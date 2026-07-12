@@ -24,6 +24,7 @@ import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
+import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
@@ -35,6 +36,20 @@ import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurri
 import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
 import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
+import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
+import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
+import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
+import { Route as ExpensesReportsRouteImport } from './routes/expenses.reports'
+import { Route as ExpensesReimbursementsRouteImport } from './routes/expenses.reimbursements'
+import { Route as ExpensesRecoveryRouteImport } from './routes/expenses.recovery'
+import { Route as ExpensesReceiptsRouteImport } from './routes/expenses.receipts'
+import { Route as ExpensesPreSpendRouteImport } from './routes/expenses.pre-spend'
+import { Route as ExpensesPoliciesRouteImport } from './routes/expenses.policies'
+import { Route as ExpensesMatchingRouteImport } from './routes/expenses.matching'
+import { Route as ExpensesListRouteImport } from './routes/expenses.list'
+import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.intelligence'
+import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
+import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
 import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
@@ -121,6 +136,11 @@ const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => InvoicesRoute,
 } as any)
+const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ExpensesRoute,
+} as any)
 const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -175,6 +195,76 @@ const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
   id: '/$invoiceId',
   path: '/$invoiceId',
   getParentRoute: () => InvoicesRoute,
+} as any)
+const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
+  id: '/vendors',
+  path: '/vendors',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesSubscriptionsRoute = ExpensesSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesSubmitRoute = ExpensesSubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReportsRoute = ExpensesReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReimbursementsRoute = ExpensesReimbursementsRouteImport.update({
+  id: '/reimbursements',
+  path: '/reimbursements',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesRecoveryRoute = ExpensesRecoveryRouteImport.update({
+  id: '/recovery',
+  path: '/recovery',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReceiptsRoute = ExpensesReceiptsRouteImport.update({
+  id: '/receipts',
+  path: '/receipts',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesPreSpendRoute = ExpensesPreSpendRouteImport.update({
+  id: '/pre-spend',
+  path: '/pre-spend',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesPoliciesRoute = ExpensesPoliciesRouteImport.update({
+  id: '/policies',
+  path: '/policies',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesMatchingRoute = ExpensesMatchingRouteImport.update({
+  id: '/matching',
+  path: '/matching',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesListRoute = ExpensesListRouteImport.update({
+  id: '/list',
+  path: '/list',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesIntelligenceRoute = ExpensesIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesCopilotRoute = ExpensesCopilotRouteImport.update({
+  id: '/copilot',
+  path: '/copilot',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesApprovalsRoute = ExpensesApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => ExpensesRoute,
 } as any)
 const EstimatesNewRoute = EstimatesNewRouteImport.update({
   id: '/new',
@@ -236,7 +326,7 @@ export interface FileRoutesByFullPath {
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
-  '/expenses': typeof ExpensesRoute
+  '/expenses': typeof ExpensesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
@@ -253,6 +343,20 @@ export interface FileRoutesByFullPath {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/estimates/new': typeof EstimatesNewRoute
+  '/expenses/approvals': typeof ExpensesApprovalsRoute
+  '/expenses/copilot': typeof ExpensesCopilotRoute
+  '/expenses/intelligence': typeof ExpensesIntelligenceRoute
+  '/expenses/list': typeof ExpensesListRoute
+  '/expenses/matching': typeof ExpensesMatchingRoute
+  '/expenses/policies': typeof ExpensesPoliciesRoute
+  '/expenses/pre-spend': typeof ExpensesPreSpendRoute
+  '/expenses/receipts': typeof ExpensesReceiptsRoute
+  '/expenses/recovery': typeof ExpensesRecoveryRoute
+  '/expenses/reimbursements': typeof ExpensesReimbursementsRoute
+  '/expenses/reports': typeof ExpensesReportsRoute
+  '/expenses/submit': typeof ExpensesSubmitRoute
+  '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
+  '/expenses/vendors': typeof ExpensesVendorsRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -264,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/expenses/': typeof ExpensesIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -273,7 +378,6 @@ export interface FileRoutesByTo {
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
-  '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
@@ -289,6 +393,20 @@ export interface FileRoutesByTo {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/estimates/new': typeof EstimatesNewRoute
+  '/expenses/approvals': typeof ExpensesApprovalsRoute
+  '/expenses/copilot': typeof ExpensesCopilotRoute
+  '/expenses/intelligence': typeof ExpensesIntelligenceRoute
+  '/expenses/list': typeof ExpensesListRoute
+  '/expenses/matching': typeof ExpensesMatchingRoute
+  '/expenses/policies': typeof ExpensesPoliciesRoute
+  '/expenses/pre-spend': typeof ExpensesPreSpendRoute
+  '/expenses/receipts': typeof ExpensesReceiptsRoute
+  '/expenses/recovery': typeof ExpensesRecoveryRoute
+  '/expenses/reimbursements': typeof ExpensesReimbursementsRoute
+  '/expenses/reports': typeof ExpensesReportsRoute
+  '/expenses/submit': typeof ExpensesSubmitRoute
+  '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
+  '/expenses/vendors': typeof ExpensesVendorsRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -300,6 +418,7 @@ export interface FileRoutesByTo {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
+  '/expenses': typeof ExpensesIndexRoute
   '/invoices': typeof InvoicesIndexRoute
 }
 export interface FileRoutesById {
@@ -311,7 +430,7 @@ export interface FileRoutesById {
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
-  '/expenses': typeof ExpensesRoute
+  '/expenses': typeof ExpensesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
@@ -328,6 +447,20 @@ export interface FileRoutesById {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/estimates/new': typeof EstimatesNewRoute
+  '/expenses/approvals': typeof ExpensesApprovalsRoute
+  '/expenses/copilot': typeof ExpensesCopilotRoute
+  '/expenses/intelligence': typeof ExpensesIntelligenceRoute
+  '/expenses/list': typeof ExpensesListRoute
+  '/expenses/matching': typeof ExpensesMatchingRoute
+  '/expenses/policies': typeof ExpensesPoliciesRoute
+  '/expenses/pre-spend': typeof ExpensesPreSpendRoute
+  '/expenses/receipts': typeof ExpensesReceiptsRoute
+  '/expenses/recovery': typeof ExpensesRecoveryRoute
+  '/expenses/reimbursements': typeof ExpensesReimbursementsRoute
+  '/expenses/reports': typeof ExpensesReportsRoute
+  '/expenses/submit': typeof ExpensesSubmitRoute
+  '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
+  '/expenses/vendors': typeof ExpensesVendorsRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -339,6 +472,7 @@ export interface FileRoutesById {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/expenses/': typeof ExpensesIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRouteTypes {
@@ -368,6 +502,20 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/estimates/new'
+    | '/expenses/approvals'
+    | '/expenses/copilot'
+    | '/expenses/intelligence'
+    | '/expenses/list'
+    | '/expenses/matching'
+    | '/expenses/policies'
+    | '/expenses/pre-spend'
+    | '/expenses/receipts'
+    | '/expenses/recovery'
+    | '/expenses/reimbursements'
+    | '/expenses/reports'
+    | '/expenses/submit'
+    | '/expenses/subscriptions'
+    | '/expenses/vendors'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -379,6 +527,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/expenses/'
     | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -388,7 +537,6 @@ export interface FileRouteTypes {
     | '/close'
     | '/customers'
     | '/estimates'
-    | '/expenses'
     | '/integrations'
     | '/payments'
     | '/reports'
@@ -404,6 +552,20 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/estimates/new'
+    | '/expenses/approvals'
+    | '/expenses/copilot'
+    | '/expenses/intelligence'
+    | '/expenses/list'
+    | '/expenses/matching'
+    | '/expenses/policies'
+    | '/expenses/pre-spend'
+    | '/expenses/receipts'
+    | '/expenses/recovery'
+    | '/expenses/reimbursements'
+    | '/expenses/reports'
+    | '/expenses/submit'
+    | '/expenses/subscriptions'
+    | '/expenses/vendors'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -415,6 +577,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking'
     | '/cash-availability'
+    | '/expenses'
     | '/invoices'
   id:
     | '__root__'
@@ -442,6 +605,20 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/estimates/new'
+    | '/expenses/approvals'
+    | '/expenses/copilot'
+    | '/expenses/intelligence'
+    | '/expenses/list'
+    | '/expenses/matching'
+    | '/expenses/policies'
+    | '/expenses/pre-spend'
+    | '/expenses/receipts'
+    | '/expenses/recovery'
+    | '/expenses/reimbursements'
+    | '/expenses/reports'
+    | '/expenses/submit'
+    | '/expenses/subscriptions'
+    | '/expenses/vendors'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -453,6 +630,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/expenses/'
     | '/invoices/'
   fileRoutesById: FileRoutesById
 }
@@ -464,7 +642,7 @@ export interface RootRouteChildren {
   CloseRoute: typeof CloseRoute
   CustomersRoute: typeof CustomersRouteWithChildren
   EstimatesRoute: typeof EstimatesRouteWithChildren
-  ExpensesRoute: typeof ExpensesRoute
+  ExpensesRoute: typeof ExpensesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
   InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
@@ -592,6 +770,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvoicesIndexRouteImport
       parentRoute: typeof InvoicesRoute
     }
+    '/expenses/': {
+      id: '/expenses/'
+      path: '/'
+      fullPath: '/expenses/'
+      preLoaderRoute: typeof ExpensesIndexRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
     '/cash-availability/': {
       id: '/cash-availability/'
       path: '/'
@@ -668,6 +853,104 @@ declare module '@tanstack/react-router' {
       fullPath: '/invoices/$invoiceId'
       preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
       parentRoute: typeof InvoicesRoute
+    }
+    '/expenses/vendors': {
+      id: '/expenses/vendors'
+      path: '/vendors'
+      fullPath: '/expenses/vendors'
+      preLoaderRoute: typeof ExpensesVendorsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/subscriptions': {
+      id: '/expenses/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/expenses/subscriptions'
+      preLoaderRoute: typeof ExpensesSubscriptionsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/submit': {
+      id: '/expenses/submit'
+      path: '/submit'
+      fullPath: '/expenses/submit'
+      preLoaderRoute: typeof ExpensesSubmitRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/reports': {
+      id: '/expenses/reports'
+      path: '/reports'
+      fullPath: '/expenses/reports'
+      preLoaderRoute: typeof ExpensesReportsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/reimbursements': {
+      id: '/expenses/reimbursements'
+      path: '/reimbursements'
+      fullPath: '/expenses/reimbursements'
+      preLoaderRoute: typeof ExpensesReimbursementsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/recovery': {
+      id: '/expenses/recovery'
+      path: '/recovery'
+      fullPath: '/expenses/recovery'
+      preLoaderRoute: typeof ExpensesRecoveryRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/receipts': {
+      id: '/expenses/receipts'
+      path: '/receipts'
+      fullPath: '/expenses/receipts'
+      preLoaderRoute: typeof ExpensesReceiptsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/pre-spend': {
+      id: '/expenses/pre-spend'
+      path: '/pre-spend'
+      fullPath: '/expenses/pre-spend'
+      preLoaderRoute: typeof ExpensesPreSpendRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/policies': {
+      id: '/expenses/policies'
+      path: '/policies'
+      fullPath: '/expenses/policies'
+      preLoaderRoute: typeof ExpensesPoliciesRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/matching': {
+      id: '/expenses/matching'
+      path: '/matching'
+      fullPath: '/expenses/matching'
+      preLoaderRoute: typeof ExpensesMatchingRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/list': {
+      id: '/expenses/list'
+      path: '/list'
+      fullPath: '/expenses/list'
+      preLoaderRoute: typeof ExpensesListRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/intelligence': {
+      id: '/expenses/intelligence'
+      path: '/intelligence'
+      fullPath: '/expenses/intelligence'
+      preLoaderRoute: typeof ExpensesIntelligenceRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/copilot': {
+      id: '/expenses/copilot'
+      path: '/copilot'
+      fullPath: '/expenses/copilot'
+      preLoaderRoute: typeof ExpensesCopilotRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/approvals': {
+      id: '/expenses/approvals'
+      path: '/approvals'
+      fullPath: '/expenses/approvals'
+      preLoaderRoute: typeof ExpensesApprovalsRouteImport
+      parentRoute: typeof ExpensesRoute
     }
     '/estimates/new': {
       id: '/estimates/new'
@@ -781,6 +1064,46 @@ const EstimatesRouteWithChildren = EstimatesRoute._addFileChildren(
   EstimatesRouteChildren,
 )
 
+interface ExpensesRouteChildren {
+  ExpensesApprovalsRoute: typeof ExpensesApprovalsRoute
+  ExpensesCopilotRoute: typeof ExpensesCopilotRoute
+  ExpensesIntelligenceRoute: typeof ExpensesIntelligenceRoute
+  ExpensesListRoute: typeof ExpensesListRoute
+  ExpensesMatchingRoute: typeof ExpensesMatchingRoute
+  ExpensesPoliciesRoute: typeof ExpensesPoliciesRoute
+  ExpensesPreSpendRoute: typeof ExpensesPreSpendRoute
+  ExpensesReceiptsRoute: typeof ExpensesReceiptsRoute
+  ExpensesRecoveryRoute: typeof ExpensesRecoveryRoute
+  ExpensesReimbursementsRoute: typeof ExpensesReimbursementsRoute
+  ExpensesReportsRoute: typeof ExpensesReportsRoute
+  ExpensesSubmitRoute: typeof ExpensesSubmitRoute
+  ExpensesSubscriptionsRoute: typeof ExpensesSubscriptionsRoute
+  ExpensesVendorsRoute: typeof ExpensesVendorsRoute
+  ExpensesIndexRoute: typeof ExpensesIndexRoute
+}
+
+const ExpensesRouteChildren: ExpensesRouteChildren = {
+  ExpensesApprovalsRoute: ExpensesApprovalsRoute,
+  ExpensesCopilotRoute: ExpensesCopilotRoute,
+  ExpensesIntelligenceRoute: ExpensesIntelligenceRoute,
+  ExpensesListRoute: ExpensesListRoute,
+  ExpensesMatchingRoute: ExpensesMatchingRoute,
+  ExpensesPoliciesRoute: ExpensesPoliciesRoute,
+  ExpensesPreSpendRoute: ExpensesPreSpendRoute,
+  ExpensesReceiptsRoute: ExpensesReceiptsRoute,
+  ExpensesRecoveryRoute: ExpensesRecoveryRoute,
+  ExpensesReimbursementsRoute: ExpensesReimbursementsRoute,
+  ExpensesReportsRoute: ExpensesReportsRoute,
+  ExpensesSubmitRoute: ExpensesSubmitRoute,
+  ExpensesSubscriptionsRoute: ExpensesSubscriptionsRoute,
+  ExpensesVendorsRoute: ExpensesVendorsRoute,
+  ExpensesIndexRoute: ExpensesIndexRoute,
+}
+
+const ExpensesRouteWithChildren = ExpensesRoute._addFileChildren(
+  ExpensesRouteChildren,
+)
+
 interface InvoicesRouteChildren {
   InvoicesInvoiceIdRoute: typeof InvoicesInvoiceIdRoute
   InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
@@ -809,7 +1132,7 @@ const rootRouteChildren: RootRouteChildren = {
   CloseRoute: CloseRoute,
   CustomersRoute: CustomersRouteWithChildren,
   EstimatesRoute: EstimatesRouteWithChildren,
-  ExpensesRoute: ExpensesRoute,
+  ExpensesRoute: ExpensesRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
   InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,

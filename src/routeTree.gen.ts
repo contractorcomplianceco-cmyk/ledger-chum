@@ -24,6 +24,7 @@ import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
+import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
 import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
@@ -36,6 +37,13 @@ import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurri
 import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
 import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
+import { Route as IntelligenceTechPortfolioRouteImport } from './routes/intelligence.tech-portfolio'
+import { Route as IntelligenceTechRouteImport } from './routes/intelligence.tech'
+import { Route as IntelligenceOverheadAnomaliesRouteImport } from './routes/intelligence.overhead-anomalies'
+import { Route as IntelligenceOverheadRouteImport } from './routes/intelligence.overhead'
+import { Route as IntelligenceMarketingRouteImport } from './routes/intelligence.marketing'
+import { Route as IntelligenceCampaignsRouteImport } from './routes/intelligence.campaigns'
+import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
 import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
@@ -136,6 +144,11 @@ const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => InvoicesRoute,
 } as any)
+const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
+  id: '/intelligence/',
+  path: '/intelligence/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -195,6 +208,43 @@ const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
   id: '/$invoiceId',
   path: '/$invoiceId',
   getParentRoute: () => InvoicesRoute,
+} as any)
+const IntelligenceTechPortfolioRoute =
+  IntelligenceTechPortfolioRouteImport.update({
+    id: '/intelligence/tech-portfolio',
+    path: '/intelligence/tech-portfolio',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceTechRoute = IntelligenceTechRouteImport.update({
+  id: '/intelligence/tech',
+  path: '/intelligence/tech',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceOverheadAnomaliesRoute =
+  IntelligenceOverheadAnomaliesRouteImport.update({
+    id: '/intelligence/overhead-anomalies',
+    path: '/intelligence/overhead-anomalies',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceOverheadRoute = IntelligenceOverheadRouteImport.update({
+  id: '/intelligence/overhead',
+  path: '/intelligence/overhead',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceMarketingRoute = IntelligenceMarketingRouteImport.update({
+  id: '/intelligence/marketing',
+  path: '/intelligence/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceCampaignsRoute = IntelligenceCampaignsRouteImport.update({
+  id: '/intelligence/campaigns',
+  path: '/intelligence/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
+  id: '/intelligence/apps',
+  path: '/intelligence/apps',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
   id: '/vendors',
@@ -357,6 +407,13 @@ export interface FileRoutesByFullPath {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/marketing': typeof IntelligenceMarketingRoute
+  '/intelligence/overhead': typeof IntelligenceOverheadRoute
+  '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/tech': typeof IntelligenceTechRoute
+  '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -369,6 +426,7 @@ export interface FileRoutesByFullPath {
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -407,6 +465,13 @@ export interface FileRoutesByTo {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/marketing': typeof IntelligenceMarketingRoute
+  '/intelligence/overhead': typeof IntelligenceOverheadRoute
+  '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/tech': typeof IntelligenceTechRoute
+  '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -419,6 +484,7 @@ export interface FileRoutesByTo {
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
   '/expenses': typeof ExpensesIndexRoute
+  '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
 }
 export interface FileRoutesById {
@@ -461,6 +527,13 @@ export interface FileRoutesById {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/marketing': typeof IntelligenceMarketingRoute
+  '/intelligence/overhead': typeof IntelligenceOverheadRoute
+  '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/tech': typeof IntelligenceTechRoute
+  '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -473,6 +546,7 @@ export interface FileRoutesById {
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRouteTypes {
@@ -516,6 +590,13 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/intelligence/apps'
+    | '/intelligence/campaigns'
+    | '/intelligence/marketing'
+    | '/intelligence/overhead'
+    | '/intelligence/overhead-anomalies'
+    | '/intelligence/tech'
+    | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -528,6 +609,7 @@ export interface FileRouteTypes {
     | '/banking/'
     | '/cash-availability/'
     | '/expenses/'
+    | '/intelligence/'
     | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -566,6 +648,13 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/intelligence/apps'
+    | '/intelligence/campaigns'
+    | '/intelligence/marketing'
+    | '/intelligence/overhead'
+    | '/intelligence/overhead-anomalies'
+    | '/intelligence/tech'
+    | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -578,6 +667,7 @@ export interface FileRouteTypes {
     | '/banking'
     | '/cash-availability'
     | '/expenses'
+    | '/intelligence'
     | '/invoices'
   id:
     | '__root__'
@@ -619,6 +709,13 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/intelligence/apps'
+    | '/intelligence/campaigns'
+    | '/intelligence/marketing'
+    | '/intelligence/overhead'
+    | '/intelligence/overhead-anomalies'
+    | '/intelligence/tech'
+    | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -631,6 +728,7 @@ export interface FileRouteTypes {
     | '/banking/'
     | '/cash-availability/'
     | '/expenses/'
+    | '/intelligence/'
     | '/invoices/'
   fileRoutesById: FileRoutesById
 }
@@ -655,12 +753,20 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  IntelligenceAppsRoute: typeof IntelligenceAppsRoute
+  IntelligenceCampaignsRoute: typeof IntelligenceCampaignsRoute
+  IntelligenceMarketingRoute: typeof IntelligenceMarketingRoute
+  IntelligenceOverheadRoute: typeof IntelligenceOverheadRoute
+  IntelligenceOverheadAnomaliesRoute: typeof IntelligenceOverheadAnomaliesRoute
+  IntelligenceTechRoute: typeof IntelligenceTechRoute
+  IntelligenceTechPortfolioRoute: typeof IntelligenceTechPortfolioRoute
   LedgerAccountsRoute: typeof LedgerAccountsRoute
   LedgerGeneralRoute: typeof LedgerGeneralRoute
   LedgerJournalsRoute: typeof LedgerJournalsRoute
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   BankingIndexRoute: typeof BankingIndexRoute
+  IntelligenceIndexRoute: typeof IntelligenceIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -770,6 +876,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvoicesIndexRouteImport
       parentRoute: typeof InvoicesRoute
     }
+    '/intelligence/': {
+      id: '/intelligence/'
+      path: '/intelligence'
+      fullPath: '/intelligence/'
+      preLoaderRoute: typeof IntelligenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/expenses/': {
       id: '/expenses/'
       path: '/'
@@ -853,6 +966,55 @@ declare module '@tanstack/react-router' {
       fullPath: '/invoices/$invoiceId'
       preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
       parentRoute: typeof InvoicesRoute
+    }
+    '/intelligence/tech-portfolio': {
+      id: '/intelligence/tech-portfolio'
+      path: '/intelligence/tech-portfolio'
+      fullPath: '/intelligence/tech-portfolio'
+      preLoaderRoute: typeof IntelligenceTechPortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/tech': {
+      id: '/intelligence/tech'
+      path: '/intelligence/tech'
+      fullPath: '/intelligence/tech'
+      preLoaderRoute: typeof IntelligenceTechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/overhead-anomalies': {
+      id: '/intelligence/overhead-anomalies'
+      path: '/intelligence/overhead-anomalies'
+      fullPath: '/intelligence/overhead-anomalies'
+      preLoaderRoute: typeof IntelligenceOverheadAnomaliesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/overhead': {
+      id: '/intelligence/overhead'
+      path: '/intelligence/overhead'
+      fullPath: '/intelligence/overhead'
+      preLoaderRoute: typeof IntelligenceOverheadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/marketing': {
+      id: '/intelligence/marketing'
+      path: '/intelligence/marketing'
+      fullPath: '/intelligence/marketing'
+      preLoaderRoute: typeof IntelligenceMarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/campaigns': {
+      id: '/intelligence/campaigns'
+      path: '/intelligence/campaigns'
+      fullPath: '/intelligence/campaigns'
+      preLoaderRoute: typeof IntelligenceCampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/apps': {
+      id: '/intelligence/apps'
+      path: '/intelligence/apps'
+      fullPath: '/intelligence/apps'
+      preLoaderRoute: typeof IntelligenceAppsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/expenses/vendors': {
       id: '/expenses/vendors'
@@ -1145,12 +1307,20 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  IntelligenceAppsRoute: IntelligenceAppsRoute,
+  IntelligenceCampaignsRoute: IntelligenceCampaignsRoute,
+  IntelligenceMarketingRoute: IntelligenceMarketingRoute,
+  IntelligenceOverheadRoute: IntelligenceOverheadRoute,
+  IntelligenceOverheadAnomaliesRoute: IntelligenceOverheadAnomaliesRoute,
+  IntelligenceTechRoute: IntelligenceTechRoute,
+  IntelligenceTechPortfolioRoute: IntelligenceTechPortfolioRoute,
   LedgerAccountsRoute: LedgerAccountsRoute,
   LedgerGeneralRoute: LedgerGeneralRoute,
   LedgerJournalsRoute: LedgerJournalsRoute,
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
   BankingIndexRoute: BankingIndexRoute,
+  IntelligenceIndexRoute: IntelligenceIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

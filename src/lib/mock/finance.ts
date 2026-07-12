@@ -15,7 +15,7 @@ export const KPIS = [
   { label: "Total Revenue", value: 1_248_750, delta: 18.6, trend: "up" as const, spark: [820, 880, 900, 950, 1020, 1080, 1180, 1248] },
   { label: "Gross Profit", value: 642_540, delta: 14.3, trend: "up" as const, spark: [420, 460, 470, 500, 540, 570, 610, 642] },
   { label: "Net Profit", value: 326_870, delta: 11.8, trend: "up" as const, spark: [210, 220, 235, 250, 268, 285, 305, 326] },
-  { label: "Cash Balance", value: 892_430, delta: 9.7, trend: "up" as const, spark: [610, 640, 680, 710, 745, 790, 840, 892] },
+  { label: "True Available Cash", value: 451_510, delta: 11.4, trend: "up" as const, spark: [402, 428, 452, 478, 501, 522, 548, 452] },
 ];
 
 /** 12 months for the Financial Overview chart. */

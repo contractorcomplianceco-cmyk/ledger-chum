@@ -9,38 +9,418 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VendorsRouteImport } from './routes/vendors'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as PaymentsRouteImport } from './routes/payments'
+import { Route as InvoicesRouteImport } from './routes/invoices'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as CloseRouteImport } from './routes/close'
+import { Route as BillsRouteImport } from './routes/bills'
+import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BankingIndexRouteImport } from './routes/banking.index'
+import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
+import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
+import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
+import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
+import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
+import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
+import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
+import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
+import { Route as BankingReconciliationRouteImport } from './routes/banking.reconciliation'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
 
+const VendorsRoute = VendorsRouteImport.update({
+  id: '/vendors',
+  path: '/vendors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesRoute = InvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CloseRoute = CloseRouteImport.update({
+  id: '/close',
+  path: '/close',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillsRoute = BillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BankingIndexRoute = BankingIndexRouteImport.update({
+  id: '/banking/',
+  path: '/banking/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
+  id: '/readiness/production',
+  path: '/readiness/production',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadinessMigrationRoute = ReadinessMigrationRouteImport.update({
+  id: '/readiness/migration',
+  path: '/readiness/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerJournalsRoute = LedgerJournalsRouteImport.update({
+  id: '/ledger/journals',
+  path: '/ledger/journals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerGeneralRoute = LedgerGeneralRouteImport.update({
+  id: '/ledger/general',
+  path: '/ledger/general',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
+  id: '/ledger/accounts',
+  path: '/ledger/accounts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
+  id: '/dashboards/team',
+  path: '/dashboards/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardsReviewerRoute = DashboardsReviewerRouteImport.update({
+  id: '/dashboards/reviewer',
+  path: '/dashboards/reviewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
+  id: '/dashboards/accounting',
+  path: '/dashboards/accounting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BankingTransactionsRoute = BankingTransactionsRouteImport.update({
+  id: '/banking/transactions',
+  path: '/banking/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BankingReconciliationRoute = BankingReconciliationRouteImport.update({
+  id: '/banking/reconciliation',
+  path: '/banking/reconciliation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/bills': typeof BillsRoute
+  '/close': typeof CloseRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/integrations': typeof IntegrationsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payments': typeof PaymentsRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/vendors': typeof VendorsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/banking/reconciliation': typeof BankingReconciliationRoute
+  '/banking/transactions': typeof BankingTransactionsRoute
+  '/dashboards/accounting': typeof DashboardsAccountingRoute
+  '/dashboards/reviewer': typeof DashboardsReviewerRoute
+  '/dashboards/team': typeof DashboardsTeamRoute
+  '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/journals': typeof LedgerJournalsRoute
+  '/readiness/migration': typeof ReadinessMigrationRoute
+  '/readiness/production': typeof ReadinessProductionRoute
+  '/banking/': typeof BankingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/bills': typeof BillsRoute
+  '/close': typeof CloseRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/integrations': typeof IntegrationsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payments': typeof PaymentsRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/vendors': typeof VendorsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/banking/reconciliation': typeof BankingReconciliationRoute
+  '/banking/transactions': typeof BankingTransactionsRoute
+  '/dashboards/accounting': typeof DashboardsAccountingRoute
+  '/dashboards/reviewer': typeof DashboardsReviewerRoute
+  '/dashboards/team': typeof DashboardsTeamRoute
+  '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/journals': typeof LedgerJournalsRoute
+  '/readiness/migration': typeof ReadinessMigrationRoute
+  '/readiness/production': typeof ReadinessProductionRoute
+  '/banking': typeof BankingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/bills': typeof BillsRoute
+  '/close': typeof CloseRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/integrations': typeof IntegrationsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payments': typeof PaymentsRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/vendors': typeof VendorsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/banking/reconciliation': typeof BankingReconciliationRoute
+  '/banking/transactions': typeof BankingTransactionsRoute
+  '/dashboards/accounting': typeof DashboardsAccountingRoute
+  '/dashboards/reviewer': typeof DashboardsReviewerRoute
+  '/dashboards/team': typeof DashboardsTeamRoute
+  '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/journals': typeof LedgerJournalsRoute
+  '/readiness/migration': typeof ReadinessMigrationRoute
+  '/readiness/production': typeof ReadinessProductionRoute
+  '/banking/': typeof BankingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/audit'
+    | '/bills'
+    | '/close'
+    | '/customers'
+    | '/expenses'
+    | '/integrations'
+    | '/invoices'
+    | '/payments'
+    | '/reports'
+    | '/settings'
+    | '/vendors'
+    | '/admin/users'
+    | '/banking/reconciliation'
+    | '/banking/transactions'
+    | '/dashboards/accounting'
+    | '/dashboards/reviewer'
+    | '/dashboards/team'
+    | '/ledger/accounts'
+    | '/ledger/general'
+    | '/ledger/journals'
+    | '/readiness/migration'
+    | '/readiness/production'
+    | '/banking/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/audit'
+    | '/bills'
+    | '/close'
+    | '/customers'
+    | '/expenses'
+    | '/integrations'
+    | '/invoices'
+    | '/payments'
+    | '/reports'
+    | '/settings'
+    | '/vendors'
+    | '/admin/users'
+    | '/banking/reconciliation'
+    | '/banking/transactions'
+    | '/dashboards/accounting'
+    | '/dashboards/reviewer'
+    | '/dashboards/team'
+    | '/ledger/accounts'
+    | '/ledger/general'
+    | '/ledger/journals'
+    | '/readiness/migration'
+    | '/readiness/production'
+    | '/banking'
+  id:
+    | '__root__'
+    | '/'
+    | '/audit'
+    | '/bills'
+    | '/close'
+    | '/customers'
+    | '/expenses'
+    | '/integrations'
+    | '/invoices'
+    | '/payments'
+    | '/reports'
+    | '/settings'
+    | '/vendors'
+    | '/admin/users'
+    | '/banking/reconciliation'
+    | '/banking/transactions'
+    | '/dashboards/accounting'
+    | '/dashboards/reviewer'
+    | '/dashboards/team'
+    | '/ledger/accounts'
+    | '/ledger/general'
+    | '/ledger/journals'
+    | '/readiness/migration'
+    | '/readiness/production'
+    | '/banking/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuditRoute: typeof AuditRoute
+  BillsRoute: typeof BillsRoute
+  CloseRoute: typeof CloseRoute
+  CustomersRoute: typeof CustomersRoute
+  ExpensesRoute: typeof ExpensesRoute
+  IntegrationsRoute: typeof IntegrationsRoute
+  InvoicesRoute: typeof InvoicesRoute
+  PaymentsRoute: typeof PaymentsRoute
+  ReportsRoute: typeof ReportsRoute
+  SettingsRoute: typeof SettingsRoute
+  VendorsRoute: typeof VendorsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  BankingReconciliationRoute: typeof BankingReconciliationRoute
+  BankingTransactionsRoute: typeof BankingTransactionsRoute
+  DashboardsAccountingRoute: typeof DashboardsAccountingRoute
+  DashboardsReviewerRoute: typeof DashboardsReviewerRoute
+  DashboardsTeamRoute: typeof DashboardsTeamRoute
+  LedgerAccountsRoute: typeof LedgerAccountsRoute
+  LedgerGeneralRoute: typeof LedgerGeneralRoute
+  LedgerJournalsRoute: typeof LedgerJournalsRoute
+  ReadinessMigrationRoute: typeof ReadinessMigrationRoute
+  ReadinessProductionRoute: typeof ReadinessProductionRoute
+  BankingIndexRoute: typeof BankingIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vendors': {
+      id: '/vendors'
+      path: '/vendors'
+      fullPath: '/vendors'
+      preLoaderRoute: typeof VendorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices': {
+      id: '/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/close': {
+      id: '/close'
+      path: '/close'
+      fullPath: '/close'
+      preLoaderRoute: typeof CloseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bills': {
+      id: '/bills'
+      path: '/bills'
+      fullPath: '/bills'
+      preLoaderRoute: typeof BillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +428,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/banking/': {
+      id: '/banking/'
+      path: '/banking'
+      fullPath: '/banking/'
+      preLoaderRoute: typeof BankingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/readiness/production': {
+      id: '/readiness/production'
+      path: '/readiness/production'
+      fullPath: '/readiness/production'
+      preLoaderRoute: typeof ReadinessProductionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/readiness/migration': {
+      id: '/readiness/migration'
+      path: '/readiness/migration'
+      fullPath: '/readiness/migration'
+      preLoaderRoute: typeof ReadinessMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/journals': {
+      id: '/ledger/journals'
+      path: '/ledger/journals'
+      fullPath: '/ledger/journals'
+      preLoaderRoute: typeof LedgerJournalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/general': {
+      id: '/ledger/general'
+      path: '/ledger/general'
+      fullPath: '/ledger/general'
+      preLoaderRoute: typeof LedgerGeneralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/accounts': {
+      id: '/ledger/accounts'
+      path: '/ledger/accounts'
+      fullPath: '/ledger/accounts'
+      preLoaderRoute: typeof LedgerAccountsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboards/team': {
+      id: '/dashboards/team'
+      path: '/dashboards/team'
+      fullPath: '/dashboards/team'
+      preLoaderRoute: typeof DashboardsTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboards/reviewer': {
+      id: '/dashboards/reviewer'
+      path: '/dashboards/reviewer'
+      fullPath: '/dashboards/reviewer'
+      preLoaderRoute: typeof DashboardsReviewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboards/accounting': {
+      id: '/dashboards/accounting'
+      path: '/dashboards/accounting'
+      fullPath: '/dashboards/accounting'
+      preLoaderRoute: typeof DashboardsAccountingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banking/transactions': {
+      id: '/banking/transactions'
+      path: '/banking/transactions'
+      fullPath: '/banking/transactions'
+      preLoaderRoute: typeof BankingTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banking/reconciliation': {
+      id: '/banking/reconciliation'
+      path: '/banking/reconciliation'
+      fullPath: '/banking/reconciliation'
+      preLoaderRoute: typeof BankingReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuditRoute: AuditRoute,
+  BillsRoute: BillsRoute,
+  CloseRoute: CloseRoute,
+  CustomersRoute: CustomersRoute,
+  ExpensesRoute: ExpensesRoute,
+  IntegrationsRoute: IntegrationsRoute,
+  InvoicesRoute: InvoicesRoute,
+  PaymentsRoute: PaymentsRoute,
+  ReportsRoute: ReportsRoute,
+  SettingsRoute: SettingsRoute,
+  VendorsRoute: VendorsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  BankingReconciliationRoute: BankingReconciliationRoute,
+  BankingTransactionsRoute: BankingTransactionsRoute,
+  DashboardsAccountingRoute: DashboardsAccountingRoute,
+  DashboardsReviewerRoute: DashboardsReviewerRoute,
+  DashboardsTeamRoute: DashboardsTeamRoute,
+  LedgerAccountsRoute: LedgerAccountsRoute,
+  LedgerGeneralRoute: LedgerGeneralRoute,
+  LedgerJournalsRoute: LedgerJournalsRoute,
+  ReadinessMigrationRoute: ReadinessMigrationRoute,
+  ReadinessProductionRoute: ReadinessProductionRoute,
+  BankingIndexRoute: BankingIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

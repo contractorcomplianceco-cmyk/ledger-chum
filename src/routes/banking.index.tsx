@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ComingSoon } from "@/components/coming-soon";
 
-export const Route = createFileRoute("/banking")({
+export const Route = createFileRoute("/banking/")({
   head: () => ({
     meta: [
       { title: "Banking Overview — LedgerOS" },

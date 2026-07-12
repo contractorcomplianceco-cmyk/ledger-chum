@@ -39,10 +39,22 @@ import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credi
 import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
 import { Route as IntelligenceTechPortfolioRouteImport } from './routes/intelligence.tech-portfolio'
 import { Route as IntelligenceTechRouteImport } from './routes/intelligence.tech'
+import { Route as IntelligenceServicesRouteImport } from './routes/intelligence.services'
+import { Route as IntelligenceRecommendationsRouteImport } from './routes/intelligence.recommendations'
+import { Route as IntelligenceProfitabilityRouteImport } from './routes/intelligence.profitability'
 import { Route as IntelligenceOverheadAnomaliesRouteImport } from './routes/intelligence.overhead-anomalies'
 import { Route as IntelligenceOverheadRouteImport } from './routes/intelligence.overhead'
 import { Route as IntelligenceMarketingRouteImport } from './routes/intelligence.marketing'
+import { Route as IntelligenceLeakageRouteImport } from './routes/intelligence.leakage'
+import { Route as IntelligenceForecastingRouteImport } from './routes/intelligence.forecasting'
+import { Route as IntelligenceDepartmentsRouteImport } from './routes/intelligence.departments'
+import { Route as IntelligenceConfidenceRouteImport } from './routes/intelligence.confidence'
+import { Route as IntelligenceClientsRouteImport } from './routes/intelligence.clients'
 import { Route as IntelligenceCampaignsRouteImport } from './routes/intelligence.campaigns'
+import { Route as IntelligenceBonusesRouteImport } from './routes/intelligence.bonuses'
+import { Route as IntelligenceBonusPlansRouteImport } from './routes/intelligence.bonus-plans'
+import { Route as IntelligenceBonusForecastRouteImport } from './routes/intelligence.bonus-forecast'
+import { Route as IntelligenceAttributionRouteImport } from './routes/intelligence.attribution'
 import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
@@ -220,6 +232,23 @@ const IntelligenceTechRoute = IntelligenceTechRouteImport.update({
   path: '/intelligence/tech',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntelligenceServicesRoute = IntelligenceServicesRouteImport.update({
+  id: '/intelligence/services',
+  path: '/intelligence/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceRecommendationsRoute =
+  IntelligenceRecommendationsRouteImport.update({
+    id: '/intelligence/recommendations',
+    path: '/intelligence/recommendations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceProfitabilityRoute =
+  IntelligenceProfitabilityRouteImport.update({
+    id: '/intelligence/profitability',
+    path: '/intelligence/profitability',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const IntelligenceOverheadAnomaliesRoute =
   IntelligenceOverheadAnomaliesRouteImport.update({
     id: '/intelligence/overhead-anomalies',
@@ -236,9 +265,55 @@ const IntelligenceMarketingRoute = IntelligenceMarketingRouteImport.update({
   path: '/intelligence/marketing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntelligenceLeakageRoute = IntelligenceLeakageRouteImport.update({
+  id: '/intelligence/leakage',
+  path: '/intelligence/leakage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceForecastingRoute = IntelligenceForecastingRouteImport.update({
+  id: '/intelligence/forecasting',
+  path: '/intelligence/forecasting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceDepartmentsRoute = IntelligenceDepartmentsRouteImport.update({
+  id: '/intelligence/departments',
+  path: '/intelligence/departments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceConfidenceRoute = IntelligenceConfidenceRouteImport.update({
+  id: '/intelligence/confidence',
+  path: '/intelligence/confidence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceClientsRoute = IntelligenceClientsRouteImport.update({
+  id: '/intelligence/clients',
+  path: '/intelligence/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IntelligenceCampaignsRoute = IntelligenceCampaignsRouteImport.update({
   id: '/intelligence/campaigns',
   path: '/intelligence/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceBonusesRoute = IntelligenceBonusesRouteImport.update({
+  id: '/intelligence/bonuses',
+  path: '/intelligence/bonuses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceBonusPlansRoute = IntelligenceBonusPlansRouteImport.update({
+  id: '/intelligence/bonus-plans',
+  path: '/intelligence/bonus-plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceBonusForecastRoute =
+  IntelligenceBonusForecastRouteImport.update({
+    id: '/intelligence/bonus-forecast',
+    path: '/intelligence/bonus-forecast',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceAttributionRoute = IntelligenceAttributionRouteImport.update({
+  id: '/intelligence/attribution',
+  path: '/intelligence/attribution',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
@@ -408,10 +483,22 @@ export interface FileRoutesByFullPath {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/attribution': typeof IntelligenceAttributionRoute
+  '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
+  '/intelligence/bonus-plans': typeof IntelligenceBonusPlansRoute
+  '/intelligence/bonuses': typeof IntelligenceBonusesRoute
   '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/clients': typeof IntelligenceClientsRoute
+  '/intelligence/confidence': typeof IntelligenceConfidenceRoute
+  '/intelligence/departments': typeof IntelligenceDepartmentsRoute
+  '/intelligence/forecasting': typeof IntelligenceForecastingRoute
+  '/intelligence/leakage': typeof IntelligenceLeakageRoute
   '/intelligence/marketing': typeof IntelligenceMarketingRoute
   '/intelligence/overhead': typeof IntelligenceOverheadRoute
   '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/profitability': typeof IntelligenceProfitabilityRoute
+  '/intelligence/recommendations': typeof IntelligenceRecommendationsRoute
+  '/intelligence/services': typeof IntelligenceServicesRoute
   '/intelligence/tech': typeof IntelligenceTechRoute
   '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
@@ -466,10 +553,22 @@ export interface FileRoutesByTo {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/attribution': typeof IntelligenceAttributionRoute
+  '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
+  '/intelligence/bonus-plans': typeof IntelligenceBonusPlansRoute
+  '/intelligence/bonuses': typeof IntelligenceBonusesRoute
   '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/clients': typeof IntelligenceClientsRoute
+  '/intelligence/confidence': typeof IntelligenceConfidenceRoute
+  '/intelligence/departments': typeof IntelligenceDepartmentsRoute
+  '/intelligence/forecasting': typeof IntelligenceForecastingRoute
+  '/intelligence/leakage': typeof IntelligenceLeakageRoute
   '/intelligence/marketing': typeof IntelligenceMarketingRoute
   '/intelligence/overhead': typeof IntelligenceOverheadRoute
   '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/profitability': typeof IntelligenceProfitabilityRoute
+  '/intelligence/recommendations': typeof IntelligenceRecommendationsRoute
+  '/intelligence/services': typeof IntelligenceServicesRoute
   '/intelligence/tech': typeof IntelligenceTechRoute
   '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
@@ -528,10 +627,22 @@ export interface FileRoutesById {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
+  '/intelligence/attribution': typeof IntelligenceAttributionRoute
+  '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
+  '/intelligence/bonus-plans': typeof IntelligenceBonusPlansRoute
+  '/intelligence/bonuses': typeof IntelligenceBonusesRoute
   '/intelligence/campaigns': typeof IntelligenceCampaignsRoute
+  '/intelligence/clients': typeof IntelligenceClientsRoute
+  '/intelligence/confidence': typeof IntelligenceConfidenceRoute
+  '/intelligence/departments': typeof IntelligenceDepartmentsRoute
+  '/intelligence/forecasting': typeof IntelligenceForecastingRoute
+  '/intelligence/leakage': typeof IntelligenceLeakageRoute
   '/intelligence/marketing': typeof IntelligenceMarketingRoute
   '/intelligence/overhead': typeof IntelligenceOverheadRoute
   '/intelligence/overhead-anomalies': typeof IntelligenceOverheadAnomaliesRoute
+  '/intelligence/profitability': typeof IntelligenceProfitabilityRoute
+  '/intelligence/recommendations': typeof IntelligenceRecommendationsRoute
+  '/intelligence/services': typeof IntelligenceServicesRoute
   '/intelligence/tech': typeof IntelligenceTechRoute
   '/intelligence/tech-portfolio': typeof IntelligenceTechPortfolioRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
@@ -591,10 +702,22 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/intelligence/apps'
+    | '/intelligence/attribution'
+    | '/intelligence/bonus-forecast'
+    | '/intelligence/bonus-plans'
+    | '/intelligence/bonuses'
     | '/intelligence/campaigns'
+    | '/intelligence/clients'
+    | '/intelligence/confidence'
+    | '/intelligence/departments'
+    | '/intelligence/forecasting'
+    | '/intelligence/leakage'
     | '/intelligence/marketing'
     | '/intelligence/overhead'
     | '/intelligence/overhead-anomalies'
+    | '/intelligence/profitability'
+    | '/intelligence/recommendations'
+    | '/intelligence/services'
     | '/intelligence/tech'
     | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
@@ -649,10 +772,22 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/intelligence/apps'
+    | '/intelligence/attribution'
+    | '/intelligence/bonus-forecast'
+    | '/intelligence/bonus-plans'
+    | '/intelligence/bonuses'
     | '/intelligence/campaigns'
+    | '/intelligence/clients'
+    | '/intelligence/confidence'
+    | '/intelligence/departments'
+    | '/intelligence/forecasting'
+    | '/intelligence/leakage'
     | '/intelligence/marketing'
     | '/intelligence/overhead'
     | '/intelligence/overhead-anomalies'
+    | '/intelligence/profitability'
+    | '/intelligence/recommendations'
+    | '/intelligence/services'
     | '/intelligence/tech'
     | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
@@ -710,10 +845,22 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/intelligence/apps'
+    | '/intelligence/attribution'
+    | '/intelligence/bonus-forecast'
+    | '/intelligence/bonus-plans'
+    | '/intelligence/bonuses'
     | '/intelligence/campaigns'
+    | '/intelligence/clients'
+    | '/intelligence/confidence'
+    | '/intelligence/departments'
+    | '/intelligence/forecasting'
+    | '/intelligence/leakage'
     | '/intelligence/marketing'
     | '/intelligence/overhead'
     | '/intelligence/overhead-anomalies'
+    | '/intelligence/profitability'
+    | '/intelligence/recommendations'
+    | '/intelligence/services'
     | '/intelligence/tech'
     | '/intelligence/tech-portfolio'
     | '/invoices/$invoiceId'
@@ -754,10 +901,22 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   IntelligenceAppsRoute: typeof IntelligenceAppsRoute
+  IntelligenceAttributionRoute: typeof IntelligenceAttributionRoute
+  IntelligenceBonusForecastRoute: typeof IntelligenceBonusForecastRoute
+  IntelligenceBonusPlansRoute: typeof IntelligenceBonusPlansRoute
+  IntelligenceBonusesRoute: typeof IntelligenceBonusesRoute
   IntelligenceCampaignsRoute: typeof IntelligenceCampaignsRoute
+  IntelligenceClientsRoute: typeof IntelligenceClientsRoute
+  IntelligenceConfidenceRoute: typeof IntelligenceConfidenceRoute
+  IntelligenceDepartmentsRoute: typeof IntelligenceDepartmentsRoute
+  IntelligenceForecastingRoute: typeof IntelligenceForecastingRoute
+  IntelligenceLeakageRoute: typeof IntelligenceLeakageRoute
   IntelligenceMarketingRoute: typeof IntelligenceMarketingRoute
   IntelligenceOverheadRoute: typeof IntelligenceOverheadRoute
   IntelligenceOverheadAnomaliesRoute: typeof IntelligenceOverheadAnomaliesRoute
+  IntelligenceProfitabilityRoute: typeof IntelligenceProfitabilityRoute
+  IntelligenceRecommendationsRoute: typeof IntelligenceRecommendationsRoute
+  IntelligenceServicesRoute: typeof IntelligenceServicesRoute
   IntelligenceTechRoute: typeof IntelligenceTechRoute
   IntelligenceTechPortfolioRoute: typeof IntelligenceTechPortfolioRoute
   LedgerAccountsRoute: typeof LedgerAccountsRoute
@@ -981,6 +1140,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntelligenceTechRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/intelligence/services': {
+      id: '/intelligence/services'
+      path: '/intelligence/services'
+      fullPath: '/intelligence/services'
+      preLoaderRoute: typeof IntelligenceServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/recommendations': {
+      id: '/intelligence/recommendations'
+      path: '/intelligence/recommendations'
+      fullPath: '/intelligence/recommendations'
+      preLoaderRoute: typeof IntelligenceRecommendationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/profitability': {
+      id: '/intelligence/profitability'
+      path: '/intelligence/profitability'
+      fullPath: '/intelligence/profitability'
+      preLoaderRoute: typeof IntelligenceProfitabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/intelligence/overhead-anomalies': {
       id: '/intelligence/overhead-anomalies'
       path: '/intelligence/overhead-anomalies'
@@ -1002,11 +1182,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntelligenceMarketingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/intelligence/leakage': {
+      id: '/intelligence/leakage'
+      path: '/intelligence/leakage'
+      fullPath: '/intelligence/leakage'
+      preLoaderRoute: typeof IntelligenceLeakageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/forecasting': {
+      id: '/intelligence/forecasting'
+      path: '/intelligence/forecasting'
+      fullPath: '/intelligence/forecasting'
+      preLoaderRoute: typeof IntelligenceForecastingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/departments': {
+      id: '/intelligence/departments'
+      path: '/intelligence/departments'
+      fullPath: '/intelligence/departments'
+      preLoaderRoute: typeof IntelligenceDepartmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/confidence': {
+      id: '/intelligence/confidence'
+      path: '/intelligence/confidence'
+      fullPath: '/intelligence/confidence'
+      preLoaderRoute: typeof IntelligenceConfidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/clients': {
+      id: '/intelligence/clients'
+      path: '/intelligence/clients'
+      fullPath: '/intelligence/clients'
+      preLoaderRoute: typeof IntelligenceClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/intelligence/campaigns': {
       id: '/intelligence/campaigns'
       path: '/intelligence/campaigns'
       fullPath: '/intelligence/campaigns'
       preLoaderRoute: typeof IntelligenceCampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonuses': {
+      id: '/intelligence/bonuses'
+      path: '/intelligence/bonuses'
+      fullPath: '/intelligence/bonuses'
+      preLoaderRoute: typeof IntelligenceBonusesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonus-plans': {
+      id: '/intelligence/bonus-plans'
+      path: '/intelligence/bonus-plans'
+      fullPath: '/intelligence/bonus-plans'
+      preLoaderRoute: typeof IntelligenceBonusPlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonus-forecast': {
+      id: '/intelligence/bonus-forecast'
+      path: '/intelligence/bonus-forecast'
+      fullPath: '/intelligence/bonus-forecast'
+      preLoaderRoute: typeof IntelligenceBonusForecastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/attribution': {
+      id: '/intelligence/attribution'
+      path: '/intelligence/attribution'
+      fullPath: '/intelligence/attribution'
+      preLoaderRoute: typeof IntelligenceAttributionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/intelligence/apps': {
@@ -1308,10 +1551,22 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   IntelligenceAppsRoute: IntelligenceAppsRoute,
+  IntelligenceAttributionRoute: IntelligenceAttributionRoute,
+  IntelligenceBonusForecastRoute: IntelligenceBonusForecastRoute,
+  IntelligenceBonusPlansRoute: IntelligenceBonusPlansRoute,
+  IntelligenceBonusesRoute: IntelligenceBonusesRoute,
   IntelligenceCampaignsRoute: IntelligenceCampaignsRoute,
+  IntelligenceClientsRoute: IntelligenceClientsRoute,
+  IntelligenceConfidenceRoute: IntelligenceConfidenceRoute,
+  IntelligenceDepartmentsRoute: IntelligenceDepartmentsRoute,
+  IntelligenceForecastingRoute: IntelligenceForecastingRoute,
+  IntelligenceLeakageRoute: IntelligenceLeakageRoute,
   IntelligenceMarketingRoute: IntelligenceMarketingRoute,
   IntelligenceOverheadRoute: IntelligenceOverheadRoute,
   IntelligenceOverheadAnomaliesRoute: IntelligenceOverheadAnomaliesRoute,
+  IntelligenceProfitabilityRoute: IntelligenceProfitabilityRoute,
+  IntelligenceRecommendationsRoute: IntelligenceRecommendationsRoute,
+  IntelligenceServicesRoute: IntelligenceServicesRoute,
   IntelligenceTechRoute: IntelligenceTechRoute,
   IntelligenceTechPortfolioRoute: IntelligenceTechPortfolioRoute,
   LedgerAccountsRoute: LedgerAccountsRoute,

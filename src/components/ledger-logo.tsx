@@ -1,4 +1,4 @@
-import emblemAsset from "@/assets/ledgeros-emblem.png.asset.json";
+import emblemUrl from "@/assets/ledgeros-emblem.png";
 import fullLogoAsset from "@/assets/ledgeros-logo-full.png.asset.json";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,7 @@ export function LedgerLogo({
 
   const emblem = (
     <img
-      src={emblemAsset.url}
+      src={emblemUrl}
       alt=""
       aria-hidden
       width={emblemSize}

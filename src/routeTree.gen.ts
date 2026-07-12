@@ -22,6 +22,7 @@ import { Route as CashAvailabilityRouteImport } from './routes/cash-availability
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
@@ -102,6 +103,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InvoicesRoute,
 } as any)
 const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
   id: '/',
@@ -189,7 +195,7 @@ export interface FileRoutesByFullPath {
   '/customers': typeof CustomersRoute
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
+  '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -209,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -218,7 +225,6 @@ export interface FileRoutesByTo {
   '/customers': typeof CustomersRoute
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -238,6 +244,7 @@ export interface FileRoutesByTo {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
+  '/invoices': typeof InvoicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -249,7 +256,7 @@ export interface FileRoutesById {
   '/customers': typeof CustomersRoute
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
+  '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -269,6 +276,7 @@ export interface FileRoutesById {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -301,6 +309,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -310,7 +319,6 @@ export interface FileRouteTypes {
     | '/customers'
     | '/expenses'
     | '/integrations'
-    | '/invoices'
     | '/payments'
     | '/reports'
     | '/settings'
@@ -330,6 +338,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking'
     | '/cash-availability'
+    | '/invoices'
   id:
     | '__root__'
     | '/'
@@ -360,6 +369,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/invoices/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -371,7 +381,7 @@ export interface RootRouteChildren {
   CustomersRoute: typeof CustomersRoute
   ExpensesRoute: typeof ExpensesRoute
   IntegrationsRoute: typeof IntegrationsRoute
-  InvoicesRoute: typeof InvoicesRoute
+  InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
@@ -482,6 +492,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/'
+      fullPath: '/invoices/'
+      preLoaderRoute: typeof InvoicesIndexRouteImport
+      parentRoute: typeof InvoicesRoute
     }
     '/cash-availability/': {
       id: '/cash-availability/'
@@ -606,6 +623,18 @@ const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
 const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
 
+interface InvoicesRouteChildren {
+  InvoicesIndexRoute: typeof InvoicesIndexRoute
+}
+
+const InvoicesRouteChildren: InvoicesRouteChildren = {
+  InvoicesIndexRoute: InvoicesIndexRoute,
+}
+
+const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
+  InvoicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuditRoute: AuditRoute,
@@ -615,7 +644,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomersRoute: CustomersRoute,
   ExpensesRoute: ExpensesRoute,
   IntegrationsRoute: IntegrationsRoute,
-  InvoicesRoute: InvoicesRoute,
+  InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,

@@ -2,22 +2,38 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   Area,
   AreaChart,
-  Bar,
-  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
-import { Banknote, TrendingUp, Wallet, Sparkles, ArrowRight, ShieldAlert, CheckCircle2, Info } from "lucide-react";
+import {
+  DollarSign,
+  LineChart as LineChartIcon,
+  PieChart as PieChartIcon,
+  Wallet,
+  ChevronDown,
+  MoreVertical,
+  FileText,
+  Receipt,
+  NotebookPen,
+  Landmark,
+  CreditCard,
+  ArrowLeftRight,
+  ChevronRight,
+  Calendar,
+  ArrowUp,
+  AlertTriangle,
+  AlertCircle,
+} from "lucide-react";
 import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { KpiCard } from "@/components/kpi-card";
-import { StatusBadge } from "@/components/status-badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -28,53 +44,69 @@ import {
 } from "@/components/ui/table";
 import {
   KPIS,
-  CASH_SERIES,
-  AR_AGING,
-  AP_AGING,
+  FIN_OVERVIEW,
+  CASH_FLOW,
   RECENT_TRANSACTIONS,
-  CLOSE_TASKS,
-  INTEGRATION_EVENTS,
+  INTEGRATION_INBOX,
   ALERTS,
   currency,
   currencyPrecise,
+  type TxnType,
 } from "@/lib/mock/finance";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Executive Dashboard — LedgerOS" },
+      { title: "Dashboard — LedgerOS" },
       {
         name: "description",
         content:
-          "LedgerOS executive dashboard: cash position, revenue, expenses, AR/AP aging, close status, and integration health.",
+          "LedgerOS executive dashboard — revenue, profit, cash balance, financial overview, cash flow, and recent transactions.",
       },
       { property: "og:title", content: "LedgerOS — Executive Dashboard" },
       {
         property: "og:description",
-        content: "Fortune-500-grade financial operating system for CCA leadership.",
+        content: "Fortune-500-grade financial operating system for modern accounting teams.",
       },
     ],
   }),
   component: ExecutiveDashboard,
 });
 
-const kpiIcons = [Wallet, TrendingUp, Banknote, Sparkles];
+const kpiVisuals = [
+  { icon: DollarSign, tone: "blue" as const },
+  { icon: LineChartIcon, tone: "cyan" as const },
+  { icon: PieChartIcon, tone: "violet" as const },
+  { icon: Wallet, tone: "mint" as const },
+];
+
+const quickActions = [
+  { label: "New Invoice", icon: FileText },
+  { label: "New Bill", icon: Receipt },
+  { label: "New Journal Entry", icon: NotebookPen },
+  { label: "Bank Reconciliation", icon: Landmark },
+  { label: "Record Payment", icon: CreditCard },
+  { label: "Transfer Funds", icon: ArrowLeftRight },
+];
 
 function ExecutiveDashboard() {
   return (
     <AppShell>
       <PageHeader
-        eyebrow="Executive Overview · August 2026"
-        title="Good afternoon, Morgan"
-        description="A calm, verified view of company-wide financial health. All figures are demonstration data for design review."
+        title="Welcome back, Rose 👋"
+        highlight="Rose"
+        description="Here's what's happening with your finances today."
         actions={
           <>
-            <Button variant="outline" className="gap-2">
-              This month <ArrowRight className="h-3.5 w-3.5" />
-            </Button>
-            <Button className="gap-2 bg-gradient-brand text-brand-foreground shadow-glow hover:opacity-95">
-              Generate report
-            </Button>
+            <button
+              type="button"
+              className="hidden h-10 items-center gap-2 rounded-xl border border-border/70 bg-surface px-3 text-[13px] font-medium text-foreground shadow-card sm:inline-flex"
+            >
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+              This Month
+              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+            </button>
           </>
         }
       />
@@ -89,225 +121,22 @@ function ExecutiveDashboard() {
               value={k.value}
               delta={k.delta}
               trend={k.trend}
-              icon={kpiIcons[i]}
+              icon={kpiVisuals[i].icon}
+              tone={kpiVisuals[i].tone}
+              sparkline={k.spark}
             />
           ))}
         </section>
 
-        {/* Cash + alerts */}
-        <section className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <Card className="overflow-hidden border-border/60 p-0 shadow-elegant">
-            <div className="flex items-start justify-between gap-3 border-b border-border/60 p-5">
-              <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  Cash & operating flow
-                </div>
-                <div className="mt-1 text-lg font-semibold">Trailing 8 months</div>
-              </div>
-              <div className="flex items-center gap-1.5">
-                {[
-                  { k: "cash", label: "Cash", cls: "bg-brand" },
-                  { k: "revenue", label: "Revenue", cls: "bg-brand-cyan" },
-                  { k: "expenses", label: "Expenses", cls: "bg-brand-violet" },
-                ].map((l) => (
-                  <Badge key={l.k} variant="outline" className="gap-1.5 border-border/60 font-medium">
-                    <span className={`h-2 w-2 rounded-full ${l.cls}`} />
-                    {l.label}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            <div className="h-[280px] w-full p-2">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={CASH_SERIES} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
-                  <defs>
-                    <linearGradient id="cashGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="var(--brand)" stopOpacity={0.35} />
-                      <stop offset="100%" stopColor="var(--brand)" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="var(--brand-cyan)" stopOpacity={0.25} />
-                      <stop offset="100%" stopColor="var(--brand-cyan)" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="m" stroke="var(--muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
-                  <YAxis
-                    stroke="var(--muted-foreground)"
-                    fontSize={11}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(v) => `$${(v / 1_000_000).toFixed(1)}M`}
-                    width={48}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: 10,
-                      fontSize: 12,
-                    }}
-                    formatter={(v: number) => currency(v)}
-                  />
-                  <Area type="monotone" dataKey="revenue" stroke="var(--brand-cyan)" fill="url(#revGrad)" strokeWidth={2} />
-                  <Area type="monotone" dataKey="cash" stroke="var(--brand)" fill="url(#cashGrad)" strokeWidth={2.5} />
-                  <Area type="monotone" dataKey="expenses" stroke="var(--brand-violet)" fillOpacity={0} strokeWidth={2} />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </Card>
-
-          <Card className="border-border/60 p-5 shadow-elegant">
-            <div className="mb-3 flex items-center justify-between">
-              <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  System signals
-                </div>
-                <div className="text-lg font-semibold">Alerts & health</div>
-              </div>
-              <Badge variant="outline" className="border-success/30 bg-success/10 text-success">
-                All feeds live
-              </Badge>
-            </div>
-            <div className="space-y-2.5">
-              {ALERTS.map((a) => {
-                const Icon =
-                  a.severity === "warning" ? ShieldAlert : a.severity === "success" ? CheckCircle2 : Info;
-                const tone =
-                  a.severity === "warning"
-                    ? "bg-warning/10 text-warning ring-warning/20"
-                    : a.severity === "success"
-                      ? "bg-success/10 text-success ring-success/20"
-                      : "bg-info/10 text-info ring-info/20";
-                return (
-                  <div
-                    key={a.title}
-                    className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/50 p-3"
-                  >
-                    <div className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ring-1 ${tone}`}>
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-sm font-medium leading-tight">{a.title}</div>
-                      <div className="mt-0.5 text-xs text-muted-foreground">{a.detail}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
+        {/* Main analytics row: Financial Overview | Cash Flow | Utility column */}
+        <section className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
+          <FinancialOverviewCard />
+          <CashFlowCard />
+          <UtilityColumn />
         </section>
 
-        {/* Aging */}
-        <section className="grid gap-4 lg:grid-cols-2">
-          <AgingCard title="Accounts receivable aging" data={AR_AGING} color="var(--brand)" />
-          <AgingCard title="Accounts payable aging" data={AP_AGING} color="var(--brand-violet)" />
-        </section>
-
-        {/* Transactions + close + integrations */}
-        <section className="grid gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <Card className="border-border/60 p-0 shadow-elegant">
-            <div className="flex items-center justify-between border-b border-border/60 p-5">
-              <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  Banking · Live feed
-                </div>
-                <div className="text-lg font-semibold">Recent transactions</div>
-              </div>
-              <Button variant="ghost" size="sm" className="gap-1">
-                Open banking <ArrowRight className="h-3.5 w-3.5" />
-              </Button>
-            </div>
-            <Table>
-              <TableHeader>
-                <TableRow className="border-border/60 hover:bg-transparent">
-                  <TableHead className="text-[11px] uppercase tracking-wider">Description</TableHead>
-                  <TableHead className="text-[11px] uppercase tracking-wider">Account</TableHead>
-                  <TableHead className="text-[11px] uppercase tracking-wider">Date</TableHead>
-                  <TableHead className="text-right text-[11px] uppercase tracking-wider">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {RECENT_TRANSACTIONS.map((t) => (
-                  <TableRow key={t.id} className="border-border/60">
-                    <TableCell>
-                      <div className="font-medium">{t.desc}</div>
-                      <div className="text-xs text-muted-foreground">{t.id}</div>
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{t.account}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{t.date}</TableCell>
-                    <TableCell
-                      className={`text-right font-tabular font-semibold ${
-                        t.kind === "in" ? "text-success" : "text-foreground"
-                      }`}
-                    >
-                      {t.kind === "in" ? "+" : ""}
-                      {currencyPrecise(t.amount)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-
-          <div className="space-y-4">
-            <Card className="border-border/60 p-5 shadow-elegant">
-              <div className="mb-3 flex items-center justify-between">
-                <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Monthly close · July
-                  </div>
-                  <div className="text-lg font-semibold">Close progress</div>
-                </div>
-                <Badge variant="outline" className="border-brand/30 bg-brand/10 text-brand">
-                  Day 6 of 10
-                </Badge>
-              </div>
-              <div className="space-y-2.5">
-                {CLOSE_TASKS.slice(0, 5).map((t) => (
-                  <div
-                    key={t.task}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-background/40 p-2.5"
-                  >
-                    <div className="min-w-0">
-                      <div className="truncate text-sm font-medium">{t.task}</div>
-                      <div className="text-[11px] text-muted-foreground">{t.owner}</div>
-                    </div>
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    <StatusBadge status={t.status as any} />
-                  </div>
-                ))}
-              </div>
-              <Separator className="my-4" />
-              <Button variant="outline" size="sm" className="w-full gap-2">
-                Open monthly close <ArrowRight className="h-3.5 w-3.5" />
-              </Button>
-            </Card>
-
-            <Card className="border-border/60 p-5 shadow-elegant">
-              <div className="mb-3">
-                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  Integration inbox
-                </div>
-                <div className="text-lg font-semibold">Recent events</div>
-              </div>
-              <div className="space-y-2">
-                {INTEGRATION_EVENTS.map((e) => (
-                  <div key={e.event + e.when} className="flex items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <div className="truncate text-sm font-medium">{e.event}</div>
-                      <div className="text-[11px] text-muted-foreground">
-                        {e.source} · {e.when}
-                      </div>
-                    </div>
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    <StatusBadge status={e.status as any} />
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-        </section>
+        {/* Recent Transactions full width */}
+        <RecentTransactionsCard />
 
         <p className="pt-2 text-center text-[11px] text-muted-foreground">
           LedgerOS UI Design Lab — All values are demonstration data. No accounting records were created or modified.
@@ -317,58 +146,390 @@ function ExecutiveDashboard() {
   );
 }
 
-function AgingCard({
-  title,
-  data,
-  color,
-}: {
-  title: string;
-  data: { bucket: string; value: number }[];
-  color: string;
-}) {
-  const total = data.reduce((s, r) => s + r.value, 0);
+function FinancialOverviewCard() {
   return (
-    <Card className="border-border/60 p-5 shadow-elegant">
-      <div className="mb-3 flex items-end justify-between">
+    <Card className="border border-border/70 bg-surface p-5 shadow-card">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            {title}
-          </div>
-          <div className="mt-1 font-tabular text-2xl font-semibold tracking-tight">
-            {currency(total)}
+          <div className="text-[15.5px] font-semibold text-foreground">Financial Overview</div>
+          <div className="mt-2.5 flex items-center gap-4 text-[12.5px]">
+            <LegendDot color="#3b82f6" label="Revenue" />
+            <LegendDot color="#22d3ee" label="Expenses" />
+            <LegendDot color="#8b5cf6" label="Net Profit" />
           </div>
         </div>
-        <Badge variant="outline" className="border-border/60">
-          {data.length} buckets
-        </Badge>
+        <button
+          type="button"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border/70 bg-surface px-3 text-[12.5px] font-medium text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+        >
+          This Year <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+        </button>
       </div>
-      <div className="h-[180px] w-full">
+
+      <div className="mt-4 h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
-            <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="bucket" stroke="var(--muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
-            <YAxis
-              stroke="var(--muted-foreground)"
+          <AreaChart data={FIN_OVERVIEW} margin={{ top: 10, right: 8, bottom: 0, left: -8 }}>
+            <defs>
+              <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.22} />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="exp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.18} />
+                <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="nnet" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.18} />
+                <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid stroke="#E5EAF1" strokeDasharray="3 3" vertical={false} />
+            <XAxis
+              dataKey="m"
+              stroke="#94A3B8"
               fontSize={11}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
-              width={40}
+              dy={4}
+            />
+            <YAxis
+              stroke="#94A3B8"
+              fontSize={11}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(v) => (v === 0 ? "$0" : `$${(v / 1000).toFixed(0)}K`)}
+              width={56}
             />
             <Tooltip
               contentStyle={{
-                background: "var(--popover)",
-                border: "1px solid var(--border)",
+                background: "white",
+                border: "1px solid #E5EAF1",
                 borderRadius: 10,
                 fontSize: 12,
+                boxShadow: "0 8px 24px -8px rgba(15,23,42,0.15)",
               }}
               formatter={(v: number) => currency(v)}
-              cursor={{ fill: "var(--muted)" }}
             />
-            <Bar dataKey="value" fill={color} radius={[6, 6, 0, 0]} />
-          </BarChart>
+            <Area
+              type="monotone"
+              dataKey="revenue"
+              stroke="#3b82f6"
+              strokeWidth={2.25}
+              fill="url(#rev)"
+              dot={{ r: 3, strokeWidth: 2, stroke: "#3b82f6", fill: "#fff" }}
+              activeDot={{ r: 5 }}
+            />
+            <Area
+              type="monotone"
+              dataKey="expenses"
+              stroke="#22d3ee"
+              strokeWidth={2.25}
+              fill="url(#exp)"
+              dot={{ r: 3, strokeWidth: 2, stroke: "#22d3ee", fill: "#fff" }}
+              activeDot={{ r: 5 }}
+            />
+            <Area
+              type="monotone"
+              dataKey="net"
+              stroke="#8b5cf6"
+              strokeWidth={2.25}
+              fill="url(#nnet)"
+              dot={{ r: 3, strokeWidth: 2, stroke: "#8b5cf6", fill: "#fff" }}
+              activeDot={{ r: 5 }}
+            />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </Card>
   );
 }
+
+function CashFlowCard() {
+  const total = CASH_FLOW.reduce((s, r) => s + r.value, 0);
+  return (
+    <Card className="flex flex-col border border-border/70 bg-surface p-5 shadow-card">
+      <div className="text-[15.5px] font-semibold text-foreground">Cash Flow Summary</div>
+
+      <div className="mt-2 grid flex-1 grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] items-center gap-3">
+        <div className="relative h-[190px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={CASH_FLOW}
+                dataKey="value"
+                innerRadius="66%"
+                outerRadius="96%"
+                paddingAngle={2}
+                stroke="none"
+              >
+                {CASH_FLOW.map((s) => (
+                  <Cell key={s.name} fill={s.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+            <div>
+              <div className="font-tabular text-[19px] font-bold tracking-tight text-foreground">
+                {currency(total)}
+              </div>
+              <div className="text-[10.5px] text-muted-foreground">Total Cash</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-2.5">
+          {CASH_FLOW.map((s) => (
+            <div key={s.name} className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span
+                  className="inline-block h-2 w-2 rounded-full"
+                  style={{ background: s.color }}
+                />
+                <span className="text-[12.5px] font-medium text-foreground">{s.name}</span>
+              </div>
+              <div className="mt-0.5 flex items-baseline justify-between gap-2 pl-3.5">
+                <span className="font-tabular text-[13px] font-semibold text-foreground">
+                  {currency(s.value)}
+                </span>
+                <span className="text-[11px] text-muted-foreground">{s.pct}%</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-success" />
+          Updated just now
+        </div>
+        <Button variant="outline" size="sm" className="h-8 rounded-lg border-border/70 text-[12px]">
+          View Report
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
+function UtilityColumn() {
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Quick Actions — dark navy card matching reference */}
+      <Card className="overflow-hidden border-0 bg-gradient-quick-actions p-4 text-white shadow-[0_10px_28px_-12px_rgba(15,23,42,0.55)]">
+        <div className="mb-2.5 text-[14.5px] font-semibold">Quick Actions</div>
+        <div className="divide-y divide-white/8">
+          {quickActions.map((a) => {
+            const Icon = a.icon;
+            return (
+              <button
+                key={a.label}
+                type="button"
+                className="group flex w-full items-center gap-2.5 py-2 text-left transition"
+              >
+                <Icon className="h-4 w-4 text-white/70 group-hover:text-white" />
+                <span className="text-[13px] font-medium text-white/90 group-hover:text-white">
+                  {a.label}
+                </span>
+                <ChevronRight className="ml-auto h-3.5 w-3.5 text-white/40 transition group-hover:translate-x-0.5 group-hover:text-white/80" />
+              </button>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* Integration Inbox */}
+      <Card className="border border-border/70 bg-surface p-4 shadow-card">
+        <div className="mb-2.5 flex items-center justify-between">
+          <div className="text-[14.5px] font-semibold text-foreground">Integration Inbox</div>
+          <span className="grid h-5 min-w-5 place-items-center rounded-full bg-brand/10 px-1.5 text-[10.5px] font-semibold text-brand">
+            {INTEGRATION_INBOX.length}
+          </span>
+        </div>
+        <div className="space-y-2.5">
+          {INTEGRATION_INBOX.map((e) => (
+            <div key={e.event + e.date} className="flex items-center gap-2.5">
+              <div
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[11px] font-bold text-white"
+                style={{ background: e.color }}
+              >
+                {e.source[0]}
+              </div>
+              <div className="min-w-0 flex-1 leading-tight">
+                <div className="truncate text-[12.5px] font-semibold text-foreground">
+                  {e.event}{" "}
+                  <span className="ml-1 font-tabular font-semibold text-foreground">
+                    {currencyPrecise(e.amount)}
+                  </span>
+                </div>
+                <div className="truncate text-[10.5px] text-muted-foreground">{e.date}</div>
+              </div>
+              <button
+                type="button"
+                className="rounded-md border border-border/70 px-2 py-1 text-[11px] font-medium text-foreground/80 transition hover:bg-muted"
+              >
+                Review
+              </button>
+            </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="mt-3 flex w-full items-center justify-center gap-1 rounded-lg border border-transparent py-1.5 text-[12px] font-semibold text-brand hover:bg-brand/5"
+        >
+          View All <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </Card>
+
+      {/* Alerts */}
+      <Card className="border border-border/70 bg-surface p-4 shadow-card">
+        <div className="mb-2.5 flex items-center justify-between">
+          <div className="text-[14.5px] font-semibold text-foreground">Alerts</div>
+          <span className="grid h-5 min-w-5 place-items-center rounded-full bg-warning/15 px-1.5 text-[10.5px] font-semibold text-warning">
+            {ALERTS.length}
+          </span>
+        </div>
+        <div className="space-y-2.5">
+          {ALERTS.map((a) => {
+            const Icon = a.severity === "warning" ? AlertTriangle : AlertCircle;
+            const tone = a.severity === "warning" ? "text-warning bg-warning/10" : "text-brand bg-brand/10";
+            return (
+              <div key={a.title} className="flex items-start gap-2.5">
+                <div className={cn("grid h-8 w-8 shrink-0 place-items-center rounded-lg", tone)}>
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="min-w-0 flex-1 leading-tight">
+                  <div className="text-[12.5px] font-semibold text-foreground">{a.title}</div>
+                  <div className="mt-0.5 text-[10.5px] text-muted-foreground">{a.detail}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <button
+          type="button"
+          className="mt-3 flex w-full items-center justify-center gap-1 rounded-lg border border-transparent py-1.5 text-[12px] font-semibold text-brand hover:bg-brand/5"
+        >
+          View All Alerts <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </Card>
+    </div>
+  );
+}
+
+function RecentTransactionsCard() {
+  return (
+    <Card className="border border-border/70 bg-surface p-0 shadow-card">
+      <div className="flex items-center justify-between px-5 pb-3 pt-4">
+        <div className="text-[15.5px] font-semibold text-foreground">Recent Transactions</div>
+        <button
+          type="button"
+          className="text-[12.5px] font-semibold text-brand hover:underline"
+        >
+          View All
+        </button>
+      </div>
+      <Table>
+        <TableHeader>
+          <TableRow className="border-border hover:bg-transparent">
+            <TableHead className="pl-5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Date
+            </TableHead>
+            <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Type
+            </TableHead>
+            <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Description
+            </TableHead>
+            <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Account
+            </TableHead>
+            <TableHead className="text-right text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Amount
+            </TableHead>
+            <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Status
+            </TableHead>
+            <TableHead className="w-10 pr-4" />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {RECENT_TRANSACTIONS.map((t) => (
+            <TableRow key={t.id} className="border-border">
+              <TableCell className="whitespace-nowrap pl-5 font-tabular text-[13px] text-foreground/90">
+                {t.date}
+              </TableCell>
+              <TableCell>
+                <TypeChip type={t.type as TxnType} />
+              </TableCell>
+              <TableCell className="text-[13px] font-medium text-foreground">
+                {t.desc}
+              </TableCell>
+              <TableCell className="font-mono text-[12.5px] text-muted-foreground">
+                {t.account}
+              </TableCell>
+              <TableCell
+                className={cn(
+                  "text-right font-tabular text-[13px] font-semibold",
+                  t.kind === "in" ? "text-success" : "text-foreground",
+                )}
+              >
+                {t.kind === "in" ? "+" : ""}
+                {currencyPrecise(t.amount)}
+              </TableCell>
+              <TableCell>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2 py-0.5 text-[11.5px] font-semibold text-success">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                  Posted
+                </span>
+              </TableCell>
+              <TableCell className="pr-4">
+                <button
+                  type="button"
+                  aria-label="More"
+                  className="grid h-7 w-7 place-items-center rounded-md text-muted-foreground hover:bg-muted"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                </button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+}
+
+function LegendDot({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-muted-foreground">
+      <span className="inline-block h-2 w-2 rounded-full" style={{ background: color }} />
+      {label}
+    </span>
+  );
+}
+
+const typeChipStyles: Record<TxnType, string> = {
+  Invoice: "border-blue-300 bg-blue-50 text-blue-700",
+  Bill: "border-violet-300 bg-violet-50 text-violet-700",
+  Payment: "border-emerald-300 bg-emerald-50 text-emerald-700",
+  "Journal Entry": "border-amber-300 bg-amber-50 text-amber-700",
+  Refund: "border-rose-300 bg-rose-50 text-rose-700",
+  Transfer: "border-cyan-300 bg-cyan-50 text-cyan-700",
+};
+
+function TypeChip({ type }: { type: TxnType }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-md border px-2 py-0.5 text-[11.5px] font-semibold",
+        typeChipStyles[type] ?? "border-border bg-muted text-foreground",
+      )}
+    >
+      {type}
+    </span>
+  );
+}
+
+// Silence unused-import for icons re-exported for banking pages
+void ArrowUp;

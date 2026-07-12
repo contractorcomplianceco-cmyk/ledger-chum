@@ -654,5 +654,3 @@ function ApproverRow({ name, role, required }: { name: string; role: string; req
   );
 }
 
-// Type-only re-export to keep imports co-located; kept intentionally quiet.
-export type _Tx = Tx;

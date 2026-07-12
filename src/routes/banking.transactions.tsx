@@ -57,7 +57,7 @@ function TransactionReview() {
         return false;
       switch (view) {
         case "needs_review":
-          return tx.status === "pending_review" || tx.status === "needs_review" as never;
+          return tx.status === "pending_review";
         case "unmatched":
           return !tx.suggestedMatch && tx.status !== "matched" && tx.status !== "reconciled" && tx.status !== "transfer";
         case "missing_receipt":

@@ -153,7 +153,7 @@ function InvoiceDetailPage() {
             </div>
             <div className="mt-2 text-[12.5px] text-muted-foreground">{lk.label}</div>
             <ul className="mt-3 space-y-1.5 text-[12.5px]">
-              {inv.likelihoodReasons.map((r, i) => (
+              {inv.likelihoodReasons.map((r: string, i: number) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-foreground/40" />
                   <span className="text-foreground/80">{r}</span>

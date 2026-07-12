@@ -16,6 +16,7 @@ import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as InvoicesRouteImport } from './routes/invoices'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as EstimatesRouteImport } from './routes/estimates'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
@@ -34,9 +35,11 @@ import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurri
 import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
 import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
+import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
+import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
@@ -76,6 +79,11 @@ const IntegrationsRoute = IntegrationsRouteImport.update({
 const ExpensesRoute = ExpensesRouteImport.update({
   id: '/expenses',
   path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimatesRoute = EstimatesRouteImport.update({
+  id: '/estimates',
+  path: '/estimates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CustomersRoute = CustomersRouteImport.update({
@@ -168,6 +176,11 @@ const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
   path: '/$invoiceId',
   getParentRoute: () => InvoicesRoute,
 } as any)
+const EstimatesNewRoute = EstimatesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => EstimatesRoute,
+} as any)
 const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
   id: '/dashboards/team',
   path: '/dashboards/team',
@@ -182,6 +195,11 @@ const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
   id: '/dashboards/accounting',
   path: '/dashboards/accounting',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
+  id: '/$customerId',
+  path: '/$customerId',
+  getParentRoute: () => CustomersRoute,
 } as any)
 const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
   id: '/rules',
@@ -216,7 +234,8 @@ export interface FileRoutesByFullPath {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
   '/invoices': typeof InvoicesRouteWithChildren
@@ -229,9 +248,11 @@ export interface FileRoutesByFullPath {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -250,7 +271,8 @@ export interface FileRoutesByTo {
   '/audit': typeof AuditRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
   '/payments': typeof PaymentsRoute
@@ -262,9 +284,11 @@ export interface FileRoutesByTo {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -285,7 +309,8 @@ export interface FileRoutesById {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
   '/invoices': typeof InvoicesRouteWithChildren
@@ -298,9 +323,11 @@ export interface FileRoutesById {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
@@ -323,6 +350,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
     | '/invoices'
@@ -335,9 +363,11 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -357,6 +387,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
     | '/payments'
@@ -368,9 +399,11 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -391,6 +424,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
     | '/invoices'
@@ -403,9 +437,11 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
     | '/invoices/$invoiceId'
     | '/invoices/credit-notes'
     | '/invoices/new'
@@ -426,7 +462,8 @@ export interface RootRouteChildren {
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
-  CustomersRoute: typeof CustomersRoute
+  CustomersRoute: typeof CustomersRouteWithChildren
+  EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRoute
   IntegrationsRoute: typeof IntegrationsRoute
   InvoicesRoute: typeof InvoicesRouteWithChildren
@@ -497,6 +534,13 @@ declare module '@tanstack/react-router' {
       path: '/expenses'
       fullPath: '/expenses'
       preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimates': {
+      id: '/estimates'
+      path: '/estimates'
+      fullPath: '/estimates'
+      preLoaderRoute: typeof EstimatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/customers': {
@@ -625,6 +669,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
       parentRoute: typeof InvoicesRoute
     }
+    '/estimates/new': {
+      id: '/estimates/new'
+      path: '/new'
+      fullPath: '/estimates/new'
+      preLoaderRoute: typeof EstimatesNewRouteImport
+      parentRoute: typeof EstimatesRoute
+    }
     '/dashboards/team': {
       id: '/dashboards/team'
       path: '/dashboards/team'
@@ -645,6 +696,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboards/accounting'
       preLoaderRoute: typeof DashboardsAccountingRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/customers/$customerId': {
+      id: '/customers/$customerId'
+      path: '/$customerId'
+      fullPath: '/customers/$customerId'
+      preLoaderRoute: typeof CustomersCustomerIdRouteImport
+      parentRoute: typeof CustomersRoute
     }
     '/cash-availability/rules': {
       id: '/cash-availability/rules'
@@ -699,6 +757,30 @@ const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
 const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
 
+interface CustomersRouteChildren {
+  CustomersCustomerIdRoute: typeof CustomersCustomerIdRoute
+}
+
+const CustomersRouteChildren: CustomersRouteChildren = {
+  CustomersCustomerIdRoute: CustomersCustomerIdRoute,
+}
+
+const CustomersRouteWithChildren = CustomersRoute._addFileChildren(
+  CustomersRouteChildren,
+)
+
+interface EstimatesRouteChildren {
+  EstimatesNewRoute: typeof EstimatesNewRoute
+}
+
+const EstimatesRouteChildren: EstimatesRouteChildren = {
+  EstimatesNewRoute: EstimatesNewRoute,
+}
+
+const EstimatesRouteWithChildren = EstimatesRoute._addFileChildren(
+  EstimatesRouteChildren,
+)
+
 interface InvoicesRouteChildren {
   InvoicesInvoiceIdRoute: typeof InvoicesInvoiceIdRoute
   InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
@@ -725,7 +807,8 @@ const rootRouteChildren: RootRouteChildren = {
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
-  CustomersRoute: CustomersRoute,
+  CustomersRoute: CustomersRouteWithChildren,
+  EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRoute,
   IntegrationsRoute: IntegrationsRoute,
   InvoicesRoute: InvoicesRouteWithChildren,

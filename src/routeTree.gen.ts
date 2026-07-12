@@ -30,6 +30,10 @@ import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migra
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
+import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
+import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
+import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
@@ -144,6 +148,26 @@ const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
   path: '/ledger/accounts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
+  id: '/recurring',
+  path: '/recurring',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesNewRoute = InvoicesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesCreditNotesRoute = InvoicesCreditNotesRouteImport.update({
+  id: '/credit-notes',
+  path: '/credit-notes',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
+  id: '/$invoiceId',
+  path: '/$invoiceId',
+  getParentRoute: () => InvoicesRoute,
+} as any)
 const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
   id: '/dashboards/team',
   path: '/dashboards/team',
@@ -208,6 +232,10 @@ export interface FileRoutesByFullPath {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -237,6 +265,10 @@ export interface FileRoutesByTo {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -269,6 +301,10 @@ export interface FileRoutesById {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -302,6 +338,10 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -331,6 +371,10 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -362,6 +406,10 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -549,6 +597,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LedgerAccountsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invoices/recurring': {
+      id: '/invoices/recurring'
+      path: '/recurring'
+      fullPath: '/invoices/recurring'
+      preLoaderRoute: typeof InvoicesRecurringRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/new': {
+      id: '/invoices/new'
+      path: '/new'
+      fullPath: '/invoices/new'
+      preLoaderRoute: typeof InvoicesNewRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/credit-notes': {
+      id: '/invoices/credit-notes'
+      path: '/credit-notes'
+      fullPath: '/invoices/credit-notes'
+      preLoaderRoute: typeof InvoicesCreditNotesRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/$invoiceId': {
+      id: '/invoices/$invoiceId'
+      path: '/$invoiceId'
+      fullPath: '/invoices/$invoiceId'
+      preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
     '/dashboards/team': {
       id: '/dashboards/team'
       path: '/dashboards/team'
@@ -624,10 +700,18 @@ const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
 
 interface InvoicesRouteChildren {
+  InvoicesInvoiceIdRoute: typeof InvoicesInvoiceIdRoute
+  InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
+  InvoicesNewRoute: typeof InvoicesNewRoute
+  InvoicesRecurringRoute: typeof InvoicesRecurringRoute
   InvoicesIndexRoute: typeof InvoicesIndexRoute
 }
 
 const InvoicesRouteChildren: InvoicesRouteChildren = {
+  InvoicesInvoiceIdRoute: InvoicesInvoiceIdRoute,
+  InvoicesCreditNotesRoute: InvoicesCreditNotesRoute,
+  InvoicesNewRoute: InvoicesNewRoute,
+  InvoicesRecurringRoute: InvoicesRecurringRoute,
   InvoicesIndexRoute: InvoicesIndexRoute,
 }
 

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AllocationPreviewCard } from "@/components/invoicing/allocation-preview-card";
@@ -7,8 +7,16 @@ import { InvoiceTimeline } from "@/components/invoicing/invoice-timeline";
 import { InvoiceStatusBadge } from "@/components/invoicing/invoice-status-badge";
 import { PaymentLikelihoodChip } from "@/components/invoicing/payment-likelihood-chip";
 import { TreatmentBadge } from "@/components/cash/treatment-badge";
-import { CUSTOMERS, INVOICES, computeInvoice, LIKELIHOOD_META } from "@/lib/mock/invoicing";
-import { TREATMENT_META } from "@/lib/mock/cash-availability";
+import {
+  CUSTOMERS,
+  INVOICES,
+  computeInvoice,
+  LIKELIHOOD_META,
+  type Invoice,
+  type InvoiceLine,
+  type PaymentLikelihood,
+} from "@/lib/mock/invoicing";
+import { TREATMENT_META, type Treatment } from "@/lib/mock/cash-availability";
 import { currencyPrecise } from "@/lib/mock/finance";
 import { ArrowLeft, Paperclip, Send, Download, MessageSquare, Sparkles } from "lucide-react";
 
@@ -19,24 +27,6 @@ export const Route = createFileRoute("/invoices/$invoiceId")({
       { name: "description", content: "Invoice detail with allocation, margin, and payment intelligence." },
     ],
   }),
-  loader: ({ params }) => {
-    const invoice = INVOICES.find((i) => i.id === params.invoiceId);
-    if (!invoice) throw notFound();
-    const customer = CUSTOMERS.find((c) => c.id === invoice.customerId);
-    return { invoice, customer };
-  },
-  errorComponent: () => (
-    <div className="p-8 text-sm text-muted-foreground">Something went wrong loading this invoice.</div>
-  ),
-  notFoundComponent: () => (
-    <div className="p-8">
-      <div className="text-lg font-semibold">Invoice not found</div>
-      <p className="mt-1 text-sm text-muted-foreground">This invoice may have been deleted or the link is out of date.</p>
-      <Button asChild variant="outline" size="sm" className="mt-3">
-        <Link to="/invoices"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices</Link>
-      </Button>
-    </div>
-  ),
   component: InvoiceDetailPage,
 });
 

@@ -24,11 +24,11 @@ export const Route = createFileRoute("/cash-availability")({
   component: CashAvailabilityLayout,
 });
 
-const TABS = [
+const TABS: Array<{ to: string; label: string; exact?: boolean }> = [
   { to: "/cash-availability", label: "Overview", exact: true },
   { to: "/cash-availability/allocations", label: "Allocations" },
   { to: "/cash-availability/rules", label: "Treatment rules" },
-] as const;
+];
 
 function CashAvailabilityLayout() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });

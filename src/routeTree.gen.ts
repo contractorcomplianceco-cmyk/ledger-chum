@@ -18,9 +18,11 @@ import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CloseRouteImport } from './routes/close'
+import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
@@ -30,6 +32,8 @@ import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
+import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
+import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
 import { Route as BankingReconciliationRouteImport } from './routes/banking.reconciliation'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
@@ -79,6 +83,11 @@ const CloseRoute = CloseRouteImport.update({
   path: '/close',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CashAvailabilityRoute = CashAvailabilityRouteImport.update({
+  id: '/cash-availability',
+  path: '/cash-availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BillsRoute = BillsRouteImport.update({
   id: '/bills',
   path: '/bills',
@@ -93,6 +102,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CashAvailabilityRoute,
 } as any)
 const BankingIndexRoute = BankingIndexRouteImport.update({
   id: '/banking/',
@@ -139,6 +153,17 @@ const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
   path: '/dashboards/accounting',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => CashAvailabilityRoute,
+} as any)
+const CashAvailabilityAllocationsRoute =
+  CashAvailabilityAllocationsRouteImport.update({
+    id: '/allocations',
+    path: '/allocations',
+    getParentRoute: () => CashAvailabilityRoute,
+  } as any)
 const BankingTransactionsRoute = BankingTransactionsRouteImport.update({
   id: '/banking/transactions',
   path: '/banking/transactions',
@@ -159,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/bills': typeof BillsRoute
+  '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRoute
   '/expenses': typeof ExpensesRoute
@@ -171,6 +197,8 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
+  '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
+  '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
@@ -180,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
+  '/cash-availability/': typeof CashAvailabilityIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -197,6 +226,8 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
+  '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
+  '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
@@ -206,12 +237,14 @@ export interface FileRoutesByTo {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking': typeof BankingIndexRoute
+  '/cash-availability': typeof CashAvailabilityIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/bills': typeof BillsRoute
+  '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRoute
   '/expenses': typeof ExpensesRoute
@@ -224,6 +257,8 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
+  '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
+  '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
@@ -233,6 +268,7 @@ export interface FileRoutesById {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
+  '/cash-availability/': typeof CashAvailabilityIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -240,6 +276,7 @@ export interface FileRouteTypes {
     | '/'
     | '/audit'
     | '/bills'
+    | '/cash-availability'
     | '/close'
     | '/customers'
     | '/expenses'
@@ -252,6 +289,8 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/banking/reconciliation'
     | '/banking/transactions'
+    | '/cash-availability/allocations'
+    | '/cash-availability/rules'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
@@ -261,6 +300,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/banking/'
+    | '/cash-availability/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -278,6 +318,8 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/banking/reconciliation'
     | '/banking/transactions'
+    | '/cash-availability/allocations'
+    | '/cash-availability/rules'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
@@ -287,11 +329,13 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/banking'
+    | '/cash-availability'
   id:
     | '__root__'
     | '/'
     | '/audit'
     | '/bills'
+    | '/cash-availability'
     | '/close'
     | '/customers'
     | '/expenses'
@@ -304,6 +348,8 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/banking/reconciliation'
     | '/banking/transactions'
+    | '/cash-availability/allocations'
+    | '/cash-availability/rules'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
@@ -313,12 +359,14 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/banking/'
+    | '/cash-availability/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuditRoute: typeof AuditRoute
   BillsRoute: typeof BillsRoute
+  CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
   CustomersRoute: typeof CustomersRoute
   ExpensesRoute: typeof ExpensesRoute
@@ -407,6 +455,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CloseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cash-availability': {
+      id: '/cash-availability'
+      path: '/cash-availability'
+      fullPath: '/cash-availability'
+      preLoaderRoute: typeof CashAvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bills': {
       id: '/bills'
       path: '/bills'
@@ -427,6 +482,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/cash-availability/': {
+      id: '/cash-availability/'
+      path: '/'
+      fullPath: '/cash-availability/'
+      preLoaderRoute: typeof CashAvailabilityIndexRouteImport
+      parentRoute: typeof CashAvailabilityRoute
     }
     '/banking/': {
       id: '/banking/'
@@ -491,6 +553,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardsAccountingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cash-availability/rules': {
+      id: '/cash-availability/rules'
+      path: '/rules'
+      fullPath: '/cash-availability/rules'
+      preLoaderRoute: typeof CashAvailabilityRulesRouteImport
+      parentRoute: typeof CashAvailabilityRoute
+    }
+    '/cash-availability/allocations': {
+      id: '/cash-availability/allocations'
+      path: '/allocations'
+      fullPath: '/cash-availability/allocations'
+      preLoaderRoute: typeof CashAvailabilityAllocationsRouteImport
+      parentRoute: typeof CashAvailabilityRoute
+    }
     '/banking/transactions': {
       id: '/banking/transactions'
       path: '/banking/transactions'
@@ -515,10 +591,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CashAvailabilityRouteChildren {
+  CashAvailabilityAllocationsRoute: typeof CashAvailabilityAllocationsRoute
+  CashAvailabilityRulesRoute: typeof CashAvailabilityRulesRoute
+  CashAvailabilityIndexRoute: typeof CashAvailabilityIndexRoute
+}
+
+const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
+  CashAvailabilityAllocationsRoute: CashAvailabilityAllocationsRoute,
+  CashAvailabilityRulesRoute: CashAvailabilityRulesRoute,
+  CashAvailabilityIndexRoute: CashAvailabilityIndexRoute,
+}
+
+const CashAvailabilityRouteWithChildren =
+  CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuditRoute: AuditRoute,
   BillsRoute: BillsRoute,
+  CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
   CustomersRoute: CustomersRoute,
   ExpensesRoute: ExpensesRoute,

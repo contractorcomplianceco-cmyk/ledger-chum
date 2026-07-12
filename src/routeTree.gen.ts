@@ -16,12 +16,14 @@ import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as InvoicesRouteImport } from './routes/invoices'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as EstimatesRouteImport } from './routes/estimates'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
@@ -29,9 +31,15 @@ import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migra
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
+import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
+import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
+import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
+import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
+import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
@@ -73,6 +81,11 @@ const ExpensesRoute = ExpensesRouteImport.update({
   path: '/expenses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EstimatesRoute = EstimatesRouteImport.update({
+  id: '/estimates',
+  path: '/estimates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CustomersRoute = CustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
@@ -102,6 +115,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InvoicesRoute,
 } as any)
 const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
   id: '/',
@@ -138,6 +156,31 @@ const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
   path: '/ledger/accounts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
+  id: '/recurring',
+  path: '/recurring',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesNewRoute = InvoicesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesCreditNotesRoute = InvoicesCreditNotesRouteImport.update({
+  id: '/credit-notes',
+  path: '/credit-notes',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
+  id: '/$invoiceId',
+  path: '/$invoiceId',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const EstimatesNewRoute = EstimatesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => EstimatesRoute,
+} as any)
 const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
   id: '/dashboards/team',
   path: '/dashboards/team',
@@ -152,6 +195,11 @@ const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
   id: '/dashboards/accounting',
   path: '/dashboards/accounting',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
+  id: '/$customerId',
+  path: '/$customerId',
+  getParentRoute: () => CustomersRoute,
 } as any)
 const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
   id: '/rules',
@@ -186,10 +234,11 @@ export interface FileRoutesByFullPath {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
+  '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -199,9 +248,15 @@ export interface FileRoutesByFullPath {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -209,16 +264,17 @@ export interface FileRoutesByFullPath {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -228,9 +284,15 @@ export interface FileRoutesByTo {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -238,6 +300,7 @@ export interface FileRoutesByTo {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
+  '/invoices': typeof InvoicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -246,10 +309,11 @@ export interface FileRoutesById {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
-  '/customers': typeof CustomersRoute
+  '/customers': typeof CustomersRouteWithChildren
+  '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRoute
   '/integrations': typeof IntegrationsRoute
-  '/invoices': typeof InvoicesRoute
+  '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
@@ -259,9 +323,15 @@ export interface FileRoutesById {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/estimates/new': typeof EstimatesNewRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdRoute
+  '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/invoices/recurring': typeof InvoicesRecurringRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -269,6 +339,7 @@ export interface FileRoutesById {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -279,6 +350,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
     | '/invoices'
@@ -291,9 +363,15 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -301,6 +379,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -308,9 +387,9 @@ export interface FileRouteTypes {
     | '/bills'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
-    | '/invoices'
     | '/payments'
     | '/reports'
     | '/settings'
@@ -320,9 +399,15 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -330,6 +415,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking'
     | '/cash-availability'
+    | '/invoices'
   id:
     | '__root__'
     | '/'
@@ -338,6 +424,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/estimates'
     | '/expenses'
     | '/integrations'
     | '/invoices'
@@ -350,9 +437,15 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/estimates/new'
+    | '/invoices/$invoiceId'
+    | '/invoices/credit-notes'
+    | '/invoices/new'
+    | '/invoices/recurring'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -360,6 +453,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/invoices/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -368,10 +462,11 @@ export interface RootRouteChildren {
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
-  CustomersRoute: typeof CustomersRoute
+  CustomersRoute: typeof CustomersRouteWithChildren
+  EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRoute
   IntegrationsRoute: typeof IntegrationsRoute
-  InvoicesRoute: typeof InvoicesRoute
+  InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
@@ -441,6 +536,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/estimates': {
+      id: '/estimates'
+      path: '/estimates'
+      fullPath: '/estimates'
+      preLoaderRoute: typeof EstimatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customers': {
       id: '/customers'
       path: '/customers'
@@ -482,6 +584,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/'
+      fullPath: '/invoices/'
+      preLoaderRoute: typeof InvoicesIndexRouteImport
+      parentRoute: typeof InvoicesRoute
     }
     '/cash-availability/': {
       id: '/cash-availability/'
@@ -532,6 +641,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LedgerAccountsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invoices/recurring': {
+      id: '/invoices/recurring'
+      path: '/recurring'
+      fullPath: '/invoices/recurring'
+      preLoaderRoute: typeof InvoicesRecurringRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/new': {
+      id: '/invoices/new'
+      path: '/new'
+      fullPath: '/invoices/new'
+      preLoaderRoute: typeof InvoicesNewRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/credit-notes': {
+      id: '/invoices/credit-notes'
+      path: '/credit-notes'
+      fullPath: '/invoices/credit-notes'
+      preLoaderRoute: typeof InvoicesCreditNotesRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/$invoiceId': {
+      id: '/invoices/$invoiceId'
+      path: '/$invoiceId'
+      fullPath: '/invoices/$invoiceId'
+      preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/estimates/new': {
+      id: '/estimates/new'
+      path: '/new'
+      fullPath: '/estimates/new'
+      preLoaderRoute: typeof EstimatesNewRouteImport
+      parentRoute: typeof EstimatesRoute
+    }
     '/dashboards/team': {
       id: '/dashboards/team'
       path: '/dashboards/team'
@@ -552,6 +696,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboards/accounting'
       preLoaderRoute: typeof DashboardsAccountingRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/customers/$customerId': {
+      id: '/customers/$customerId'
+      path: '/$customerId'
+      fullPath: '/customers/$customerId'
+      preLoaderRoute: typeof CustomersCustomerIdRouteImport
+      parentRoute: typeof CustomersRoute
     }
     '/cash-availability/rules': {
       id: '/cash-availability/rules'
@@ -606,16 +757,61 @@ const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
 const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
 
+interface CustomersRouteChildren {
+  CustomersCustomerIdRoute: typeof CustomersCustomerIdRoute
+}
+
+const CustomersRouteChildren: CustomersRouteChildren = {
+  CustomersCustomerIdRoute: CustomersCustomerIdRoute,
+}
+
+const CustomersRouteWithChildren = CustomersRoute._addFileChildren(
+  CustomersRouteChildren,
+)
+
+interface EstimatesRouteChildren {
+  EstimatesNewRoute: typeof EstimatesNewRoute
+}
+
+const EstimatesRouteChildren: EstimatesRouteChildren = {
+  EstimatesNewRoute: EstimatesNewRoute,
+}
+
+const EstimatesRouteWithChildren = EstimatesRoute._addFileChildren(
+  EstimatesRouteChildren,
+)
+
+interface InvoicesRouteChildren {
+  InvoicesInvoiceIdRoute: typeof InvoicesInvoiceIdRoute
+  InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
+  InvoicesNewRoute: typeof InvoicesNewRoute
+  InvoicesRecurringRoute: typeof InvoicesRecurringRoute
+  InvoicesIndexRoute: typeof InvoicesIndexRoute
+}
+
+const InvoicesRouteChildren: InvoicesRouteChildren = {
+  InvoicesInvoiceIdRoute: InvoicesInvoiceIdRoute,
+  InvoicesCreditNotesRoute: InvoicesCreditNotesRoute,
+  InvoicesNewRoute: InvoicesNewRoute,
+  InvoicesRecurringRoute: InvoicesRecurringRoute,
+  InvoicesIndexRoute: InvoicesIndexRoute,
+}
+
+const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
+  InvoicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuditRoute: AuditRoute,
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
-  CustomersRoute: CustomersRoute,
+  CustomersRoute: CustomersRouteWithChildren,
+  EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRoute,
   IntegrationsRoute: IntegrationsRoute,
-  InvoicesRoute: InvoicesRoute,
+  InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,

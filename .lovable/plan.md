@@ -1,71 +1,104 @@
 ## Scope
 
-This is a massive product spec — 12 modules spanning cash allocation, anomaly detection, tech ROI, marketing attribution, bonuses, expense matching, forecasting, an AI copilot, and a confidence score. LedgerOS today is a **UI Design Lab** with mock data (`src/lib/mock/*`) and no backend. I'll match that pattern: build these as designed, navigable screens with realistic mock data, following the LedgerOS visual system already established (dark sidebar, gradient KPI cards, existing components). No Supabase/backend changes.
+Another massive spec — 20 sections spanning invoicing, expenses, intelligence, forecasting, procurement, and AI advisors. Matching how we shipped Phase 1 (Cash Availability): LedgerOS stays a **UI Design Lab** with mock data, no backend. I'll sequence this in phases and only build **Phase 2A — Core Invoicing with Allocation Preview** now, because it's the natural extension of the Cash Availability engine we just shipped and hits three of your six highest-priority differentiators (invoice-level allocation, spendable-cash impact preview, real-time margin preview).
 
-I'll deliver in **phases**. This plan covers **Phase 1 only** — the module you flagged as first priority: **Revenue Allocation & Cash Availability**. After you approve Phase 1 shipped, we sequence the rest.
+Phases 2B (Expenses), 2C (Intelligence), and 2D (Predictive) will each get their own plan after 2A ships.
 
-## Phase 1 — Cash Availability & Revenue Allocation Engine
+## Phase 2A — Core Invoicing + Allocation Preview
 
 ### New routes
 
 ```
-/cash-availability          → main dashboard: "what's actually spendable"
-/cash-availability/allocations   → per-payment allocation breakdowns
-/cash-availability/rules    → treatment rules per line-item type
+/invoices                     → invoice list (replaces the current ComingSoon stub)
+/invoices/new                 → invoice builder with live allocation preview
+/invoices/$id                 → invoice detail: lines, allocation, margin, timeline
+/estimates                    → estimate list
+/estimates/new                → estimate builder (converts to invoice)
+/customers                    → customer list (replaces ComingSoon stub)
+/customers/$id                → customer profile: invoices, statements, portal link
+/invoices/recurring           → recurring invoice schedules
+/invoices/credit-notes        → credit notes & refunds
 ```
 
 ### Screens
 
-**1. Cash Availability dashboard (`/cash-availability`)**
-- Hero waterfall card: `Bank cash → − Pass-through → − Commission reserve → − Tax reserve → − Payroll reserve → True Available Operating Cash`
-- 4 KPI tiles: Total Cash, Restricted Obligations, Reserved (commissions/tax/payroll), True Available
-- Stacked bar chart: 12-month history of Available vs Restricted vs Reserved
-- Guardrail status strip: "2.4 payroll cycles protected", "Pass-through fully held ✓", "Tax reserve 82% funded"
-- Right rail: upcoming pass-through disbursements (filing fees due, qualifier payments)
+**1. Invoice list (`/invoices`)**
+- KPI strip: Outstanding, Overdue, Draft, Paid this month, Avg days to pay
+- Filter chips: status (Draft/Sent/Partial/Paid/Overdue/Void), owner, client, date range
+- Table columns: #, Client, Issued, Due, Total, **CCA revenue**, **Pass-through**, **Commission**, Status, Payment-likelihood chip
+- Row click → detail panel (reuses `transaction-detail-panel` pattern)
 
-**2. Allocations ledger (`/cash-availability/allocations`)**
-- Table of recent client payments, each row expandable to show the split:
-  ```
-  Payment $5,000 from Acme LLC
-    ├─ Government filing fee   $1,250  Restricted
-    ├─ Qualifier payment       $  750  Restricted
-    ├─ Sales commission        $  300  Reserved
-    └─ CCA service revenue     $2,700  Operating
-  ```
-- Filter chips: Restricted / Reserved / Operating / All
-- Sidebar detail panel (reuses transaction-detail-panel pattern) with allocation timeline & source invoice link
+**2. Invoice builder (`/invoices/new`)**
+- Left: standard fields (client, dates, terms, PO, notes, template)
+- Center: line-item editor. Each line: service, description, qty, rate, discount, tax, **treatment** (dropdown from the 9 treatments we already defined in `TREATMENT_META`), department, state, project, commission owner, refundability
+- Right rail: **live Allocation Preview card** — the six-row table from your spec:
+  - Total client charge
+  - Expected CCA revenue
+  - Restricted pass-through
+  - Commission reserve
+  - Estimated fulfillment cost (from a service-cost mock)
+  - Estimated contribution margin (with % vs target, warning below target)
+  - Estimated true-available-cash impact after collection
+- Actions: Save draft, Send for approval, Send to client
 
-**3. Treatment rules (`/cash-availability/rules`)**
-- List of the 9 invoice-line treatments (CCA Revenue, Pass-Through, Commissionable, Non-Commissionable, Reimbursable Expense, Tax Reserve, Refundable Deposit, Deferred Revenue, Other Restricted) with GL account mapping, recognition policy, and a "review needed by accountant" flag
-- Read-only cards with edit affordance (design lab — no persistence)
+**3. Invoice detail (`/invoices/$id`)**
+- Header: #, client, status pill, total, balance, aging
+- **Allocation breakdown** panel (reuses `AllocationRow` from Phase 1)
+- Margin panel: revenue, pass-through, commission, labor, tech alloc, marketing CAC, gross margin, contribution margin, target delta
+- Payment-likelihood card: score + top 3 drivers
+- Timeline: created → sent → viewed → partial → paid, with actor & timestamp
+- Right rail: activity, attachments, internal notes, customer notes, related pass-through obligations (links to `/cash-availability`)
 
-### Components to add
-- `src/components/cash/waterfall-card.tsx` — the hero cash-flow waterfall
-- `src/components/cash/allocation-row.tsx` — expandable allocation breakdown
-- `src/components/cash/treatment-badge.tsx` — Restricted / Reserved / Operating pill (3 semantic tones)
-- `src/components/cash/guardrail-strip.tsx` — payroll-cycles / reserve status
-- `src/components/cash/obligation-list.tsx` — upcoming pass-through disbursements
+**4. Estimates (`/estimates`, `/estimates/new`)**
+- Same builder shape as invoices, minus payment fields; adds "Convert to invoice" action and client-approval status
+
+**5. Customer list & profile (`/customers`, `/customers/$id`)**
+- List: name, contact, balance, LTV, avg pay days, status
+- Profile: contacts, billing profiles, invoices, statements, credits, payment methods (mock), portal-link preview, engagement history
+
+**6. Recurring invoices & Credit notes**
+- Simple list screens with schedule/status/next-run and issue/apply flows
+
+### New components
+
+- `src/components/invoicing/invoice-list-table.tsx`
+- `src/components/invoicing/invoice-line-editor.tsx` — line row with treatment dropdown
+- `src/components/invoicing/allocation-preview-card.tsx` — the six-row live preview
+- `src/components/invoicing/margin-preview-card.tsx` — margin math + target warning
+- `src/components/invoicing/payment-likelihood-chip.tsx` — advisory score pill
+- `src/components/invoicing/invoice-status-badge.tsx`
+- `src/components/invoicing/invoice-timeline.tsx`
+- `src/components/invoicing/customer-summary-card.tsx`
+
+Reuses from Phase 1: `TreatmentBadge`, `AllocationRow`, treatment metadata from `TREATMENT_META`.
 
 ### Mock data
-- `src/lib/mock/cash-availability.ts` — payments with line-item splits, obligation schedule, reserves, treatment rules, 12-month history
+
+- `src/lib/mock/invoicing.ts` — customers, invoices, estimates, recurring schedules, credit notes, service catalog with cost-per-service, target margins, payment-likelihood scores
+- Extend `src/lib/mock/cash-availability.ts` only if needed to link obligations back to invoice IDs (they already share the pass-through concept)
 
 ### Sidebar / nav
-- Add a new **"Cash & Revenue"** section to `NAV_PRIMARY` above "Reports": Cash Availability, Allocations, Treatment Rules
-- Wire the executive dashboard's Cash KPI card to link to `/cash-availability`
 
-### Executive dashboard touch
-- Replace/augment the existing "Cash Balance" KPI with **"True Available Cash"** and add a small breakdown line ("$892k bank · $2,000 restricted · $300 reserved") so the top-level view reflects the new engine
+- Promote **Sales** section (already in `NAV_PRIMARY`) to expanded state with children: Invoices, Estimates, Recurring, Credit Notes, Customers, Payments
+- Wire executive dashboard's AR-related KPIs to `/invoices`
 
-## Explicitly out of scope for Phase 1
+## Explicitly out of scope for Phase 2A
 
-Modules 2–12 (Overhead Intelligence, Tech & AI Economics, Marketing ROI, Bonus Center, Expense Intelligence, Revenue Leakage, Margin Intelligence, Financial Digital Twin, Cash Guardrails config UI, AI Copilot, Financial Confidence Score) — I'll plan and build these in follow-up phases once Phase 1 is approved.
+- **Expense system, receipts, policy engine, matching** → Phase 2B
+- **Payment-likelihood ML, smart collections queue, revenue-leakage detector, subscription intelligence, merchant normalization, AI Spend Advisor** → Phase 2C (we'll show *static* mock payment-likelihood chips in 2A but not the queue or reasoning UI)
+- **Cash & spend forecasting, budgets, scenarios, relationship graph** → Phase 2D
+- **Client billing portal** → its own mini-phase after 2A (it's a separate surface)
+- **Milestone/outcome billing configurator, procurement/vendor intelligence, pre-spend requests, exception-based accounting workspace** → later phases
+- No backend, no auth, no persistence — Design Lab only
 
 ## Constraints honored
-- Visual language: existing LedgerOS dark sidebar, gradient KPIs, shadcn tokens — no new theme
-- No backend, no Supabase, no auth — mock data only, matching Design Lab pattern
-- No changes to existing banking/transactions/reconciliation screens beyond the KPI link
+
+- Visual language: existing LedgerOS dark sidebar, gradient KPIs, shadcn tokens
+- Reuses Phase 1 treatments and components — one source of truth for allocation logic
+- No changes to `/cash-availability`, banking, or reconciliation screens beyond linking
 
 ## Confirm before I build
 
-1. Ship **Phase 1 only** now (Cash Availability + Allocations + Rules) and queue the other 11 modules for later phases? Or a different first slice?
-2. OK to add a **"Cash & Revenue"** section to the sidebar, or keep it flat?
+1. Ship **Phase 2A only** (Invoicing + Allocation Preview + Customers + Estimates + Recurring + Credit Notes) and queue 2B/2C/2D for later? Or a different first slice — e.g. expenses first, or portal first?
+2. OK to expand the sidebar's **Sales** section with children (Invoices, Estimates, Recurring, Credit Notes, Customers, Payments) rather than flat entries?
+3. For the allocation preview, keep the six-row layout from your spec verbatim, or fold it into a compact card + expandable detail?

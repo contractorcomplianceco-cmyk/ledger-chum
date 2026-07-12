@@ -21,6 +21,9 @@ import {
   Building2,
   Receipt,
   ReceiptText,
+  Coins,
+  Split,
+  ScrollText,
   type LucideIcon,
 } from "lucide-react";
 

@@ -17,7 +17,7 @@ import { ReconciliationSummaryPanel } from "@/components/banking/reconciliation-
 import { ReconciliationStepHeader } from "@/components/banking/reconciliation-step-header";
 import { ReconciliationHistoryTable } from "@/components/banking/reconciliation-history-table";
 import { TxKindIcon } from "@/components/banking/transaction-icons";
-import { BANK_ACCOUNTS, TRANSACTIONS, type BankAccount, type Tx } from "@/lib/mock/banking";
+import { BANK_ACCOUNTS, TRANSACTIONS, type BankAccount } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
 import {
   ArrowLeft,

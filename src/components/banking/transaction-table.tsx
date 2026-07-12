@@ -5,7 +5,7 @@ import { TxKindIcon } from "@/components/banking/transaction-icons";
 import { BANK_ACCOUNTS, type Tx } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
 import { cn } from "@/lib/utils";
-import { Paperclip, PaperclipIcon, Copy, MoreVertical, AlertTriangle } from "lucide-react";
+import { Paperclip, Copy, MoreVertical, AlertTriangle, CircleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

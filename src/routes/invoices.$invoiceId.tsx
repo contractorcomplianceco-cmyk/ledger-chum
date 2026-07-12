@@ -105,8 +105,8 @@ function InvoiceDetailPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
-                  {inv.lines.map((l) => {
-                    const meta = TREATMENT_META[l.treatment];
+                  {inv.lines.map((l: InvoiceLine) => {
+                    const meta = TREATMENT_META[l.treatment as Treatment];
                     const total = l.qty * l.rate - l.discount + l.tax;
                     return (
                       <tr key={l.id}>

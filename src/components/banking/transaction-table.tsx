@@ -138,7 +138,7 @@ export function TransactionTable({
                     {tx.receipt === "attached" ? (
                       <Paperclip className="h-3.5 w-3.5 text-success" aria-label="Receipt attached" />
                     ) : tx.receipt === "missing" ? (
-                      <PaperclipIcon className="h-3.5 w-3.5 text-warning" aria-label="Missing receipt" />
+                      <CircleAlert className="h-3.5 w-3.5 text-warning" aria-label="Missing receipt" />
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}

@@ -1,3 +1,15 @@
+## Status
+
+Phase 6 impact assessment expanded to cover owner activity, legal, tax,
+payroll/ADP, workforce, events/travel/education, appreciation, promos,
+charity, international workforce, consulting/R&D, multi-entity/consolidation,
+check writing, invoice templating, AI invoice drafts, and billing
+recommendations. See `docs/production-handoff/phase-6-impact-assessment.md`.
+
+Implementation is **paused** pending confirmation of items 1–5 in §15 of that
+document. No UI or API changes beyond Sub-phase 6A (already shipped) until
+sign-off.
+
 ## Scope
 
 Phase 6 is enormous — a full typed API abstraction, four full UI workstreams (Commissions, Admin, Integrations, Intelligence AI), and 16 handoff spec documents. Delivering all of it in a single turn would produce shallow screens and rushed docs. I'll ship it in **four sub-phases**, each self-contained and reviewable, matching the ordering you gave.

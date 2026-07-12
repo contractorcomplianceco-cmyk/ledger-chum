@@ -1,25 +1,26 @@
 import {
   LayoutDashboard,
-  Landmark,
-  Wallet,
   ArrowLeftRight,
-  Users,
+  NotebookPen,
+  Landmark,
+  ShoppingBag,
+  ShoppingCart,
+  Users2,
+  BookOpen,
+  BarChart3,
+  Wallet2,
+  BookOpenCheck,
+  Plug,
+  Settings as SettingsIcon,
+  ShieldCheck,
+  UserCog,
+  Rocket,
+  CalendarClock,
   FileText,
   CreditCard,
   Building2,
   Receipt,
   ReceiptText,
-  BookOpen,
-  BookOpenCheck,
-  NotebookPen,
-  BarChart3,
-  CalendarClock,
-  Inbox,
-  ShieldCheck,
-  UserCog,
-  Settings,
-  Rocket,
-  Gauge,
   type LucideIcon,
 } from "lucide-react";
 
@@ -28,76 +29,43 @@ export type NavItem = {
   to: string;
   icon: LucideIcon;
   badge?: string;
+  badgeTone?: "brand" | "violet" | "warning";
+  status?: "Soon";
+  hasChildren?: boolean;
 };
 
-export type NavSection = {
-  label: string;
-  items: NavItem[];
-};
+/**
+ * Flat primary navigation matching the LedgerOS reference dashboard sidebar.
+ * No section labels — the reference uses a single continuous list.
+ */
+export const NAV_PRIMARY: NavItem[] = [
+  { title: "Dashboard", to: "/", icon: LayoutDashboard },
+  { title: "Transactions", to: "/banking/transactions", icon: ArrowLeftRight, hasChildren: true, badge: "24", badgeTone: "brand" },
+  { title: "Journal Entries", to: "/ledger/journals", icon: NotebookPen },
+  { title: "Banking", to: "/banking", icon: Landmark, hasChildren: true },
+  { title: "Sales", to: "/invoices", icon: ShoppingBag, hasChildren: true },
+  { title: "Purchases", to: "/bills", icon: ShoppingCart, hasChildren: true },
+  { title: "Payroll", to: "/payroll", icon: Users2, status: "Soon" },
+  { title: "Chart of Accounts", to: "/ledger/accounts", icon: BookOpen },
+  { title: "Reports", to: "/reports", icon: BarChart3, hasChildren: true },
+  { title: "Budgets", to: "/budgets", icon: Wallet2 },
+  { title: "Reconciliation", to: "/banking/reconciliation", icon: BookOpenCheck },
+  { title: "Integrations", to: "/integrations", icon: Plug, badge: "3", badgeTone: "violet" },
+  { title: "Settings", to: "/settings", icon: SettingsIcon, hasChildren: true },
+  { title: "Audit Log", to: "/audit", icon: ShieldCheck },
+];
 
-export const NAV_SECTIONS: NavSection[] = [
-  {
-    label: "Overview",
-    items: [
-      { title: "Executive", to: "/", icon: LayoutDashboard },
-      { title: "Accounting Lead", to: "/dashboards/accounting", icon: Gauge },
-      { title: "Systems Reviewer", to: "/dashboards/reviewer", icon: ShieldCheck },
-      { title: "Team Member", to: "/dashboards/team", icon: Wallet },
-    ],
-  },
-  {
-    label: "Banking",
-    items: [
-      { title: "Banking", to: "/banking", icon: Landmark },
-      { title: "Transactions", to: "/banking/transactions", icon: ArrowLeftRight, badge: "24" },
-      { title: "Reconciliation", to: "/banking/reconciliation", icon: BookOpenCheck },
-    ],
-  },
-  {
-    label: "Sales",
-    items: [
-      { title: "Customers", to: "/customers", icon: Users },
-      { title: "Invoices", to: "/invoices", icon: FileText },
-      { title: "Payments", to: "/payments", icon: CreditCard },
-    ],
-  },
-  {
-    label: "Purchases",
-    items: [
-      { title: "Vendors", to: "/vendors", icon: Building2 },
-      { title: "Bills", to: "/bills", icon: Receipt },
-      { title: "Expenses", to: "/expenses", icon: ReceiptText },
-    ],
-  },
-  {
-    label: "Ledger",
-    items: [
-      { title: "Chart of Accounts", to: "/ledger/accounts", icon: BookOpen },
-      { title: "General Ledger", to: "/ledger/general", icon: BookOpenCheck },
-      { title: "Journal Entries", to: "/ledger/journals", icon: NotebookPen },
-    ],
-  },
-  {
-    label: "Insight",
-    items: [
-      { title: "Reports", to: "/reports", icon: BarChart3 },
-      { title: "Monthly Close", to: "/close", icon: CalendarClock },
-    ],
-  },
-  {
-    label: "Operations",
-    items: [
-      { title: "Integration Inbox", to: "/integrations", icon: Inbox, badge: "3" },
-      { title: "Audit Log", to: "/audit", icon: ShieldCheck },
-    ],
-  },
-  {
-    label: "Admin",
-    items: [
-      { title: "Users & Roles", to: "/admin/users", icon: UserCog },
-      { title: "Settings", to: "/settings", icon: Settings },
-      { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
-      { title: "Production Readiness", to: "/readiness/production", icon: ShieldCheck },
-    ],
-  },
+/** Secondary / admin destinations retained from earlier phases so all routes stay reachable. */
+export const NAV_SECONDARY: NavItem[] = [
+  { title: "Monthly Close", to: "/close", icon: CalendarClock },
+  { title: "Customers", to: "/customers", icon: Users2 },
+  { title: "Invoices", to: "/invoices", icon: FileText },
+  { title: "Payments", to: "/payments", icon: CreditCard },
+  { title: "Vendors", to: "/vendors", icon: Building2 },
+  { title: "Bills", to: "/bills", icon: Receipt },
+  { title: "Expenses", to: "/expenses", icon: ReceiptText },
+  { title: "General Ledger", to: "/ledger/general", icon: BookOpenCheck },
+  { title: "Users & Roles", to: "/admin/users", icon: UserCog },
+  { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
+  { title: "Production Readiness", to: "/readiness/production", icon: ShieldCheck },
 ];

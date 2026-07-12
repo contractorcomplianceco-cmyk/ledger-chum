@@ -214,11 +214,51 @@
   --sidebar-ring: oklch(0.65 0.19 258);
 }
 
+/* LedgerOS brand ramp — literal hex from reference, for gradients and finance accents */
+:root {
+  --gradient-brand-full: linear-gradient(135deg, #2563eb 0%, #3b82f6 30%, #06b6d4 58%, #8b5cf6 100%);
+  --gradient-sidebar-active: linear-gradient(90deg, #3b5bff 0%, #5a3ff0 100%);
+  --gradient-sidebar-panel: linear-gradient(180deg, #0a1a33 0%, #050d1f 100%);
+  --gradient-brand-cool: linear-gradient(135deg, #3b82f6, #22d3ee);
+  --gradient-brand-warm: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --gradient-brand-mint: linear-gradient(135deg, #06b6d4, #22d3ee);
+  --gradient-brand-vio: linear-gradient(135deg, #8b5cf6, #c084fc);
+  --gradient-quick-actions: linear-gradient(180deg, #0d1b34 0%, #060e21 100%);
+
+  --shadow-card: 0 4px 18px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 8px 26px rgba(15, 23, 42, 0.10);
+  --shadow-side-active: 0 8px 24px -8px rgba(59, 91, 255, 0.55);
+}
+
 @utility bg-gradient-brand {
   background-image: var(--gradient-brand);
 }
+@utility bg-gradient-brand-full {
+  background-image: var(--gradient-brand-full);
+}
+@utility bg-gradient-brand-cool {
+  background-image: var(--gradient-brand-cool);
+}
+@utility bg-gradient-brand-warm {
+  background-image: var(--gradient-brand-warm);
+}
+@utility bg-gradient-brand-mint {
+  background-image: var(--gradient-brand-mint);
+}
+@utility bg-gradient-brand-vio {
+  background-image: var(--gradient-brand-vio);
+}
 @utility bg-gradient-navy {
   background-image: var(--gradient-navy);
+}
+@utility bg-gradient-sidebar {
+  background-image: var(--gradient-sidebar-panel);
+}
+@utility bg-gradient-sidebar-active {
+  background-image: var(--gradient-sidebar-active);
+}
+@utility bg-gradient-quick-actions {
+  background-image: var(--gradient-quick-actions);
 }
 @utility bg-gradient-surface {
   background-image: var(--gradient-surface);
@@ -229,11 +269,20 @@
 @utility shadow-elegant {
   box-shadow: var(--shadow-elegant);
 }
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+@utility shadow-card-hover {
+  box-shadow: var(--shadow-card-hover);
+}
 @utility shadow-lifted {
   box-shadow: var(--shadow-lifted);
 }
 @utility shadow-glow {
   box-shadow: var(--shadow-glow);
+}
+@utility shadow-side-active {
+  box-shadow: var(--shadow-side-active);
 }
 @utility font-tabular {
   font-variant-numeric: tabular-nums;

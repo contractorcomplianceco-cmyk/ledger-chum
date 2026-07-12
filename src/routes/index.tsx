@@ -129,7 +129,7 @@ function ExecutiveDashboard() {
         </section>
 
         {/* Main analytics row: Financial Overview | Cash Flow | Utility column */}
-        <section className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
+        <section className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
           <FinancialOverviewCard />
           <CashFlowCard />
           <UtilityColumn />

@@ -41,9 +41,9 @@ export function AppSidebar() {
         <div className="flex items-center justify-between gap-2">
           <Link to="/" className="flex min-w-0 items-center">
             {collapsed ? (
-              <LedgerLogo variant="emblem" emblemSize={34} />
+              <LedgerLogo variant="emblem" onDark />
             ) : (
-              <LedgerLogo variant="lockup" emblemSize={38} />
+              <LedgerLogo variant="lockup" onDark />
             )}
           </Link>
           {!collapsed && (

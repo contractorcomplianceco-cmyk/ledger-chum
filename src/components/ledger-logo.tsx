@@ -41,7 +41,7 @@ export function LedgerLogo({
     // Crop to the emblem (left ~40% of the artwork).
     return (
       <span
-        className={cn("relative block h-9 w-9 overflow-hidden", className)}
+        className={cn("relative block h-11 w-11 overflow-hidden", className)}
         aria-label="LedgerOS"
       >
         <img
@@ -60,7 +60,7 @@ export function LedgerLogo({
     <img
       src={officialLogo.url}
       alt="LedgerOS — RoseOS Intelligence"
-      className={cn("h-10 w-auto object-contain", className)}
+      className={cn("h-12 w-auto object-contain", className)}
       style={blendStyle}
     />
   );

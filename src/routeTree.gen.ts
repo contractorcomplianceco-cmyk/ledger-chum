@@ -21,6 +21,7 @@ import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
+import { Route as AutomationCenterRouteImport } from './routes/automation-center'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
@@ -79,6 +80,20 @@ import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availab
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
 import { Route as BankingReconciliationRouteImport } from './routes/banking.reconciliation'
+import { Route as AutomationSubscriptionActionsRouteImport } from './routes/automation.subscription-actions'
+import { Route as AutomationRulesRouteImport } from './routes/automation.rules'
+import { Route as AutomationRevenueRecoveryRouteImport } from './routes/automation.revenue-recovery'
+import { Route as AutomationPayablesRouteImport } from './routes/automation.payables'
+import { Route as AutomationIntegrationHealthRouteImport } from './routes/automation.integration-health'
+import { Route as AutomationExceptionsRouteImport } from './routes/automation.exceptions'
+import { Route as AutomationDecisionLogRouteImport } from './routes/automation.decision-log'
+import { Route as AutomationDataQualityRouteImport } from './routes/automation.data-quality'
+import { Route as AutomationCollectionsRouteImport } from './routes/automation.collections'
+import { Route as AutomationCashControlsRouteImport } from './routes/automation.cash-controls'
+import { Route as AutomationBudgetControlsRouteImport } from './routes/automation.budget-controls'
+import { Route as AutomationBonusControlsRouteImport } from './routes/automation.bonus-controls'
+import { Route as AutomationApprovalsRouteImport } from './routes/automation.approvals'
+import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 
 const VendorsRoute = VendorsRouteImport.update({
@@ -139,6 +154,11 @@ const CashAvailabilityRoute = CashAvailabilityRouteImport.update({
 const BillsRoute = BillsRouteImport.update({
   id: '/bills',
   path: '/bills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationCenterRoute = AutomationCenterRouteImport.update({
+  id: '/automation-center',
+  path: '/automation-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuditRoute = AuditRouteImport.update({
@@ -437,6 +457,80 @@ const BankingReconciliationRoute = BankingReconciliationRouteImport.update({
   path: '/banking/reconciliation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutomationSubscriptionActionsRoute =
+  AutomationSubscriptionActionsRouteImport.update({
+    id: '/automation/subscription-actions',
+    path: '/automation/subscription-actions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationRulesRoute = AutomationRulesRouteImport.update({
+  id: '/automation/rules',
+  path: '/automation/rules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationRevenueRecoveryRoute =
+  AutomationRevenueRecoveryRouteImport.update({
+    id: '/automation/revenue-recovery',
+    path: '/automation/revenue-recovery',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationPayablesRoute = AutomationPayablesRouteImport.update({
+  id: '/automation/payables',
+  path: '/automation/payables',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationIntegrationHealthRoute =
+  AutomationIntegrationHealthRouteImport.update({
+    id: '/automation/integration-health',
+    path: '/automation/integration-health',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationExceptionsRoute = AutomationExceptionsRouteImport.update({
+  id: '/automation/exceptions',
+  path: '/automation/exceptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationDecisionLogRoute = AutomationDecisionLogRouteImport.update({
+  id: '/automation/decision-log',
+  path: '/automation/decision-log',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationDataQualityRoute = AutomationDataQualityRouteImport.update({
+  id: '/automation/data-quality',
+  path: '/automation/data-quality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationCollectionsRoute = AutomationCollectionsRouteImport.update({
+  id: '/automation/collections',
+  path: '/automation/collections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationCashControlsRoute = AutomationCashControlsRouteImport.update({
+  id: '/automation/cash-controls',
+  path: '/automation/cash-controls',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationBudgetControlsRoute =
+  AutomationBudgetControlsRouteImport.update({
+    id: '/automation/budget-controls',
+    path: '/automation/budget-controls',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationBonusControlsRoute = AutomationBonusControlsRouteImport.update({
+  id: '/automation/bonus-controls',
+  path: '/automation/bonus-controls',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationApprovalsRoute = AutomationApprovalsRouteImport.update({
+  id: '/automation/approvals',
+  path: '/automation/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationActionPlansRoute = AutomationActionPlansRouteImport.update({
+  id: '/automation/action-plans',
+  path: '/automation/action-plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -446,6 +540,7 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
+  '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
@@ -459,6 +554,20 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/automation/action-plans': typeof AutomationActionPlansRoute
+  '/automation/approvals': typeof AutomationApprovalsRoute
+  '/automation/bonus-controls': typeof AutomationBonusControlsRoute
+  '/automation/budget-controls': typeof AutomationBudgetControlsRoute
+  '/automation/cash-controls': typeof AutomationCashControlsRoute
+  '/automation/collections': typeof AutomationCollectionsRoute
+  '/automation/data-quality': typeof AutomationDataQualityRoute
+  '/automation/decision-log': typeof AutomationDecisionLogRoute
+  '/automation/exceptions': typeof AutomationExceptionsRoute
+  '/automation/integration-health': typeof AutomationIntegrationHealthRoute
+  '/automation/payables': typeof AutomationPayablesRoute
+  '/automation/revenue-recovery': typeof AutomationRevenueRecoveryRoute
+  '/automation/rules': typeof AutomationRulesRoute
+  '/automation/subscription-actions': typeof AutomationSubscriptionActionsRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
@@ -519,6 +628,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
+  '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
@@ -529,6 +639,20 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/automation/action-plans': typeof AutomationActionPlansRoute
+  '/automation/approvals': typeof AutomationApprovalsRoute
+  '/automation/bonus-controls': typeof AutomationBonusControlsRoute
+  '/automation/budget-controls': typeof AutomationBudgetControlsRoute
+  '/automation/cash-controls': typeof AutomationCashControlsRoute
+  '/automation/collections': typeof AutomationCollectionsRoute
+  '/automation/data-quality': typeof AutomationDataQualityRoute
+  '/automation/decision-log': typeof AutomationDecisionLogRoute
+  '/automation/exceptions': typeof AutomationExceptionsRoute
+  '/automation/integration-health': typeof AutomationIntegrationHealthRoute
+  '/automation/payables': typeof AutomationPayablesRoute
+  '/automation/revenue-recovery': typeof AutomationRevenueRecoveryRoute
+  '/automation/rules': typeof AutomationRulesRoute
+  '/automation/subscription-actions': typeof AutomationSubscriptionActionsRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
@@ -590,6 +714,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/audit': typeof AuditRoute
+  '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
@@ -603,6 +728,20 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/automation/action-plans': typeof AutomationActionPlansRoute
+  '/automation/approvals': typeof AutomationApprovalsRoute
+  '/automation/bonus-controls': typeof AutomationBonusControlsRoute
+  '/automation/budget-controls': typeof AutomationBudgetControlsRoute
+  '/automation/cash-controls': typeof AutomationCashControlsRoute
+  '/automation/collections': typeof AutomationCollectionsRoute
+  '/automation/data-quality': typeof AutomationDataQualityRoute
+  '/automation/decision-log': typeof AutomationDecisionLogRoute
+  '/automation/exceptions': typeof AutomationExceptionsRoute
+  '/automation/integration-health': typeof AutomationIntegrationHealthRoute
+  '/automation/payables': typeof AutomationPayablesRoute
+  '/automation/revenue-recovery': typeof AutomationRevenueRecoveryRoute
+  '/automation/rules': typeof AutomationRulesRoute
+  '/automation/subscription-actions': typeof AutomationSubscriptionActionsRoute
   '/banking/reconciliation': typeof BankingReconciliationRoute
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
@@ -665,6 +804,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/audit'
+    | '/automation-center'
     | '/bills'
     | '/cash-availability'
     | '/close'
@@ -678,6 +818,20 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/automation/action-plans'
+    | '/automation/approvals'
+    | '/automation/bonus-controls'
+    | '/automation/budget-controls'
+    | '/automation/cash-controls'
+    | '/automation/collections'
+    | '/automation/data-quality'
+    | '/automation/decision-log'
+    | '/automation/exceptions'
+    | '/automation/integration-health'
+    | '/automation/payables'
+    | '/automation/revenue-recovery'
+    | '/automation/rules'
+    | '/automation/subscription-actions'
     | '/banking/reconciliation'
     | '/banking/transactions'
     | '/cash-availability/allocations'
@@ -738,6 +892,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/audit'
+    | '/automation-center'
     | '/bills'
     | '/close'
     | '/customers'
@@ -748,6 +903,20 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/automation/action-plans'
+    | '/automation/approvals'
+    | '/automation/bonus-controls'
+    | '/automation/budget-controls'
+    | '/automation/cash-controls'
+    | '/automation/collections'
+    | '/automation/data-quality'
+    | '/automation/decision-log'
+    | '/automation/exceptions'
+    | '/automation/integration-health'
+    | '/automation/payables'
+    | '/automation/revenue-recovery'
+    | '/automation/rules'
+    | '/automation/subscription-actions'
     | '/banking/reconciliation'
     | '/banking/transactions'
     | '/cash-availability/allocations'
@@ -808,6 +977,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/audit'
+    | '/automation-center'
     | '/bills'
     | '/cash-availability'
     | '/close'
@@ -821,6 +991,20 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/automation/action-plans'
+    | '/automation/approvals'
+    | '/automation/bonus-controls'
+    | '/automation/budget-controls'
+    | '/automation/cash-controls'
+    | '/automation/collections'
+    | '/automation/data-quality'
+    | '/automation/decision-log'
+    | '/automation/exceptions'
+    | '/automation/integration-health'
+    | '/automation/payables'
+    | '/automation/revenue-recovery'
+    | '/automation/rules'
+    | '/automation/subscription-actions'
     | '/banking/reconciliation'
     | '/banking/transactions'
     | '/cash-availability/allocations'
@@ -882,6 +1066,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuditRoute: typeof AuditRoute
+  AutomationCenterRoute: typeof AutomationCenterRoute
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
@@ -895,6 +1080,20 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   VendorsRoute: typeof VendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  AutomationActionPlansRoute: typeof AutomationActionPlansRoute
+  AutomationApprovalsRoute: typeof AutomationApprovalsRoute
+  AutomationBonusControlsRoute: typeof AutomationBonusControlsRoute
+  AutomationBudgetControlsRoute: typeof AutomationBudgetControlsRoute
+  AutomationCashControlsRoute: typeof AutomationCashControlsRoute
+  AutomationCollectionsRoute: typeof AutomationCollectionsRoute
+  AutomationDataQualityRoute: typeof AutomationDataQualityRoute
+  AutomationDecisionLogRoute: typeof AutomationDecisionLogRoute
+  AutomationExceptionsRoute: typeof AutomationExceptionsRoute
+  AutomationIntegrationHealthRoute: typeof AutomationIntegrationHealthRoute
+  AutomationPayablesRoute: typeof AutomationPayablesRoute
+  AutomationRevenueRecoveryRoute: typeof AutomationRevenueRecoveryRoute
+  AutomationRulesRoute: typeof AutomationRulesRoute
+  AutomationSubscriptionActionsRoute: typeof AutomationSubscriptionActionsRoute
   BankingReconciliationRoute: typeof BankingReconciliationRoute
   BankingTransactionsRoute: typeof BankingTransactionsRoute
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
@@ -1012,6 +1211,13 @@ declare module '@tanstack/react-router' {
       path: '/bills'
       fullPath: '/bills'
       preLoaderRoute: typeof BillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation-center': {
+      id: '/automation-center'
+      path: '/automation-center'
+      fullPath: '/automation-center'
+      preLoaderRoute: typeof AutomationCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audit': {
@@ -1420,6 +1626,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BankingReconciliationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/automation/subscription-actions': {
+      id: '/automation/subscription-actions'
+      path: '/automation/subscription-actions'
+      fullPath: '/automation/subscription-actions'
+      preLoaderRoute: typeof AutomationSubscriptionActionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/rules': {
+      id: '/automation/rules'
+      path: '/automation/rules'
+      fullPath: '/automation/rules'
+      preLoaderRoute: typeof AutomationRulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/revenue-recovery': {
+      id: '/automation/revenue-recovery'
+      path: '/automation/revenue-recovery'
+      fullPath: '/automation/revenue-recovery'
+      preLoaderRoute: typeof AutomationRevenueRecoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/payables': {
+      id: '/automation/payables'
+      path: '/automation/payables'
+      fullPath: '/automation/payables'
+      preLoaderRoute: typeof AutomationPayablesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/integration-health': {
+      id: '/automation/integration-health'
+      path: '/automation/integration-health'
+      fullPath: '/automation/integration-health'
+      preLoaderRoute: typeof AutomationIntegrationHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/exceptions': {
+      id: '/automation/exceptions'
+      path: '/automation/exceptions'
+      fullPath: '/automation/exceptions'
+      preLoaderRoute: typeof AutomationExceptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/decision-log': {
+      id: '/automation/decision-log'
+      path: '/automation/decision-log'
+      fullPath: '/automation/decision-log'
+      preLoaderRoute: typeof AutomationDecisionLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/data-quality': {
+      id: '/automation/data-quality'
+      path: '/automation/data-quality'
+      fullPath: '/automation/data-quality'
+      preLoaderRoute: typeof AutomationDataQualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/collections': {
+      id: '/automation/collections'
+      path: '/automation/collections'
+      fullPath: '/automation/collections'
+      preLoaderRoute: typeof AutomationCollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/cash-controls': {
+      id: '/automation/cash-controls'
+      path: '/automation/cash-controls'
+      fullPath: '/automation/cash-controls'
+      preLoaderRoute: typeof AutomationCashControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/budget-controls': {
+      id: '/automation/budget-controls'
+      path: '/automation/budget-controls'
+      fullPath: '/automation/budget-controls'
+      preLoaderRoute: typeof AutomationBudgetControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/bonus-controls': {
+      id: '/automation/bonus-controls'
+      path: '/automation/bonus-controls'
+      fullPath: '/automation/bonus-controls'
+      preLoaderRoute: typeof AutomationBonusControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/approvals': {
+      id: '/automation/approvals'
+      path: '/automation/approvals'
+      fullPath: '/automation/approvals'
+      preLoaderRoute: typeof AutomationApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/action-plans': {
+      id: '/automation/action-plans'
+      path: '/automation/action-plans'
+      fullPath: '/automation/action-plans'
+      preLoaderRoute: typeof AutomationActionPlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/admin/users'
@@ -1532,6 +1836,7 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuditRoute: AuditRoute,
+  AutomationCenterRoute: AutomationCenterRoute,
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
@@ -1545,6 +1850,20 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   VendorsRoute: VendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
+  AutomationActionPlansRoute: AutomationActionPlansRoute,
+  AutomationApprovalsRoute: AutomationApprovalsRoute,
+  AutomationBonusControlsRoute: AutomationBonusControlsRoute,
+  AutomationBudgetControlsRoute: AutomationBudgetControlsRoute,
+  AutomationCashControlsRoute: AutomationCashControlsRoute,
+  AutomationCollectionsRoute: AutomationCollectionsRoute,
+  AutomationDataQualityRoute: AutomationDataQualityRoute,
+  AutomationDecisionLogRoute: AutomationDecisionLogRoute,
+  AutomationExceptionsRoute: AutomationExceptionsRoute,
+  AutomationIntegrationHealthRoute: AutomationIntegrationHealthRoute,
+  AutomationPayablesRoute: AutomationPayablesRoute,
+  AutomationRevenueRecoveryRoute: AutomationRevenueRecoveryRoute,
+  AutomationRulesRoute: AutomationRulesRoute,
+  AutomationSubscriptionActionsRoute: AutomationSubscriptionActionsRoute,
   BankingReconciliationRoute: BankingReconciliationRoute,
   BankingTransactionsRoute: BankingTransactionsRoute,
   DashboardsAccountingRoute: DashboardsAccountingRoute,

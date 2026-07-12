@@ -26,6 +26,7 @@ import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
+import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
 import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
@@ -57,6 +58,17 @@ import { Route as IntelligenceBonusPlansRouteImport } from './routes/intelligenc
 import { Route as IntelligenceBonusForecastRouteImport } from './routes/intelligence.bonus-forecast'
 import { Route as IntelligenceAttributionRouteImport } from './routes/intelligence.attribution'
 import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
+import { Route as ImplementationTestingRouteImport } from './routes/implementation.testing'
+import { Route as ImplementationSecurityRouteImport } from './routes/implementation.security'
+import { Route as ImplementationReadinessRouteImport } from './routes/implementation.readiness'
+import { Route as ImplementationPermissionsRouteImport } from './routes/implementation.permissions'
+import { Route as ImplementationMigrationRouteImport } from './routes/implementation.migration'
+import { Route as ImplementationIntegrationsRouteImport } from './routes/implementation.integrations'
+import { Route as ImplementationHandoffRouteImport } from './routes/implementation.handoff'
+import { Route as ImplementationEventsRouteImport } from './routes/implementation.events'
+import { Route as ImplementationDataMapRouteImport } from './routes/implementation.data-map'
+import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
+import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
 import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
@@ -179,6 +191,11 @@ const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
 const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
   id: '/intelligence/',
   path: '/intelligence/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationIndexRoute = ImplementationIndexRouteImport.update({
+  id: '/implementation/',
+  path: '/implementation/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
@@ -339,6 +356,63 @@ const IntelligenceAttributionRoute = IntelligenceAttributionRouteImport.update({
 const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
   id: '/intelligence/apps',
   path: '/intelligence/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationTestingRoute = ImplementationTestingRouteImport.update({
+  id: '/implementation/testing',
+  path: '/implementation/testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationSecurityRoute = ImplementationSecurityRouteImport.update({
+  id: '/implementation/security',
+  path: '/implementation/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationReadinessRoute = ImplementationReadinessRouteImport.update({
+  id: '/implementation/readiness',
+  path: '/implementation/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationPermissionsRoute =
+  ImplementationPermissionsRouteImport.update({
+    id: '/implementation/permissions',
+    path: '/implementation/permissions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ImplementationMigrationRoute = ImplementationMigrationRouteImport.update({
+  id: '/implementation/migration',
+  path: '/implementation/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationIntegrationsRoute =
+  ImplementationIntegrationsRouteImport.update({
+    id: '/implementation/integrations',
+    path: '/implementation/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ImplementationHandoffRoute = ImplementationHandoffRouteImport.update({
+  id: '/implementation/handoff',
+  path: '/implementation/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationEventsRoute = ImplementationEventsRouteImport.update({
+  id: '/implementation/events',
+  path: '/implementation/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationDataMapRoute = ImplementationDataMapRouteImport.update({
+  id: '/implementation/data-map',
+  path: '/implementation/data-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationCutoverRoute = ImplementationCutoverRouteImport.update({
+  id: '/implementation/cutover',
+  path: '/implementation/cutover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationApiMapRoute = ImplementationApiMapRouteImport.update({
+  id: '/implementation/api-map',
+  path: '/implementation/api-map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
@@ -591,6 +665,17 @@ export interface FileRoutesByFullPath {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/implementation/api-map': typeof ImplementationApiMapRoute
+  '/implementation/cutover': typeof ImplementationCutoverRoute
+  '/implementation/data-map': typeof ImplementationDataMapRoute
+  '/implementation/events': typeof ImplementationEventsRoute
+  '/implementation/handoff': typeof ImplementationHandoffRoute
+  '/implementation/integrations': typeof ImplementationIntegrationsRoute
+  '/implementation/migration': typeof ImplementationMigrationRoute
+  '/implementation/permissions': typeof ImplementationPermissionsRoute
+  '/implementation/readiness': typeof ImplementationReadinessRoute
+  '/implementation/security': typeof ImplementationSecurityRoute
+  '/implementation/testing': typeof ImplementationTestingRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -622,6 +707,7 @@ export interface FileRoutesByFullPath {
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
@@ -676,6 +762,17 @@ export interface FileRoutesByTo {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/implementation/api-map': typeof ImplementationApiMapRoute
+  '/implementation/cutover': typeof ImplementationCutoverRoute
+  '/implementation/data-map': typeof ImplementationDataMapRoute
+  '/implementation/events': typeof ImplementationEventsRoute
+  '/implementation/handoff': typeof ImplementationHandoffRoute
+  '/implementation/integrations': typeof ImplementationIntegrationsRoute
+  '/implementation/migration': typeof ImplementationMigrationRoute
+  '/implementation/permissions': typeof ImplementationPermissionsRoute
+  '/implementation/readiness': typeof ImplementationReadinessRoute
+  '/implementation/security': typeof ImplementationSecurityRoute
+  '/implementation/testing': typeof ImplementationTestingRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -707,6 +804,7 @@ export interface FileRoutesByTo {
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
   '/expenses': typeof ExpensesIndexRoute
+  '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
 }
@@ -765,6 +863,17 @@ export interface FileRoutesById {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/implementation/api-map': typeof ImplementationApiMapRoute
+  '/implementation/cutover': typeof ImplementationCutoverRoute
+  '/implementation/data-map': typeof ImplementationDataMapRoute
+  '/implementation/events': typeof ImplementationEventsRoute
+  '/implementation/handoff': typeof ImplementationHandoffRoute
+  '/implementation/integrations': typeof ImplementationIntegrationsRoute
+  '/implementation/migration': typeof ImplementationMigrationRoute
+  '/implementation/permissions': typeof ImplementationPermissionsRoute
+  '/implementation/readiness': typeof ImplementationReadinessRoute
+  '/implementation/security': typeof ImplementationSecurityRoute
+  '/implementation/testing': typeof ImplementationTestingRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -796,6 +905,7 @@ export interface FileRoutesById {
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
@@ -855,6 +965,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/implementation/api-map'
+    | '/implementation/cutover'
+    | '/implementation/data-map'
+    | '/implementation/events'
+    | '/implementation/handoff'
+    | '/implementation/integrations'
+    | '/implementation/migration'
+    | '/implementation/permissions'
+    | '/implementation/readiness'
+    | '/implementation/security'
+    | '/implementation/testing'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -886,6 +1007,7 @@ export interface FileRouteTypes {
     | '/banking/'
     | '/cash-availability/'
     | '/expenses/'
+    | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
@@ -940,6 +1062,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/implementation/api-map'
+    | '/implementation/cutover'
+    | '/implementation/data-map'
+    | '/implementation/events'
+    | '/implementation/handoff'
+    | '/implementation/integrations'
+    | '/implementation/migration'
+    | '/implementation/permissions'
+    | '/implementation/readiness'
+    | '/implementation/security'
+    | '/implementation/testing'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -971,6 +1104,7 @@ export interface FileRouteTypes {
     | '/banking'
     | '/cash-availability'
     | '/expenses'
+    | '/implementation'
     | '/intelligence'
     | '/invoices'
   id:
@@ -1028,6 +1162,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/implementation/api-map'
+    | '/implementation/cutover'
+    | '/implementation/data-map'
+    | '/implementation/events'
+    | '/implementation/handoff'
+    | '/implementation/integrations'
+    | '/implementation/migration'
+    | '/implementation/permissions'
+    | '/implementation/readiness'
+    | '/implementation/security'
+    | '/implementation/testing'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -1059,6 +1204,7 @@ export interface FileRouteTypes {
     | '/banking/'
     | '/cash-availability/'
     | '/expenses/'
+    | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
   fileRoutesById: FileRoutesById
@@ -1099,6 +1245,17 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  ImplementationApiMapRoute: typeof ImplementationApiMapRoute
+  ImplementationCutoverRoute: typeof ImplementationCutoverRoute
+  ImplementationDataMapRoute: typeof ImplementationDataMapRoute
+  ImplementationEventsRoute: typeof ImplementationEventsRoute
+  ImplementationHandoffRoute: typeof ImplementationHandoffRoute
+  ImplementationIntegrationsRoute: typeof ImplementationIntegrationsRoute
+  ImplementationMigrationRoute: typeof ImplementationMigrationRoute
+  ImplementationPermissionsRoute: typeof ImplementationPermissionsRoute
+  ImplementationReadinessRoute: typeof ImplementationReadinessRoute
+  ImplementationSecurityRoute: typeof ImplementationSecurityRoute
+  ImplementationTestingRoute: typeof ImplementationTestingRoute
   IntelligenceAppsRoute: typeof IntelligenceAppsRoute
   IntelligenceAttributionRoute: typeof IntelligenceAttributionRoute
   IntelligenceBonusForecastRoute: typeof IntelligenceBonusForecastRoute
@@ -1124,6 +1281,7 @@ export interface RootRouteChildren {
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   BankingIndexRoute: typeof BankingIndexRoute
+  ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
 }
 
@@ -1246,6 +1404,13 @@ declare module '@tanstack/react-router' {
       path: '/intelligence'
       fullPath: '/intelligence/'
       preLoaderRoute: typeof IntelligenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/': {
+      id: '/implementation/'
+      path: '/implementation'
+      fullPath: '/implementation/'
+      preLoaderRoute: typeof ImplementationIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/': {
@@ -1463,6 +1628,83 @@ declare module '@tanstack/react-router' {
       path: '/intelligence/apps'
       fullPath: '/intelligence/apps'
       preLoaderRoute: typeof IntelligenceAppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/testing': {
+      id: '/implementation/testing'
+      path: '/implementation/testing'
+      fullPath: '/implementation/testing'
+      preLoaderRoute: typeof ImplementationTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/security': {
+      id: '/implementation/security'
+      path: '/implementation/security'
+      fullPath: '/implementation/security'
+      preLoaderRoute: typeof ImplementationSecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/readiness': {
+      id: '/implementation/readiness'
+      path: '/implementation/readiness'
+      fullPath: '/implementation/readiness'
+      preLoaderRoute: typeof ImplementationReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/permissions': {
+      id: '/implementation/permissions'
+      path: '/implementation/permissions'
+      fullPath: '/implementation/permissions'
+      preLoaderRoute: typeof ImplementationPermissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/migration': {
+      id: '/implementation/migration'
+      path: '/implementation/migration'
+      fullPath: '/implementation/migration'
+      preLoaderRoute: typeof ImplementationMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/integrations': {
+      id: '/implementation/integrations'
+      path: '/implementation/integrations'
+      fullPath: '/implementation/integrations'
+      preLoaderRoute: typeof ImplementationIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/handoff': {
+      id: '/implementation/handoff'
+      path: '/implementation/handoff'
+      fullPath: '/implementation/handoff'
+      preLoaderRoute: typeof ImplementationHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/events': {
+      id: '/implementation/events'
+      path: '/implementation/events'
+      fullPath: '/implementation/events'
+      preLoaderRoute: typeof ImplementationEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/data-map': {
+      id: '/implementation/data-map'
+      path: '/implementation/data-map'
+      fullPath: '/implementation/data-map'
+      preLoaderRoute: typeof ImplementationDataMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/cutover': {
+      id: '/implementation/cutover'
+      path: '/implementation/cutover'
+      fullPath: '/implementation/cutover'
+      preLoaderRoute: typeof ImplementationCutoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/api-map': {
+      id: '/implementation/api-map'
+      path: '/implementation/api-map'
+      fullPath: '/implementation/api-map'
+      preLoaderRoute: typeof ImplementationApiMapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/vendors': {
@@ -1869,6 +2111,17 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  ImplementationApiMapRoute: ImplementationApiMapRoute,
+  ImplementationCutoverRoute: ImplementationCutoverRoute,
+  ImplementationDataMapRoute: ImplementationDataMapRoute,
+  ImplementationEventsRoute: ImplementationEventsRoute,
+  ImplementationHandoffRoute: ImplementationHandoffRoute,
+  ImplementationIntegrationsRoute: ImplementationIntegrationsRoute,
+  ImplementationMigrationRoute: ImplementationMigrationRoute,
+  ImplementationPermissionsRoute: ImplementationPermissionsRoute,
+  ImplementationReadinessRoute: ImplementationReadinessRoute,
+  ImplementationSecurityRoute: ImplementationSecurityRoute,
+  ImplementationTestingRoute: ImplementationTestingRoute,
   IntelligenceAppsRoute: IntelligenceAppsRoute,
   IntelligenceAttributionRoute: IntelligenceAttributionRoute,
   IntelligenceBonusForecastRoute: IntelligenceBonusForecastRoute,
@@ -1894,6 +2147,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
   BankingIndexRoute: BankingIndexRoute,
+  ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
 }
 export const routeTree = rootRouteImport

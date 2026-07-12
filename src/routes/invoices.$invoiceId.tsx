@@ -31,10 +31,25 @@ export const Route = createFileRoute("/invoices/$invoiceId")({
 });
 
 function InvoiceDetailPage() {
-  const { invoice: inv, customer } = Route.useLoaderData();
+  const { invoiceId } = Route.useParams();
+  const inv: Invoice | undefined = INVOICES.find((i) => i.id === invoiceId);
+
+  if (!inv) {
+    return (
+      <div className="p-8">
+        <div className="text-lg font-semibold">Invoice not found</div>
+        <p className="mt-1 text-sm text-muted-foreground">This invoice may have been deleted or the link is out of date.</p>
+        <Button asChild variant="outline" size="sm" className="mt-3">
+          <Link to="/invoices"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  const customer = CUSTOMERS.find((c) => c.id === inv.customerId);
   const c = computeInvoice(inv.lines);
   const balance = c.total - inv.paid;
-  const lk = LIKELIHOOD_META[inv.likelihood];
+  const lk = LIKELIHOOD_META[inv.likelihood as PaymentLikelihood];
 
   return (
     <div className="space-y-4">

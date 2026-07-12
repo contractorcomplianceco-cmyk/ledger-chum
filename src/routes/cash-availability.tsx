@@ -58,7 +58,7 @@ function CashAvailabilityLayout() {
             return (
               <Link
                 key={t.to}
-                to={t.to}
+                to={t.to as "/cash-availability"}
                 className={cn(
                   "relative rounded-t-md px-3 py-2 text-[13px] font-medium transition",
                   active

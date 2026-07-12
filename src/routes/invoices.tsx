@@ -28,8 +28,6 @@ const TABS: Array<{ to: string; label: string; exact?: boolean }> = [
   { to: "/invoices", label: "Invoices", exact: true },
   { to: "/invoices/recurring", label: "Recurring" },
   { to: "/invoices/credit-notes", label: "Credit notes" },
-  { to: "/estimates", label: "Estimates" },
-  { to: "/customers", label: "Customers" },
 ];
 
 function InvoicesLayout() {

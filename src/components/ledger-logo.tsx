@@ -1,63 +1,67 @@
-import emblemUrl from "@/assets/ledgeros-emblem.png";
-import fullLogoAsset from "@/assets/ledgeros-logo-full.png.asset.json";
+import officialLogo from "@/assets/ledgeros-logo-official.png.asset.json";
 import { cn } from "@/lib/utils";
 
 /**
- * LedgerOS brand mark.
- * - `variant="lockup"` renders the emblem + wordmark stacked "RoseOS Intelligence".
- *   Used in the expanded sidebar header.
- * - `variant="emblem"` renders emblem only. Used in the collapsed sidebar and favicons.
- * - `variant="splash"` renders the full uploaded reference logo, for auth/splash surfaces.
+ * LedgerOS brand mark — the official uploaded logo is the ONLY brand asset.
+ * The name "LedgerOS · RoseOS Intelligence" is baked into the artwork; never
+ * render additional wordmark text alongside it.
+ *
+ * - `variant="lockup"` full logo (emblem + wordmark) for expanded sidebar / headers.
+ * - `variant="emblem"` cropped emblem area for the collapsed sidebar rail.
+ * - `variant="splash"` full logo at large size for auth/splash surfaces.
+ *
+ * The source PNG has a white background, so on dark surfaces we use
+ * `mix-blend-mode: screen` to knock the white out while preserving the
+ * cyan → violet gradient.
  */
 export function LedgerLogo({
   variant = "lockup",
   className,
-  emblemSize = 36,
+  onDark = false,
 }: {
   variant?: "lockup" | "emblem" | "splash";
   className?: string;
-  emblemSize?: number;
+  /** Set true when placing on a dark surface (e.g. the navy sidebar). */
+  onDark?: boolean;
 }) {
+  const blendStyle = onDark ? { mixBlendMode: "screen" as const } : undefined;
+
   if (variant === "splash") {
     return (
       <img
-        src={fullLogoAsset.url}
-        alt="LedgerOS · RoseOS Intelligence"
-        className={cn("h-auto w-full max-w-[420px]", className)}
+        src={officialLogo.url}
+        alt="LedgerOS — RoseOS Intelligence"
+        className={cn("h-auto w-full max-w-[520px] object-contain", className)}
+        style={blendStyle}
       />
     );
   }
 
-  const emblem = (
-    <img
-      src={emblemUrl}
-      alt=""
-      aria-hidden
-      width={emblemSize}
-      height={emblemSize}
-      style={{ width: emblemSize, height: emblemSize }}
-      className="drop-shadow-[0_0_18px_rgba(96,165,250,0.35)]"
-      loading="eager"
-    />
-  );
-
   if (variant === "emblem") {
-    return <span className={cn("inline-flex", className)}>{emblem}</span>;
+    // Crop to the emblem (left ~40% of the artwork).
+    return (
+      <span
+        className={cn("relative block h-9 w-9 overflow-hidden", className)}
+        aria-label="LedgerOS"
+      >
+        <img
+          src={officialLogo.url}
+          alt=""
+          aria-hidden
+          className="absolute left-0 top-1/2 h-[220%] w-auto max-w-none -translate-y-1/2 object-contain"
+          style={{ ...blendStyle, transform: "translate(-8%, -50%)" }}
+        />
+      </span>
+    );
   }
 
+  // lockup — full logo image, no accompanying text.
   return (
-    <div className={cn("flex items-center gap-2.5", className)}>
-      {emblem}
-      <div className="min-w-0 leading-none">
-        <div className="flex items-baseline gap-[1px] font-display text-[19px] font-semibold tracking-tight">
-          <span className="text-white">Ledger</span>
-          <span className="bg-gradient-brand-full bg-clip-text text-transparent">OS</span>
-        </div>
-        <div className="mt-1 h-px w-full bg-gradient-to-r from-cyan-400/60 via-violet-400/60 to-transparent" />
-        <div className="mt-1 text-[9px] font-medium uppercase tracking-[0.24em] text-cyan-300/80">
-          RoseOS Intelligence
-        </div>
-      </div>
-    </div>
+    <img
+      src={officialLogo.url}
+      alt="LedgerOS — RoseOS Intelligence"
+      className={cn("h-10 w-auto object-contain", className)}
+      style={blendStyle}
+    />
   );
 }

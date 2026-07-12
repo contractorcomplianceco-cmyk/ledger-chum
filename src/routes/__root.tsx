@@ -77,21 +77,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "LedgerOS — Financial Operating System" },
+      {
+        name: "description",
+        content:
+          "LedgerOS by RoseOS Intelligence — a Fortune-500-grade double-entry accounting and financial operations platform.",
+      },
+      { name: "author", content: "RoseOS Intelligence" },
+      { property: "og:title", content: "LedgerOS — Financial Operating System" },
+      {
+        property: "og:description",
+        content: "Luxury enterprise accounting platform for modern finance teams.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { name: "theme-color", content: "#0f1730" },
+
     ],
   }),
   shellComponent: RootShell,

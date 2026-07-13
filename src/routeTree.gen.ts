@@ -88,6 +88,7 @@ import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
 import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
+import { Route as CompensationEligibilityRouteImport } from './routes/compensation.eligibility'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
@@ -521,6 +522,11 @@ const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
   path: '/$customerId',
   getParentRoute: () => CustomersRoute,
 } as any)
+const CompensationEligibilityRoute = CompensationEligibilityRouteImport.update({
+  id: '/compensation/eligibility',
+  path: '/compensation/eligibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
   id: '/rules',
   path: '/rules',
@@ -720,6 +726,7 @@ export interface FileRoutesByFullPath {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/eligibility': typeof CompensationEligibilityRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -828,6 +835,7 @@ export interface FileRoutesByTo {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/eligibility': typeof CompensationEligibilityRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -940,6 +948,7 @@ export interface FileRoutesById {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/eligibility': typeof CompensationEligibilityRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -1053,6 +1062,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/eligibility'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1161,6 +1171,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/eligibility'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1272,6 +1283,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/eligibility'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1382,6 +1394,7 @@ export interface RootRouteChildren {
   AutomationSubscriptionActionsRoute: typeof AutomationSubscriptionActionsRoute
   BankingReconciliationRoute: typeof BankingReconciliationRoute
   BankingTransactionsRoute: typeof BankingTransactionsRoute
+  CompensationEligibilityRoute: typeof CompensationEligibilityRoute
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
@@ -1989,6 +2002,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersCustomerIdRouteImport
       parentRoute: typeof CustomersRoute
     }
+    '/compensation/eligibility': {
+      id: '/compensation/eligibility'
+      path: '/compensation/eligibility'
+      fullPath: '/compensation/eligibility'
+      preLoaderRoute: typeof CompensationEligibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cash-availability/rules': {
       id: '/cash-availability/rules'
       path: '/rules'
@@ -2347,6 +2367,7 @@ const rootRouteChildren: RootRouteChildren = {
   AutomationSubscriptionActionsRoute: AutomationSubscriptionActionsRoute,
   BankingReconciliationRoute: BankingReconciliationRoute,
   BankingTransactionsRoute: BankingTransactionsRoute,
+  CompensationEligibilityRoute: CompensationEligibilityRoute,
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,

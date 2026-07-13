@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Sidebar,
@@ -9,25 +10,78 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { NAV_PRIMARY, NAV_SECONDARY, type NavItem } from "@/lib/mock/nav";
+import { NAV_GROUPS, type NavGroup, type NavItem } from "@/lib/mock/nav";
 import { LedgerLogo } from "@/components/ledger-logo";
-import { ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown } from "lucide-react";
+import { useCurrentUser } from "@/hooks/use-permission";
+import { useFavorites, useGroupOpenState, useRecents } from "@/lib/nav-storage";
+import {
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  ChevronDown,
+  Star,
+  Clock,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+
+function hasPermission(held: string[], permission?: string) {
+  if (!permission) return true;
+  if (held.includes("*")) return true;
+  if (held.includes(permission)) return true;
+  const [group] = permission.split(".");
+  return held.includes(`${group}.*`);
+}
 
 export function AppSidebar() {
   const { state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const user = useCurrentUser();
+  const { favorites, toggle: toggleFavorite, isFavorite } = useFavorites();
+  const recents = useRecents();
+
+  const groupDefaults = useMemo(() => {
+    const d: Record<string, boolean> = {};
+    for (const g of NAV_GROUPS) d[g.id] = g.defaultOpen ?? false;
+    return d;
+  }, []);
+  const { state: groupOpen, setOpen: setGroupOpen } = useGroupOpenState(groupDefaults);
 
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
+
+  // Filter items + whole groups by permission
+  const visibleGroups: NavGroup[] = useMemo(() => {
+    return NAV_GROUPS.map((group) => ({
+      ...group,
+      items: group.items.filter((i) => !i.hidden && hasPermission(user.permissions, i.permission)),
+    }))
+      .filter((g) => hasPermission(user.permissions, g.permission))
+      .filter((g) => g.items.length > 0);
+  }, [user.permissions]);
+
+  const allItems = useMemo(() => visibleGroups.flatMap((g) => g.items), [visibleGroups]);
+  const favoriteItems = favorites
+    .map((to) => allItems.find((i) => i.to === to))
+    .filter(Boolean) as NavItem[];
+  const recentItems = recents
+    .filter((p) => p !== pathname)
+    .map((to) => allItems.find((i) => i.to === to))
+    .filter(Boolean)
+    .slice(0, 4) as NavItem[];
+
+  // Auto-open the group containing the active route
+  const activeGroupId = useMemo(
+    () => visibleGroups.find((g) => g.items.some((i) => isActive(i.to)))?.id,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [visibleGroups, pathname],
+  );
 
   return (
     <Sidebar
       collapsible="icon"
       className="border-r-0 [&>[data-sidebar=sidebar]]:bg-gradient-sidebar [&>[data-sidebar=sidebar]]:text-sidebar-foreground"
     >
-      {/* Subtle radial glow near the logo — matches reference */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
@@ -40,11 +94,7 @@ export function AppSidebar() {
       <SidebarHeader className="relative z-10 px-2 py-1">
         <div className="flex items-center justify-between gap-2">
           <Link to="/" className="flex min-w-0 items-center">
-            {collapsed ? (
-              <LedgerLogo variant="emblem" onDark />
-            ) : (
-              <LedgerLogo variant="lockup" onDark />
-            )}
+            {collapsed ? <LedgerLogo variant="emblem" onDark /> : <LedgerLogo variant="lockup" onDark />}
           </Link>
           {!collapsed && (
             <button
@@ -70,24 +120,88 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="relative z-10 px-2 py-2">
-        <SidebarMenu className="gap-0.5">
-          {NAV_PRIMARY.map((item) => (
-            <NavRow key={item.to + item.title} item={item} active={isActive(item.to)} collapsed={collapsed} />
-          ))}
-        </SidebarMenu>
-
-        {!collapsed && (
-          <>
-            <div className="mt-5 px-3 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/40">
-              More
-            </div>
+        {/* Favorites */}
+        {!collapsed && favoriteItems.length > 0 && (
+          <div className="mb-3">
+            <SectionLabel>Favorites</SectionLabel>
             <SidebarMenu className="gap-0.5">
-              {NAV_SECONDARY.map((item) => (
-                <NavRow key={item.to + item.title} item={item} active={isActive(item.to)} collapsed={collapsed} compact />
+              {favoriteItems.map((item) => (
+                <NavRow
+                  key={"fav-" + item.to}
+                  item={item}
+                  active={isActive(item.to)}
+                  collapsed={collapsed}
+                  favorite
+                  onToggleFavorite={() => toggleFavorite(item.to)}
+                  isFavorite={isFavorite(item.to)}
+                />
               ))}
             </SidebarMenu>
-          </>
+          </div>
         )}
+
+        {/* Recents */}
+        {!collapsed && recentItems.length > 0 && (
+          <div className="mb-3">
+            <SectionLabel icon={<Clock className="h-3 w-3" />}>Recent</SectionLabel>
+            <SidebarMenu className="gap-0.5">
+              {recentItems.map((item) => (
+                <NavRow
+                  key={"recent-" + item.to}
+                  item={item}
+                  active={isActive(item.to)}
+                  collapsed={collapsed}
+                  compact
+                  onToggleFavorite={() => toggleFavorite(item.to)}
+                  isFavorite={isFavorite(item.to)}
+                />
+              ))}
+            </SidebarMenu>
+          </div>
+        )}
+
+        {/* Groups */}
+        {visibleGroups.map((group) => {
+          const isOpen = collapsed
+            ? true
+            : (groupOpen[group.id] ?? group.defaultOpen ?? false) || group.id === activeGroupId;
+          const GroupIcon = group.icon;
+          return (
+            <div key={group.id} className={cn("mb-1", !collapsed && "mb-2")}>
+              {!collapsed && (
+                <button
+                  type="button"
+                  onClick={() => setGroupOpen(group.id, !isOpen)}
+                  className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/50 transition hover:text-white/90"
+                  aria-expanded={isOpen}
+                >
+                  {GroupIcon && <GroupIcon className="h-3 w-3" />}
+                  <span className="flex-1 text-left">{group.title}</span>
+                  <ChevronDown
+                    className={cn(
+                      "h-3.5 w-3.5 transition-transform",
+                      !isOpen && "-rotate-90",
+                    )}
+                  />
+                </button>
+              )}
+              {isOpen && (
+                <SidebarMenu className="gap-0.5">
+                  {group.items.map((item) => (
+                    <NavRow
+                      key={item.to + item.title}
+                      item={item}
+                      active={isActive(item.to)}
+                      collapsed={collapsed}
+                      onToggleFavorite={() => toggleFavorite(item.to)}
+                      isFavorite={isFavorite(item.to)}
+                    />
+                  ))}
+                </SidebarMenu>
+              )}
+            </div>
+          );
+        })}
       </SidebarContent>
 
       <SidebarFooter className="relative z-10 gap-2 px-2 pb-3 pt-2">
@@ -130,20 +244,36 @@ export function AppSidebar() {
   );
 }
 
+function SectionLabel({ children, icon }: { children: React.ReactNode; icon?: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-1.5 px-3 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/40">
+      {icon}
+      <span>{children}</span>
+    </div>
+  );
+}
+
 function NavRow({
   item,
   active,
   collapsed,
   compact,
+  favorite,
+  isFavorite,
+  onToggleFavorite,
 }: {
   item: NavItem;
   active: boolean;
   collapsed: boolean;
   compact?: boolean;
+  favorite?: boolean;
+  isFavorite?: boolean;
+  onToggleFavorite?: () => void;
 }) {
   const Icon = item.icon;
+  const [hover, setHover] = useState(false);
   return (
-    <SidebarMenuItem>
+    <SidebarMenuItem onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <SidebarMenuButton
         asChild
         isActive={active}
@@ -167,11 +297,6 @@ function NavRow({
             <>
               <span className="truncate">{item.title}</span>
               <span className="ml-auto flex items-center gap-1.5">
-                {item.status === "Soon" && (
-                  <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sidebar-foreground/70">
-                    Soon
-                  </span>
-                )}
                 {item.badge && (
                   <span
                     className={cn(
@@ -186,8 +311,24 @@ function NavRow({
                     {item.badge}
                   </span>
                 )}
-                {item.hasChildren && !item.badge && !item.status && (
-                  <ChevronRight className="h-3.5 w-3.5 text-sidebar-foreground/40 group-hover:text-white/70" />
+                {onToggleFavorite && (hover || isFavorite) && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onToggleFavorite();
+                    }}
+                    aria-label={isFavorite ? "Remove favorite" : "Add favorite"}
+                    className="rounded p-0.5 text-sidebar-foreground/60 hover:bg-white/10 hover:text-white"
+                  >
+                    <Star
+                      className={cn(
+                        "h-3.5 w-3.5",
+                        (isFavorite || favorite) && "fill-current text-amber-400",
+                      )}
+                    />
+                  </button>
                 )}
               </span>
             </>

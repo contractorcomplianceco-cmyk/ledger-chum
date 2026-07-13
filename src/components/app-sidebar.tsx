@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NAV_GROUPS, type NavGroup, type NavItem } from "@/lib/mock/nav";
 import { LedgerLogo } from "@/components/ledger-logo";
+import { NavModeSwitcher } from "@/components/apex/nav-mode-switcher";
 import { useCurrentUser } from "@/hooks/use-permission";
 import { useFavorites, useGroupOpenState, useRecents } from "@/lib/nav-storage";
 import {
@@ -206,11 +207,15 @@ export function AppSidebar() {
 
       <SidebarFooter className="relative z-10 gap-2 px-2 pb-3 pt-2">
         {collapsed ? (
-          <div className="mx-auto grid h-9 w-9 place-items-center rounded-full bg-gradient-brand-full text-[11px] font-semibold text-white">
-            RT
-          </div>
+          <>
+            <NavModeSwitcher compact />
+            <div className="mx-auto grid h-9 w-9 place-items-center rounded-full bg-gradient-brand-full text-[11px] font-semibold text-white">
+              RT
+            </div>
+          </>
         ) : (
           <>
+            <NavModeSwitcher />
             <button
               type="button"
               className="group flex w-full items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-2 pr-2.5 text-left transition hover:border-white/20 hover:bg-white/[0.06]"

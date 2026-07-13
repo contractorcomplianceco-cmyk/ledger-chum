@@ -32,6 +32,7 @@ import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
+import { Route as ApexIndexRouteImport } from './routes/apex.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
@@ -129,6 +130,19 @@ import { Route as AutomationBudgetControlsRouteImport } from './routes/automatio
 import { Route as AutomationBonusControlsRouteImport } from './routes/automation.bonus-controls'
 import { Route as AutomationApprovalsRouteImport } from './routes/automation.approvals'
 import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
+import { Route as ApexWidgetsRouteImport } from './routes/apex.widgets'
+import { Route as ApexTimelineRouteImport } from './routes/apex.timeline'
+import { Route as ApexRolesRouteImport } from './routes/apex.roles'
+import { Route as ApexRelationshipGraphRouteImport } from './routes/apex.relationship-graph'
+import { Route as ApexPersonasRouteImport } from './routes/apex.personas'
+import { Route as ApexOpportunitiesRouteImport } from './routes/apex.opportunities'
+import { Route as ApexNavigationRouteImport } from './routes/apex.navigation'
+import { Route as ApexHandoffRouteImport } from './routes/apex.handoff'
+import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dna'
+import { Route as ApexDigitalTwinRouteImport } from './routes/apex.digital-twin'
+import { Route as ApexCompanyHealthRouteImport } from './routes/apex.company-health'
+import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
+import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
@@ -267,6 +281,11 @@ const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
 const BankingIndexRoute = BankingIndexRouteImport.update({
   id: '/banking/',
   path: '/banking/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexIndexRoute = ApexIndexRouteImport.update({
+  id: '/apex/',
+  path: '/apex/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
@@ -773,6 +792,71 @@ const AutomationActionPlansRoute = AutomationActionPlansRouteImport.update({
   path: '/automation/action-plans',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApexWidgetsRoute = ApexWidgetsRouteImport.update({
+  id: '/apex/widgets',
+  path: '/apex/widgets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexTimelineRoute = ApexTimelineRouteImport.update({
+  id: '/apex/timeline',
+  path: '/apex/timeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexRolesRoute = ApexRolesRouteImport.update({
+  id: '/apex/roles',
+  path: '/apex/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexRelationshipGraphRoute = ApexRelationshipGraphRouteImport.update({
+  id: '/apex/relationship-graph',
+  path: '/apex/relationship-graph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexPersonasRoute = ApexPersonasRouteImport.update({
+  id: '/apex/personas',
+  path: '/apex/personas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexOpportunitiesRoute = ApexOpportunitiesRouteImport.update({
+  id: '/apex/opportunities',
+  path: '/apex/opportunities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexNavigationRoute = ApexNavigationRouteImport.update({
+  id: '/apex/navigation',
+  path: '/apex/navigation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexHandoffRoute = ApexHandoffRouteImport.update({
+  id: '/apex/handoff',
+  path: '/apex/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexFinancialDnaRoute = ApexFinancialDnaRouteImport.update({
+  id: '/apex/financial-dna',
+  path: '/apex/financial-dna',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexDigitalTwinRoute = ApexDigitalTwinRouteImport.update({
+  id: '/apex/digital-twin',
+  path: '/apex/digital-twin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexCompanyHealthRoute = ApexCompanyHealthRouteImport.update({
+  id: '/apex/company-health',
+  path: '/apex/company-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexBriefingRoute = ApexBriefingRouteImport.update({
+  id: '/apex/briefing',
+  path: '/apex/briefing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexArchitectureRoute = ApexArchitectureRouteImport.update({
+  id: '/apex/architecture',
+  path: '/apex/architecture',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -929,6 +1013,19 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company-health': typeof ApexCompanyHealthRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRoute
+  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/navigation': typeof ApexNavigationRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/personas': typeof ApexPersonasRoute
+  '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
+  '/apex/roles': typeof ApexRolesRoute
+  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
   '/automation/bonus-controls': typeof AutomationBonusControlsRoute
@@ -1026,6 +1123,7 @@ export interface FileRoutesByFullPath {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
@@ -1072,6 +1170,19 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company-health': typeof ApexCompanyHealthRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRoute
+  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/navigation': typeof ApexNavigationRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/personas': typeof ApexPersonasRoute
+  '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
+  '/apex/roles': typeof ApexRolesRoute
+  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
   '/automation/bonus-controls': typeof AutomationBonusControlsRoute
@@ -1169,6 +1280,7 @@ export interface FileRoutesByTo {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
   '/compensation': typeof CompensationIndexRoute
@@ -1219,6 +1331,19 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company-health': typeof ApexCompanyHealthRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRoute
+  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/navigation': typeof ApexNavigationRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/personas': typeof ApexPersonasRoute
+  '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
+  '/apex/roles': typeof ApexRolesRoute
+  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
   '/automation/bonus-controls': typeof AutomationBonusControlsRoute
@@ -1316,6 +1441,7 @@ export interface FileRoutesById {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
@@ -1367,6 +1493,19 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/apex/architecture'
+    | '/apex/briefing'
+    | '/apex/company-health'
+    | '/apex/digital-twin'
+    | '/apex/financial-dna'
+    | '/apex/handoff'
+    | '/apex/navigation'
+    | '/apex/opportunities'
+    | '/apex/personas'
+    | '/apex/relationship-graph'
+    | '/apex/roles'
+    | '/apex/timeline'
+    | '/apex/widgets'
     | '/automation/action-plans'
     | '/automation/approvals'
     | '/automation/bonus-controls'
@@ -1464,6 +1603,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/apex/'
     | '/banking/'
     | '/cash-availability/'
     | '/compensation/'
@@ -1510,6 +1650,19 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/apex/architecture'
+    | '/apex/briefing'
+    | '/apex/company-health'
+    | '/apex/digital-twin'
+    | '/apex/financial-dna'
+    | '/apex/handoff'
+    | '/apex/navigation'
+    | '/apex/opportunities'
+    | '/apex/personas'
+    | '/apex/relationship-graph'
+    | '/apex/roles'
+    | '/apex/timeline'
+    | '/apex/widgets'
     | '/automation/action-plans'
     | '/automation/approvals'
     | '/automation/bonus-controls'
@@ -1607,6 +1760,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/apex'
     | '/banking'
     | '/cash-availability'
     | '/compensation'
@@ -1656,6 +1810,19 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/admin/users'
+    | '/apex/architecture'
+    | '/apex/briefing'
+    | '/apex/company-health'
+    | '/apex/digital-twin'
+    | '/apex/financial-dna'
+    | '/apex/handoff'
+    | '/apex/navigation'
+    | '/apex/opportunities'
+    | '/apex/personas'
+    | '/apex/relationship-graph'
+    | '/apex/roles'
+    | '/apex/timeline'
+    | '/apex/widgets'
     | '/automation/action-plans'
     | '/automation/approvals'
     | '/automation/bonus-controls'
@@ -1753,6 +1920,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/apex/'
     | '/banking/'
     | '/cash-availability/'
     | '/compensation/'
@@ -1803,6 +1971,19 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   VendorsRoute: typeof VendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  ApexArchitectureRoute: typeof ApexArchitectureRoute
+  ApexBriefingRoute: typeof ApexBriefingRoute
+  ApexCompanyHealthRoute: typeof ApexCompanyHealthRoute
+  ApexDigitalTwinRoute: typeof ApexDigitalTwinRoute
+  ApexFinancialDnaRoute: typeof ApexFinancialDnaRoute
+  ApexHandoffRoute: typeof ApexHandoffRoute
+  ApexNavigationRoute: typeof ApexNavigationRoute
+  ApexOpportunitiesRoute: typeof ApexOpportunitiesRoute
+  ApexPersonasRoute: typeof ApexPersonasRoute
+  ApexRelationshipGraphRoute: typeof ApexRelationshipGraphRoute
+  ApexRolesRoute: typeof ApexRolesRoute
+  ApexTimelineRoute: typeof ApexTimelineRoute
+  ApexWidgetsRoute: typeof ApexWidgetsRoute
   AutomationActionPlansRoute: typeof AutomationActionPlansRoute
   AutomationApprovalsRoute: typeof AutomationApprovalsRoute
   AutomationBonusControlsRoute: typeof AutomationBonusControlsRoute
@@ -1878,6 +2059,7 @@ export interface RootRouteChildren {
   LedgerJournalsRoute: typeof LedgerJournalsRoute
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
+  ApexIndexRoute: typeof ApexIndexRoute
   BankingIndexRoute: typeof BankingIndexRoute
   CompensationIndexRoute: typeof CompensationIndexRoute
   FeatureRegistryIndexRoute: typeof FeatureRegistryIndexRoute
@@ -2066,6 +2248,13 @@ declare module '@tanstack/react-router' {
       path: '/banking'
       fullPath: '/banking/'
       preLoaderRoute: typeof BankingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/': {
+      id: '/apex/'
+      path: '/apex'
+      fullPath: '/apex/'
+      preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/readiness/production': {
@@ -2747,6 +2936,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutomationActionPlansRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/widgets': {
+      id: '/apex/widgets'
+      path: '/apex/widgets'
+      fullPath: '/apex/widgets'
+      preLoaderRoute: typeof ApexWidgetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/timeline': {
+      id: '/apex/timeline'
+      path: '/apex/timeline'
+      fullPath: '/apex/timeline'
+      preLoaderRoute: typeof ApexTimelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/roles': {
+      id: '/apex/roles'
+      path: '/apex/roles'
+      fullPath: '/apex/roles'
+      preLoaderRoute: typeof ApexRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/relationship-graph': {
+      id: '/apex/relationship-graph'
+      path: '/apex/relationship-graph'
+      fullPath: '/apex/relationship-graph'
+      preLoaderRoute: typeof ApexRelationshipGraphRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/personas': {
+      id: '/apex/personas'
+      path: '/apex/personas'
+      fullPath: '/apex/personas'
+      preLoaderRoute: typeof ApexPersonasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/opportunities': {
+      id: '/apex/opportunities'
+      path: '/apex/opportunities'
+      fullPath: '/apex/opportunities'
+      preLoaderRoute: typeof ApexOpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/navigation': {
+      id: '/apex/navigation'
+      path: '/apex/navigation'
+      fullPath: '/apex/navigation'
+      preLoaderRoute: typeof ApexNavigationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/handoff': {
+      id: '/apex/handoff'
+      path: '/apex/handoff'
+      fullPath: '/apex/handoff'
+      preLoaderRoute: typeof ApexHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/financial-dna': {
+      id: '/apex/financial-dna'
+      path: '/apex/financial-dna'
+      fullPath: '/apex/financial-dna'
+      preLoaderRoute: typeof ApexFinancialDnaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/digital-twin': {
+      id: '/apex/digital-twin'
+      path: '/apex/digital-twin'
+      fullPath: '/apex/digital-twin'
+      preLoaderRoute: typeof ApexDigitalTwinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/company-health': {
+      id: '/apex/company-health'
+      path: '/apex/company-health'
+      fullPath: '/apex/company-health'
+      preLoaderRoute: typeof ApexCompanyHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/briefing': {
+      id: '/apex/briefing'
+      path: '/apex/briefing'
+      fullPath: '/apex/briefing'
+      preLoaderRoute: typeof ApexBriefingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/architecture': {
+      id: '/apex/architecture'
+      path: '/apex/architecture'
+      fullPath: '/apex/architecture'
+      preLoaderRoute: typeof ApexArchitectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/admin/users'
@@ -3062,6 +3342,19 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   VendorsRoute: VendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
+  ApexArchitectureRoute: ApexArchitectureRoute,
+  ApexBriefingRoute: ApexBriefingRoute,
+  ApexCompanyHealthRoute: ApexCompanyHealthRoute,
+  ApexDigitalTwinRoute: ApexDigitalTwinRoute,
+  ApexFinancialDnaRoute: ApexFinancialDnaRoute,
+  ApexHandoffRoute: ApexHandoffRoute,
+  ApexNavigationRoute: ApexNavigationRoute,
+  ApexOpportunitiesRoute: ApexOpportunitiesRoute,
+  ApexPersonasRoute: ApexPersonasRoute,
+  ApexRelationshipGraphRoute: ApexRelationshipGraphRoute,
+  ApexRolesRoute: ApexRolesRoute,
+  ApexTimelineRoute: ApexTimelineRoute,
+  ApexWidgetsRoute: ApexWidgetsRoute,
   AutomationActionPlansRoute: AutomationActionPlansRoute,
   AutomationApprovalsRoute: AutomationApprovalsRoute,
   AutomationBonusControlsRoute: AutomationBonusControlsRoute,
@@ -3137,6 +3430,7 @@ const rootRouteChildren: RootRouteChildren = {
   LedgerJournalsRoute: LedgerJournalsRoute,
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
+  ApexIndexRoute: ApexIndexRoute,
   BankingIndexRoute: BankingIndexRoute,
   CompensationIndexRoute: CompensationIndexRoute,
   FeatureRegistryIndexRoute: FeatureRegistryIndexRoute,
@@ -3166,13 +3460,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

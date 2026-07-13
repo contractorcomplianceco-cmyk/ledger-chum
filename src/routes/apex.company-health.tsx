@@ -26,14 +26,12 @@ export const Route = createFileRoute("/apex/company-health")({
               ["Controls", 5],
               ["Integration Health", 3],
               ["Risk", 2],
-            ].map(([label, w]) => (
-              <>
-                <div key={String(label) + "l"}>{label as string}</div>
-                <div key={String(label) + "w"} className="text-right font-mono text-muted-foreground">
-                  {w as number}%
-                </div>
-              </>
-            ))}
+            ].flatMap(([label, w]) => [
+              <div key={String(label) + "l"}>{label as string}</div>,
+              <div key={String(label) + "w"} className="text-right font-mono text-muted-foreground">
+                {w as number}%
+              </div>,
+            ])}
           </div>
         </Card>
       </ApexSection>

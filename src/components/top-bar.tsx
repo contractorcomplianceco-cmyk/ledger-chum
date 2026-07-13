@@ -10,12 +10,100 @@ import {
   Calendar,
   Plus,
   FlaskConical,
+  Sparkles,
+  MessageSquareText,
 } from "lucide-react";
+import { useRouterState } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommandPalette, useCommandPalette } from "@/components/command-palette";
 
 export function TopBar() {
   const { open, setOpen } = useCommandPalette();
+  const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const isApex = pathname === "/apex" || pathname.startsWith("/apex/");
+
+  if (isApex) {
+    return (
+      <>
+        <header className="sticky top-0 z-30 flex h-[68px] items-center gap-3 border-b border-border bg-surface/95 px-4 backdrop-blur-md sm:px-6">
+          <SidebarTrigger className="shrink-0 md:hidden" />
+
+          {/* Ask LedgerOS input — primary top-bar affordance in executive mode */}
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="relative flex h-10 min-w-0 flex-1 items-center gap-2 rounded-xl border border-border/70 bg-surface pl-10 pr-16 text-left text-[13px] text-muted-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-border-strong hover:text-foreground sm:max-w-[520px]"
+            aria-label="Ask LedgerOS"
+          >
+            <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 bg-gradient-brand-full bg-clip-text text-transparent" />
+            <span className="truncate">Ask LedgerOS anything…</span>
+            <kbd className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-muted px-1.5 py-0.5 font-mono text-[10.5px] font-medium text-muted-foreground sm:inline-flex">
+              ⌘K
+            </kbd>
+          </button>
+
+          <Badge
+            variant="outline"
+            className="hidden shrink-0 gap-1 rounded-full border-brand/25 bg-brand/5 px-2 py-0.5 text-[10px] font-medium text-brand xl:inline-flex"
+          >
+            <FlaskConical className="h-2.5 w-2.5" />
+            Demo Data
+          </Badge>
+
+          <div className="ml-auto flex items-center gap-1.5">
+            <Button
+              size="icon"
+              className="h-9 w-9 rounded-xl bg-gradient-brand-full text-white shadow-[0_6px_18px_-6px_rgba(99,102,241,0.55)] hover:brightness-110"
+              aria-label="Add"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+
+            <button
+              type="button"
+              aria-label="Notifications"
+              className="relative grid h-9 w-9 place-items-center rounded-xl border border-border/70 bg-surface text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-border-strong"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-gradient-brand-full px-1 text-[9.5px] font-semibold text-white">
+                7
+              </span>
+            </button>
+
+            <button
+              type="button"
+              aria-label="Messages"
+              className="hidden h-9 w-9 place-items-center rounded-xl border border-border/70 bg-surface text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-border-strong sm:grid"
+            >
+              <MessageSquareText className="h-4 w-4" />
+            </button>
+
+            <button
+              type="button"
+              aria-label="AI Shortcut"
+              onClick={() => setOpen(true)}
+              className="hidden h-9 w-9 place-items-center rounded-xl border border-brand/30 bg-brand/5 text-brand shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand/50 hover:bg-brand/10 sm:grid"
+            >
+              <Sparkles className="h-4 w-4" />
+            </button>
+
+            <div className="ml-1 hidden items-center gap-2 rounded-xl border border-border/70 bg-surface px-1.5 py-1 pr-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] sm:flex">
+              <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-gradient-brand-full text-[10.5px] font-semibold text-white">
+                RT
+              </div>
+              <div className="min-w-0 leading-tight">
+                <div className="truncate text-[12.5px] font-semibold text-foreground">Rose Taylor</div>
+                <div className="truncate text-[10.5px] text-muted-foreground">CEO</div>
+              </div>
+              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+          </div>
+        </header>
+
+        <CommandPalette open={open} onOpenChange={setOpen} />
+      </>
+    );
+  }
 
   return (
     <>

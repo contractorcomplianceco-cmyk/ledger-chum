@@ -16,8 +16,8 @@ export const APEX_TABS: Array<{ to: string; label: string; exact?: boolean }> = 
   { to: "/apex/timeline", label: "Financial Timeline" },
   { to: "/apex/digital-twin", label: "Digital Twin" },
   { to: "/apex/briefing", label: "Executive Briefing" },
-  { to: "/apex/personas", label: "AI Personas" },
-  { to: "/apex/roles", label: "Role Workspaces" },
+  { to: "/apex/ai-personas", label: "AI Personas" },
+  { to: "/apex/workspaces", label: "Role Workspaces" },
   { to: "/apex/handoff", label: "Production Handoff" },
   { to: "/apex/assets", label: "Illustrations" },
 ];

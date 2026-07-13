@@ -53,6 +53,16 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
+    id: "roles-personas",
+    title: "Roles & Personas",
+    icon: Users2,
+    defaultOpen: true,
+    items: [
+      { title: "Role Workspaces", to: "/apex/workspaces", icon: Users2, keywords: ["role", "workspace"] },
+      { title: "AI Personas", to: "/apex/ai-personas", icon: Bot, keywords: ["persona", "advisor", "ai"] },
+    ],
+  },
+  {
     id: "work-queues",
     title: "Work Queues",
     icon: CheckSquare,

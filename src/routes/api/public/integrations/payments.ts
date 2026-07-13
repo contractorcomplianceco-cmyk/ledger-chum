@@ -6,7 +6,6 @@ import {
   finishIntegrationCall,
   integrationResponse,
   recordIntegrationError,
-  writeAudit,
   IntegrationError,
   type IntegrationContext,
 } from "@/integrations/serviceconnect/verify.server";
@@ -44,34 +43,22 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
           if (!parsed.success) throw new IntegrationError(422, parsed.error.message);
           const p = parsed.data;
 
+          // Resolve customer by external id.
           const { data: customer } = await supabaseAdmin
-            .from("customers").select("id")
+            .from("customers")
+            .select("id")
             .eq("org_id", ctx.orgId)
             .eq("external_source", "serviceconnect")
             .eq("external_id", p.customer_external_id)
             .maybeSingle();
           if (!customer) throw new IntegrationError(422, "Customer not found");
 
-          const applyTotal = round2(p.apply_to.reduce((s, a) => s + a.amount, 0));
-          if (applyTotal > p.amount)
-            throw new IntegrationError(422, "apply_to sum exceeds payment amount");
-
-          const { data: pay, error } = await supabaseAdmin
-            .from("payments")
-            .insert({
-              org_id: ctx.orgId, customer_id: customer.id,
-              external_source: "serviceconnect", external_id: p.external_id,
-              payment_date: p.payment_date, method: p.method ?? null,
-              reference: p.reference ?? null, amount: p.amount,
-              unapplied_amount: round2(p.amount - applyTotal),
-              memo: p.memo ?? null,
-            }).select().single();
-          if (error) throw new IntegrationError(500, error.message);
-
-          const applications: unknown[] = [];
+          // Resolve invoice UUIDs from external ids.
+          const applyPairs: { invoice_id: string; amount: number }[] = [];
           for (const a of p.apply_to) {
             const { data: inv } = await supabaseAdmin
-              .from("invoices").select("id, balance, total")
+              .from("invoices")
+              .select("id")
               .eq("org_id", ctx.orgId)
               .eq("external_source", "serviceconnect")
               .eq("external_id", a.invoice_external_id)
@@ -82,40 +69,49 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
                 `Invoice ${a.invoice_external_id} not found`,
               );
             }
-            if (a.amount > inv.balance) {
-              throw new IntegrationError(
-                422,
-                `Application ${a.amount} exceeds invoice balance ${inv.balance}`,
-              );
-            }
-            const { data: app, error: aerr } = await supabaseAdmin
-              .from("payment_applications")
-              .insert({
-                payment_id: pay.id, invoice_id: inv.id,
-                amount_applied: a.amount,
-              }).select().single();
-            if (aerr) throw new IntegrationError(500, aerr.message);
-            applications.push(app);
-
-            const newBalance = round2(inv.balance - a.amount);
-            const newStatus =
-              newBalance === 0 ? "paid" : newBalance < inv.total ? "partial" : "sent";
-            await supabaseAdmin
-              .from("invoices")
-              .update({ balance: newBalance, status: newStatus, updated_at: new Date().toISOString() })
-              .eq("id", inv.id);
+            applyPairs.push({ invoice_id: inv.id, amount: a.amount });
           }
 
-          const auditId = await writeAudit(
-            ctx, "payment.recorded", "payment", pay.id, null,
-            { payment: pay, applications },
+          // Atomic RPC: creates payment + applications + posted journal + audit.
+          const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
+            "record_payment_with_posting" as never,
+            {
+              _org_id: ctx.orgId,
+              _customer_id: customer.id,
+              _external_source: "serviceconnect",
+              _external_id: p.external_id,
+              _payment_date: p.payment_date,
+              _method: p.method ?? null,
+              _reference: p.reference ?? null,
+              _amount: p.amount,
+              _memo: p.memo ?? null,
+              _apply_to: applyPairs,
+              _actor_type: "api_client",
+              _actor_id: ctx.clientId,
+              _correlation_id: ctx.correlationId,
+            } as never,
           );
+          if (rpcErr) {
+            // Duplicate payment (org_id, external_source, external_id) — return 409.
+            if (rpcErr.code === "23505") {
+              throw new IntegrationError(409, "Payment already recorded");
+            }
+            throw new IntegrationError(422, rpcErr.message);
+          }
+
+          const result = rpc as {
+            payment_id: string;
+            journal_id: string;
+            unapplied_amount: number;
+            applications: unknown[];
+          };
 
           const response = {
-            id: pay.id, amount: p.amount,
-            unapplied_amount: round2(p.amount - applyTotal),
-            applications: applications.length,
-            audit_event_id: auditId,
+            id: result.payment_id,
+            journal_id: result.journal_id,
+            amount: p.amount,
+            unapplied_amount: result.unapplied_amount,
+            applications: result.applications.length,
             correlation_id: ctx.correlationId,
           };
           await finishIntegrationCall(ctx, p.external_id, body, response);
@@ -128,5 +124,3 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
     },
   },
 });
-
-function round2(n: number) { return Math.round(n * 100) / 100; }

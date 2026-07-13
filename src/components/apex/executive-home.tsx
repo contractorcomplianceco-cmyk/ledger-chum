@@ -269,17 +269,22 @@ function CashPulseCard() {
           <DemoBadge />
         </div>
 
-        <div className="mt-3 grid gap-4 sm:grid-cols-[minmax(0,180px)_minmax(0,1fr)] sm:items-center">
-          <div className="relative mx-auto aspect-square w-40">
+        <div className="mt-3 grid gap-4 sm:grid-cols-[minmax(0,200px)_minmax(0,1fr)] sm:items-center">
+          <div className="relative mx-auto aspect-square w-48">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={p.slices}
                   dataKey="value"
-                  innerRadius={52}
-                  outerRadius={74}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="58%"
+                  outerRadius="92%"
+                  startAngle={90}
+                  endAngle={-270}
                   paddingAngle={2}
                   stroke="none"
+                  isAnimationActive={false}
                 >
                   {p.slices.map((s) => (
                     <Cell key={s.name} fill={s.color} />
@@ -292,7 +297,7 @@ function CashPulseCard() {
               <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                 True available
               </div>
-              <div className="text-[20px] font-bold tabular-nums text-foreground">
+              <div className="text-[22px] font-bold tabular-nums text-foreground">
                 {currency0(p.trueAvailable)}
               </div>
             </div>

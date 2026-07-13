@@ -110,7 +110,9 @@ export const setPeriodStatus = createServerFn({ method: "POST" })
       .eq("id", data.periodId)
       .single();
 
-    const patch: Record<string, unknown> = { status: data.status };
+    const patch: { status: typeof data.status; closed_at?: string; closed_by?: string } = {
+      status: data.status,
+    };
     if (data.status === "closed" || data.status === "locked") {
       patch.closed_at = new Date().toISOString();
       patch.closed_by = context.userId;

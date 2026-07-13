@@ -11,8 +11,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NAV_GROUPS, type NavGroup, type NavItem } from "@/lib/mock/nav";
+import { APEX_EXECUTIVE_NAV_GROUPS } from "@/lib/mock/nav-apex";
 import { LedgerLogo } from "@/components/ledger-logo";
 import { NavModeSwitcher } from "@/components/apex/nav-mode-switcher";
+import { useNavMode } from "@/hooks/use-nav-mode";
 import { useCurrentUser } from "@/hooks/use-permission";
 import { useFavorites, useGroupOpenState, useRecents } from "@/lib/nav-storage";
 import {

@@ -74,7 +74,7 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
 
           // Atomic RPC: creates payment + applications + posted journal + audit.
           const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
-            "record_payment_with_posting",
+            "record_payment_with_posting" as never,
             {
               _org_id: ctx.orgId,
               _customer_id: customer.id,
@@ -89,7 +89,7 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
               _actor_type: "api_client",
               _actor_id: ctx.clientId,
               _correlation_id: ctx.correlationId,
-            },
+            } as never,
           );
           if (rpcErr) {
             // Duplicate payment (org_id, external_source, external_id) — return 409.

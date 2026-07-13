@@ -242,6 +242,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Audit Log", to: "/audit", icon: ShieldCheck },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
       { title: "Production Readiness", to: "/readiness/production", icon: ShieldCheck },
+      { title: "Master Feature Registry", to: "/feature-registry", icon: ClipboardList, badge: "Planning", badgeTone: "violet", permission: "implementation.view" },
       // Implementation subsection — narrower gating than admin.view
       { title: "Implementation", to: "/implementation", icon: FileText, badge: "Phase 5", badgeTone: "violet", permission: "implementation.view" },
       { title: "API Map", to: "/implementation/api-map", icon: ScrollText, permission: "implementation.view" },

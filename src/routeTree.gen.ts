@@ -113,6 +113,7 @@ import { Route as CompensationAttributionIndexRouteImport } from './routes/compe
 import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
 import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
 import { Route as CompensationParticipantsIdRouteImport } from './routes/compensation.participants.$id'
+import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
 import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
 import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
@@ -653,6 +654,12 @@ const CompensationParticipantsIdRoute =
     path: '/compensation/participants/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompensationAttributionEvidenceRoute =
+  CompensationAttributionEvidenceRouteImport.update({
+    id: '/compensation/attribution/evidence',
+    path: '/compensation/attribution/evidence',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompensationAttributionConflictsRoute =
   CompensationAttributionConflictsRouteImport.update({
     id: '/compensation/attribution/conflicts',
@@ -779,6 +786,7 @@ export interface FileRoutesByFullPath {
   '/invoices/': typeof InvoicesIndexRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
+  '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
@@ -886,6 +894,7 @@ export interface FileRoutesByTo {
   '/invoices': typeof InvoicesIndexRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
+  '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
@@ -997,6 +1006,7 @@ export interface FileRoutesById {
   '/invoices/': typeof InvoicesIndexRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
+  '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
@@ -1109,6 +1119,7 @@ export interface FileRouteTypes {
     | '/invoices/'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
+    | '/compensation/attribution/evidence'
     | '/compensation/participants/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
@@ -1216,6 +1227,7 @@ export interface FileRouteTypes {
     | '/invoices'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
+    | '/compensation/attribution/evidence'
     | '/compensation/participants/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
@@ -1326,6 +1338,7 @@ export interface FileRouteTypes {
     | '/invoices/'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
+    | '/compensation/attribution/evidence'
     | '/compensation/participants/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
@@ -1412,6 +1425,7 @@ export interface RootRouteChildren {
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
   CompensationAttributionConflictsRoute: typeof CompensationAttributionConflictsRoute
+  CompensationAttributionEvidenceRoute: typeof CompensationAttributionEvidenceRoute
   CompensationParticipantsIdRoute: typeof CompensationParticipantsIdRoute
   CompensationPlansIdRoute: typeof CompensationPlansIdRouteWithChildren
   CompensationPlansNewRoute: typeof CompensationPlansNewRoute
@@ -2150,6 +2164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationParticipantsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/attribution/evidence': {
+      id: '/compensation/attribution/evidence'
+      path: '/compensation/attribution/evidence'
+      fullPath: '/compensation/attribution/evidence'
+      preLoaderRoute: typeof CompensationAttributionEvidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/attribution/conflicts': {
       id: '/compensation/attribution/conflicts'
       path: '/compensation/attribution/conflicts'
@@ -2369,6 +2390,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntelligenceIndexRoute: IntelligenceIndexRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,
   CompensationAttributionConflictsRoute: CompensationAttributionConflictsRoute,
+  CompensationAttributionEvidenceRoute: CompensationAttributionEvidenceRoute,
   CompensationParticipantsIdRoute: CompensationParticipantsIdRoute,
   CompensationPlansIdRoute: CompensationPlansIdRouteWithChildren,
   CompensationPlansNewRoute: CompensationPlansNewRoute,

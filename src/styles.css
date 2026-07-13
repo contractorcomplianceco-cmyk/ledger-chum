@@ -273,6 +273,33 @@
 @utility bg-gradient-quick-actions {
   background-image: var(--gradient-quick-actions);
 }
+@utility bg-gradient-cash {
+  background-image: var(--gradient-cash);
+}
+@utility bg-gradient-profit {
+  background-image: var(--gradient-profit);
+}
+@utility bg-gradient-growth {
+  background-image: var(--gradient-growth);
+}
+@utility bg-gradient-attention {
+  background-image: var(--gradient-attention);
+}
+@utility bg-gradient-briefing {
+  background-image: var(--gradient-briefing);
+}
+@utility bg-tint-cash {
+  background-image: var(--tint-cash);
+}
+@utility bg-tint-profit {
+  background-image: var(--tint-profit);
+}
+@utility bg-tint-growth {
+  background-image: var(--tint-growth);
+}
+@utility bg-tint-attention {
+  background-image: var(--tint-attention);
+}
 @utility bg-gradient-surface {
   background-image: var(--gradient-surface);
 }

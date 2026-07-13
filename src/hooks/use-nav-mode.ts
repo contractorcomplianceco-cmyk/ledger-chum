@@ -7,8 +7,6 @@ const EVENT = "ledgeros:nav-mode-change";
 
 function readInitial(): NavMode {
   if (typeof window === "undefined") return "operational";
-  // On /apex routes, default to executive mode for the Executive Home experience.
-  if (window.location.pathname.startsWith("/apex")) return "executive";
   try {
     const v = window.localStorage.getItem(STORAGE_KEY);
     return v === "executive" ? "executive" : "operational";

@@ -170,9 +170,14 @@ import { Route as CompensationCalculationsIdRouteImport } from './routes/compens
 import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
 import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
 import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
+import { Route as ApexTimelineIdRouteImport } from './routes/apex.timeline.$id'
+import { Route as ApexOpportunitiesIdRouteImport } from './routes/apex.opportunities.$id'
+import { Route as ApexFinancialDnaIdRouteImport } from './routes/apex.financial-dna.$id'
+import { Route as ApexDigitalTwinScenariosRouteImport } from './routes/apex.digital-twin.scenarios'
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
 import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
+import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
 
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
@@ -1013,6 +1018,27 @@ const CompensationAttributionIdRoute =
     path: '/compensation/attribution/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApexTimelineIdRoute = ApexTimelineIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexTimelineRoute,
+} as any)
+const ApexOpportunitiesIdRoute = ApexOpportunitiesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexOpportunitiesRoute,
+} as any)
+const ApexFinancialDnaIdRoute = ApexFinancialDnaIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexFinancialDnaRoute,
+} as any)
+const ApexDigitalTwinScenariosRoute =
+  ApexDigitalTwinScenariosRouteImport.update({
+    id: '/scenarios',
+    path: '/scenarios',
+    getParentRoute: () => ApexDigitalTwinRoute,
+  } as any)
 const CompensationPlansIdVersionsRoute =
   CompensationPlansIdVersionsRouteImport.update({
     id: '/versions',
@@ -1030,6 +1056,12 @@ const CompensationCalculationsIdPreviewRoute =
     id: '/preview',
     path: '/preview',
     getParentRoute: () => CompensationCalculationsIdRoute,
+  } as any)
+const ApexDigitalTwinScenariosIdRoute =
+  ApexDigitalTwinScenariosIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => ApexDigitalTwinScenariosRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -1055,18 +1087,18 @@ export interface FileRoutesByFullPath {
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
-  '/apex/digital-twin': typeof ApexDigitalTwinRoute
-  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRouteWithChildren
+  '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
-  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
   '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
-  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/timeline': typeof ApexTimelineRouteWithChildren
   '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
@@ -1174,6 +1206,10 @@ export interface FileRoutesByFullPath {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
+  '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
+  '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
+  '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1194,6 +1230,7 @@ export interface FileRoutesByFullPath {
   '/compensation/payment-batches/': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
+  '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1218,18 +1255,18 @@ export interface FileRoutesByTo {
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
-  '/apex/digital-twin': typeof ApexDigitalTwinRoute
-  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRouteWithChildren
+  '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
-  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
   '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
-  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/timeline': typeof ApexTimelineRouteWithChildren
   '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
@@ -1337,6 +1374,10 @@ export interface FileRoutesByTo {
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
+  '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
+  '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
+  '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
+  '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1357,6 +1398,7 @@ export interface FileRoutesByTo {
   '/compensation/payment-batches': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans': typeof CompensationPlansIndexRoute
   '/compensation/statements': typeof CompensationStatementsIndexRoute
+  '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1385,18 +1427,18 @@ export interface FileRoutesById {
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
-  '/apex/digital-twin': typeof ApexDigitalTwinRoute
-  '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/digital-twin': typeof ApexDigitalTwinRouteWithChildren
+  '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
-  '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
   '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
-  '/apex/timeline': typeof ApexTimelineRoute
+  '/apex/timeline': typeof ApexTimelineRouteWithChildren
   '/apex/widgets': typeof ApexWidgetsRoute
   '/automation/action-plans': typeof AutomationActionPlansRoute
   '/automation/approvals': typeof AutomationApprovalsRoute
@@ -1504,6 +1546,10 @@ export interface FileRoutesById {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
+  '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
+  '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
+  '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1524,6 +1570,7 @@ export interface FileRoutesById {
   '/compensation/payment-batches/': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
+  '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1672,6 +1719,10 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/apex/digital-twin/scenarios'
+    | '/apex/financial-dna/$id'
+    | '/apex/opportunities/$id'
+    | '/apex/timeline/$id'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -1692,6 +1743,7 @@ export interface FileRouteTypes {
     | '/compensation/payment-batches/'
     | '/compensation/plans/'
     | '/compensation/statements/'
+    | '/apex/digital-twin/scenarios/$id'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -1835,6 +1887,10 @@ export interface FileRouteTypes {
     | '/implementation'
     | '/intelligence'
     | '/invoices'
+    | '/apex/digital-twin/scenarios'
+    | '/apex/financial-dna/$id'
+    | '/apex/opportunities/$id'
+    | '/apex/timeline/$id'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -1855,6 +1911,7 @@ export interface FileRouteTypes {
     | '/compensation/payment-batches'
     | '/compensation/plans'
     | '/compensation/statements'
+    | '/apex/digital-twin/scenarios/$id'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -2001,6 +2058,10 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/apex/digital-twin/scenarios'
+    | '/apex/financial-dna/$id'
+    | '/apex/opportunities/$id'
+    | '/apex/timeline/$id'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -2021,6 +2082,7 @@ export interface FileRouteTypes {
     | '/compensation/payment-batches/'
     | '/compensation/plans/'
     | '/compensation/statements/'
+    | '/apex/digital-twin/scenarios/$id'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -2049,18 +2111,18 @@ export interface RootRouteChildren {
   ApexBriefingRoute: typeof ApexBriefingRoute
   ApexCompanyRoute: typeof ApexCompanyRoute
   ApexCompanyHealthRoute: typeof ApexCompanyHealthRoute
-  ApexDigitalTwinRoute: typeof ApexDigitalTwinRoute
-  ApexFinancialDnaRoute: typeof ApexFinancialDnaRoute
+  ApexDigitalTwinRoute: typeof ApexDigitalTwinRouteWithChildren
+  ApexFinancialDnaRoute: typeof ApexFinancialDnaRouteWithChildren
   ApexGrowthRoute: typeof ApexGrowthRoute
   ApexHandoffRoute: typeof ApexHandoffRoute
   ApexMoneyRoute: typeof ApexMoneyRoute
   ApexNavigationRoute: typeof ApexNavigationRoute
-  ApexOpportunitiesRoute: typeof ApexOpportunitiesRoute
+  ApexOpportunitiesRoute: typeof ApexOpportunitiesRouteWithChildren
   ApexPeopleRoute: typeof ApexPeopleRoute
   ApexPersonasRoute: typeof ApexPersonasRoute
   ApexRelationshipGraphRoute: typeof ApexRelationshipGraphRoute
   ApexRolesRoute: typeof ApexRolesRoute
-  ApexTimelineRoute: typeof ApexTimelineRoute
+  ApexTimelineRoute: typeof ApexTimelineRouteWithChildren
   ApexWidgetsRoute: typeof ApexWidgetsRoute
   AutomationActionPlansRoute: typeof AutomationActionPlansRoute
   AutomationApprovalsRoute: typeof AutomationApprovalsRoute
@@ -3294,6 +3356,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationAttributionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/timeline/$id': {
+      id: '/apex/timeline/$id'
+      path: '/$id'
+      fullPath: '/apex/timeline/$id'
+      preLoaderRoute: typeof ApexTimelineIdRouteImport
+      parentRoute: typeof ApexTimelineRoute
+    }
+    '/apex/opportunities/$id': {
+      id: '/apex/opportunities/$id'
+      path: '/$id'
+      fullPath: '/apex/opportunities/$id'
+      preLoaderRoute: typeof ApexOpportunitiesIdRouteImport
+      parentRoute: typeof ApexOpportunitiesRoute
+    }
+    '/apex/financial-dna/$id': {
+      id: '/apex/financial-dna/$id'
+      path: '/$id'
+      fullPath: '/apex/financial-dna/$id'
+      preLoaderRoute: typeof ApexFinancialDnaIdRouteImport
+      parentRoute: typeof ApexFinancialDnaRoute
+    }
+    '/apex/digital-twin/scenarios': {
+      id: '/apex/digital-twin/scenarios'
+      path: '/scenarios'
+      fullPath: '/apex/digital-twin/scenarios'
+      preLoaderRoute: typeof ApexDigitalTwinScenariosRouteImport
+      parentRoute: typeof ApexDigitalTwinRoute
+    }
     '/compensation/plans/$id/versions': {
       id: '/compensation/plans/$id/versions'
       path: '/versions'
@@ -3314,6 +3404,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/compensation/calculations/$id/preview'
       preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
       parentRoute: typeof CompensationCalculationsIdRoute
+    }
+    '/apex/digital-twin/scenarios/$id': {
+      id: '/apex/digital-twin/scenarios/$id'
+      path: '/$id'
+      fullPath: '/apex/digital-twin/scenarios/$id'
+      preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
+      parentRoute: typeof ApexDigitalTwinScenariosRoute
     }
   }
 }
@@ -3417,6 +3514,66 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
   InvoicesRouteChildren,
 )
 
+interface ApexDigitalTwinScenariosRouteChildren {
+  ApexDigitalTwinScenariosIdRoute: typeof ApexDigitalTwinScenariosIdRoute
+}
+
+const ApexDigitalTwinScenariosRouteChildren: ApexDigitalTwinScenariosRouteChildren =
+  {
+    ApexDigitalTwinScenariosIdRoute: ApexDigitalTwinScenariosIdRoute,
+  }
+
+const ApexDigitalTwinScenariosRouteWithChildren =
+  ApexDigitalTwinScenariosRoute._addFileChildren(
+    ApexDigitalTwinScenariosRouteChildren,
+  )
+
+interface ApexDigitalTwinRouteChildren {
+  ApexDigitalTwinScenariosRoute: typeof ApexDigitalTwinScenariosRouteWithChildren
+}
+
+const ApexDigitalTwinRouteChildren: ApexDigitalTwinRouteChildren = {
+  ApexDigitalTwinScenariosRoute: ApexDigitalTwinScenariosRouteWithChildren,
+}
+
+const ApexDigitalTwinRouteWithChildren = ApexDigitalTwinRoute._addFileChildren(
+  ApexDigitalTwinRouteChildren,
+)
+
+interface ApexFinancialDnaRouteChildren {
+  ApexFinancialDnaIdRoute: typeof ApexFinancialDnaIdRoute
+}
+
+const ApexFinancialDnaRouteChildren: ApexFinancialDnaRouteChildren = {
+  ApexFinancialDnaIdRoute: ApexFinancialDnaIdRoute,
+}
+
+const ApexFinancialDnaRouteWithChildren =
+  ApexFinancialDnaRoute._addFileChildren(ApexFinancialDnaRouteChildren)
+
+interface ApexOpportunitiesRouteChildren {
+  ApexOpportunitiesIdRoute: typeof ApexOpportunitiesIdRoute
+}
+
+const ApexOpportunitiesRouteChildren: ApexOpportunitiesRouteChildren = {
+  ApexOpportunitiesIdRoute: ApexOpportunitiesIdRoute,
+}
+
+const ApexOpportunitiesRouteWithChildren =
+  ApexOpportunitiesRoute._addFileChildren(ApexOpportunitiesRouteChildren)
+
+interface ApexTimelineRouteChildren {
+  ApexTimelineIdRoute: typeof ApexTimelineIdRoute
+}
+
+const ApexTimelineRouteChildren: ApexTimelineRouteChildren = {
+  ApexTimelineIdRoute: ApexTimelineIdRoute,
+}
+
+const ApexTimelineRouteWithChildren = ApexTimelineRoute._addFileChildren(
+  ApexTimelineRouteChildren,
+)
+
 interface CompensationCalculationsIdRouteChildren {
   CompensationCalculationsIdPreviewRoute: typeof CompensationCalculationsIdPreviewRoute
 }
@@ -3468,18 +3625,18 @@ const rootRouteChildren: RootRouteChildren = {
   ApexBriefingRoute: ApexBriefingRoute,
   ApexCompanyRoute: ApexCompanyRoute,
   ApexCompanyHealthRoute: ApexCompanyHealthRoute,
-  ApexDigitalTwinRoute: ApexDigitalTwinRoute,
-  ApexFinancialDnaRoute: ApexFinancialDnaRoute,
+  ApexDigitalTwinRoute: ApexDigitalTwinRouteWithChildren,
+  ApexFinancialDnaRoute: ApexFinancialDnaRouteWithChildren,
   ApexGrowthRoute: ApexGrowthRoute,
   ApexHandoffRoute: ApexHandoffRoute,
   ApexMoneyRoute: ApexMoneyRoute,
   ApexNavigationRoute: ApexNavigationRoute,
-  ApexOpportunitiesRoute: ApexOpportunitiesRoute,
+  ApexOpportunitiesRoute: ApexOpportunitiesRouteWithChildren,
   ApexPeopleRoute: ApexPeopleRoute,
   ApexPersonasRoute: ApexPersonasRoute,
   ApexRelationshipGraphRoute: ApexRelationshipGraphRoute,
   ApexRolesRoute: ApexRolesRoute,
-  ApexTimelineRoute: ApexTimelineRoute,
+  ApexTimelineRoute: ApexTimelineRouteWithChildren,
   ApexWidgetsRoute: ApexWidgetsRoute,
   AutomationActionPlansRoute: AutomationActionPlansRoute,
   AutomationApprovalsRoute: AutomationApprovalsRoute,

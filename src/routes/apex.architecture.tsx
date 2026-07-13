@@ -1,6 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ApexPage, ApexSection } from "@/components/apex/apex-page";
 import { Card } from "@/components/ui/card";
+import { EXECUTIVE_WORKSPACES } from "@/lib/mock/nav-executive";
+
+const PILLARS = [
+  { q: "Can we safely spend money?", ws: "Money" },
+  { q: "Did we make money?", ws: "Money" },
+  { q: "Why did profit change?", ws: "Money" },
+  { q: "What requires attention today?", ws: "Home" },
+  { q: "Where are we leaking revenue or margin?", ws: "Growth" },
+  { q: "What is financially unhealthy?", ws: "Home" },
+  { q: "Can we hire?", ws: "People" },
+  { q: "Can we expand?", ws: "Growth" },
+  { q: "Can we afford a proposed decision?", ws: "Money" },
+  { q: "What is the smartest next action?", ws: "Home" },
+];
 
 export const Route = createFileRoute("/apex/architecture")({
   head: () => ({ meta: [{ title: "Experience Architecture — Project APEX" }] }),

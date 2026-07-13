@@ -42,12 +42,19 @@ export function AppSidebar() {
   const user = useCurrentUser();
   const { favorites, toggle: toggleFavorite, isFavorite } = useFavorites();
   const recents = useRecents();
+  const { mode } = useNavMode();
+
+  // /apex and all /apex/* routes always render Executive navigation.
+  const forceExecutive = pathname === "/apex" || pathname.startsWith("/apex/");
+  const effectiveMode: "operational" | "executive" =
+    forceExecutive ? "executive" : mode;
+  const activeGroups = effectiveMode === "executive" ? APEX_EXECUTIVE_NAV_GROUPS : NAV_GROUPS;
 
   const groupDefaults = useMemo(() => {
     const d: Record<string, boolean> = {};
-    for (const g of NAV_GROUPS) d[g.id] = g.defaultOpen ?? false;
+    for (const g of activeGroups) d[g.id] = g.defaultOpen ?? false;
     return d;
-  }, []);
+  }, [activeGroups]);
   const { state: groupOpen, setOpen: setGroupOpen } = useGroupOpenState(groupDefaults);
 
   const isActive = (to: string) =>
@@ -55,13 +62,13 @@ export function AppSidebar() {
 
   // Filter items + whole groups by permission
   const visibleGroups: NavGroup[] = useMemo(() => {
-    return NAV_GROUPS.map((group) => ({
+    return activeGroups.map((group) => ({
       ...group,
       items: group.items.filter((i) => !i.hidden && hasPermission(user.permissions, i.permission)),
     }))
       .filter((g) => hasPermission(user.permissions, g.permission))
       .filter((g) => g.items.length > 0);
-  }, [user.permissions]);
+  }, [user.permissions, activeGroups]);
 
   const allItems = useMemo(() => visibleGroups.flatMap((g) => g.items), [visibleGroups]);
   const favoriteItems = favorites

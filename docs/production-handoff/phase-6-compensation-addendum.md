@@ -1,6 +1,6 @@
 # Phase 6 — Compensation Intelligence Platform Addendum
 
-Status: **Assessment only.** Extends `phase-6-impact-assessment.md` (§13 disbursement taxonomy still governs). No broad UI/API implementation until Rose signs off on §22 questions below. Reference: Tara Casella proposal (monthly retainer step-up, 5% first-year collected retained revenue, milestone bonuses, 2.5%/1.0% recurring software participation, investor/equity paths).
+Status: **Assessment + policy defaults approved (2026-07-13).** Extends `phase-6-impact-assessment.md` (§13 disbursement taxonomy still governs). Sub-phase 6B-1 (types + policy scaffolding) landed; 6B-2 → 6B-6 still queued. Reference: Tara Casella proposal (monthly retainer step-up, 5% first-year collected retained revenue, milestone bonuses, 2.5%/1.0% recurring software participation, investor/equity paths).
 
 Every commission, participation, bonus, retainer, stipend, milestone, and equity record in the platform routes through this addendum. It supersedes the narrow "commissions" language in prior Phase 6 drafts — the module is now **Compensation Intelligence**, and `commissions.ts` becomes one facet of it.
 

@@ -7,11 +7,25 @@ import { toast } from "sonner";
 import { DEMO_MUTATION_MESSAGE } from "@/lib/api/types";
 
 const SUBNAV: Array<{ to: string; label: string; matchStartsWith?: string }> = [
+  { to: "/compensation", label: "Overview" },
   { to: "/compensation/plans", label: "Plans", matchStartsWith: "/compensation/plans" },
   { to: "/compensation/participants", label: "Participants", matchStartsWith: "/compensation/participants" },
   { to: "/compensation/attribution", label: "Attribution", matchStartsWith: "/compensation/attribution" },
   { to: "/compensation/eligibility", label: "Eligibility" },
   { to: "/compensation/preview", label: "Plan Preview" },
+  { to: "/compensation/calculations", label: "Calculations", matchStartsWith: "/compensation/calculations" },
+  { to: "/compensation/verification", label: "Verification" },
+  { to: "/compensation/approvals", label: "Approvals" },
+  { to: "/compensation/reserves", label: "Reserves" },
+  { to: "/compensation/payables", label: "Payables", matchStartsWith: "/compensation/payables" },
+  { to: "/compensation/payment-batches", label: "Batches", matchStartsWith: "/compensation/payment-batches" },
+  { to: "/compensation/statements", label: "Statements", matchStartsWith: "/compensation/statements" },
+  { to: "/compensation/holdbacks", label: "Holdbacks" },
+  { to: "/compensation/adjustments", label: "Adjustments" },
+  { to: "/compensation/clawbacks", label: "Clawbacks" },
+  { to: "/compensation/disputes", label: "Disputes", matchStartsWith: "/compensation/disputes" },
+  { to: "/compensation/reconciliation", label: "Reconciliation" },
+  { to: "/compensation/audit", label: "Audit" },
 ];
 
 export function CompensationShell({

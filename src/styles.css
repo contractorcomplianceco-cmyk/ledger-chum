@@ -225,6 +225,19 @@
   --gradient-brand-vio: linear-gradient(135deg, #8b5cf6, #c084fc);
   --gradient-quick-actions: linear-gradient(180deg, #0d1b34 0%, #060e21 100%);
 
+  /* APEX pulse category gradients — cash/profit/growth/attention */
+  --gradient-cash: linear-gradient(135deg, #0ea5b7 0%, #22d3ee 55%, #7dd3fc 100%);
+  --gradient-profit: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #c084fc 100%);
+  --gradient-growth: linear-gradient(135deg, #2563eb 0%, #06b6d4 55%, #34d399 100%);
+  --gradient-attention: linear-gradient(135deg, #f97316 0%, #fb7185 55%, #f43f5e 100%);
+  --gradient-briefing: linear-gradient(160deg, #0b1a36 0%, #0a1226 60%, #060d1f 100%);
+
+  /* APEX pulse tint backdrops (very light, for card wash) */
+  --tint-cash: linear-gradient(180deg, rgba(34,211,238,0.10), rgba(34,211,238,0.02));
+  --tint-profit: linear-gradient(180deg, rgba(139,92,246,0.10), rgba(139,92,246,0.02));
+  --tint-growth: linear-gradient(180deg, rgba(37,99,235,0.09), rgba(52,211,153,0.02));
+  --tint-attention: linear-gradient(180deg, rgba(249,115,22,0.10), rgba(244,63,94,0.02));
+
   --shadow-card: 0 4px 18px rgba(15, 23, 42, 0.06);
   --shadow-card-hover: 0 8px 26px rgba(15, 23, 42, 0.10);
   --shadow-side-active: 0 8px 24px -8px rgba(59, 91, 255, 0.55);

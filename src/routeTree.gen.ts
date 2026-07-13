@@ -110,6 +110,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
 import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
+import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
 
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
@@ -629,6 +630,12 @@ const CompensationPlansIdVersionsRoute =
     path: '/versions',
     getParentRoute: () => CompensationPlansIdRoute,
   } as any)
+const CompensationPlansIdParticipantsRoute =
+  CompensationPlansIdParticipantsRouteImport.update({
+    id: '/participants',
+    path: '/participants',
+    getParentRoute: () => CompensationPlansIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -731,6 +738,7 @@ export interface FileRoutesByFullPath {
   '/invoices/': typeof InvoicesIndexRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/': typeof CompensationPlansIndexRoute
+  '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
 export interface FileRoutesByTo {
@@ -831,6 +839,7 @@ export interface FileRoutesByTo {
   '/invoices': typeof InvoicesIndexRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans': typeof CompensationPlansIndexRoute
+  '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
 export interface FileRoutesById {
@@ -935,6 +944,7 @@ export interface FileRoutesById {
   '/invoices/': typeof InvoicesIndexRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/': typeof CompensationPlansIndexRoute
+  '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
 export interface FileRouteTypes {
@@ -1040,6 +1050,7 @@ export interface FileRouteTypes {
     | '/invoices/'
     | '/compensation/plans/$id'
     | '/compensation/plans/'
+    | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1140,6 +1151,7 @@ export interface FileRouteTypes {
     | '/invoices'
     | '/compensation/plans/$id'
     | '/compensation/plans'
+    | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   id:
     | '__root__'
@@ -1243,6 +1255,7 @@ export interface FileRouteTypes {
     | '/invoices/'
     | '/compensation/plans/$id'
     | '/compensation/plans/'
+    | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   fileRoutesById: FileRoutesById
 }
@@ -2033,6 +2046,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationPlansIdVersionsRouteImport
       parentRoute: typeof CompensationPlansIdRoute
     }
+    '/compensation/plans/$id/participants': {
+      id: '/compensation/plans/$id/participants'
+      path: '/participants'
+      fullPath: '/compensation/plans/$id/participants'
+      preLoaderRoute: typeof CompensationPlansIdParticipantsRouteImport
+      parentRoute: typeof CompensationPlansIdRoute
+    }
   }
 }
 
@@ -2136,10 +2156,12 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
 )
 
 interface CompensationPlansIdRouteChildren {
+  CompensationPlansIdParticipantsRoute: typeof CompensationPlansIdParticipantsRoute
   CompensationPlansIdVersionsRoute: typeof CompensationPlansIdVersionsRoute
 }
 
 const CompensationPlansIdRouteChildren: CompensationPlansIdRouteChildren = {
+  CompensationPlansIdParticipantsRoute: CompensationPlansIdParticipantsRoute,
   CompensationPlansIdVersionsRoute: CompensationPlansIdVersionsRoute,
 }
 

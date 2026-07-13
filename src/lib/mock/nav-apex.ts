@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   AlertTriangle,
   CheckSquare,
+  CalendarClock,
 } from "lucide-react";
 import type { NavGroup } from "@/lib/mock/nav";
 
@@ -46,8 +47,9 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
       { title: "Opportunity Engine", to: "/apex/opportunities", icon: Target },
       { title: "Company Health", to: "/apex/company-health", icon: Gauge },
       { title: "Financial DNA", to: "/apex/financial-dna", icon: Dna },
-      { title: "Digital Twin", to: "/apex/digital-twin", icon: Bot },
+      { title: "Financial Timeline", to: "/apex/timeline", icon: CalendarClock },
       { title: "Relationship Graph", to: "/apex/relationship-graph", icon: Network },
+      { title: "Digital Twin", to: "/apex/digital-twin", icon: Bot },
     ],
   },
   {

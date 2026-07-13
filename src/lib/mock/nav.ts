@@ -96,7 +96,8 @@ export const NAV_GROUPS: NavGroup[] = [
     icon: Compass,
     defaultOpen: true,
     items: [
-      { title: "Dashboard", to: "/", icon: LayoutDashboard, keywords: ["home", "kpi"] },
+      { title: "Operational Dashboard", to: "/dashboard", icon: LayoutDashboard, keywords: ["home", "kpi", "operational"] },
+      { title: "Executive Home", to: "/apex", icon: LayoutDashboard, keywords: ["executive", "apex", "home"] },
     ],
   },
   {

@@ -76,6 +76,7 @@ import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-reg
 import { Route as FeatureRegistryNavigationRouteImport } from './routes/feature-registry.navigation'
 import { Route as FeatureRegistryLegalAccountingRouteImport } from './routes/feature-registry.legal-accounting'
 import { Route as FeatureRegistryIntegrationsRouteImport } from './routes/feature-registry.integrations'
+import { Route as FeatureRegistryDependenciesRouteImport } from './routes/feature-registry.dependencies'
 import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
 import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
 import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
@@ -494,6 +495,12 @@ const FeatureRegistryIntegrationsRoute =
   FeatureRegistryIntegrationsRouteImport.update({
     id: '/feature-registry/integrations',
     path: '/feature-registry/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryDependenciesRoute =
+  FeatureRegistryDependenciesRouteImport.update({
+    id: '/feature-registry/dependencies',
+    path: '/feature-registry/dependencies',
     getParentRoute: () => rootRouteImport,
   } as any)
 const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
@@ -959,6 +966,7 @@ export interface FileRoutesByFullPath {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
   '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
@@ -1099,6 +1107,7 @@ export interface FileRoutesByTo {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
   '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
@@ -1243,6 +1252,7 @@ export interface FileRoutesById {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
   '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
@@ -1388,6 +1398,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/dependencies'
     | '/feature-registry/integrations'
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
@@ -1528,6 +1539,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/dependencies'
     | '/feature-registry/integrations'
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
@@ -1671,6 +1683,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/dependencies'
     | '/feature-registry/integrations'
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
@@ -1797,6 +1810,7 @@ export interface RootRouteChildren {
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
   FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
+  FeatureRegistryDependenciesRoute: typeof FeatureRegistryDependenciesRoute
   FeatureRegistryIntegrationsRoute: typeof FeatureRegistryIntegrationsRoute
   FeatureRegistryLegalAccountingRoute: typeof FeatureRegistryLegalAccountingRoute
   FeatureRegistryNavigationRoute: typeof FeatureRegistryNavigationRoute
@@ -2333,6 +2347,13 @@ declare module '@tanstack/react-router' {
       path: '/feature-registry/integrations'
       fullPath: '/feature-registry/integrations'
       preLoaderRoute: typeof FeatureRegistryIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/dependencies': {
+      id: '/feature-registry/dependencies'
+      path: '/feature-registry/dependencies'
+      fullPath: '/feature-registry/dependencies'
+      preLoaderRoute: typeof FeatureRegistryDependenciesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-registry/built': {
@@ -3032,6 +3053,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
   FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,
+  FeatureRegistryDependenciesRoute: FeatureRegistryDependenciesRoute,
   FeatureRegistryIntegrationsRoute: FeatureRegistryIntegrationsRoute,
   FeatureRegistryLegalAccountingRoute: FeatureRegistryLegalAccountingRoute,
   FeatureRegistryNavigationRoute: FeatureRegistryNavigationRoute,

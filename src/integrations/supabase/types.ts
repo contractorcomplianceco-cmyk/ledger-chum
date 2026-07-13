@@ -76,32 +76,50 @@ export type Database = {
         Row: {
           active: boolean
           created_at: string
+          created_by: string | null
+          description: string | null
+          expires_at: string | null
           id: string
           key_hash: string
           key_prefix: string
           last_used_at: string | null
           name: string
           org_id: string
+          provider: string
+          revoked_at: string | null
+          updated_at: string
         }
         Insert: {
           active?: boolean
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
           id?: string
           key_hash: string
           key_prefix: string
           last_used_at?: string | null
           name: string
           org_id: string
+          provider?: string
+          revoked_at?: string | null
+          updated_at?: string
         }
         Update: {
           active?: boolean
           created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
           id?: string
           key_hash?: string
           key_prefix?: string
           last_used_at?: string | null
           name?: string
           org_id?: string
+          provider?: string
+          revoked_at?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -115,6 +133,7 @@ export type Database = {
       }
       audit_events: {
         Row: {
+          action: string | null
           actor_id: string
           actor_type: string
           after: Json | null
@@ -124,10 +143,13 @@ export type Database = {
           event_type: string
           id: string
           org_id: string
+          reason: string | null
+          source: string | null
           target_id: string
           target_type: string
         }
         Insert: {
+          action?: string | null
           actor_id: string
           actor_type: string
           after?: Json | null
@@ -137,10 +159,13 @@ export type Database = {
           event_type: string
           id?: string
           org_id: string
+          reason?: string | null
+          source?: string | null
           target_id: string
           target_type: string
         }
         Update: {
+          action?: string | null
           actor_id?: string
           actor_type?: string
           after?: Json | null
@@ -150,6 +175,8 @@ export type Database = {
           event_type?: string
           id?: string
           org_id?: string
+          reason?: string | null
+          source?: string | null
           target_id?: string
           target_type?: string
         }
@@ -306,6 +333,104 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "customers_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fiscal_periods: {
+        Row: {
+          closed_at: string | null
+          closed_by: string | null
+          created_at: string
+          end_date: string
+          fiscal_year_id: string
+          id: string
+          org_id: string
+          period_number: number
+          start_date: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          end_date: string
+          fiscal_year_id: string
+          id?: string
+          org_id: string
+          period_number: number
+          start_date: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          end_date?: string
+          fiscal_year_id?: string
+          id?: string
+          org_id?: string
+          period_number?: number
+          start_date?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fiscal_periods_fiscal_year_id_fkey"
+            columns: ["fiscal_year_id"]
+            isOneToOne: false
+            referencedRelation: "fiscal_years"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fiscal_periods_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fiscal_years: {
+        Row: {
+          created_at: string
+          end_date: string
+          id: string
+          org_id: string
+          start_date: string
+          status: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          end_date: string
+          id?: string
+          org_id: string
+          start_date: string
+          status?: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          end_date?: string
+          id?: string
+          org_id?: string
+          start_date?: string
+          status?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fiscal_years_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
@@ -641,24 +766,98 @@ export type Database = {
           },
         ]
       }
-      organizations: {
+      organization_settings: {
         Row: {
+          accounting_basis: string
+          audit_retention_months: number
+          close_policy: Json
           created_at: string
+          default_currency: string
+          fiscal_calendar: string
           id: string
-          name: string
-          slug: string
+          org_id: string
+          timezone: string
+          updated_at: string
         }
         Insert: {
+          accounting_basis?: string
+          audit_retention_months?: number
+          close_policy?: Json
           created_at?: string
+          default_currency?: string
+          fiscal_calendar?: string
           id?: string
-          name: string
-          slug: string
+          org_id: string
+          timezone?: string
+          updated_at?: string
         }
         Update: {
+          accounting_basis?: string
+          audit_retention_months?: number
+          close_policy?: Json
           created_at?: string
+          default_currency?: string
+          fiscal_calendar?: string
           id?: string
+          org_id?: string
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_settings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          country: string | null
+          created_at: string
+          currency: string
+          display_name: string | null
+          fiscal_year_start_month: number
+          id: string
+          industry: string | null
+          legal_name: string | null
+          name: string
+          slug: string
+          status: string
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          currency?: string
+          display_name?: string | null
+          fiscal_year_start_month?: number
+          id?: string
+          industry?: string | null
+          legal_name?: string | null
+          name: string
+          slug: string
+          status?: string
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          currency?: string
+          display_name?: string | null
+          fiscal_year_start_month?: number
+          id?: string
+          industry?: string | null
+          legal_name?: string | null
           name?: string
           slug?: string
+          status?: string
+          timezone?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1003,6 +1202,10 @@ export type Database = {
         Returns: boolean
       }
       is_org_member: { Args: { _org: string }; Returns: boolean }
+      is_period_open: {
+        Args: { _date: string; _org: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:

@@ -27,6 +27,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
 import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
+import { Route as FeatureRegistryIndexRouteImport } from './routes/feature-registry.index'
 import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
@@ -230,6 +231,11 @@ const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
 const ImplementationIndexRoute = ImplementationIndexRouteImport.update({
   id: '/implementation/',
   path: '/implementation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryIndexRoute = FeatureRegistryIndexRouteImport.update({
+  id: '/feature-registry/',
+  path: '/feature-registry/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
@@ -942,6 +948,7 @@ export interface FileRoutesByFullPath {
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/feature-registry/': typeof FeatureRegistryIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
@@ -1073,6 +1080,7 @@ export interface FileRoutesByTo {
   '/cash-availability': typeof CashAvailabilityIndexRoute
   '/compensation': typeof CompensationIndexRoute
   '/expenses': typeof ExpensesIndexRoute
+  '/feature-registry': typeof FeatureRegistryIndexRoute
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
@@ -1208,6 +1216,7 @@ export interface FileRoutesById {
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/feature-registry/': typeof FeatureRegistryIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
@@ -1344,6 +1353,7 @@ export interface FileRouteTypes {
     | '/cash-availability/'
     | '/compensation/'
     | '/expenses/'
+    | '/feature-registry/'
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
@@ -1475,6 +1485,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/compensation'
     | '/expenses'
+    | '/feature-registry'
     | '/implementation'
     | '/intelligence'
     | '/invoices'
@@ -1609,6 +1620,7 @@ export interface FileRouteTypes {
     | '/cash-availability/'
     | '/compensation/'
     | '/expenses/'
+    | '/feature-registry/'
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
@@ -1720,6 +1732,7 @@ export interface RootRouteChildren {
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   BankingIndexRoute: typeof BankingIndexRoute
   CompensationIndexRoute: typeof CompensationIndexRoute
+  FeatureRegistryIndexRoute: typeof FeatureRegistryIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
@@ -1870,6 +1883,13 @@ declare module '@tanstack/react-router' {
       path: '/implementation'
       fullPath: '/implementation/'
       preLoaderRoute: typeof ImplementationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/': {
+      id: '/feature-registry/'
+      path: '/feature-registry'
+      fullPath: '/feature-registry/'
+      preLoaderRoute: typeof FeatureRegistryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/': {
@@ -2883,6 +2903,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReadinessProductionRoute: ReadinessProductionRoute,
   BankingIndexRoute: BankingIndexRoute,
   CompensationIndexRoute: CompensationIndexRoute,
+  FeatureRegistryIndexRoute: FeatureRegistryIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,

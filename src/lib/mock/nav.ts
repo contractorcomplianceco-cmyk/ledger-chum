@@ -44,6 +44,7 @@ import {
   Activity,
   Target,
   BookMarked,
+  PiggyBank,
   type LucideIcon,
 } from "lucide-react";
 

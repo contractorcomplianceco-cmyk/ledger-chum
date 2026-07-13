@@ -18,6 +18,7 @@ import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as EstimatesRouteImport } from './routes/estimates'
 import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as CompensationRouteImport } from './routes/compensation'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
@@ -152,6 +153,11 @@ const EstimatesRoute = EstimatesRouteImport.update({
 const CustomersRoute = CustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationRoute = CompensationRouteImport.update({
+  id: '/compensation',
+  path: '/compensation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CloseRoute = CloseRouteImport.update({
@@ -612,9 +618,9 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompensationPlansIndexRoute = CompensationPlansIndexRouteImport.update({
-  id: '/compensation/plans/',
-  path: '/compensation/plans/',
-  getParentRoute: () => rootRouteImport,
+  id: '/plans/',
+  path: '/plans/',
+  getParentRoute: () => CompensationRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -624,6 +630,7 @@ export interface FileRoutesByFullPath {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
+  '/compensation': typeof CompensationRouteWithChildren
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
@@ -724,6 +731,7 @@ export interface FileRoutesByTo {
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
+  '/compensation': typeof CompensationRouteWithChildren
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -824,6 +832,7 @@ export interface FileRoutesById {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
+  '/compensation': typeof CompensationRouteWithChildren
   '/customers': typeof CustomersRouteWithChildren
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
@@ -927,6 +936,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/cash-availability'
     | '/close'
+    | '/compensation'
     | '/customers'
     | '/estimates'
     | '/expenses'
@@ -1027,6 +1037,7 @@ export interface FileRouteTypes {
     | '/automation-center'
     | '/bills'
     | '/close'
+    | '/compensation'
     | '/customers'
     | '/estimates'
     | '/integrations'
@@ -1126,6 +1137,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/cash-availability'
     | '/close'
+    | '/compensation'
     | '/customers'
     | '/estimates'
     | '/expenses'
@@ -1228,6 +1240,7 @@ export interface RootRouteChildren {
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
+  CompensationRoute: typeof CompensationRouteWithChildren
   CustomersRoute: typeof CustomersRouteWithChildren
   EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRouteWithChildren
@@ -1295,7 +1308,6 @@ export interface RootRouteChildren {
   BankingIndexRoute: typeof BankingIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
-  CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1361,6 +1373,13 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers'
       preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation': {
+      id: '/compensation'
+      path: '/compensation'
+      fullPath: '/compensation'
+      preLoaderRoute: typeof CompensationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/close': {
@@ -1988,10 +2007,10 @@ declare module '@tanstack/react-router' {
     }
     '/compensation/plans/': {
       id: '/compensation/plans/'
-      path: '/compensation/plans'
+      path: '/plans'
       fullPath: '/compensation/plans/'
       preLoaderRoute: typeof CompensationPlansIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof CompensationRoute
     }
   }
 }
@@ -2010,6 +2029,18 @@ const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
 
 const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
+
+interface CompensationRouteChildren {
+  CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
+}
+
+const CompensationRouteChildren: CompensationRouteChildren = {
+  CompensationPlansIndexRoute: CompensationPlansIndexRoute,
+}
+
+const CompensationRouteWithChildren = CompensationRoute._addFileChildren(
+  CompensationRouteChildren,
+)
 
 interface CustomersRouteChildren {
   CustomersCustomerIdRoute: typeof CustomersCustomerIdRoute
@@ -2102,6 +2133,7 @@ const rootRouteChildren: RootRouteChildren = {
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
+  CompensationRoute: CompensationRouteWithChildren,
   CustomersRoute: CustomersRouteWithChildren,
   EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRouteWithChildren,
@@ -2169,7 +2201,6 @@ const rootRouteChildren: RootRouteChildren = {
   BankingIndexRoute: BankingIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
-  CompensationPlansIndexRoute: CompensationPlansIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

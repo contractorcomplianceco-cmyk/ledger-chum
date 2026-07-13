@@ -279,6 +279,17 @@ export const CHILD_ONLY_ROUTES: NavItem[] = [
   { title: "Payment Batch", to: "/compensation/payment-batches/$id", icon: Repeat, hidden: true, permission: "compensation.view" },
   { title: "Statement", to: "/compensation/statements/$id", icon: ScrollText, hidden: true, permission: "compensation.view" },
   { title: "Dispute Detail", to: "/compensation/disputes/$id", icon: AlertTriangle, hidden: true, permission: "compensation.view" },
+  { title: "Feature Registry — All", to: "/feature-registry/all", icon: ClipboardList, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Built", to: "/feature-registry/built", icon: ClipboardList, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Planned", to: "/feature-registry/planned", icon: ClipboardList, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Blocked", to: "/feature-registry/blocked", icon: ClipboardList, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Integrations", to: "/feature-registry/integrations", icon: Plug, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Legal & Accounting", to: "/feature-registry/legal-accounting", icon: ShieldCheck, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Releases", to: "/feature-registry/releases", icon: Rocket, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Future Nav", to: "/feature-registry/navigation", icon: Compass, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Dependencies", to: "/feature-registry/dependencies", icon: Workflow, hidden: true, permission: "implementation.view" },
+  { title: "Feature Registry — Readiness", to: "/feature-registry/readiness", icon: Gauge, hidden: true, permission: "implementation.view" },
+  { title: "Feature Detail", to: "/feature-registry/$id", icon: FileText, hidden: true, permission: "implementation.view" },
 ];
 
 /** Flat lookup used by breadcrumbs, favorites, and command palette. */

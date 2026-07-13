@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   AlertTriangle,
   CheckSquare,
+  CalendarClock,
 } from "lucide-react";
 import type { NavGroup } from "@/lib/mock/nav";
 

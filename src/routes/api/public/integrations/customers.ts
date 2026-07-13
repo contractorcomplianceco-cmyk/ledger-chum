@@ -53,7 +53,7 @@ export const Route = createFileRoute("/api/public/integrations/customers")({
                 name: p.name,
                 email: p.email ?? null,
                 phone: p.phone ?? null,
-                billing_address: p.billing_address ?? null,
+                billing_address: (p.billing_address ?? null) as never,
                 status: p.status ?? existing.status,
                 updated_at: new Date().toISOString(),
               })
@@ -73,7 +73,7 @@ export const Route = createFileRoute("/api/public/integrations/customers")({
                 name: p.name,
                 email: p.email ?? null,
                 phone: p.phone ?? null,
-                billing_address: p.billing_address ?? null,
+                billing_address: (p.billing_address ?? null) as never,
                 status: p.status ?? "active",
               })
               .select()

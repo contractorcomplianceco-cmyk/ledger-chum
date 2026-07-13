@@ -104,6 +104,8 @@ export async function beginIntegrationCall(
   };
 }
 
+type Json = import("@/integrations/supabase/types").Json;
+
 export async function finishIntegrationCall(
   ctx: IntegrationContext,
   externalId: string | null,
@@ -117,8 +119,8 @@ export async function finishIntegrationCall(
     external_id: externalId,
     idempotency_key: ctx.idempotencyKey,
     status: "accepted",
-    request,
-    response,
+    request: request as Json,
+    response: response as Json,
   });
 }
 
@@ -135,7 +137,7 @@ export async function recordIntegrationError(
     external_id: null,
     idempotency_key: ctx.idempotencyKey + ":err:" + randomUUID(),
     status: "error",
-    request,
+    request: request as Json,
     error: err instanceof Error ? err.message : String(err),
   });
 }
@@ -157,8 +159,8 @@ export async function writeAudit(
       event_type: eventType,
       target_type: targetType,
       target_id: targetId,
-      before: (before as object) ?? null,
-      after: (after as object) ?? null,
+      before: (before ?? null) as Json,
+      after: (after ?? null) as Json,
       correlation_id: ctx.correlationId,
     })
     .select("id")

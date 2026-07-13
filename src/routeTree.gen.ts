@@ -181,7 +181,12 @@ import { Route as ApexAiPersonasPersonaRouteImport } from './routes/apex.ai-pers
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
 import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
+import { Route as ApiPublicIntegrationsPaymentsRouteImport } from './routes/api/public/integrations/payments'
+import { Route as ApiPublicIntegrationsInvoicesRouteImport } from './routes/api/public/integrations/invoices'
+import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from './routes/api/public/integrations/inventory-consumption'
+import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
 import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
+import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
 
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
@@ -1081,11 +1086,41 @@ const CompensationCalculationsIdPreviewRoute =
     path: '/preview',
     getParentRoute: () => CompensationCalculationsIdRoute,
   } as any)
+const ApiPublicIntegrationsPaymentsRoute =
+  ApiPublicIntegrationsPaymentsRouteImport.update({
+    id: '/api/public/integrations/payments',
+    path: '/api/public/integrations/payments',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicIntegrationsInvoicesRoute =
+  ApiPublicIntegrationsInvoicesRouteImport.update({
+    id: '/api/public/integrations/invoices',
+    path: '/api/public/integrations/invoices',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicIntegrationsInventoryConsumptionRoute =
+  ApiPublicIntegrationsInventoryConsumptionRouteImport.update({
+    id: '/api/public/integrations/inventory-consumption',
+    path: '/api/public/integrations/inventory-consumption',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicIntegrationsCustomersRoute =
+  ApiPublicIntegrationsCustomersRouteImport.update({
+    id: '/api/public/integrations/customers',
+    path: '/api/public/integrations/customers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApexDigitalTwinScenariosIdRoute =
   ApexDigitalTwinScenariosIdRouteImport.update({
     id: '/$id',
     path: '/$id',
     getParentRoute: () => ApexDigitalTwinScenariosRoute,
+  } as any)
+const ApiPublicIntegrationsWorkOrdersCompletedRoute =
+  ApiPublicIntegrationsWorkOrdersCompletedRouteImport.update({
+    id: '/api/public/integrations/work-orders/completed',
+    path: '/api/public/integrations/work-orders/completed',
+    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -1259,9 +1294,14 @@ export interface FileRoutesByFullPath {
   '/compensation/plans/': typeof CompensationPlansIndexRoute
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
+  '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
+  '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
+  '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
+  '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -1431,9 +1471,14 @@ export interface FileRoutesByTo {
   '/compensation/plans': typeof CompensationPlansIndexRoute
   '/compensation/statements': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
+  '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
+  '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
+  '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
+  '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1607,9 +1652,14 @@ export interface FileRoutesById {
   '/compensation/plans/': typeof CompensationPlansIndexRoute
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
+  '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
+  '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
+  '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
+  '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1784,9 +1834,14 @@ export interface FileRouteTypes {
     | '/compensation/plans/'
     | '/compensation/statements/'
     | '/apex/digital-twin/scenarios/$id'
+    | '/api/public/integrations/customers'
+    | '/api/public/integrations/inventory-consumption'
+    | '/api/public/integrations/invoices'
+    | '/api/public/integrations/payments'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
+    | '/api/public/integrations/work-orders/completed'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1956,9 +2011,14 @@ export interface FileRouteTypes {
     | '/compensation/plans'
     | '/compensation/statements'
     | '/apex/digital-twin/scenarios/$id'
+    | '/api/public/integrations/customers'
+    | '/api/public/integrations/inventory-consumption'
+    | '/api/public/integrations/invoices'
+    | '/api/public/integrations/payments'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
+    | '/api/public/integrations/work-orders/completed'
   id:
     | '__root__'
     | '/'
@@ -2131,9 +2191,14 @@ export interface FileRouteTypes {
     | '/compensation/plans/'
     | '/compensation/statements/'
     | '/apex/digital-twin/scenarios/$id'
+    | '/api/public/integrations/customers'
+    | '/api/public/integrations/inventory-consumption'
+    | '/api/public/integrations/invoices'
+    | '/api/public/integrations/payments'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
+    | '/api/public/integrations/work-orders/completed'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -2277,6 +2342,11 @@ export interface RootRouteChildren {
   CompensationPaymentBatchesIndexRoute: typeof CompensationPaymentBatchesIndexRoute
   CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
   CompensationStatementsIndexRoute: typeof CompensationStatementsIndexRoute
+  ApiPublicIntegrationsCustomersRoute: typeof ApiPublicIntegrationsCustomersRoute
+  ApiPublicIntegrationsInventoryConsumptionRoute: typeof ApiPublicIntegrationsInventoryConsumptionRoute
+  ApiPublicIntegrationsInvoicesRoute: typeof ApiPublicIntegrationsInvoicesRoute
+  ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
+  ApiPublicIntegrationsWorkOrdersCompletedRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -3485,12 +3555,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
       parentRoute: typeof CompensationCalculationsIdRoute
     }
+    '/api/public/integrations/payments': {
+      id: '/api/public/integrations/payments'
+      path: '/api/public/integrations/payments'
+      fullPath: '/api/public/integrations/payments'
+      preLoaderRoute: typeof ApiPublicIntegrationsPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/integrations/invoices': {
+      id: '/api/public/integrations/invoices'
+      path: '/api/public/integrations/invoices'
+      fullPath: '/api/public/integrations/invoices'
+      preLoaderRoute: typeof ApiPublicIntegrationsInvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/integrations/inventory-consumption': {
+      id: '/api/public/integrations/inventory-consumption'
+      path: '/api/public/integrations/inventory-consumption'
+      fullPath: '/api/public/integrations/inventory-consumption'
+      preLoaderRoute: typeof ApiPublicIntegrationsInventoryConsumptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/integrations/customers': {
+      id: '/api/public/integrations/customers'
+      path: '/api/public/integrations/customers'
+      fullPath: '/api/public/integrations/customers'
+      preLoaderRoute: typeof ApiPublicIntegrationsCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/digital-twin/scenarios/$id': {
       id: '/apex/digital-twin/scenarios/$id'
       path: '/$id'
       fullPath: '/apex/digital-twin/scenarios/$id'
       preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
       parentRoute: typeof ApexDigitalTwinScenariosRoute
+    }
+    '/api/public/integrations/work-orders/completed': {
+      id: '/api/public/integrations/work-orders/completed'
+      path: '/api/public/integrations/work-orders/completed'
+      fullPath: '/api/public/integrations/work-orders/completed'
+      preLoaderRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -3823,6 +3928,13 @@ const rootRouteChildren: RootRouteChildren = {
   CompensationPaymentBatchesIndexRoute: CompensationPaymentBatchesIndexRoute,
   CompensationPlansIndexRoute: CompensationPlansIndexRoute,
   CompensationStatementsIndexRoute: CompensationStatementsIndexRoute,
+  ApiPublicIntegrationsCustomersRoute: ApiPublicIntegrationsCustomersRoute,
+  ApiPublicIntegrationsInventoryConsumptionRoute:
+    ApiPublicIntegrationsInventoryConsumptionRoute,
+  ApiPublicIntegrationsInvoicesRoute: ApiPublicIntegrationsInvoicesRoute,
+  ApiPublicIntegrationsPaymentsRoute: ApiPublicIntegrationsPaymentsRoute,
+  ApiPublicIntegrationsWorkOrdersCompletedRoute:
+    ApiPublicIntegrationsWorkOrdersCompletedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

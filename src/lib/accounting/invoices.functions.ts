@@ -91,11 +91,11 @@ export const postInvoice = createServerFn({ method: "POST" })
         memo: "AR",
         line_order: 0,
       },
-      ...inv.invoice_lines
-        .filter((l: { account_id: string | null }) => l.account_id)
-        .map((l: { account_id: string; amount: number; description: string }, idx: number) => ({
+      ...(inv.invoice_lines as Array<{ account_id: string | null; amount: number; description: string }>)
+        .filter((l) => l.account_id !== null)
+        .map((l, idx) => ({
           journal_id: je.id,
-          account_id: l.account_id,
+          account_id: l.account_id as string,
           debit: 0,
           credit: l.amount,
           memo: l.description,

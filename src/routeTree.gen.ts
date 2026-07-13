@@ -27,6 +27,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
 import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
+import { Route as FeatureRegistryIndexRouteImport } from './routes/feature-registry.index'
 import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
 import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
@@ -70,6 +71,17 @@ import { Route as ImplementationEventsRouteImport } from './routes/implementatio
 import { Route as ImplementationDataMapRouteImport } from './routes/implementation.data-map'
 import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
 import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
+import { Route as FeatureRegistryReleasesRouteImport } from './routes/feature-registry.releases'
+import { Route as FeatureRegistryReadinessRouteImport } from './routes/feature-registry.readiness'
+import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
+import { Route as FeatureRegistryNavigationRouteImport } from './routes/feature-registry.navigation'
+import { Route as FeatureRegistryLegalAccountingRouteImport } from './routes/feature-registry.legal-accounting'
+import { Route as FeatureRegistryIntegrationsRouteImport } from './routes/feature-registry.integrations'
+import { Route as FeatureRegistryDependenciesRouteImport } from './routes/feature-registry.dependencies'
+import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
+import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
+import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
+import { Route as FeatureRegistryIdRouteImport } from './routes/feature-registry.$id'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
 import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
@@ -230,6 +242,11 @@ const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
 const ImplementationIndexRoute = ImplementationIndexRouteImport.update({
   id: '/implementation/',
   path: '/implementation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryIndexRoute = FeatureRegistryIndexRouteImport.update({
+  id: '/feature-registry/',
+  path: '/feature-registry/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
@@ -452,6 +469,66 @@ const ImplementationCutoverRoute = ImplementationCutoverRouteImport.update({
 const ImplementationApiMapRoute = ImplementationApiMapRouteImport.update({
   id: '/implementation/api-map',
   path: '/implementation/api-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryReleasesRoute = FeatureRegistryReleasesRouteImport.update({
+  id: '/feature-registry/releases',
+  path: '/feature-registry/releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryReadinessRoute =
+  FeatureRegistryReadinessRouteImport.update({
+    id: '/feature-registry/readiness',
+    path: '/feature-registry/readiness',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
+  id: '/feature-registry/planned',
+  path: '/feature-registry/planned',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryNavigationRoute =
+  FeatureRegistryNavigationRouteImport.update({
+    id: '/feature-registry/navigation',
+    path: '/feature-registry/navigation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryLegalAccountingRoute =
+  FeatureRegistryLegalAccountingRouteImport.update({
+    id: '/feature-registry/legal-accounting',
+    path: '/feature-registry/legal-accounting',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryIntegrationsRoute =
+  FeatureRegistryIntegrationsRouteImport.update({
+    id: '/feature-registry/integrations',
+    path: '/feature-registry/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryDependenciesRoute =
+  FeatureRegistryDependenciesRouteImport.update({
+    id: '/feature-registry/dependencies',
+    path: '/feature-registry/dependencies',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
+  id: '/feature-registry/built',
+  path: '/feature-registry/built',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryBlockedRoute = FeatureRegistryBlockedRouteImport.update({
+  id: '/feature-registry/blocked',
+  path: '/feature-registry/blocked',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
+  id: '/feature-registry/all',
+  path: '/feature-registry/all',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryIdRoute = FeatureRegistryIdRouteImport.update({
+  id: '/feature-registry/$id',
+  path: '/feature-registry/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
@@ -899,6 +976,17 @@ export interface FileRoutesByFullPath {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
+  '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
+  '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
+  '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
+  '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
+  '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -942,6 +1030,7 @@ export interface FileRoutesByFullPath {
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/feature-registry/': typeof FeatureRegistryIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
@@ -1030,6 +1119,17 @@ export interface FileRoutesByTo {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
+  '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
+  '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
+  '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
+  '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
+  '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -1073,6 +1173,7 @@ export interface FileRoutesByTo {
   '/cash-availability': typeof CashAvailabilityIndexRoute
   '/compensation': typeof CompensationIndexRoute
   '/expenses': typeof ExpensesIndexRoute
+  '/feature-registry': typeof FeatureRegistryIndexRoute
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
@@ -1165,6 +1266,17 @@ export interface FileRoutesById {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
+  '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/dependencies': typeof FeatureRegistryDependenciesRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
+  '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
+  '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
+  '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
+  '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -1208,6 +1320,7 @@ export interface FileRoutesById {
   '/cash-availability/': typeof CashAvailabilityIndexRoute
   '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
+  '/feature-registry/': typeof FeatureRegistryIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
@@ -1301,6 +1414,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
+    | '/feature-registry/all'
+    | '/feature-registry/blocked'
+    | '/feature-registry/built'
+    | '/feature-registry/dependencies'
+    | '/feature-registry/integrations'
+    | '/feature-registry/legal-accounting'
+    | '/feature-registry/navigation'
+    | '/feature-registry/planned'
+    | '/feature-registry/readiness'
+    | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1344,6 +1468,7 @@ export interface FileRouteTypes {
     | '/cash-availability/'
     | '/compensation/'
     | '/expenses/'
+    | '/feature-registry/'
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
@@ -1432,6 +1557,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
+    | '/feature-registry/all'
+    | '/feature-registry/blocked'
+    | '/feature-registry/built'
+    | '/feature-registry/dependencies'
+    | '/feature-registry/integrations'
+    | '/feature-registry/legal-accounting'
+    | '/feature-registry/navigation'
+    | '/feature-registry/planned'
+    | '/feature-registry/readiness'
+    | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1475,6 +1611,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/compensation'
     | '/expenses'
+    | '/feature-registry'
     | '/implementation'
     | '/intelligence'
     | '/invoices'
@@ -1566,6 +1703,17 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
+    | '/feature-registry/all'
+    | '/feature-registry/blocked'
+    | '/feature-registry/built'
+    | '/feature-registry/dependencies'
+    | '/feature-registry/integrations'
+    | '/feature-registry/legal-accounting'
+    | '/feature-registry/navigation'
+    | '/feature-registry/planned'
+    | '/feature-registry/readiness'
+    | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1609,6 +1757,7 @@ export interface FileRouteTypes {
     | '/cash-availability/'
     | '/compensation/'
     | '/expenses/'
+    | '/feature-registry/'
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
@@ -1683,6 +1832,17 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
+  FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
+  FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
+  FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
+  FeatureRegistryDependenciesRoute: typeof FeatureRegistryDependenciesRoute
+  FeatureRegistryIntegrationsRoute: typeof FeatureRegistryIntegrationsRoute
+  FeatureRegistryLegalAccountingRoute: typeof FeatureRegistryLegalAccountingRoute
+  FeatureRegistryNavigationRoute: typeof FeatureRegistryNavigationRoute
+  FeatureRegistryPlannedRoute: typeof FeatureRegistryPlannedRoute
+  FeatureRegistryReadinessRoute: typeof FeatureRegistryReadinessRoute
+  FeatureRegistryReleasesRoute: typeof FeatureRegistryReleasesRoute
   ImplementationApiMapRoute: typeof ImplementationApiMapRoute
   ImplementationCutoverRoute: typeof ImplementationCutoverRoute
   ImplementationDataMapRoute: typeof ImplementationDataMapRoute
@@ -1720,6 +1880,7 @@ export interface RootRouteChildren {
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   BankingIndexRoute: typeof BankingIndexRoute
   CompensationIndexRoute: typeof CompensationIndexRoute
+  FeatureRegistryIndexRoute: typeof FeatureRegistryIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
@@ -1870,6 +2031,13 @@ declare module '@tanstack/react-router' {
       path: '/implementation'
       fullPath: '/implementation/'
       preLoaderRoute: typeof ImplementationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/': {
+      id: '/feature-registry/'
+      path: '/feature-registry'
+      fullPath: '/feature-registry/'
+      preLoaderRoute: typeof FeatureRegistryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/': {
@@ -2171,6 +2339,83 @@ declare module '@tanstack/react-router' {
       path: '/implementation/api-map'
       fullPath: '/implementation/api-map'
       preLoaderRoute: typeof ImplementationApiMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/releases': {
+      id: '/feature-registry/releases'
+      path: '/feature-registry/releases'
+      fullPath: '/feature-registry/releases'
+      preLoaderRoute: typeof FeatureRegistryReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/readiness': {
+      id: '/feature-registry/readiness'
+      path: '/feature-registry/readiness'
+      fullPath: '/feature-registry/readiness'
+      preLoaderRoute: typeof FeatureRegistryReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/planned': {
+      id: '/feature-registry/planned'
+      path: '/feature-registry/planned'
+      fullPath: '/feature-registry/planned'
+      preLoaderRoute: typeof FeatureRegistryPlannedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/navigation': {
+      id: '/feature-registry/navigation'
+      path: '/feature-registry/navigation'
+      fullPath: '/feature-registry/navigation'
+      preLoaderRoute: typeof FeatureRegistryNavigationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/legal-accounting': {
+      id: '/feature-registry/legal-accounting'
+      path: '/feature-registry/legal-accounting'
+      fullPath: '/feature-registry/legal-accounting'
+      preLoaderRoute: typeof FeatureRegistryLegalAccountingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/integrations': {
+      id: '/feature-registry/integrations'
+      path: '/feature-registry/integrations'
+      fullPath: '/feature-registry/integrations'
+      preLoaderRoute: typeof FeatureRegistryIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/dependencies': {
+      id: '/feature-registry/dependencies'
+      path: '/feature-registry/dependencies'
+      fullPath: '/feature-registry/dependencies'
+      preLoaderRoute: typeof FeatureRegistryDependenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/built': {
+      id: '/feature-registry/built'
+      path: '/feature-registry/built'
+      fullPath: '/feature-registry/built'
+      preLoaderRoute: typeof FeatureRegistryBuiltRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/blocked': {
+      id: '/feature-registry/blocked'
+      path: '/feature-registry/blocked'
+      fullPath: '/feature-registry/blocked'
+      preLoaderRoute: typeof FeatureRegistryBlockedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/all': {
+      id: '/feature-registry/all'
+      path: '/feature-registry/all'
+      fullPath: '/feature-registry/all'
+      preLoaderRoute: typeof FeatureRegistryAllRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/$id': {
+      id: '/feature-registry/$id'
+      path: '/feature-registry/$id'
+      fullPath: '/feature-registry/$id'
+      preLoaderRoute: typeof FeatureRegistryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/vendors': {
@@ -2846,6 +3091,17 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  FeatureRegistryIdRoute: FeatureRegistryIdRoute,
+  FeatureRegistryAllRoute: FeatureRegistryAllRoute,
+  FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
+  FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,
+  FeatureRegistryDependenciesRoute: FeatureRegistryDependenciesRoute,
+  FeatureRegistryIntegrationsRoute: FeatureRegistryIntegrationsRoute,
+  FeatureRegistryLegalAccountingRoute: FeatureRegistryLegalAccountingRoute,
+  FeatureRegistryNavigationRoute: FeatureRegistryNavigationRoute,
+  FeatureRegistryPlannedRoute: FeatureRegistryPlannedRoute,
+  FeatureRegistryReadinessRoute: FeatureRegistryReadinessRoute,
+  FeatureRegistryReleasesRoute: FeatureRegistryReleasesRoute,
   ImplementationApiMapRoute: ImplementationApiMapRoute,
   ImplementationCutoverRoute: ImplementationCutoverRoute,
   ImplementationDataMapRoute: ImplementationDataMapRoute,
@@ -2883,6 +3139,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReadinessProductionRoute: ReadinessProductionRoute,
   BankingIndexRoute: BankingIndexRoute,
   CompensationIndexRoute: CompensationIndexRoute,
+  FeatureRegistryIndexRoute: FeatureRegistryIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,

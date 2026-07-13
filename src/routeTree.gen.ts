@@ -142,6 +142,7 @@ import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dn
 import { Route as ApexDigitalTwinRouteImport } from './routes/apex.digital-twin'
 import { Route as ApexCompanyHealthRouteImport } from './routes/apex.company-health'
 import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
+import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
@@ -852,6 +853,11 @@ const ApexBriefingRoute = ApexBriefingRouteImport.update({
   path: '/apex/briefing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApexAssetsRoute = ApexAssetsRouteImport.update({
+  id: '/apex/assets',
+  path: '/apex/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApexArchitectureRoute = ApexArchitectureRouteImport.update({
   id: '/apex/architecture',
   path: '/apex/architecture',
@@ -1014,6 +1020,7 @@ export interface FileRoutesByFullPath {
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
@@ -1171,6 +1178,7 @@ export interface FileRoutesByTo {
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
@@ -1332,6 +1340,7 @@ export interface FileRoutesById {
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
+  '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
@@ -1494,6 +1503,7 @@ export interface FileRouteTypes {
     | '/vendors'
     | '/admin/users'
     | '/apex/architecture'
+    | '/apex/assets'
     | '/apex/briefing'
     | '/apex/company-health'
     | '/apex/digital-twin'
@@ -1651,6 +1661,7 @@ export interface FileRouteTypes {
     | '/vendors'
     | '/admin/users'
     | '/apex/architecture'
+    | '/apex/assets'
     | '/apex/briefing'
     | '/apex/company-health'
     | '/apex/digital-twin'
@@ -1811,6 +1822,7 @@ export interface FileRouteTypes {
     | '/vendors'
     | '/admin/users'
     | '/apex/architecture'
+    | '/apex/assets'
     | '/apex/briefing'
     | '/apex/company-health'
     | '/apex/digital-twin'
@@ -1972,6 +1984,7 @@ export interface RootRouteChildren {
   VendorsRoute: typeof VendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
+  ApexAssetsRoute: typeof ApexAssetsRoute
   ApexBriefingRoute: typeof ApexBriefingRoute
   ApexCompanyHealthRoute: typeof ApexCompanyHealthRoute
   ApexDigitalTwinRoute: typeof ApexDigitalTwinRoute
@@ -3020,6 +3033,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexBriefingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/assets': {
+      id: '/apex/assets'
+      path: '/apex/assets'
+      fullPath: '/apex/assets'
+      preLoaderRoute: typeof ApexAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/architecture': {
       id: '/apex/architecture'
       path: '/apex/architecture'
@@ -3343,6 +3363,7 @@ const rootRouteChildren: RootRouteChildren = {
   VendorsRoute: VendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
+  ApexAssetsRoute: ApexAssetsRoute,
   ApexBriefingRoute: ApexBriefingRoute,
   ApexCompanyHealthRoute: ApexCompanyHealthRoute,
   ApexDigitalTwinRoute: ApexDigitalTwinRoute,

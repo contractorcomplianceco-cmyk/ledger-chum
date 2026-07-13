@@ -861,6 +861,58 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_account_mappings: {
+        Row: {
+          account_id: string
+          created_at: string
+          description: string | null
+          id: string
+          method: string
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          method: string
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          method?: string
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "payment_account_mappings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payment_applications: {
         Row: {
           amount_applied: number
@@ -1205,6 +1257,38 @@ export type Database = {
       is_period_open: {
         Args: { _date: string; _org: string }
         Returns: boolean
+      }
+      record_payment_with_posting: {
+        Args: {
+          _actor_id: string
+          _actor_type: string
+          _amount: number
+          _apply_to: Json
+          _correlation_id: string
+          _customer_id: string
+          _external_id: string
+          _external_source: string
+          _memo: string
+          _method: string
+          _org_id: string
+          _payment_date: string
+          _reference: string
+        }
+        Returns: Json
+      }
+      record_refund_with_posting: {
+        Args: {
+          _actor_id: string
+          _actor_type: string
+          _amount: number
+          _correlation_id: string
+          _memo: string
+          _method: string
+          _org_id: string
+          _payment_id: string
+          _refund_date: string
+        }
+        Returns: Json
       }
     }
     Enums: {

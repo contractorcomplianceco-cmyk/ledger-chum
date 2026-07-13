@@ -1,37 +1,68 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ApexPage, ApexSection } from "@/components/apex/apex-page";
-import { Card } from "@/components/ui/card";
+import { PulseCard, PulseGrid } from "@/components/apex/pulse-card";
+import { WhyDidThisChange } from "@/components/apex/why-changed";
+import { APEX_PULSES } from "@/lib/mock/apex-pulses";
 
 export const Route = createFileRoute("/apex/widgets")({
   head: () => ({ meta: [{ title: "Intelligent Widgets — Project APEX" }] }),
-  component: () => (
+  component: WidgetsPage,
+});
+
+function WidgetsPage() {
+  return (
     <ApexPage
       title="Intelligent Widget System"
-      description="Every pulse widget renders headline value, trend, drivers, risk, forecast, recommended action, confidence, and evidence link. Concrete components ship in APEX 2."
+      description="Every pulse widget renders headline value, trend, drivers, risk, forecast, recommended action, confidence, freshness, and a link into full explainability."
+      decision="What signal should turn into a decision right now?"
     >
-      <ApexSection title="Twelve pulse widgets (planned)">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {[
-            ["Cash Pulse", "Bank cash · true available · restricted · committed · reserved · expected collections · upcoming disbursements · 7d/30d forecast · risk · action."],
-            ["Profit Pulse", "Gross · operating · net · contribution · margin · prior · target · drivers · pressure · action."],
-            ["Growth Pulse", "Revenue · new · renewals · upsells · expansions · lost · pipeline · collected · contribution · risks · opportunities."],
-            ["AI Pulse", "New opportunities · savings · risks · open recommendations · accepted · outcomes · confidence · staleness."],
-            ["Team Pulse", "Payroll · commissions · bonuses · profit sharing · workforce cost · capacity · hiring · training · travel · trend."],
-            ["Collections Pulse", "AR aging · expected · escalations · risk · action."],
-            ["Expense Pulse", "Spend · variance · categories · anomalies · action."],
-            ["Technology Pulse", "App spend · usage · consolidation savings · risk."],
-            ["Marketing Pulse", "Campaign contribution · CAC · payback · pipeline · action."],
-            ["Risk Pulse", "Top risks · severity · trend · owner · mitigation."],
-            ["Opportunity Pulse", "Impact · effort · confidence · owner · next step."],
-            ["Data Confidence Pulse", "Freshness · coverage · reconciliation gaps · integration health."],
-          ].map(([t, d]) => (
-            <Card key={t} className="border-border/70 p-3">
-              <div className="text-[13px] font-semibold">{t}</div>
-              <div className="mt-1 text-[12px] text-muted-foreground">{d}</div>
-            </Card>
+      <ApexSection
+        title="Twelve pulse widgets (demonstration)"
+        description="Dark intelligence surfaces are reserved for executive pulses (Cash, AI, Opportunity). Operational pulses stay on the light workspace."
+      >
+        <PulseGrid>
+          {APEX_PULSES.map((p) => (
+            <PulseCard key={p.id} pulse={p} />
           ))}
+        </PulseGrid>
+      </ApexSection>
+
+      <ApexSection
+        title="Why-did-this-change component"
+        description="Attachable to any metric across LedgerOS. Renders current, prior, target, delta, narrative, and contributor list."
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          <WhyDidThisChange
+            metric="Operating Profit"
+            current="$412K"
+            prior="$382K"
+            target="$400K"
+            delta={8}
+            narrative="Operating profit rose 8% MTD driven by enterprise renewals and Campaign 18 contribution, partially offset by software cost inflation."
+            contributors={[
+              { label: "Enterprise renewals", amount: "$96K", direction: "up" },
+              { label: "Campaign 18 contribution", amount: "$41K", direction: "up" },
+              { label: "Software cost inflation", amount: "$14K", direction: "down" },
+              { label: "Deferred revenue release", amount: "$22K", direction: "up" },
+            ]}
+          />
+          <WhyDidThisChange
+            metric="Available Cash"
+            current="$1.84M"
+            prior="$1.96M"
+            target="$1.90M"
+            delta={-6}
+            invert
+            narrative="True available cash declined 6% as pass-through and commission reserves grew alongside the mid-month bill run."
+            contributors={[
+              { label: "Renewals collected", amount: "$412K", direction: "up" },
+              { label: "Pass-through reserve growth", amount: "$185K", direction: "down" },
+              { label: "Commission reserve", amount: "$92K", direction: "down" },
+              { label: "Bill run 7/12", amount: "$96K", direction: "down" },
+            ]}
+          />
         </div>
       </ApexSection>
     </ApexPage>
-  ),
-});
+  );
+}

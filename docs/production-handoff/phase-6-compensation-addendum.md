@@ -1,6 +1,6 @@
 # Phase 6 — Compensation Intelligence Platform Addendum
 
-Status: **Assessment only.** Extends `phase-6-impact-assessment.md` (§13 disbursement taxonomy still governs). No broad UI/API implementation until Rose signs off on §22 questions below. Reference: Tara Casella proposal (monthly retainer step-up, 5% first-year collected retained revenue, milestone bonuses, 2.5%/1.0% recurring software participation, investor/equity paths).
+Status: **Assessment + policy defaults approved (2026-07-13).** Extends `phase-6-impact-assessment.md` (§13 disbursement taxonomy still governs). Sub-phase 6B-1 (types + policy scaffolding) landed; 6B-2 → 6B-6 still queued. Reference: Tara Casella proposal (monthly retainer step-up, 5% first-year collected retained revenue, milestone bonuses, 2.5%/1.0% recurring software participation, investor/equity paths).
 
 Every commission, participation, bonus, retainer, stipend, milestone, and equity record in the platform routes through this addendum. It supersedes the narrow "commissions" language in prior Phase 6 drafts — the module is now **Compensation Intelligence**, and `commissions.ts` becomes one facet of it.
 
@@ -183,18 +183,35 @@ Worked example (RCR $20,000, 10% pool, Tara eligible):
 
 ---
 
-## 11. Open policy questions (require Rose sign-off before 6B)
+## 11. Approved policy defaults (Rose sign-off 2026-07-13)
 
-1. **Attribution split total** — must attribution total exactly 100%, or is "≥ 100% with leadership override" allowed for stacked pools?
-2. **Payment-clearing lag** — global default (3 days? 5?) or per-plan only?
-3. **Brand-ambassador stacking with milestone bonus** — do slot B and slot C stack by default on the same relationship, or is milestone-only elected per milestone?
-4. **Post-termination survival window** — default duration (12 months? life-of-account?) when signed terms are silent.
-5. **Software participation basis** — monthly accrual on billed NRSR, or on collected-and-cleared NRSR only?
-6. **Chargeback window** — default 60 days, 90 days, or per plan-family?
-7. **Draw offset order** — recoverable draws offset which lifecycle state (approved? payable? paid-only)?
-8. **Holdback release trigger** — automatic on chargeback-window expiry, or requires Rose approval?
-9. **House-account rule** — do house accounts suppress sales commission entirely, or reduce pool to a configurable %?
-10. **Event stipend cap** — default $250/day local; cap for travel days and multi-day events?
+Encoded in `src/lib/api/services/compensation/policy-defaults.ts` as
+`COMPENSATION_POLICY_DEFAULTS`. Every plan may override any field via
+`CompensationPlanPolicyOverrides`; the resolved policy is snapshotted onto
+every calculation line for audit reproducibility. Overrides that relax an
+invariant (pass-through inclusion, uncollected inclusion, zero holdback,
+zero chargeback window) additionally require `legal_review_status = 'cleared'`
+plus explicit Owner approval — the backend must reject the plan otherwise.
+
+| # | Question | Approved default | Override path |
+|---|---|---|---|
+| 1 | Attribution split total | Must equal 100% (± tolerance 0.0001) | `attribution.allowLeadershipOverstack = true` permits stacked > 100% with justification + audit event |
+| 2 | Payment-clearing lag | **3 days** global | Per-plan `revenueRecognition.paymentClearingLagDays` |
+| 3 | BA + milestone stacking | **Elect per milestone**; never auto-stack | Per-plan `stacking.brandAmbassadorMilestoneStack = 'auto_stack'` |
+| 4 | Post-termination survival | **12 months** when signed terms silent | Per-plan `postTermination.survivalMonthsDefault`; legal review always required to release |
+| 5 | Software participation basis | **Collected-and-cleared NRSR only** | Per-plan `softwareParticipation.basis = 'billed_nrsr'` (requires legal review — permits pre-collection accrual) |
+| 6 | Chargeback window | **90 days** | Per-plan `riskReserve.chargebackWindowDays` (0 requires legal + Owner) |
+| 7 | Draw offset order | Draws offset at **payable** state | Per-plan `riskReserve.drawOffsetState` |
+| 8 | Holdback release | **Automatic on chargeback-window expiry** | Per-plan `riskReserve.holdbackReleaseTrigger = 'requires_owner_approval'` |
+| 9 | House-account rule | **Suppress** sales commission (0% pool) | Per-plan `salesPool.houseAccountRule = 'reduce'` + `houseAccountReducedPoolPct` |
+| 10 | Event stipend caps | Local **$250/day**, travel **$400/day**, multi-day cap **$2,000** | Per-plan `eventStipend.*` |
+
+**Invariants that survive all overrides (unless legal + Owner override attached):**
+
+- No compensation is ever calculated from pass-through funds.
+- No compensation is ever calculated from uncollected revenue.
+- Commissions, bonuses, retainers, milestone payments, software participation, profit sharing, and equity remain distinct disbursement classes end-to-end (see phase-6 §13 taxonomy and `DEFAULT_FAMILY_DISBURSEMENT_CLASS`).
+- Every default change emits `compensation.policy_defaults.updated`; every plan override that relaxes an invariant emits `compensation.plan.invariant_override` with the attached legal-review record ID.
 
 ---
 

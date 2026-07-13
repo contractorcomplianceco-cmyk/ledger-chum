@@ -28,6 +28,7 @@ import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
 import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
 import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
+import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
@@ -88,8 +89,16 @@ import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
 import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
+import { Route as CompensationVerificationRouteImport } from './routes/compensation.verification'
+import { Route as CompensationReservesRouteImport } from './routes/compensation.reserves'
+import { Route as CompensationReconciliationRouteImport } from './routes/compensation.reconciliation'
 import { Route as CompensationPreviewRouteImport } from './routes/compensation.preview'
+import { Route as CompensationHoldbacksRouteImport } from './routes/compensation.holdbacks'
 import { Route as CompensationEligibilityRouteImport } from './routes/compensation.eligibility'
+import { Route as CompensationClawbacksRouteImport } from './routes/compensation.clawbacks'
+import { Route as CompensationAuditRouteImport } from './routes/compensation.audit'
+import { Route as CompensationApprovalsRouteImport } from './routes/compensation.approvals'
+import { Route as CompensationAdjustmentsRouteImport } from './routes/compensation.adjustments'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
@@ -109,17 +118,29 @@ import { Route as AutomationBonusControlsRouteImport } from './routes/automation
 import { Route as AutomationApprovalsRouteImport } from './routes/automation.approvals'
 import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
+import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
+import { Route as CompensationPayablesIndexRouteImport } from './routes/compensation.payables.index'
 import { Route as CompensationParticipantsIndexRouteImport } from './routes/compensation.participants.index'
+import { Route as CompensationDisputesIndexRouteImport } from './routes/compensation.disputes.index'
+import { Route as CompensationCalculationsIndexRouteImport } from './routes/compensation.calculations.index'
 import { Route as CompensationAttributionIndexRouteImport } from './routes/compensation.attribution.index'
+import { Route as CompensationStatementsIdRouteImport } from './routes/compensation.statements.$id'
 import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
 import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
+import { Route as CompensationPaymentBatchesIdRouteImport } from './routes/compensation.payment-batches.$id'
+import { Route as CompensationPayablesIdRouteImport } from './routes/compensation.payables.$id'
 import { Route as CompensationParticipantsIdRouteImport } from './routes/compensation.participants.$id'
+import { Route as CompensationDisputesIdRouteImport } from './routes/compensation.disputes.$id'
+import { Route as CompensationCalculationsNewRouteImport } from './routes/compensation.calculations.new'
+import { Route as CompensationCalculationsIdRouteImport } from './routes/compensation.calculations.$id'
 import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
 import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
 import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
+import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
 
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
@@ -215,6 +236,11 @@ const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ExpensesRoute,
+} as any)
+const CompensationIndexRoute = CompensationIndexRouteImport.update({
+  id: '/compensation/',
+  path: '/compensation/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
   id: '/',
@@ -523,14 +549,56 @@ const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
   path: '/$customerId',
   getParentRoute: () => CustomersRoute,
 } as any)
+const CompensationVerificationRoute =
+  CompensationVerificationRouteImport.update({
+    id: '/compensation/verification',
+    path: '/compensation/verification',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationReservesRoute = CompensationReservesRouteImport.update({
+  id: '/compensation/reserves',
+  path: '/compensation/reserves',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationReconciliationRoute =
+  CompensationReconciliationRouteImport.update({
+    id: '/compensation/reconciliation',
+    path: '/compensation/reconciliation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompensationPreviewRoute = CompensationPreviewRouteImport.update({
   id: '/compensation/preview',
   path: '/compensation/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensationHoldbacksRoute = CompensationHoldbacksRouteImport.update({
+  id: '/compensation/holdbacks',
+  path: '/compensation/holdbacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationEligibilityRoute = CompensationEligibilityRouteImport.update({
   id: '/compensation/eligibility',
   path: '/compensation/eligibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationClawbacksRoute = CompensationClawbacksRouteImport.update({
+  id: '/compensation/clawbacks',
+  path: '/compensation/clawbacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationAuditRoute = CompensationAuditRouteImport.update({
+  id: '/compensation/audit',
+  path: '/compensation/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationApprovalsRoute = CompensationApprovalsRouteImport.update({
+  id: '/compensation/approvals',
+  path: '/compensation/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationAdjustmentsRoute = CompensationAdjustmentsRouteImport.update({
+  id: '/compensation/adjustments',
+  path: '/compensation/adjustments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
@@ -633,21 +701,57 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensationStatementsIndexRoute =
+  CompensationStatementsIndexRouteImport.update({
+    id: '/compensation/statements/',
+    path: '/compensation/statements/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompensationPlansIndexRoute = CompensationPlansIndexRouteImport.update({
   id: '/compensation/plans/',
   path: '/compensation/plans/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensationPaymentBatchesIndexRoute =
+  CompensationPaymentBatchesIndexRouteImport.update({
+    id: '/compensation/payment-batches/',
+    path: '/compensation/payment-batches/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationPayablesIndexRoute =
+  CompensationPayablesIndexRouteImport.update({
+    id: '/compensation/payables/',
+    path: '/compensation/payables/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompensationParticipantsIndexRoute =
   CompensationParticipantsIndexRouteImport.update({
     id: '/compensation/participants/',
     path: '/compensation/participants/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompensationDisputesIndexRoute =
+  CompensationDisputesIndexRouteImport.update({
+    id: '/compensation/disputes/',
+    path: '/compensation/disputes/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsIndexRoute =
+  CompensationCalculationsIndexRouteImport.update({
+    id: '/compensation/calculations/',
+    path: '/compensation/calculations/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompensationAttributionIndexRoute =
   CompensationAttributionIndexRouteImport.update({
     id: '/compensation/attribution/',
     path: '/compensation/attribution/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationStatementsIdRoute =
+  CompensationStatementsIdRouteImport.update({
+    id: '/compensation/statements/$id',
+    path: '/compensation/statements/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
 const CompensationPlansNewRoute = CompensationPlansNewRouteImport.update({
@@ -660,10 +764,38 @@ const CompensationPlansIdRoute = CompensationPlansIdRouteImport.update({
   path: '/compensation/plans/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensationPaymentBatchesIdRoute =
+  CompensationPaymentBatchesIdRouteImport.update({
+    id: '/compensation/payment-batches/$id',
+    path: '/compensation/payment-batches/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationPayablesIdRoute = CompensationPayablesIdRouteImport.update({
+  id: '/compensation/payables/$id',
+  path: '/compensation/payables/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationParticipantsIdRoute =
   CompensationParticipantsIdRouteImport.update({
     id: '/compensation/participants/$id',
     path: '/compensation/participants/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationDisputesIdRoute = CompensationDisputesIdRouteImport.update({
+  id: '/compensation/disputes/$id',
+  path: '/compensation/disputes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationCalculationsNewRoute =
+  CompensationCalculationsNewRouteImport.update({
+    id: '/compensation/calculations/new',
+    path: '/compensation/calculations/new',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsIdRoute =
+  CompensationCalculationsIdRouteImport.update({
+    id: '/compensation/calculations/$id',
+    path: '/compensation/calculations/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
 const CompensationAttributionEvidenceRoute =
@@ -695,6 +827,12 @@ const CompensationPlansIdParticipantsRoute =
     id: '/participants',
     path: '/participants',
     getParentRoute: () => CompensationPlansIdRoute,
+  } as any)
+const CompensationCalculationsIdPreviewRoute =
+  CompensationCalculationsIdPreviewRouteImport.update({
+    id: '/preview',
+    path: '/preview',
+    getParentRoute: () => CompensationCalculationsIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -732,8 +870,16 @@ export interface FileRoutesByFullPath {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/adjustments': typeof CompensationAdjustmentsRoute
+  '/compensation/approvals': typeof CompensationApprovalsRoute
+  '/compensation/audit': typeof CompensationAuditRoute
+  '/compensation/clawbacks': typeof CompensationClawbacksRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/holdbacks': typeof CompensationHoldbacksRoute
   '/compensation/preview': typeof CompensationPreviewRoute
+  '/compensation/reconciliation': typeof CompensationReconciliationRoute
+  '/compensation/reserves': typeof CompensationReservesRoute
+  '/compensation/verification': typeof CompensationVerificationRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -794,6 +940,7 @@ export interface FileRoutesByFullPath {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
@@ -801,12 +948,24 @@ export interface FileRoutesByFullPath {
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
+  '/compensation/calculations/$id': typeof CompensationCalculationsIdRouteWithChildren
+  '/compensation/calculations/new': typeof CompensationCalculationsNewRoute
+  '/compensation/disputes/$id': typeof CompensationDisputesIdRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
+  '/compensation/payables/$id': typeof CompensationPayablesIdRoute
+  '/compensation/payment-batches/$id': typeof CompensationPaymentBatchesIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
+  '/compensation/statements/$id': typeof CompensationStatementsIdRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
+  '/compensation/calculations/': typeof CompensationCalculationsIndexRoute
+  '/compensation/disputes/': typeof CompensationDisputesIndexRoute
   '/compensation/participants/': typeof CompensationParticipantsIndexRoute
+  '/compensation/payables/': typeof CompensationPayablesIndexRoute
+  '/compensation/payment-batches/': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
+  '/compensation/statements/': typeof CompensationStatementsIndexRoute
+  '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
@@ -842,8 +1001,16 @@ export interface FileRoutesByTo {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/adjustments': typeof CompensationAdjustmentsRoute
+  '/compensation/approvals': typeof CompensationApprovalsRoute
+  '/compensation/audit': typeof CompensationAuditRoute
+  '/compensation/clawbacks': typeof CompensationClawbacksRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/holdbacks': typeof CompensationHoldbacksRoute
   '/compensation/preview': typeof CompensationPreviewRoute
+  '/compensation/reconciliation': typeof CompensationReconciliationRoute
+  '/compensation/reserves': typeof CompensationReservesRoute
+  '/compensation/verification': typeof CompensationVerificationRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -904,6 +1071,7 @@ export interface FileRoutesByTo {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
+  '/compensation': typeof CompensationIndexRoute
   '/expenses': typeof ExpensesIndexRoute
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
@@ -911,12 +1079,24 @@ export interface FileRoutesByTo {
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
+  '/compensation/calculations/$id': typeof CompensationCalculationsIdRouteWithChildren
+  '/compensation/calculations/new': typeof CompensationCalculationsNewRoute
+  '/compensation/disputes/$id': typeof CompensationDisputesIdRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
+  '/compensation/payables/$id': typeof CompensationPayablesIdRoute
+  '/compensation/payment-batches/$id': typeof CompensationPaymentBatchesIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
+  '/compensation/statements/$id': typeof CompensationStatementsIdRoute
   '/compensation/attribution': typeof CompensationAttributionIndexRoute
+  '/compensation/calculations': typeof CompensationCalculationsIndexRoute
+  '/compensation/disputes': typeof CompensationDisputesIndexRoute
   '/compensation/participants': typeof CompensationParticipantsIndexRoute
+  '/compensation/payables': typeof CompensationPayablesIndexRoute
+  '/compensation/payment-batches': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans': typeof CompensationPlansIndexRoute
+  '/compensation/statements': typeof CompensationStatementsIndexRoute
+  '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
@@ -956,8 +1136,16 @@ export interface FileRoutesById {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/compensation/adjustments': typeof CompensationAdjustmentsRoute
+  '/compensation/approvals': typeof CompensationApprovalsRoute
+  '/compensation/audit': typeof CompensationAuditRoute
+  '/compensation/clawbacks': typeof CompensationClawbacksRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/holdbacks': typeof CompensationHoldbacksRoute
   '/compensation/preview': typeof CompensationPreviewRoute
+  '/compensation/reconciliation': typeof CompensationReconciliationRoute
+  '/compensation/reserves': typeof CompensationReservesRoute
+  '/compensation/verification': typeof CompensationVerificationRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -1018,6 +1206,7 @@ export interface FileRoutesById {
   '/readiness/production': typeof ReadinessProductionRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
+  '/compensation/': typeof CompensationIndexRoute
   '/expenses/': typeof ExpensesIndexRoute
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
@@ -1025,12 +1214,24 @@ export interface FileRoutesById {
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
+  '/compensation/calculations/$id': typeof CompensationCalculationsIdRouteWithChildren
+  '/compensation/calculations/new': typeof CompensationCalculationsNewRoute
+  '/compensation/disputes/$id': typeof CompensationDisputesIdRoute
   '/compensation/participants/$id': typeof CompensationParticipantsIdRoute
+  '/compensation/payables/$id': typeof CompensationPayablesIdRoute
+  '/compensation/payment-batches/$id': typeof CompensationPaymentBatchesIdRoute
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
+  '/compensation/statements/$id': typeof CompensationStatementsIdRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
+  '/compensation/calculations/': typeof CompensationCalculationsIndexRoute
+  '/compensation/disputes/': typeof CompensationDisputesIndexRoute
   '/compensation/participants/': typeof CompensationParticipantsIndexRoute
+  '/compensation/payables/': typeof CompensationPayablesIndexRoute
+  '/compensation/payment-batches/': typeof CompensationPaymentBatchesIndexRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
+  '/compensation/statements/': typeof CompensationStatementsIndexRoute
+  '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
 }
@@ -1071,8 +1272,16 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/adjustments'
+    | '/compensation/approvals'
+    | '/compensation/audit'
+    | '/compensation/clawbacks'
     | '/compensation/eligibility'
+    | '/compensation/holdbacks'
     | '/compensation/preview'
+    | '/compensation/reconciliation'
+    | '/compensation/reserves'
+    | '/compensation/verification'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1133,6 +1342,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/compensation/'
     | '/expenses/'
     | '/implementation/'
     | '/intelligence/'
@@ -1140,12 +1350,24 @@ export interface FileRouteTypes {
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
+    | '/compensation/calculations/$id'
+    | '/compensation/calculations/new'
+    | '/compensation/disputes/$id'
     | '/compensation/participants/$id'
+    | '/compensation/payables/$id'
+    | '/compensation/payment-batches/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
+    | '/compensation/statements/$id'
     | '/compensation/attribution/'
+    | '/compensation/calculations/'
+    | '/compensation/disputes/'
     | '/compensation/participants/'
+    | '/compensation/payables/'
+    | '/compensation/payment-batches/'
     | '/compensation/plans/'
+    | '/compensation/statements/'
+    | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   fileRoutesByTo: FileRoutesByTo
@@ -1181,8 +1403,16 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/adjustments'
+    | '/compensation/approvals'
+    | '/compensation/audit'
+    | '/compensation/clawbacks'
     | '/compensation/eligibility'
+    | '/compensation/holdbacks'
     | '/compensation/preview'
+    | '/compensation/reconciliation'
+    | '/compensation/reserves'
+    | '/compensation/verification'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1243,6 +1473,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking'
     | '/cash-availability'
+    | '/compensation'
     | '/expenses'
     | '/implementation'
     | '/intelligence'
@@ -1250,12 +1481,24 @@ export interface FileRouteTypes {
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
+    | '/compensation/calculations/$id'
+    | '/compensation/calculations/new'
+    | '/compensation/disputes/$id'
     | '/compensation/participants/$id'
+    | '/compensation/payables/$id'
+    | '/compensation/payment-batches/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
+    | '/compensation/statements/$id'
     | '/compensation/attribution'
+    | '/compensation/calculations'
+    | '/compensation/disputes'
     | '/compensation/participants'
+    | '/compensation/payables'
+    | '/compensation/payment-batches'
     | '/compensation/plans'
+    | '/compensation/statements'
+    | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   id:
@@ -1294,8 +1537,16 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/compensation/adjustments'
+    | '/compensation/approvals'
+    | '/compensation/audit'
+    | '/compensation/clawbacks'
     | '/compensation/eligibility'
+    | '/compensation/holdbacks'
     | '/compensation/preview'
+    | '/compensation/reconciliation'
+    | '/compensation/reserves'
+    | '/compensation/verification'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1356,6 +1607,7 @@ export interface FileRouteTypes {
     | '/readiness/production'
     | '/banking/'
     | '/cash-availability/'
+    | '/compensation/'
     | '/expenses/'
     | '/implementation/'
     | '/intelligence/'
@@ -1363,12 +1615,24 @@ export interface FileRouteTypes {
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
+    | '/compensation/calculations/$id'
+    | '/compensation/calculations/new'
+    | '/compensation/disputes/$id'
     | '/compensation/participants/$id'
+    | '/compensation/payables/$id'
+    | '/compensation/payment-batches/$id'
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
+    | '/compensation/statements/$id'
     | '/compensation/attribution/'
+    | '/compensation/calculations/'
+    | '/compensation/disputes/'
     | '/compensation/participants/'
+    | '/compensation/payables/'
+    | '/compensation/payment-batches/'
     | '/compensation/plans/'
+    | '/compensation/statements/'
+    | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
   fileRoutesById: FileRoutesById
@@ -1406,8 +1670,16 @@ export interface RootRouteChildren {
   AutomationSubscriptionActionsRoute: typeof AutomationSubscriptionActionsRoute
   BankingReconciliationRoute: typeof BankingReconciliationRoute
   BankingTransactionsRoute: typeof BankingTransactionsRoute
+  CompensationAdjustmentsRoute: typeof CompensationAdjustmentsRoute
+  CompensationApprovalsRoute: typeof CompensationApprovalsRoute
+  CompensationAuditRoute: typeof CompensationAuditRoute
+  CompensationClawbacksRoute: typeof CompensationClawbacksRoute
   CompensationEligibilityRoute: typeof CompensationEligibilityRoute
+  CompensationHoldbacksRoute: typeof CompensationHoldbacksRoute
   CompensationPreviewRoute: typeof CompensationPreviewRoute
+  CompensationReconciliationRoute: typeof CompensationReconciliationRoute
+  CompensationReservesRoute: typeof CompensationReservesRoute
+  CompensationVerificationRoute: typeof CompensationVerificationRoute
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
@@ -1447,17 +1719,29 @@ export interface RootRouteChildren {
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   BankingIndexRoute: typeof BankingIndexRoute
+  CompensationIndexRoute: typeof CompensationIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
   CompensationAttributionConflictsRoute: typeof CompensationAttributionConflictsRoute
   CompensationAttributionEvidenceRoute: typeof CompensationAttributionEvidenceRoute
+  CompensationCalculationsIdRoute: typeof CompensationCalculationsIdRouteWithChildren
+  CompensationCalculationsNewRoute: typeof CompensationCalculationsNewRoute
+  CompensationDisputesIdRoute: typeof CompensationDisputesIdRoute
   CompensationParticipantsIdRoute: typeof CompensationParticipantsIdRoute
+  CompensationPayablesIdRoute: typeof CompensationPayablesIdRoute
+  CompensationPaymentBatchesIdRoute: typeof CompensationPaymentBatchesIdRoute
   CompensationPlansIdRoute: typeof CompensationPlansIdRouteWithChildren
   CompensationPlansNewRoute: typeof CompensationPlansNewRoute
+  CompensationStatementsIdRoute: typeof CompensationStatementsIdRoute
   CompensationAttributionIndexRoute: typeof CompensationAttributionIndexRoute
+  CompensationCalculationsIndexRoute: typeof CompensationCalculationsIndexRoute
+  CompensationDisputesIndexRoute: typeof CompensationDisputesIndexRoute
   CompensationParticipantsIndexRoute: typeof CompensationParticipantsIndexRoute
+  CompensationPayablesIndexRoute: typeof CompensationPayablesIndexRoute
+  CompensationPaymentBatchesIndexRoute: typeof CompensationPaymentBatchesIndexRoute
   CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
+  CompensationStatementsIndexRoute: typeof CompensationStatementsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1594,6 +1878,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/expenses/'
       preLoaderRoute: typeof ExpensesIndexRouteImport
       parentRoute: typeof ExpensesRoute
+    }
+    '/compensation/': {
+      id: '/compensation/'
+      path: '/compensation'
+      fullPath: '/compensation/'
+      preLoaderRoute: typeof CompensationIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/cash-availability/': {
       id: '/cash-availability/'
@@ -2015,6 +2306,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersCustomerIdRouteImport
       parentRoute: typeof CustomersRoute
     }
+    '/compensation/verification': {
+      id: '/compensation/verification'
+      path: '/compensation/verification'
+      fullPath: '/compensation/verification'
+      preLoaderRoute: typeof CompensationVerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/reserves': {
+      id: '/compensation/reserves'
+      path: '/compensation/reserves'
+      fullPath: '/compensation/reserves'
+      preLoaderRoute: typeof CompensationReservesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/reconciliation': {
+      id: '/compensation/reconciliation'
+      path: '/compensation/reconciliation'
+      fullPath: '/compensation/reconciliation'
+      preLoaderRoute: typeof CompensationReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/preview': {
       id: '/compensation/preview'
       path: '/compensation/preview'
@@ -2022,11 +2334,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/holdbacks': {
+      id: '/compensation/holdbacks'
+      path: '/compensation/holdbacks'
+      fullPath: '/compensation/holdbacks'
+      preLoaderRoute: typeof CompensationHoldbacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/eligibility': {
       id: '/compensation/eligibility'
       path: '/compensation/eligibility'
       fullPath: '/compensation/eligibility'
       preLoaderRoute: typeof CompensationEligibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/clawbacks': {
+      id: '/compensation/clawbacks'
+      path: '/compensation/clawbacks'
+      fullPath: '/compensation/clawbacks'
+      preLoaderRoute: typeof CompensationClawbacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/audit': {
+      id: '/compensation/audit'
+      path: '/compensation/audit'
+      fullPath: '/compensation/audit'
+      preLoaderRoute: typeof CompensationAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/approvals': {
+      id: '/compensation/approvals'
+      path: '/compensation/approvals'
+      fullPath: '/compensation/approvals'
+      preLoaderRoute: typeof CompensationApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/adjustments': {
+      id: '/compensation/adjustments'
+      path: '/compensation/adjustments'
+      fullPath: '/compensation/adjustments'
+      preLoaderRoute: typeof CompensationAdjustmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cash-availability/rules': {
@@ -2162,11 +2509,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/statements/': {
+      id: '/compensation/statements/'
+      path: '/compensation/statements'
+      fullPath: '/compensation/statements/'
+      preLoaderRoute: typeof CompensationStatementsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/plans/': {
       id: '/compensation/plans/'
       path: '/compensation/plans'
       fullPath: '/compensation/plans/'
       preLoaderRoute: typeof CompensationPlansIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payment-batches/': {
+      id: '/compensation/payment-batches/'
+      path: '/compensation/payment-batches'
+      fullPath: '/compensation/payment-batches/'
+      preLoaderRoute: typeof CompensationPaymentBatchesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payables/': {
+      id: '/compensation/payables/'
+      path: '/compensation/payables'
+      fullPath: '/compensation/payables/'
+      preLoaderRoute: typeof CompensationPayablesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compensation/participants/': {
@@ -2176,11 +2544,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationParticipantsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/disputes/': {
+      id: '/compensation/disputes/'
+      path: '/compensation/disputes'
+      fullPath: '/compensation/disputes/'
+      preLoaderRoute: typeof CompensationDisputesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/': {
+      id: '/compensation/calculations/'
+      path: '/compensation/calculations'
+      fullPath: '/compensation/calculations/'
+      preLoaderRoute: typeof CompensationCalculationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/attribution/': {
       id: '/compensation/attribution/'
       path: '/compensation/attribution'
       fullPath: '/compensation/attribution/'
       preLoaderRoute: typeof CompensationAttributionIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/statements/$id': {
+      id: '/compensation/statements/$id'
+      path: '/compensation/statements/$id'
+      fullPath: '/compensation/statements/$id'
+      preLoaderRoute: typeof CompensationStatementsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compensation/plans/new': {
@@ -2197,11 +2586,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationPlansIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/payment-batches/$id': {
+      id: '/compensation/payment-batches/$id'
+      path: '/compensation/payment-batches/$id'
+      fullPath: '/compensation/payment-batches/$id'
+      preLoaderRoute: typeof CompensationPaymentBatchesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payables/$id': {
+      id: '/compensation/payables/$id'
+      path: '/compensation/payables/$id'
+      fullPath: '/compensation/payables/$id'
+      preLoaderRoute: typeof CompensationPayablesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/participants/$id': {
       id: '/compensation/participants/$id'
       path: '/compensation/participants/$id'
       fullPath: '/compensation/participants/$id'
       preLoaderRoute: typeof CompensationParticipantsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/disputes/$id': {
+      id: '/compensation/disputes/$id'
+      path: '/compensation/disputes/$id'
+      fullPath: '/compensation/disputes/$id'
+      preLoaderRoute: typeof CompensationDisputesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/new': {
+      id: '/compensation/calculations/new'
+      path: '/compensation/calculations/new'
+      fullPath: '/compensation/calculations/new'
+      preLoaderRoute: typeof CompensationCalculationsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/$id': {
+      id: '/compensation/calculations/$id'
+      path: '/compensation/calculations/$id'
+      fullPath: '/compensation/calculations/$id'
+      preLoaderRoute: typeof CompensationCalculationsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compensation/attribution/evidence': {
@@ -2238,6 +2662,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/compensation/plans/$id/participants'
       preLoaderRoute: typeof CompensationPlansIdParticipantsRouteImport
       parentRoute: typeof CompensationPlansIdRoute
+    }
+    '/compensation/calculations/$id/preview': {
+      id: '/compensation/calculations/$id/preview'
+      path: '/preview'
+      fullPath: '/compensation/calculations/$id/preview'
+      preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
+      parentRoute: typeof CompensationCalculationsIdRoute
     }
   }
 }
@@ -2341,6 +2772,21 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
   InvoicesRouteChildren,
 )
 
+interface CompensationCalculationsIdRouteChildren {
+  CompensationCalculationsIdPreviewRoute: typeof CompensationCalculationsIdPreviewRoute
+}
+
+const CompensationCalculationsIdRouteChildren: CompensationCalculationsIdRouteChildren =
+  {
+    CompensationCalculationsIdPreviewRoute:
+      CompensationCalculationsIdPreviewRoute,
+  }
+
+const CompensationCalculationsIdRouteWithChildren =
+  CompensationCalculationsIdRoute._addFileChildren(
+    CompensationCalculationsIdRouteChildren,
+  )
+
 interface CompensationPlansIdRouteChildren {
   CompensationPlansIdParticipantsRoute: typeof CompensationPlansIdParticipantsRoute
   CompensationPlansIdVersionsRoute: typeof CompensationPlansIdVersionsRoute
@@ -2387,8 +2833,16 @@ const rootRouteChildren: RootRouteChildren = {
   AutomationSubscriptionActionsRoute: AutomationSubscriptionActionsRoute,
   BankingReconciliationRoute: BankingReconciliationRoute,
   BankingTransactionsRoute: BankingTransactionsRoute,
+  CompensationAdjustmentsRoute: CompensationAdjustmentsRoute,
+  CompensationApprovalsRoute: CompensationApprovalsRoute,
+  CompensationAuditRoute: CompensationAuditRoute,
+  CompensationClawbacksRoute: CompensationClawbacksRoute,
   CompensationEligibilityRoute: CompensationEligibilityRoute,
+  CompensationHoldbacksRoute: CompensationHoldbacksRoute,
   CompensationPreviewRoute: CompensationPreviewRoute,
+  CompensationReconciliationRoute: CompensationReconciliationRoute,
+  CompensationReservesRoute: CompensationReservesRoute,
+  CompensationVerificationRoute: CompensationVerificationRoute,
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
@@ -2428,28 +2882,30 @@ const rootRouteChildren: RootRouteChildren = {
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
   BankingIndexRoute: BankingIndexRoute,
+  CompensationIndexRoute: CompensationIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,
   CompensationAttributionConflictsRoute: CompensationAttributionConflictsRoute,
   CompensationAttributionEvidenceRoute: CompensationAttributionEvidenceRoute,
+  CompensationCalculationsIdRoute: CompensationCalculationsIdRouteWithChildren,
+  CompensationCalculationsNewRoute: CompensationCalculationsNewRoute,
+  CompensationDisputesIdRoute: CompensationDisputesIdRoute,
   CompensationParticipantsIdRoute: CompensationParticipantsIdRoute,
+  CompensationPayablesIdRoute: CompensationPayablesIdRoute,
+  CompensationPaymentBatchesIdRoute: CompensationPaymentBatchesIdRoute,
   CompensationPlansIdRoute: CompensationPlansIdRouteWithChildren,
   CompensationPlansNewRoute: CompensationPlansNewRoute,
+  CompensationStatementsIdRoute: CompensationStatementsIdRoute,
   CompensationAttributionIndexRoute: CompensationAttributionIndexRoute,
+  CompensationCalculationsIndexRoute: CompensationCalculationsIndexRoute,
+  CompensationDisputesIndexRoute: CompensationDisputesIndexRoute,
   CompensationParticipantsIndexRoute: CompensationParticipantsIndexRoute,
+  CompensationPayablesIndexRoute: CompensationPayablesIndexRoute,
+  CompensationPaymentBatchesIndexRoute: CompensationPaymentBatchesIndexRoute,
   CompensationPlansIndexRoute: CompensationPlansIndexRoute,
+  CompensationStatementsIndexRoute: CompensationStatementsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

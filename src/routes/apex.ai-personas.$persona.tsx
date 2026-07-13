@@ -38,7 +38,7 @@ function PersonaDetail() {
         <div className="mt-1 text-[22px] font-semibold">{persona.name}</div>
         <div className="mt-1 text-[13px] text-white/85">{persona.purpose}</div>
         <div className="mt-3 flex flex-wrap gap-2">
-          {persona.intendedRoles.map((r) => (
+          {persona.intendedRoles.map((r: string) => (
             <Badge key={r} variant="outline" className="border-white/40 bg-white/10 text-[10.5px] text-white">
               {r}
             </Badge>
@@ -56,25 +56,25 @@ function PersonaDetail() {
         <Card className="border-border/70 p-3">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald-600">Allowed data</div>
           <ul className="mt-2 space-y-1 text-[12.5px]">
-            {persona.allowedData.map((d) => <li key={d}>• {d}</li>)}
+            {persona.allowedData.map((d: string) => <li key={d}>• {d}</li>)}
           </ul>
         </Card>
         <Card className="border-border/70 p-3">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-rose-600">Restricted data</div>
           <ul className="mt-2 space-y-1 text-[12.5px]">
-            {persona.restrictedData.map((d) => <li key={d}>• {d}</li>)}
+            {persona.restrictedData.map((d: string) => <li key={d}>• {d}</li>)}
           </ul>
         </Card>
         <Card className="border-border/70 p-3">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Recommendations supported</div>
           <ul className="mt-2 space-y-1 text-[12.5px]">
-            {persona.recommendations.map((d) => <li key={d}>• {d}</li>)}
+            {persona.recommendations.map((d: string) => <li key={d}>• {d}</li>)}
           </ul>
         </Card>
         <Card className="border-border/70 p-3">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Approval requirements</div>
           <ul className="mt-2 space-y-1 text-[12.5px]">
-            {persona.approvalRequired.map((d) => <li key={d}>• {d}</li>)}
+            {persona.approvalRequired.map((d: string) => <li key={d}>• {d}</li>)}
           </ul>
           <div className="mt-3 text-[11.5px] text-muted-foreground">
             Escalation: <span className="text-foreground">{persona.escalation}</span>

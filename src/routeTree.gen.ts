@@ -72,6 +72,7 @@ import { Route as ImplementationDataMapRouteImport } from './routes/implementati
 import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
 import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
 import { Route as FeatureRegistryReleasesRouteImport } from './routes/feature-registry.releases'
+import { Route as FeatureRegistryReadinessRouteImport } from './routes/feature-registry.readiness'
 import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
 import { Route as FeatureRegistryNavigationRouteImport } from './routes/feature-registry.navigation'
 import { Route as FeatureRegistryLegalAccountingRouteImport } from './routes/feature-registry.legal-accounting'
@@ -474,6 +475,12 @@ const FeatureRegistryReleasesRoute = FeatureRegistryReleasesRouteImport.update({
   path: '/feature-registry/releases',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeatureRegistryReadinessRoute =
+  FeatureRegistryReadinessRouteImport.update({
+    id: '/feature-registry/readiness',
+    path: '/feature-registry/readiness',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
   id: '/feature-registry/planned',
   path: '/feature-registry/planned',
@@ -971,6 +978,7 @@ export interface FileRoutesByFullPath {
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
   '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1112,6 +1120,7 @@ export interface FileRoutesByTo {
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
   '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1257,6 +1266,7 @@ export interface FileRoutesById {
   '/feature-registry/legal-accounting': typeof FeatureRegistryLegalAccountingRoute
   '/feature-registry/navigation': typeof FeatureRegistryNavigationRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
+  '/feature-registry/readiness': typeof FeatureRegistryReadinessRoute
   '/feature-registry/releases': typeof FeatureRegistryReleasesRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1403,6 +1413,7 @@ export interface FileRouteTypes {
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
     | '/feature-registry/planned'
+    | '/feature-registry/readiness'
     | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1544,6 +1555,7 @@ export interface FileRouteTypes {
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
     | '/feature-registry/planned'
+    | '/feature-registry/readiness'
     | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1688,6 +1700,7 @@ export interface FileRouteTypes {
     | '/feature-registry/legal-accounting'
     | '/feature-registry/navigation'
     | '/feature-registry/planned'
+    | '/feature-registry/readiness'
     | '/feature-registry/releases'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1815,6 +1828,7 @@ export interface RootRouteChildren {
   FeatureRegistryLegalAccountingRoute: typeof FeatureRegistryLegalAccountingRoute
   FeatureRegistryNavigationRoute: typeof FeatureRegistryNavigationRoute
   FeatureRegistryPlannedRoute: typeof FeatureRegistryPlannedRoute
+  FeatureRegistryReadinessRoute: typeof FeatureRegistryReadinessRoute
   FeatureRegistryReleasesRoute: typeof FeatureRegistryReleasesRoute
   ImplementationApiMapRoute: typeof ImplementationApiMapRoute
   ImplementationCutoverRoute: typeof ImplementationCutoverRoute
@@ -2319,6 +2333,13 @@ declare module '@tanstack/react-router' {
       path: '/feature-registry/releases'
       fullPath: '/feature-registry/releases'
       preLoaderRoute: typeof FeatureRegistryReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/readiness': {
+      id: '/feature-registry/readiness'
+      path: '/feature-registry/readiness'
+      fullPath: '/feature-registry/readiness'
+      preLoaderRoute: typeof FeatureRegistryReadinessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-registry/planned': {
@@ -3058,6 +3079,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeatureRegistryLegalAccountingRoute: FeatureRegistryLegalAccountingRoute,
   FeatureRegistryNavigationRoute: FeatureRegistryNavigationRoute,
   FeatureRegistryPlannedRoute: FeatureRegistryPlannedRoute,
+  FeatureRegistryReadinessRoute: FeatureRegistryReadinessRoute,
   FeatureRegistryReleasesRoute: FeatureRegistryReleasesRoute,
   ImplementationApiMapRoute: ImplementationApiMapRoute,
   ImplementationCutoverRoute: ImplementationCutoverRoute,

@@ -47,7 +47,7 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 function FeatureDetail() {
-  const { feature: f } = Route.useLoaderData();
+  const { feature: f } = Route.useLoaderData() as { feature: FeatureRecord };
   return (
     <FeatureRegistryPage
       title={f.name}

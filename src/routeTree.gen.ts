@@ -108,6 +108,7 @@ import { Route as AutomationApprovalsRouteImport } from './routes/automation.app
 import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
+import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
 
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
@@ -616,6 +617,11 @@ const CompensationPlansIndexRoute = CompensationPlansIndexRouteImport.update({
   path: '/compensation/plans/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompensationPlansIdRoute = CompensationPlansIdRouteImport.update({
+  id: '/compensation/plans/$id',
+  path: '/compensation/plans/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -716,6 +722,7 @@ export interface FileRoutesByFullPath {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/compensation/plans/$id': typeof CompensationPlansIdRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
 }
 export interface FileRoutesByTo {
@@ -814,6 +821,7 @@ export interface FileRoutesByTo {
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
+  '/compensation/plans/$id': typeof CompensationPlansIdRoute
   '/compensation/plans': typeof CompensationPlansIndexRoute
 }
 export interface FileRoutesById {
@@ -916,6 +924,7 @@ export interface FileRoutesById {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/compensation/plans/$id': typeof CompensationPlansIdRoute
   '/compensation/plans/': typeof CompensationPlansIndexRoute
 }
 export interface FileRouteTypes {
@@ -1019,6 +1028,7 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/compensation/plans/$id'
     | '/compensation/plans/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1117,6 +1127,7 @@ export interface FileRouteTypes {
     | '/implementation'
     | '/intelligence'
     | '/invoices'
+    | '/compensation/plans/$id'
     | '/compensation/plans'
   id:
     | '__root__'
@@ -1218,6 +1229,7 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/compensation/plans/$id'
     | '/compensation/plans/'
   fileRoutesById: FileRoutesById
 }
@@ -1295,6 +1307,7 @@ export interface RootRouteChildren {
   BankingIndexRoute: typeof BankingIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
+  CompensationPlansIdRoute: typeof CompensationPlansIdRoute
   CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
 }
 
@@ -1993,6 +2006,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationPlansIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compensation/plans/$id': {
+      id: '/compensation/plans/$id'
+      path: '/compensation/plans/$id'
+      fullPath: '/compensation/plans/$id'
+      preLoaderRoute: typeof CompensationPlansIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -2169,6 +2189,7 @@ const rootRouteChildren: RootRouteChildren = {
   BankingIndexRoute: BankingIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
+  CompensationPlansIdRoute: CompensationPlansIdRoute,
   CompensationPlansIndexRoute: CompensationPlansIndexRoute,
 }
 export const routeTree = rootRouteImport

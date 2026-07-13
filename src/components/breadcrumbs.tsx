@@ -12,10 +12,11 @@ type Crumb = { title: string; to?: string };
  * Dynamic segments ($id) are shown as-is when no static label matches.
  */
 function buildCrumbs(pathname: string): Crumb[] {
-  if (pathname === "/") return [{ title: "Dashboard", to: "/" }];
+  if (pathname === "/" || pathname === "/apex") return [{ title: "Executive Home", to: "/apex" }];
+  if (pathname === "/dashboard") return [{ title: "Operational Dashboard", to: "/dashboard" }];
 
   const parts = pathname.split("/").filter(Boolean);
-  const crumbs: Crumb[] = [{ title: "Home", to: "/" }];
+  const crumbs: Crumb[] = [{ title: "Home", to: "/apex" }];
 
   let acc = "";
   for (let i = 0; i < parts.length; i++) {

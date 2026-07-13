@@ -87,7 +87,7 @@ export const EXECUTIVE_WORKSPACES: ExecutiveWorkspace[] = [
       { title: "Company Health", to: "/apex/company-health", icon: Gauge },
       { title: "Executive Briefing", to: "/apex/briefing", icon: BookMarked },
       { title: "Priorities & Approvals", to: "/automation/approvals", icon: ShieldCheck },
-      { title: "Operational Dashboard", to: "/", icon: Compass },
+      { title: "Operational Dashboard", to: "/dashboard", icon: Compass },
     ],
   },
   {

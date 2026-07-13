@@ -194,10 +194,8 @@ export function CrossExperienceLinks({
       {links.map((l) => (
         <Link
           key={l.label}
-          // @ts-expect-error dynamic to path
-          to={l.to}
-          // @ts-expect-error dynamic params
-          params={l.params}
+          to={l.to as never}
+          params={l.params as never}
           className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background px-2.5 py-1 text-[11px] font-medium text-foreground transition hover:border-info/60 hover:bg-info/5"
         >
           {l.label} <ArrowRight className="h-3 w-3" />

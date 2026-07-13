@@ -298,7 +298,7 @@ function baseExplain(title: string, question: string, confidence: number, freshn
     missingData: ["Production ledger not connected"],
     action: "Advisory recommendation — route to appropriate owner via the operational workspace.",
     approval: "Advisory only — no autonomous action taken.",
-  } as const;
+  };
 }
 
 export const APEX_HEALTH = {

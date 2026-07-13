@@ -409,7 +409,7 @@ export const MOCK_VERIFICATIONS: CompensationVerification[] = [
   { id: "ver_003", calculationId: "calc_002", category: "collection_clearance", status: "pending", evidenceCount: 0, note: "Awaiting payment clearance" },
   { id: "ver_004", calculationId: "calc_002", category: "split_validation", status: "pending", evidenceCount: 0 },
   { id: "ver_005", calculationId: "calc_005", category: "refund_chargeback", status: "evidence_requested", reviewer: "Rose Delacroix", note: "Need refund memo attached", evidenceCount: 1 },
-  { id: "ver_006", calculationId: "calc_003", category: "commission", status: "verified", reviewer: "Accounting Lead", reviewedAt: now, evidenceCount: 2 },
+  { id: "ver_006", calculationId: "calc_003", category: "software_participation", status: "verified", reviewer: "Accounting Lead", reviewedAt: now, evidenceCount: 2 },
 ];
 
 // ─── Approvals ────────────────────────────────────────────────────────────

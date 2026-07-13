@@ -1,0 +1,62 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { ApexPage, ApexSection } from "@/components/apex/apex-page";
+import { Card } from "@/components/ui/card";
+
+export const Route = createFileRoute("/apex/architecture")({
+  head: () => ({ meta: [{ title: "Experience Architecture — Project APEX" }] }),
+  component: () => (
+    <ApexPage
+      title="Experience Architecture"
+      description="How LedgerOS becomes signal → explanation → decision → action → outcome. This surface documents the model before any UI rewrite."
+    >
+      <ApexSection title="Every major screen answers seven questions">
+        <ol className="grid list-decimal gap-1 pl-5 text-[12.5px] text-muted-foreground sm:grid-cols-2">
+          <li>What happened?</li>
+          <li>Why did it happen?</li>
+          <li>Why does it matter?</li>
+          <li>What should the user do next?</li>
+          <li>What evidence supports the recommendation?</li>
+          <li>Who must approve the action?</li>
+          <li>What financial impact will the action have?</li>
+        </ol>
+      </ApexSection>
+
+      <ApexSection
+        title="Explainability standard"
+        description="Every metric, insight, and recommendation surfaces the same explainability contract."
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          {[
+            ["Metric surface", "Current, prior, target, trend, why it changed, contributors, detractors, risk, action, evidence, confidence, freshness."],
+            ["Insight surface", "Direct answer, period, entity, evidence, calculation method, confidence, freshness, assumptions, missing data, action, approval."],
+            ["Recommendation surface", "Estimated impact, effort, horizon, risk, evidence, owner, next step, required approval, status, outcome."],
+            ["Ask LedgerOS surface", "Persona, permitted data, prohibited actions, required evidence, demonstration label, escalation path."],
+          ].map(([t, d]) => (
+            <Card key={t} className="border-border/70 p-3">
+              <div className="text-[13px] font-semibold">{t}</div>
+              <div className="mt-1 text-[12px] text-muted-foreground">{d}</div>
+            </Card>
+          ))}
+        </div>
+      </ApexSection>
+
+      <ApexSection
+        title="Light/dark visual balance"
+        description="Approximately 70% light workspace, 30% dark executive surfaces. Deep navy sidebar, cool-gray background, white operational cards, selective dark navy intelligence cards, electric blue / cyan / teal / violet accents."
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          <Card className="border-border/70 bg-background p-4">
+            <div className="text-[12px] font-semibold text-muted-foreground">Operational surface</div>
+            <div className="mt-2 text-[15px] font-semibold">White card, tabular data, high readability</div>
+            <div className="mt-1 text-[12px] text-muted-foreground">Used for day-to-day accounting workflows.</div>
+          </Card>
+          <Card className="border-none bg-gradient-to-br from-slate-950 to-indigo-950 p-4 text-white">
+            <div className="text-[12px] font-semibold text-white/60">Intelligence surface</div>
+            <div className="mt-2 text-[15px] font-semibold">Dark navy card, controlled glow, executive tone</div>
+            <div className="mt-1 text-[12px] text-white/70">Used selectively for pulses, briefings, and health.</div>
+          </Card>
+        </div>
+      </ApexSection>
+    </ApexPage>
+  ),
+});

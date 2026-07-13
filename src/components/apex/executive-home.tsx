@@ -1128,7 +1128,10 @@ function NotificationsPill() {
 export function ExecutiveHome() {
   const { mode, set } = useNavMode();
   useEffect(() => {
-    if (mode !== "executive") set("executive");
+    const t = window.setTimeout(() => {
+      if (mode !== "executive") set("executive");
+    }, 50);
+    return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

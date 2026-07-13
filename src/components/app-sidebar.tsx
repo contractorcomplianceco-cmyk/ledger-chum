@@ -225,7 +225,7 @@ export function AppSidebar() {
               </div>
               <div className="min-w-0 flex-1 leading-tight">
                 <div className="truncate text-[13px] font-semibold text-white">Rose Taylor</div>
-                <div className="truncate text-[11px] text-sidebar-foreground/60">Owner</div>
+                <div className="truncate text-[11px] text-sidebar-foreground/60">Founder & CEO</div>
               </div>
               <ChevronRight className="h-4 w-4 text-sidebar-foreground/50 transition group-hover:translate-x-0.5 group-hover:text-white" />
             </button>

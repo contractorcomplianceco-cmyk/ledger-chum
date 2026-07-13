@@ -152,7 +152,7 @@ const KPI_VISUAL: Record<
   {
     tint: string;
     accent: string;
-    illustration: (props: { className?: string; decorative?: boolean; reducedMotion?: boolean }) => JSX.Element;
+    illustration: (props: { className?: string; decorative?: boolean; reducedMotion?: boolean }) => ReactElement;
   }
 > = {
   cash: {

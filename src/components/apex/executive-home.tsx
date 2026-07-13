@@ -211,8 +211,8 @@ function KpiCard({ kpi }: { kpi: ExecutiveKpi }) {
         </div>
       </div>
 
-      <div aria-hidden className={cn("relative -mx-4 mt-3 h-14 overflow-hidden", v.tint)}>
-        <v.illustration className="absolute inset-x-0 bottom-0 h-full w-full" decorative />
+      <div aria-hidden className={cn("relative -mx-4 mt-3 h-24 overflow-hidden", v.tint)}>
+        <v.illustration className="absolute inset-0 h-full w-full" decorative />
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">

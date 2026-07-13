@@ -1,5 +1,4 @@
-import { useEffect, useState, type ReactElement } from "react";
-import { useNavMode } from "@/hooks/use-nav-mode";
+import { useState, type ReactElement } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   AlertTriangle,

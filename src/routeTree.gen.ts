@@ -72,6 +72,7 @@ import { Route as ImplementationDataMapRouteImport } from './routes/implementati
 import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
 import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
 import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
+import { Route as FeatureRegistryIntegrationsRouteImport } from './routes/feature-registry.integrations'
 import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
 import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
 import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
@@ -469,6 +470,12 @@ const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
   path: '/feature-registry/planned',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeatureRegistryIntegrationsRoute =
+  FeatureRegistryIntegrationsRouteImport.update({
+    id: '/feature-registry/integrations',
+    path: '/feature-registry/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
   id: '/feature-registry/built',
   path: '/feature-registry/built',
@@ -932,6 +939,7 @@ export interface FileRoutesByFullPath {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1068,6 +1076,7 @@ export interface FileRoutesByTo {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1208,6 +1217,7 @@ export interface FileRoutesById {
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
+  '/feature-registry/integrations': typeof FeatureRegistryIntegrationsRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
@@ -1349,6 +1359,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/integrations'
     | '/feature-registry/planned'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1485,6 +1496,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/integrations'
     | '/feature-registry/planned'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1624,6 +1636,7 @@ export interface FileRouteTypes {
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
+    | '/feature-registry/integrations'
     | '/feature-registry/planned'
     | '/implementation/api-map'
     | '/implementation/cutover'
@@ -1746,6 +1759,7 @@ export interface RootRouteChildren {
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
   FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
+  FeatureRegistryIntegrationsRoute: typeof FeatureRegistryIntegrationsRoute
   FeatureRegistryPlannedRoute: typeof FeatureRegistryPlannedRoute
   ImplementationApiMapRoute: typeof ImplementationApiMapRoute
   ImplementationCutoverRoute: typeof ImplementationCutoverRoute
@@ -2250,6 +2264,13 @@ declare module '@tanstack/react-router' {
       path: '/feature-registry/planned'
       fullPath: '/feature-registry/planned'
       preLoaderRoute: typeof FeatureRegistryPlannedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/integrations': {
+      id: '/feature-registry/integrations'
+      path: '/feature-registry/integrations'
+      fullPath: '/feature-registry/integrations'
+      preLoaderRoute: typeof FeatureRegistryIntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-registry/built': {
@@ -2949,6 +2970,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
   FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,
+  FeatureRegistryIntegrationsRoute: FeatureRegistryIntegrationsRoute,
   FeatureRegistryPlannedRoute: FeatureRegistryPlannedRoute,
   ImplementationApiMapRoute: ImplementationApiMapRoute,
   ImplementationCutoverRoute: ImplementationCutoverRoute,

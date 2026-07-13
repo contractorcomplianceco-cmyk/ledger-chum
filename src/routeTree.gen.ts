@@ -88,6 +88,7 @@ import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
 import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
+import { Route as CompensationPreviewRouteImport } from './routes/compensation.preview'
 import { Route as CompensationEligibilityRouteImport } from './routes/compensation.eligibility'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
@@ -522,6 +523,11 @@ const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
   path: '/$customerId',
   getParentRoute: () => CustomersRoute,
 } as any)
+const CompensationPreviewRoute = CompensationPreviewRouteImport.update({
+  id: '/compensation/preview',
+  path: '/compensation/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationEligibilityRoute = CompensationEligibilityRouteImport.update({
   id: '/compensation/eligibility',
   path: '/compensation/eligibility',
@@ -727,6 +733,7 @@ export interface FileRoutesByFullPath {
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/preview': typeof CompensationPreviewRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -836,6 +843,7 @@ export interface FileRoutesByTo {
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/preview': typeof CompensationPreviewRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -949,6 +957,7 @@ export interface FileRoutesById {
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
   '/compensation/eligibility': typeof CompensationEligibilityRoute
+  '/compensation/preview': typeof CompensationPreviewRoute
   '/customers/$customerId': typeof CustomersCustomerIdRoute
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
@@ -1063,6 +1072,7 @@ export interface FileRouteTypes {
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
     | '/compensation/eligibility'
+    | '/compensation/preview'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1172,6 +1182,7 @@ export interface FileRouteTypes {
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
     | '/compensation/eligibility'
+    | '/compensation/preview'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1284,6 +1295,7 @@ export interface FileRouteTypes {
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
     | '/compensation/eligibility'
+    | '/compensation/preview'
     | '/customers/$customerId'
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
@@ -1395,6 +1407,7 @@ export interface RootRouteChildren {
   BankingReconciliationRoute: typeof BankingReconciliationRoute
   BankingTransactionsRoute: typeof BankingTransactionsRoute
   CompensationEligibilityRoute: typeof CompensationEligibilityRoute
+  CompensationPreviewRoute: typeof CompensationPreviewRoute
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
@@ -2002,6 +2015,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomersCustomerIdRouteImport
       parentRoute: typeof CustomersRoute
     }
+    '/compensation/preview': {
+      id: '/compensation/preview'
+      path: '/compensation/preview'
+      fullPath: '/compensation/preview'
+      preLoaderRoute: typeof CompensationPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/eligibility': {
       id: '/compensation/eligibility'
       path: '/compensation/eligibility'
@@ -2368,6 +2388,7 @@ const rootRouteChildren: RootRouteChildren = {
   BankingReconciliationRoute: BankingReconciliationRoute,
   BankingTransactionsRoute: BankingTransactionsRoute,
   CompensationEligibilityRoute: CompensationEligibilityRoute,
+  CompensationPreviewRoute: CompensationPreviewRoute,
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,

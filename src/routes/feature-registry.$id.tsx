@@ -7,6 +7,7 @@ import {
   STATUS_LABELS,
   FLAG_LABELS,
   RELEASE_LABELS,
+  type FeatureRecord,
 } from "@/lib/mock/feature-registry";
 
 export const Route = createFileRoute("/feature-registry/$id")({

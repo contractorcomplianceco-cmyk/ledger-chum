@@ -81,6 +81,7 @@ import { Route as FeatureRegistryDependenciesRouteImport } from './routes/featur
 import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
 import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
 import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
+import { Route as FeatureRegistryIdRouteImport } from './routes/feature-registry.$id'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
 import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
@@ -523,6 +524,11 @@ const FeatureRegistryBlockedRoute = FeatureRegistryBlockedRouteImport.update({
 const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
   id: '/feature-registry/all',
   path: '/feature-registry/all',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryIdRoute = FeatureRegistryIdRouteImport.update({
+  id: '/feature-registry/$id',
+  path: '/feature-registry/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
@@ -970,6 +976,7 @@ export interface FileRoutesByFullPath {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
@@ -1112,6 +1119,7 @@ export interface FileRoutesByTo {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
@@ -1258,6 +1266,7 @@ export interface FileRoutesById {
   '/expenses/submit': typeof ExpensesSubmitRoute
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
+  '/feature-registry/$id': typeof FeatureRegistryIdRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
   '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
@@ -1405,6 +1414,7 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
@@ -1547,6 +1557,7 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
@@ -1692,6 +1703,7 @@ export interface FileRouteTypes {
     | '/expenses/submit'
     | '/expenses/subscriptions'
     | '/expenses/vendors'
+    | '/feature-registry/$id'
     | '/feature-registry/all'
     | '/feature-registry/blocked'
     | '/feature-registry/built'
@@ -1820,6 +1832,7 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
   FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
@@ -2396,6 +2409,13 @@ declare module '@tanstack/react-router' {
       path: '/feature-registry/all'
       fullPath: '/feature-registry/all'
       preLoaderRoute: typeof FeatureRegistryAllRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/$id': {
+      id: '/feature-registry/$id'
+      path: '/feature-registry/$id'
+      fullPath: '/feature-registry/$id'
+      preLoaderRoute: typeof FeatureRegistryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expenses/vendors': {
@@ -3071,6 +3091,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
   FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,

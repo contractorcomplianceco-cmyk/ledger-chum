@@ -17,6 +17,7 @@ import { Route as InvoicesRouteImport } from './routes/invoices'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as EstimatesRouteImport } from './routes/estimates'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
@@ -207,6 +208,11 @@ const ExpensesRoute = ExpensesRouteImport.update({
 const EstimatesRoute = EstimatesRouteImport.update({
   id: '/estimates',
   path: '/estimates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CustomersRoute = CustomersRouteImport.update({
@@ -1010,6 +1016,7 @@ export interface FileRoutesByFullPath {
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -1170,6 +1177,7 @@ export interface FileRoutesByTo {
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/payments': typeof PaymentsRoute
@@ -1330,6 +1338,7 @@ export interface FileRoutesById {
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
   '/customers': typeof CustomersRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -1493,6 +1502,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/dashboard'
     | '/estimates'
     | '/expenses'
     | '/integrations'
@@ -1653,6 +1663,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/close'
     | '/customers'
+    | '/dashboard'
     | '/estimates'
     | '/integrations'
     | '/payments'
@@ -1812,6 +1823,7 @@ export interface FileRouteTypes {
     | '/cash-availability'
     | '/close'
     | '/customers'
+    | '/dashboard'
     | '/estimates'
     | '/expenses'
     | '/integrations'
@@ -1974,6 +1986,7 @@ export interface RootRouteChildren {
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
   CustomersRoute: typeof CustomersRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
   EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
@@ -2156,6 +2169,13 @@ declare module '@tanstack/react-router' {
       path: '/estimates'
       fullPath: '/estimates'
       preLoaderRoute: typeof EstimatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/customers': {
@@ -3353,6 +3373,7 @@ const rootRouteChildren: RootRouteChildren = {
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
   CustomersRoute: CustomersRouteWithChildren,
+  DashboardRoute: DashboardRoute,
   EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
@@ -3481,13 +3502,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -19,6 +19,7 @@ export const APEX_TABS: Array<{ to: string; label: string; exact?: boolean }> = 
   { to: "/apex/personas", label: "AI Personas" },
   { to: "/apex/roles", label: "Role Workspaces" },
   { to: "/apex/handoff", label: "Production Handoff" },
+  { to: "/apex/assets", label: "Illustrations" },
 ];
 
 export function ApexPage({

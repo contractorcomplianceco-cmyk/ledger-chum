@@ -11,8 +11,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NAV_GROUPS, type NavGroup, type NavItem } from "@/lib/mock/nav";
+import { APEX_EXECUTIVE_NAV_GROUPS } from "@/lib/mock/nav-apex";
 import { LedgerLogo } from "@/components/ledger-logo";
 import { NavModeSwitcher } from "@/components/apex/nav-mode-switcher";
+import { useNavMode } from "@/hooks/use-nav-mode";
 import { useCurrentUser } from "@/hooks/use-permission";
 import { useFavorites, useGroupOpenState, useRecents } from "@/lib/nav-storage";
 import {
@@ -40,12 +42,19 @@ export function AppSidebar() {
   const user = useCurrentUser();
   const { favorites, toggle: toggleFavorite, isFavorite } = useFavorites();
   const recents = useRecents();
+  const { mode } = useNavMode();
+
+  // /apex and all /apex/* routes always render Executive navigation.
+  const forceExecutive = pathname === "/apex" || pathname.startsWith("/apex/");
+  const effectiveMode: "operational" | "executive" =
+    forceExecutive ? "executive" : mode;
+  const activeGroups = effectiveMode === "executive" ? APEX_EXECUTIVE_NAV_GROUPS : NAV_GROUPS;
 
   const groupDefaults = useMemo(() => {
     const d: Record<string, boolean> = {};
-    for (const g of NAV_GROUPS) d[g.id] = g.defaultOpen ?? false;
+    for (const g of activeGroups) d[g.id] = g.defaultOpen ?? false;
     return d;
-  }, []);
+  }, [activeGroups]);
   const { state: groupOpen, setOpen: setGroupOpen } = useGroupOpenState(groupDefaults);
 
   const isActive = (to: string) =>
@@ -53,13 +62,13 @@ export function AppSidebar() {
 
   // Filter items + whole groups by permission
   const visibleGroups: NavGroup[] = useMemo(() => {
-    return NAV_GROUPS.map((group) => ({
+    return activeGroups.map((group) => ({
       ...group,
       items: group.items.filter((i) => !i.hidden && hasPermission(user.permissions, i.permission)),
     }))
       .filter((g) => hasPermission(user.permissions, g.permission))
       .filter((g) => g.items.length > 0);
-  }, [user.permissions]);
+  }, [user.permissions, activeGroups]);
 
   const allItems = useMemo(() => visibleGroups.flatMap((g) => g.items), [visibleGroups]);
   const favoriteItems = favorites
@@ -215,7 +224,40 @@ export function AppSidebar() {
           </>
         ) : (
           <>
+            {effectiveMode === "executive" && (
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/60">
+                    Company Health
+                  </div>
+                  <span className="rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                    A
+                  </span>
+                </div>
+                <div className="mt-1 flex items-baseline gap-1.5">
+                  <div className="text-[20px] font-bold tabular-nums text-white">92</div>
+                  <div className="text-[10.5px] text-sidebar-foreground/60">/ 100 · Stable outlook</div>
+                </div>
+                <svg viewBox="0 0 100 22" className="mt-1 h-5 w-full" aria-hidden>
+                  <defs>
+                    <linearGradient id="chc" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#3b82f6" />
+                      <stop offset="100%" stopColor="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                  <polyline
+                    fill="none"
+                    stroke="url(#chc)"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points="0,16 12,14 24,15 36,11 48,12 60,8 72,9 84,5 100,6"
+                  />
+                </svg>
+              </div>
+            )}
             <NavModeSwitcher />
+
             <button
               type="button"
               className="group flex w-full items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-2 pr-2.5 text-left transition hover:border-white/20 hover:bg-white/[0.06]"

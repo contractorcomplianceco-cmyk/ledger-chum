@@ -71,6 +71,7 @@ import { Route as ImplementationEventsRouteImport } from './routes/implementatio
 import { Route as ImplementationDataMapRouteImport } from './routes/implementation.data-map'
 import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
 import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
+import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
 import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
@@ -459,6 +460,11 @@ const ImplementationCutoverRoute = ImplementationCutoverRouteImport.update({
 const ImplementationApiMapRoute = ImplementationApiMapRouteImport.update({
   id: '/implementation/api-map',
   path: '/implementation/api-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
+  id: '/feature-registry/built',
+  path: '/feature-registry/built',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
@@ -912,6 +918,7 @@ export interface FileRoutesByFullPath {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -1045,6 +1052,7 @@ export interface FileRoutesByTo {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -1182,6 +1190,7 @@ export interface FileRoutesById {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
   '/implementation/cutover': typeof ImplementationCutoverRoute
   '/implementation/data-map': typeof ImplementationDataMapRoute
@@ -1320,6 +1329,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/built'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1453,6 +1463,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/built'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1589,6 +1600,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/built'
     | '/implementation/api-map'
     | '/implementation/cutover'
     | '/implementation/data-map'
@@ -1708,6 +1720,7 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
+  FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
   ImplementationApiMapRoute: typeof ImplementationApiMapRoute
   ImplementationCutoverRoute: typeof ImplementationCutoverRoute
   ImplementationDataMapRoute: typeof ImplementationDataMapRoute
@@ -2204,6 +2217,13 @@ declare module '@tanstack/react-router' {
       path: '/implementation/api-map'
       fullPath: '/implementation/api-map'
       preLoaderRoute: typeof ImplementationApiMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/built': {
+      id: '/feature-registry/built'
+      path: '/feature-registry/built'
+      fullPath: '/feature-registry/built'
+      preLoaderRoute: typeof FeatureRegistryBuiltRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-registry/all': {
@@ -2887,6 +2907,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
+  FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,
   ImplementationApiMapRoute: ImplementationApiMapRoute,
   ImplementationCutoverRoute: ImplementationCutoverRoute,
   ImplementationDataMapRoute: ImplementationDataMapRoute,

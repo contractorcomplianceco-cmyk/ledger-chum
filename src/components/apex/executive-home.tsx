@@ -1126,23 +1126,21 @@ function NotificationsPill() {
 /* ------------------------------------------------------------------ */
 
 export function ExecutiveHome() {
+  const { mode, set } = useNavMode();
+  useEffect(() => {
+    if (mode !== "executive") set("executive");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <AppShell>
       <GreetingHeader />
-      <DecisionPromptStrip />
 
       <div className="px-6 pb-8 pt-4 sm:px-8">
         <div className="mb-4">
           <DemoNotice message="LedgerOS UI Design Lab · Demonstration Data · No live financial data, AI inference, or approvals." />
         </div>
 
-        <div className="mb-4 flex items-center justify-between gap-2">
-          <div className="text-[11.5px] text-muted-foreground">
-            Signed in as <span className="font-semibold text-foreground">{APEX_HOME_GREETING.compactLabel.name}</span> ·{" "}
-            {APEX_HOME_GREETING.compactLabel.role}
-          </div>
-          <NotificationsPill />
-        </div>
 
         {/* B — KPI row */}
         <KpiRow />

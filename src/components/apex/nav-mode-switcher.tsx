@@ -1,9 +1,13 @@
 import { useNavMode } from "@/hooks/use-nav-mode";
+import { useRouterState } from "@tanstack/react-router";
 import { Compass, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function NavModeSwitcher({ compact = false }: { compact?: boolean }) {
   const { mode, set } = useNavMode();
+  const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const forceExec = pathname === "/apex" || pathname.startsWith("/apex/");
+  const effective = forceExec ? "executive" : mode;
 
   if (compact) {
     return (

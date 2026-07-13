@@ -238,7 +238,7 @@ export function AppSidebar() {
                 C
               </div>
               <div className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-sidebar-foreground">
-                CCA Compliance Authority
+                CCA · Contractor Compliance Authority
               </div>
               <ChevronDown className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground/50 transition group-hover:text-white" />
             </button>

@@ -136,12 +136,16 @@ import { Route as ApexTimelineRouteImport } from './routes/apex.timeline'
 import { Route as ApexRolesRouteImport } from './routes/apex.roles'
 import { Route as ApexRelationshipGraphRouteImport } from './routes/apex.relationship-graph'
 import { Route as ApexPersonasRouteImport } from './routes/apex.personas'
+import { Route as ApexPeopleRouteImport } from './routes/apex.people'
 import { Route as ApexOpportunitiesRouteImport } from './routes/apex.opportunities'
 import { Route as ApexNavigationRouteImport } from './routes/apex.navigation'
+import { Route as ApexMoneyRouteImport } from './routes/apex.money'
 import { Route as ApexHandoffRouteImport } from './routes/apex.handoff'
+import { Route as ApexGrowthRouteImport } from './routes/apex.growth'
 import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dna'
 import { Route as ApexDigitalTwinRouteImport } from './routes/apex.digital-twin'
 import { Route as ApexCompanyHealthRouteImport } from './routes/apex.company-health'
+import { Route as ApexCompanyRouteImport } from './routes/apex.company'
 import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
 import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
@@ -824,6 +828,11 @@ const ApexPersonasRoute = ApexPersonasRouteImport.update({
   path: '/apex/personas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApexPeopleRoute = ApexPeopleRouteImport.update({
+  id: '/apex/people',
+  path: '/apex/people',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApexOpportunitiesRoute = ApexOpportunitiesRouteImport.update({
   id: '/apex/opportunities',
   path: '/apex/opportunities',
@@ -834,9 +843,19 @@ const ApexNavigationRoute = ApexNavigationRouteImport.update({
   path: '/apex/navigation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApexMoneyRoute = ApexMoneyRouteImport.update({
+  id: '/apex/money',
+  path: '/apex/money',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApexHandoffRoute = ApexHandoffRouteImport.update({
   id: '/apex/handoff',
   path: '/apex/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexGrowthRoute = ApexGrowthRouteImport.update({
+  id: '/apex/growth',
+  path: '/apex/growth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApexFinancialDnaRoute = ApexFinancialDnaRouteImport.update({
@@ -852,6 +871,11 @@ const ApexDigitalTwinRoute = ApexDigitalTwinRouteImport.update({
 const ApexCompanyHealthRoute = ApexCompanyHealthRouteImport.update({
   id: '/apex/company-health',
   path: '/apex/company-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexCompanyRoute = ApexCompanyRouteImport.update({
+  id: '/apex/company',
+  path: '/apex/company',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApexBriefingRoute = ApexBriefingRouteImport.update({
@@ -1029,12 +1053,16 @@ export interface FileRoutesByFullPath {
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
   '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
@@ -1188,12 +1216,16 @@ export interface FileRoutesByTo {
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
   '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
@@ -1351,12 +1383,16 @@ export interface FileRoutesById {
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
   '/apex/briefing': typeof ApexBriefingRoute
+  '/apex/company': typeof ApexCompanyRoute
   '/apex/company-health': typeof ApexCompanyHealthRoute
   '/apex/digital-twin': typeof ApexDigitalTwinRoute
   '/apex/financial-dna': typeof ApexFinancialDnaRoute
+  '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRoute
+  '/apex/people': typeof ApexPeopleRoute
   '/apex/personas': typeof ApexPersonasRoute
   '/apex/relationship-graph': typeof ApexRelationshipGraphRoute
   '/apex/roles': typeof ApexRolesRoute
@@ -1515,12 +1551,16 @@ export interface FileRouteTypes {
     | '/apex/architecture'
     | '/apex/assets'
     | '/apex/briefing'
+    | '/apex/company'
     | '/apex/company-health'
     | '/apex/digital-twin'
     | '/apex/financial-dna'
+    | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
+    | '/apex/people'
     | '/apex/personas'
     | '/apex/relationship-graph'
     | '/apex/roles'
@@ -1674,12 +1714,16 @@ export interface FileRouteTypes {
     | '/apex/architecture'
     | '/apex/assets'
     | '/apex/briefing'
+    | '/apex/company'
     | '/apex/company-health'
     | '/apex/digital-twin'
     | '/apex/financial-dna'
+    | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
+    | '/apex/people'
     | '/apex/personas'
     | '/apex/relationship-graph'
     | '/apex/roles'
@@ -1836,12 +1880,16 @@ export interface FileRouteTypes {
     | '/apex/architecture'
     | '/apex/assets'
     | '/apex/briefing'
+    | '/apex/company'
     | '/apex/company-health'
     | '/apex/digital-twin'
     | '/apex/financial-dna'
+    | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
+    | '/apex/people'
     | '/apex/personas'
     | '/apex/relationship-graph'
     | '/apex/roles'
@@ -1999,12 +2047,16 @@ export interface RootRouteChildren {
   ApexArchitectureRoute: typeof ApexArchitectureRoute
   ApexAssetsRoute: typeof ApexAssetsRoute
   ApexBriefingRoute: typeof ApexBriefingRoute
+  ApexCompanyRoute: typeof ApexCompanyRoute
   ApexCompanyHealthRoute: typeof ApexCompanyHealthRoute
   ApexDigitalTwinRoute: typeof ApexDigitalTwinRoute
   ApexFinancialDnaRoute: typeof ApexFinancialDnaRoute
+  ApexGrowthRoute: typeof ApexGrowthRoute
   ApexHandoffRoute: typeof ApexHandoffRoute
+  ApexMoneyRoute: typeof ApexMoneyRoute
   ApexNavigationRoute: typeof ApexNavigationRoute
   ApexOpportunitiesRoute: typeof ApexOpportunitiesRoute
+  ApexPeopleRoute: typeof ApexPeopleRoute
   ApexPersonasRoute: typeof ApexPersonasRoute
   ApexRelationshipGraphRoute: typeof ApexRelationshipGraphRoute
   ApexRolesRoute: typeof ApexRolesRoute
@@ -3004,6 +3056,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexPersonasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/people': {
+      id: '/apex/people'
+      path: '/apex/people'
+      fullPath: '/apex/people'
+      preLoaderRoute: typeof ApexPeopleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/opportunities': {
       id: '/apex/opportunities'
       path: '/apex/opportunities'
@@ -3018,11 +3077,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexNavigationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/money': {
+      id: '/apex/money'
+      path: '/apex/money'
+      fullPath: '/apex/money'
+      preLoaderRoute: typeof ApexMoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/handoff': {
       id: '/apex/handoff'
       path: '/apex/handoff'
       fullPath: '/apex/handoff'
       preLoaderRoute: typeof ApexHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/growth': {
+      id: '/apex/growth'
+      path: '/apex/growth'
+      fullPath: '/apex/growth'
+      preLoaderRoute: typeof ApexGrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apex/financial-dna': {
@@ -3044,6 +3117,13 @@ declare module '@tanstack/react-router' {
       path: '/apex/company-health'
       fullPath: '/apex/company-health'
       preLoaderRoute: typeof ApexCompanyHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/company': {
+      id: '/apex/company'
+      path: '/apex/company'
+      fullPath: '/apex/company'
+      preLoaderRoute: typeof ApexCompanyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apex/briefing': {
@@ -3386,12 +3466,16 @@ const rootRouteChildren: RootRouteChildren = {
   ApexArchitectureRoute: ApexArchitectureRoute,
   ApexAssetsRoute: ApexAssetsRoute,
   ApexBriefingRoute: ApexBriefingRoute,
+  ApexCompanyRoute: ApexCompanyRoute,
   ApexCompanyHealthRoute: ApexCompanyHealthRoute,
   ApexDigitalTwinRoute: ApexDigitalTwinRoute,
   ApexFinancialDnaRoute: ApexFinancialDnaRoute,
+  ApexGrowthRoute: ApexGrowthRoute,
   ApexHandoffRoute: ApexHandoffRoute,
+  ApexMoneyRoute: ApexMoneyRoute,
   ApexNavigationRoute: ApexNavigationRoute,
   ApexOpportunitiesRoute: ApexOpportunitiesRoute,
+  ApexPeopleRoute: ApexPeopleRoute,
   ApexPersonasRoute: ApexPersonasRoute,
   ApexRelationshipGraphRoute: ApexRelationshipGraphRoute,
   ApexRolesRoute: ApexRolesRoute,

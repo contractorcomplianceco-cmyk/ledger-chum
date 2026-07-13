@@ -30,10 +30,10 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
     defaultOpen: true,
     items: [
       { title: "Home", to: "/apex", icon: Home, keywords: ["executive", "dashboard"] },
-      { title: "Money", to: "/cash-availability", icon: Wallet, keywords: ["cash", "banking", "money"] },
-      { title: "Growth", to: "/intelligence", icon: TrendingUp, keywords: ["revenue", "growth"] },
-      { title: "People", to: "/compensation", icon: Users2, keywords: ["compensation", "people"] },
-      { title: "Company", to: "/apex/company-health", icon: Building2, keywords: ["health", "company"] },
+      { title: "Money", to: "/apex/money", icon: Wallet, keywords: ["cash", "banking", "money", "profit"] },
+      { title: "Growth", to: "/apex/growth", icon: TrendingUp, keywords: ["revenue", "growth", "marketing"] },
+      { title: "People", to: "/apex/people", icon: Users2, keywords: ["compensation", "people", "payroll"] },
+      { title: "Company", to: "/apex/company", icon: Building2, keywords: ["health", "company", "governance"] },
     ],
   },
   {

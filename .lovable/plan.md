@@ -1,124 +1,124 @@
-## Status
+# Sub-phase 6B-3 — Compensation Operations Layer
 
-Phase 6 impact assessment expanded to cover owner activity, legal, tax,
-payroll/ADP, workforce, events/travel/education, appreciation, promos,
-charity, international workforce, consulting/R&D, multi-entity/consolidation,
-check writing, invoice templating, AI invoice drafts, and billing
-recommendations. See `docs/production-handoff/phase-6-impact-assessment.md`.
+Building the full Compensation Operations layer on top of 6B-2. All work is
+frontend + typed mock-service surface only. No backend, no Supabase, no
+auth changes. Every mutation returns `DemoResult` with the standard
+"UI demonstration only — no compensation or accounting record was modified."
+message.
 
-Implementation is **paused** pending confirmation of items 1–5 in §15 of that
-document. No UI or API changes beyond Sub-phase 6A (already shipped) until
-sign-off.
+## Scope preserved from 6B-2
 
-## Scope
+All 13 existing compensation routes, plans/versions, resolved policy
+snapshots, participants, multi-touch attribution (with per-pool 100%
+validation), stacked pools, Tara eligibility states, evidence library,
+conflict center, eligibility checker, plan preview, invariant rules, typed
+API architecture, mock+Express adapter seams, and demonstration-only
+messaging all remain intact.
 
-Phase 6 is enormous — a full typed API abstraction, four full UI workstreams (Commissions, Admin, Integrations, Intelligence AI), and 16 handoff spec documents. Delivering all of it in a single turn would produce shallow screens and rushed docs. I'll ship it in **four sub-phases**, each self-contained and reviewable, matching the ordering you gave.
+## New routes (21)
 
-Constraints honored across every sub-phase:
-- No Lovable Cloud, no Supabase, no auth changes, no real backend
-- Mock adapter only; Express adapter compiles as a typed placeholder
-- Every mutation shows the "UI demonstration only" notice
-- Uses existing LedgerOS design system, `AppShell`, `PageHeader`, tabbed layout pattern
-- Fictional mock data only — no real compensation, credentials, or client financial data
+Wired into the `CompensationShell` subnav under an "Operations" group.
 
----
+```text
+/compensation                              -> ops dashboard
+/compensation/calculations                 -> list + saved views
+/compensation/calculations/new             -> 10-step guided workflow
+/compensation/calculations/$id             -> detail (16 tabs)
+/compensation/calculations/$id.preview     -> preview snapshot
+/compensation/verification                 -> queue
+/compensation/approvals                    -> approval center
+/compensation/reserves                     -> reserve center
+/compensation/payables                     -> list
+/compensation/payables/$id                 -> detail
+/compensation/payment-batches              -> list
+/compensation/payment-batches/$id          -> detail
+/compensation/statements                   -> list
+/compensation/statements/$id               -> statement view
+/compensation/holdbacks                    -> holdback center
+/compensation/adjustments                  -> adjustments + reversals
+/compensation/clawbacks                    -> clawback center
+/compensation/disputes                     -> list
+/compensation/disputes/$id                 -> detail
+/compensation/reconciliation               -> reconciliation workspace
+/compensation/audit                        -> compensation audit history
+```
 
-## Sub-phase 6A — Typed API architecture (build now, this turn)
+## Domain types (new file `service/operations-types.ts`)
 
-Foundation everything else plugs into.
+`CompensationCalculation`, `CompensationCalculationStatus` (20 states),
+`CompensationCalculationLine`, `CompensationCalculationVersion`,
+`CalculationSourceRecord`, `CalculationPolicySnapshot`,
+`CompensationVerification`, `CompensationApproval`, `CompensationReserve`,
+`CompensationPayable`, `CompensationPaymentBatch`, `CompensationStatement`,
+`CompensationStatementLine`, `CompensationHoldback`, `HoldbackRelease`,
+`CompensationAdjustment`, `CompensationReversal`, `CompensationClawback`,
+`ClawbackRecovery`, `CompensationDispute`, `CompensationReconciliation`,
+`CompensationReconciliationException`, `AccountingImpactPreview`.
 
-**Files**
-- `src/lib/api/config.ts` — reads `VITE_LEDGEROS_API_BASE_URL`, `VITE_LEDGEROS_API_MODE`, `VITE_LEDGEROS_USE_CREDENTIALS`
-- `src/lib/api/errors.ts` — `ApiError`, normalized 401/403/404/409/422/500 shapes, `PermissionDeniedError`, `ValidationError`
-- `src/lib/api/types.ts` — shared domain types (Money, Role, Permission, AuditEvent, Paginated<T>)
-- `src/lib/api/client.ts` — `apiClient` singleton, adapter selector, demo-mode banner hook
-- `src/lib/api/adapters/mock-adapter.ts` — mock adapter interface
-- `src/lib/api/adapters/express-adapter.ts` — typed placeholder using `fetch` with `credentials: "include"`, base URL from env, JSON handling, error normalization; throws `NotConfiguredError` when base URL missing
-- `src/lib/api/services/commissions.ts` — service interface + mock impl
-- `src/lib/api/services/admin.ts` — same shape
-- `src/lib/api/services/integrations.ts` — same shape
-- `src/lib/api/services/intelligence.ts` — same shape
-- `src/hooks/use-permission.ts` — permission-gated UI hook against mock current-user
-- `.env.example` — documented variables
+## Service methods (extend `compensationService`)
 
-**Deliverables:** typed adapter interface, mock adapter wired to existing `src/lib/mock/*` data, Express adapter compiles, permission hook, demo-notice utility.
+All ~45 methods listed in §21 of the spec. Reads return typed shapes,
+mutations return `DemoResult` via `mockMutation`.
 
----
+## Mock data (new file `service/operations-mock-data.ts`)
 
-## Sub-phase 6B — Commission Management (next turn)
+Fictional demonstration records covering every scenario in §25 (Tara
+stacked, salesperson-only, strategic partner, affiliate, referral,
+software participation, strategic-channel, milestone bonus, retainer,
+event stipend, partial payment, pending clearance, refund, chargeback,
+holdback, clawback, dispute, post-termination, house account, renewal,
+expansion, below-target margin, manual adjustment).
 
-**Routes:** `/commissions`, `/commissions/plans`, `/commissions/plans/new`, `/commissions/plans/$id`, `/commissions/calculator`, `/commissions/calculations`, `/commissions/calculations/$id`, `/commissions/attribution`, `/commissions/approvals`, `/commissions/payables`, `/commissions/statements`, `/commissions/clawbacks`, `/commissions/audit`
+## Components (`src/components/compensation/operations/`)
 
-- Commissions nav group
-- Dashboard with lifecycle KPIs, participant/plan/service breakdowns, approvals, exceptions
-- Plan builder covering all 14 plan types, calculation preview, pass-through exclusion
-- Calculator with worked example (5000 → 3300 → 330)
-- Attribution editor with 100% total validation
-- Lifecycle badge component (Projected → Paid → Reversed → Closed)
-- Loading, empty, error, restricted states
-- `src/lib/mock/commissions.ts`, `src/components/commissions/*`
+- `calculation-status-badge`, `calc-lifecycle-funnel`, `calc-line-table`
+- `verification-checklist`, `approval-decision-panel`
+- `reserve-summary`, `payable-status-badge`, `payment-batch-status`
+- `statement-section`, `holdback-timeline`, `clawback-recovery-panel`
+- `dispute-timeline`, `reconciliation-exception-row`
+- `accounting-impact-preview` (labeled "Proposed accounting treatment —
+  requires backend validation and accountant approval.")
 
----
+## Permissions
 
-## Sub-phase 6C — Admin & Users + Integrations (turn after 6B)
+Extend the permission strings in §22. Continue using existing
+`usePermission` hook to gate destructive/approval actions.
 
-**Admin routes:** `/admin/users` (already stub), `/admin/users/new`, `/admin/users/$id`, `/admin/roles`, `/admin/roles/$id`, `/admin/permissions`, `/admin/sessions`, `/admin/security-events`, `/admin/login-history`, `/admin/service-accounts`, `/admin/audit`
+## Navigation
 
-**Integration routes:** `/integrations/directory`, `/integrations/$id`, `/integrations/mappings`, `/integrations/events`, `/integrations/sync-runs`, `/integrations/dead-letter`, `/integrations/credentials`, `/integrations/health`, `/integrations/contracts`
+Add an "Operations" section to `CompensationShell` subnav and extend
+`src/lib/mock/nav.ts` accordingly.
 
-- User list, detail tabs, invite/suspend/deactivate flows with confirmation + reason
-- Role permission matrix (grouped) with inherited-vs-custom, sensitive-scope indicators
-- Approval limits editor
-- Integration directory with all listed connectors, credential-safe display
-- Mapping builder with sample payload → transformed result preview
-- Event inbox covering all listed event types, dead-letter queue with retry
-- `src/lib/mock/admin.ts`, `src/lib/mock/integrations.ts`, components
+## Invariants surfaced in UI
 
----
+- Pass-through funds visibly excluded from every calculation display
+- Uncollected revenue blocks progression in the create-calculation flow
+  unless the plan is fixed / milestone
+- Partial payments show pro-rata eligibility
+- Stacked pools shown as separate rows, never blended
+- Every calculation view surfaces the resolved policy snapshot
+- Paid calculations render read-only; corrections require Adjustment/Reversal
+- Holdback release honors chargeback-window + Rose-approval triggers
+- Clawback recovery never auto-touches already-paid amounts
+- Statements keep classes separate (retainer / revenue participation /
+  milestone / software participation / event stipend / investor / equity)
 
-## Sub-phase 6D — Intelligence AI + spec documents (final turn)
+## Validation
 
-**Intelligence AI routes:** `/intelligence/ask`, `/intelligence/brief`, `/intelligence/recommendations` (upgrade existing), `/intelligence/recommendations/$id`, `/intelligence/evidence`, `/intelligence/history`, `/intelligence/feedback`, `/intelligence/policies`, `/intelligence/audit`
+Typecheck and production build pass; every new route renders; role-aware
+restricted states shown for team member / integration service; every
+mutation displays the demonstration-only toast.
 
-- Ask surface with suggested questions and structured demonstration response (answer, scope, evidence, confidence, freshness, assumptions, missing data, recommended action, approval)
-- Reusable evidence drawer used across all AI screens
-- Recommendation lifecycle states + owner + approval
-- AI policy screen enumerating permitted/prohibited actions
-- `src/lib/mock/intelligence-ai.ts` (separate from existing `intelligence.ts` financial-intelligence mock)
+## Technical Details
 
-**Spec documents** in `docs/production-handoff/`:
-1. commission-schema.md
-2. commission-api-contract.md
-3. commission-calculation-rules.md
-4. admin-user-schema.md
-5. admin-api-contract.md
-6. permission-matrix.md
-7. integration-framework.md
-8. integration-event-contracts.md
-9. ai-architecture.md
-10. ai-api-contract.md
-11. ai-security-policy.md
-12. audit-event-catalog.md
-13. backend-endpoint-backlog.md
-14. database-change-backlog.md
-15. acceptance-test-matrix.md
-16. production-handoff.md
+- New files under `src/lib/api/services/compensation/` and
+  `src/components/compensation/operations/`.
+- `service.ts` extended (not rewritten) — keeps the 6B-2 surface intact.
+- Route files use flat dot-separated names to match TanStack Router.
+- No changes to `client.ts` schema (only additive method surface).
+- No `src/pages/`, no Supabase, no auth work.
 
-Each API contract entry includes method, path, permission, request/response schema, validation, error map, idempotency, audit event, posting behavior, approval requirement.
+## Completion report
 
----
-
-## Technical details
-
-- Adapter selection at module load reads `import.meta.env.VITE_LEDGEROS_API_MODE`; defaults to `"mock"`
-- Mock adapter simulates ~150ms latency and returns `{ data, meta }` envelopes matching the Express contract
-- Express adapter's `fetch` wrapper: `credentials: "include"`, `Accept: application/json`, JSON body serialization, response status → typed error class, correlation-id header pass-through
-- Every service method typed as `(input) => Promise<Result>`; UI calls services, never adapters directly
-- Permission gating: `usePermission("commissions.approve")` returns `{ allowed, reason }`; restricted screens render `<RestrictedState/>`
-- No route or component from Phase 2A/2B/3/4/5 is removed or renamed
-
-## Confirm before I proceed
-
-1. OK to ship this in **four sub-phases** (6A adapter → 6B commissions → 6C admin+integrations → 6D AI+docs), one per turn? Alternative: single monolithic turn that will be shallower on every workstream.
-2. Should the existing `/intelligence/recommendations` (Phase 3 executive recommendations) stay where it is and the new **Ask/AI** surface live under a new `/intelligence-ai/*` prefix instead — to avoid collision with the current financial-intelligence tab bar?
-3. For the mock adapter, keep the current `src/lib/mock/*.ts` files as-is and have services import from them, or migrate mock data into `src/lib/api/adapters/mock-adapter.ts`? I recommend keeping the existing files (less churn, preserves Phase 2–5 screens).
+Delivered at the end of implementation covering the 28 items requested in
+§27.

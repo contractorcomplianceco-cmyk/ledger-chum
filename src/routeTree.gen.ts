@@ -73,6 +73,7 @@ import { Route as ImplementationCutoverRouteImport } from './routes/implementati
 import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
 import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
 import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
+import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
 import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
 import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
 import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
@@ -471,6 +472,11 @@ const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
 const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
   id: '/feature-registry/built',
   path: '/feature-registry/built',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryBlockedRoute = FeatureRegistryBlockedRouteImport.update({
+  id: '/feature-registry/blocked',
+  path: '/feature-registry/blocked',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
@@ -924,6 +930,7 @@ export interface FileRoutesByFullPath {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
@@ -1059,6 +1066,7 @@ export interface FileRoutesByTo {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
@@ -1198,6 +1206,7 @@ export interface FileRoutesById {
   '/expenses/subscriptions': typeof ExpensesSubscriptionsRoute
   '/expenses/vendors': typeof ExpensesVendorsRoute
   '/feature-registry/all': typeof FeatureRegistryAllRoute
+  '/feature-registry/blocked': typeof FeatureRegistryBlockedRoute
   '/feature-registry/built': typeof FeatureRegistryBuiltRoute
   '/feature-registry/planned': typeof FeatureRegistryPlannedRoute
   '/implementation/api-map': typeof ImplementationApiMapRoute
@@ -1338,6 +1347,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/blocked'
     | '/feature-registry/built'
     | '/feature-registry/planned'
     | '/implementation/api-map'
@@ -1473,6 +1483,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/blocked'
     | '/feature-registry/built'
     | '/feature-registry/planned'
     | '/implementation/api-map'
@@ -1611,6 +1622,7 @@ export interface FileRouteTypes {
     | '/expenses/subscriptions'
     | '/expenses/vendors'
     | '/feature-registry/all'
+    | '/feature-registry/blocked'
     | '/feature-registry/built'
     | '/feature-registry/planned'
     | '/implementation/api-map'
@@ -1732,6 +1744,7 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
+  FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
   FeatureRegistryBuiltRoute: typeof FeatureRegistryBuiltRoute
   FeatureRegistryPlannedRoute: typeof FeatureRegistryPlannedRoute
   ImplementationApiMapRoute: typeof ImplementationApiMapRoute
@@ -2244,6 +2257,13 @@ declare module '@tanstack/react-router' {
       path: '/feature-registry/built'
       fullPath: '/feature-registry/built'
       preLoaderRoute: typeof FeatureRegistryBuiltRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/blocked': {
+      id: '/feature-registry/blocked'
+      path: '/feature-registry/blocked'
+      fullPath: '/feature-registry/blocked'
+      preLoaderRoute: typeof FeatureRegistryBlockedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-registry/all': {
@@ -2927,6 +2947,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
+  FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
   FeatureRegistryBuiltRoute: FeatureRegistryBuiltRoute,
   FeatureRegistryPlannedRoute: FeatureRegistryPlannedRoute,
   ImplementationApiMapRoute: ImplementationApiMapRoute,

@@ -714,7 +714,7 @@ export const MOCK_STATEMENTS: CompensationStatement[] = [
         ],
       },
       {
-        kind: "commission",
+        kind: "software_participation",
         label: "Software participation — 3% NRSR",
         total: 75,
         lines: [
@@ -740,7 +740,7 @@ export const MOCK_STATEMENTS: CompensationStatement[] = [
     participantId: "pp_jamie",
     participantName: "Jamie Rivera",
     participantType: "salesperson",
-    statementKind: "commission",
+    statementKind: "sales_commission",
     projected: 540,
     earned: 540,
     verified: 540,
@@ -751,7 +751,7 @@ export const MOCK_STATEMENTS: CompensationStatement[] = [
     endingBalance: 540,
     sections: [
       {
-        kind: "commission",
+        kind: "sales_commission",
         label: "Standard sales commission",
         total: 540,
         lines: [

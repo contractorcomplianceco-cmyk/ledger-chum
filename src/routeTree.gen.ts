@@ -158,6 +158,8 @@ import { Route as CompensationParticipantsIndexRouteImport } from './routes/comp
 import { Route as CompensationDisputesIndexRouteImport } from './routes/compensation.disputes.index'
 import { Route as CompensationCalculationsIndexRouteImport } from './routes/compensation.calculations.index'
 import { Route as CompensationAttributionIndexRouteImport } from './routes/compensation.attribution.index'
+import { Route as ApexWorkspacesIndexRouteImport } from './routes/apex.workspaces.index'
+import { Route as ApexAiPersonasIndexRouteImport } from './routes/apex.ai-personas.index'
 import { Route as CompensationStatementsIdRouteImport } from './routes/compensation.statements.$id'
 import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
 import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
@@ -170,10 +172,12 @@ import { Route as CompensationCalculationsIdRouteImport } from './routes/compens
 import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
 import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
 import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
+import { Route as ApexWorkspacesRoleRouteImport } from './routes/apex.workspaces.$role'
 import { Route as ApexTimelineIdRouteImport } from './routes/apex.timeline.$id'
 import { Route as ApexOpportunitiesIdRouteImport } from './routes/apex.opportunities.$id'
 import { Route as ApexFinancialDnaIdRouteImport } from './routes/apex.financial-dna.$id'
 import { Route as ApexDigitalTwinScenariosRouteImport } from './routes/apex.digital-twin.scenarios'
+import { Route as ApexAiPersonasPersonaRouteImport } from './routes/apex.ai-personas.$persona'
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
 import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
@@ -950,6 +954,16 @@ const CompensationAttributionIndexRoute =
     path: '/compensation/attribution/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApexWorkspacesIndexRoute = ApexWorkspacesIndexRouteImport.update({
+  id: '/apex/workspaces/',
+  path: '/apex/workspaces/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexAiPersonasIndexRoute = ApexAiPersonasIndexRouteImport.update({
+  id: '/apex/ai-personas/',
+  path: '/apex/ai-personas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationStatementsIdRoute =
   CompensationStatementsIdRouteImport.update({
     id: '/compensation/statements/$id',
@@ -1018,6 +1032,11 @@ const CompensationAttributionIdRoute =
     path: '/compensation/attribution/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApexWorkspacesRoleRoute = ApexWorkspacesRoleRouteImport.update({
+  id: '/apex/workspaces/$role',
+  path: '/apex/workspaces/$role',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApexTimelineIdRoute = ApexTimelineIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -1039,6 +1058,11 @@ const ApexDigitalTwinScenariosRoute =
     path: '/scenarios',
     getParentRoute: () => ApexDigitalTwinRoute,
   } as any)
+const ApexAiPersonasPersonaRoute = ApexAiPersonasPersonaRouteImport.update({
+  id: '/apex/ai-personas/$persona',
+  path: '/apex/ai-personas/$persona',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationPlansIdVersionsRoute =
   CompensationPlansIdVersionsRouteImport.update({
     id: '/versions',
@@ -1206,10 +1230,12 @@ export interface FileRoutesByFullPath {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
+  '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1222,6 +1248,8 @@ export interface FileRoutesByFullPath {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/apex/ai-personas/': typeof ApexAiPersonasIndexRoute
+  '/apex/workspaces/': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
   '/compensation/calculations/': typeof CompensationCalculationsIndexRoute
   '/compensation/disputes/': typeof CompensationDisputesIndexRoute
@@ -1374,10 +1402,12 @@ export interface FileRoutesByTo {
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
+  '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
+  '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1390,6 +1420,8 @@ export interface FileRoutesByTo {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/apex/ai-personas': typeof ApexAiPersonasIndexRoute
+  '/apex/workspaces': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution': typeof CompensationAttributionIndexRoute
   '/compensation/calculations': typeof CompensationCalculationsIndexRoute
   '/compensation/disputes': typeof CompensationDisputesIndexRoute
@@ -1546,10 +1578,12 @@ export interface FileRoutesById {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
+  '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1562,6 +1596,8 @@ export interface FileRoutesById {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/apex/ai-personas/': typeof ApexAiPersonasIndexRoute
+  '/apex/workspaces/': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
   '/compensation/calculations/': typeof CompensationCalculationsIndexRoute
   '/compensation/disputes/': typeof CompensationDisputesIndexRoute
@@ -1719,10 +1755,12 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
+    | '/apex/workspaces/$role'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -1735,6 +1773,8 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/apex/ai-personas/'
+    | '/apex/workspaces/'
     | '/compensation/attribution/'
     | '/compensation/calculations/'
     | '/compensation/disputes/'
@@ -1887,10 +1927,12 @@ export interface FileRouteTypes {
     | '/implementation'
     | '/intelligence'
     | '/invoices'
+    | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
+    | '/apex/workspaces/$role'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -1903,6 +1945,8 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/apex/ai-personas'
+    | '/apex/workspaces'
     | '/compensation/attribution'
     | '/compensation/calculations'
     | '/compensation/disputes'
@@ -2058,10 +2102,12 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
+    | '/apex/workspaces/$role'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -2074,6 +2120,8 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/apex/ai-personas/'
+    | '/apex/workspaces/'
     | '/compensation/attribution/'
     | '/compensation/calculations/'
     | '/compensation/disputes/'
@@ -2205,6 +2253,8 @@ export interface RootRouteChildren {
   FeatureRegistryIndexRoute: typeof FeatureRegistryIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
+  ApexAiPersonasPersonaRoute: typeof ApexAiPersonasPersonaRoute
+  ApexWorkspacesRoleRoute: typeof ApexWorkspacesRoleRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
   CompensationAttributionConflictsRoute: typeof CompensationAttributionConflictsRoute
   CompensationAttributionEvidenceRoute: typeof CompensationAttributionEvidenceRoute
@@ -2217,6 +2267,8 @@ export interface RootRouteChildren {
   CompensationPlansIdRoute: typeof CompensationPlansIdRouteWithChildren
   CompensationPlansNewRoute: typeof CompensationPlansNewRoute
   CompensationStatementsIdRoute: typeof CompensationStatementsIdRoute
+  ApexAiPersonasIndexRoute: typeof ApexAiPersonasIndexRoute
+  ApexWorkspacesIndexRoute: typeof ApexWorkspacesIndexRoute
   CompensationAttributionIndexRoute: typeof CompensationAttributionIndexRoute
   CompensationCalculationsIndexRoute: typeof CompensationCalculationsIndexRoute
   CompensationDisputesIndexRoute: typeof CompensationDisputesIndexRoute
@@ -3272,6 +3324,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationAttributionIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/workspaces/': {
+      id: '/apex/workspaces/'
+      path: '/apex/workspaces'
+      fullPath: '/apex/workspaces/'
+      preLoaderRoute: typeof ApexWorkspacesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/ai-personas/': {
+      id: '/apex/ai-personas/'
+      path: '/apex/ai-personas'
+      fullPath: '/apex/ai-personas/'
+      preLoaderRoute: typeof ApexAiPersonasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/statements/$id': {
       id: '/compensation/statements/$id'
       path: '/compensation/statements/$id'
@@ -3356,6 +3422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationAttributionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/workspaces/$role': {
+      id: '/apex/workspaces/$role'
+      path: '/apex/workspaces/$role'
+      fullPath: '/apex/workspaces/$role'
+      preLoaderRoute: typeof ApexWorkspacesRoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/timeline/$id': {
       id: '/apex/timeline/$id'
       path: '/$id'
@@ -3383,6 +3456,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/apex/digital-twin/scenarios'
       preLoaderRoute: typeof ApexDigitalTwinScenariosRouteImport
       parentRoute: typeof ApexDigitalTwinRoute
+    }
+    '/apex/ai-personas/$persona': {
+      id: '/apex/ai-personas/$persona'
+      path: '/apex/ai-personas/$persona'
+      fullPath: '/apex/ai-personas/$persona'
+      preLoaderRoute: typeof ApexAiPersonasPersonaRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/compensation/plans/$id/versions': {
       id: '/compensation/plans/$id/versions'
@@ -3719,6 +3799,8 @@ const rootRouteChildren: RootRouteChildren = {
   FeatureRegistryIndexRoute: FeatureRegistryIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
+  ApexAiPersonasPersonaRoute: ApexAiPersonasPersonaRoute,
+  ApexWorkspacesRoleRoute: ApexWorkspacesRoleRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,
   CompensationAttributionConflictsRoute: CompensationAttributionConflictsRoute,
   CompensationAttributionEvidenceRoute: CompensationAttributionEvidenceRoute,
@@ -3731,6 +3813,8 @@ const rootRouteChildren: RootRouteChildren = {
   CompensationPlansIdRoute: CompensationPlansIdRouteWithChildren,
   CompensationPlansNewRoute: CompensationPlansNewRoute,
   CompensationStatementsIdRoute: CompensationStatementsIdRoute,
+  ApexAiPersonasIndexRoute: ApexAiPersonasIndexRoute,
+  ApexWorkspacesIndexRoute: ApexWorkspacesIndexRoute,
   CompensationAttributionIndexRoute: CompensationAttributionIndexRoute,
   CompensationCalculationsIndexRoute: CompensationCalculationsIndexRoute,
   CompensationDisputesIndexRoute: CompensationDisputesIndexRoute,

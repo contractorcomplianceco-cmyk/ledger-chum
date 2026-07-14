@@ -64,16 +64,17 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
               `Customer ${p.customer_external_id} not found — send POST /customers first`,
             );
 
-          // Resolve default revenue account for lines missing account_code
-          const { data: defaultRev } = await supabaseAdmin
-            .from("accounts")
-            .select("id, code")
-            .eq("org_id", ctx.orgId)
-            .eq("type", "revenue")
-            .eq("is_active", true)
-            .order("code", { ascending: true })
-            .limit(1)
-            .maybeSingle();
+          // Resolve mapped revenue accounts once
+          const { data: laborRev } = await supabaseAdmin.rpc(
+            "resolve_account" as never,
+            { _org: ctx.orgId, _purpose: "labor_revenue" } as never,
+          );
+          const { data: materialRev } = await supabaseAdmin.rpc(
+            "resolve_account" as never,
+            { _org: ctx.orgId, _purpose: "material_revenue" } as never,
+          );
+          const laborRevId = (laborRev as string | null) ?? null;
+          const materialRevId = (materialRev as string | null) ?? null;
 
           // Build lines with amounts and resolved account ids
           let subtotal = 0;
@@ -96,6 +97,7 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
             tax += lineTax;
 
             let accountId: string | null = null;
+            // 1. Explicit account_code wins.
             if (l.account_code) {
               const { data: acc } = await supabaseAdmin
                 .from("accounts")
@@ -105,7 +107,13 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
                 .maybeSingle();
               accountId = acc?.id ?? null;
             }
-            if (!accountId) accountId = defaultRev?.id ?? null;
+            // 2. Fall back to mapped revenue by line_type hint.
+            if (!accountId) {
+              if (l.line_type === "labor") accountId = laborRevId;
+              else if (l.line_type === "material") accountId = materialRevId;
+            }
+            // 3. Final fallback: any mapped revenue, then any active revenue account.
+            if (!accountId) accountId = laborRevId ?? materialRevId;
 
             lineRows.push({
               description: l.description,
@@ -117,6 +125,7 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
               line_order: i,
             });
           }
+
 
           subtotal = round2(subtotal);
           tax = round2(tax);

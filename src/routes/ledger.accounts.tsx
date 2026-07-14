@@ -107,7 +107,11 @@ function ChartOfAccountsPage() {
   }, [grouped]);
 
   const createMut = useMutation({
-    mutationFn: (input: Parameters<typeof createFn>[0]["data"]) => createFn({ data: input }),
+    mutationFn: (input: {
+      orgId: string; code: string; name: string;
+      type: "asset" | "liability" | "equity" | "revenue" | "expense";
+      normalBalance: "debit" | "credit"; sortOrder: number;
+    }) => createFn({ data: input }),
     onSuccess: () => {
       toast.success("Account created");
       qc.invalidateQueries({ queryKey: ["accounts", orgId] });
@@ -117,7 +121,9 @@ function ChartOfAccountsPage() {
   });
 
   const updateMut = useMutation({
-    mutationFn: (input: Parameters<typeof updateFn>[0]["data"]) => updateFn({ data: input }),
+    mutationFn: (input: {
+      id: string; name?: string; code?: string; sortOrder?: number; isActive?: boolean;
+    }) => updateFn({ data: input }),
     onSuccess: () => {
       toast.success("Account updated");
       qc.invalidateQueries({ queryKey: ["accounts", orgId] });

@@ -34,6 +34,7 @@ import { Route as CompensationIndexRouteImport } from './routes/compensation.ind
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
+import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
 import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
@@ -64,6 +65,7 @@ import { Route as IntelligenceBonusPlansRouteImport } from './routes/intelligenc
 import { Route as IntelligenceBonusForecastRouteImport } from './routes/intelligence.bonus-forecast'
 import { Route as IntelligenceAttributionRouteImport } from './routes/intelligence.attribution'
 import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
+import { Route as IntegrationsSandboxRouteImport } from './routes/integrations.sandbox'
 import { Route as ImplementationTestingRouteImport } from './routes/implementation.testing'
 import { Route as ImplementationSecurityRouteImport } from './routes/implementation.security'
 import { Route as ImplementationReadinessRouteImport } from './routes/implementation.readiness'
@@ -316,6 +318,11 @@ const ApexIndexRoute = ApexIndexRouteImport.update({
   path: '/apex/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsServiceconnectRoute = SettingsServiceconnectRouteImport.update({
+  id: '/serviceconnect',
+  path: '/serviceconnect',
+  getParentRoute: () => SettingsRoute,
+} as any)
 const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
   id: '/account-mappings',
   path: '/account-mappings',
@@ -470,6 +477,11 @@ const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
   id: '/intelligence/apps',
   path: '/intelligence/apps',
   getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsSandboxRoute = IntegrationsSandboxRouteImport.update({
+  id: '/sandbox',
+  path: '/sandbox',
+  getParentRoute: () => IntegrationsRoute,
 } as any)
 const ImplementationTestingRoute = ImplementationTestingRouteImport.update({
   id: '/implementation/testing',
@@ -1153,7 +1165,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
-  '/integrations': typeof IntegrationsRoute
+  '/integrations': typeof IntegrationsRouteWithChildren
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
@@ -1247,6 +1259,7 @@ export interface FileRoutesByFullPath {
   '/implementation/readiness': typeof ImplementationReadinessRoute
   '/implementation/security': typeof ImplementationSecurityRoute
   '/implementation/testing': typeof ImplementationTestingRoute
+  '/integrations/sandbox': typeof IntegrationsSandboxRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -1277,6 +1290,7 @@ export interface FileRoutesByFullPath {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1334,7 +1348,7 @@ export interface FileRoutesByTo {
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
-  '/integrations': typeof IntegrationsRoute
+  '/integrations': typeof IntegrationsRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
@@ -1427,6 +1441,7 @@ export interface FileRoutesByTo {
   '/implementation/readiness': typeof ImplementationReadinessRoute
   '/implementation/security': typeof ImplementationSecurityRoute
   '/implementation/testing': typeof ImplementationTestingRoute
+  '/integrations/sandbox': typeof IntegrationsSandboxRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -1457,6 +1472,7 @@ export interface FileRoutesByTo {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
@@ -1517,7 +1533,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
   '/expenses': typeof ExpensesRouteWithChildren
-  '/integrations': typeof IntegrationsRoute
+  '/integrations': typeof IntegrationsRouteWithChildren
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
@@ -1611,6 +1627,7 @@ export interface FileRoutesById {
   '/implementation/readiness': typeof ImplementationReadinessRoute
   '/implementation/security': typeof ImplementationSecurityRoute
   '/implementation/testing': typeof ImplementationTestingRoute
+  '/integrations/sandbox': typeof IntegrationsSandboxRoute
   '/intelligence/apps': typeof IntelligenceAppsRoute
   '/intelligence/attribution': typeof IntelligenceAttributionRoute
   '/intelligence/bonus-forecast': typeof IntelligenceBonusForecastRoute
@@ -1641,6 +1658,7 @@ export interface FileRoutesById {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1796,6 +1814,7 @@ export interface FileRouteTypes {
     | '/implementation/readiness'
     | '/implementation/security'
     | '/implementation/testing'
+    | '/integrations/sandbox'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -1826,6 +1845,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -1976,6 +1996,7 @@ export interface FileRouteTypes {
     | '/implementation/readiness'
     | '/implementation/security'
     | '/implementation/testing'
+    | '/integrations/sandbox'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -2006,6 +2027,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex'
     | '/banking'
     | '/cash-availability'
@@ -2159,6 +2181,7 @@ export interface FileRouteTypes {
     | '/implementation/readiness'
     | '/implementation/security'
     | '/implementation/testing'
+    | '/integrations/sandbox'
     | '/intelligence/apps'
     | '/intelligence/attribution'
     | '/intelligence/bonus-forecast'
@@ -2189,6 +2212,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -2249,7 +2273,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRouteWithChildren
-  IntegrationsRoute: typeof IntegrationsRoute
+  IntegrationsRoute: typeof IntegrationsRouteWithChildren
   InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
   ReportsRoute: typeof ReportsRoute
@@ -2564,6 +2588,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/serviceconnect': {
+      id: '/settings/serviceconnect'
+      path: '/serviceconnect'
+      fullPath: '/settings/serviceconnect'
+      preLoaderRoute: typeof SettingsServiceconnectRouteImport
+      parentRoute: typeof SettingsRoute
+    }
     '/settings/account-mappings': {
       id: '/settings/account-mappings'
       path: '/account-mappings'
@@ -2773,6 +2804,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/intelligence/apps'
       preLoaderRoute: typeof IntelligenceAppsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/integrations/sandbox': {
+      id: '/integrations/sandbox'
+      path: '/sandbox'
+      fullPath: '/integrations/sandbox'
+      preLoaderRoute: typeof IntegrationsSandboxRouteImport
+      parentRoute: typeof IntegrationsRoute
     }
     '/implementation/testing': {
       id: '/implementation/testing'
@@ -3738,6 +3776,18 @@ const ExpensesRouteWithChildren = ExpensesRoute._addFileChildren(
   ExpensesRouteChildren,
 )
 
+interface IntegrationsRouteChildren {
+  IntegrationsSandboxRoute: typeof IntegrationsSandboxRoute
+}
+
+const IntegrationsRouteChildren: IntegrationsRouteChildren = {
+  IntegrationsSandboxRoute: IntegrationsSandboxRoute,
+}
+
+const IntegrationsRouteWithChildren = IntegrationsRoute._addFileChildren(
+  IntegrationsRouteChildren,
+)
+
 interface InvoicesRouteChildren {
   InvoicesInvoiceIdRoute: typeof InvoicesInvoiceIdRoute
   InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
@@ -3762,10 +3812,12 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
 
 interface SettingsRouteChildren {
   SettingsAccountMappingsRoute: typeof SettingsAccountMappingsRoute
+  SettingsServiceconnectRoute: typeof SettingsServiceconnectRoute
 }
 
 const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsAccountMappingsRoute: SettingsAccountMappingsRoute,
+  SettingsServiceconnectRoute: SettingsServiceconnectRoute,
 }
 
 const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
@@ -3871,7 +3923,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRouteWithChildren,
-  IntegrationsRoute: IntegrationsRoute,
+  IntegrationsRoute: IntegrationsRouteWithChildren,
   InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
   ReportsRoute: ReportsRoute,

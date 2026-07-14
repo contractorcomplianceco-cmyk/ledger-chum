@@ -15,10 +15,23 @@
 import { createHash, randomUUID } from "crypto";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+export type IntegrationScope =
+  | "customers.read"
+  | "customers.write"
+  | "work_orders.completed"
+  | "invoices.create"
+  | "invoices.read"
+  | "payments.create"
+  | "refunds.create"
+  | "inventory.consume"
+  | "reports.read";
+
 export interface ResolvedClient {
   clientId: string;
   orgId: string;
   clientName: string;
+  scopes: string[];
+  environment: "sandbox" | "production";
 }
 
 export interface IntegrationContext extends ResolvedClient {

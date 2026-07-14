@@ -93,7 +93,7 @@ export const setCloseTaskStatus = createServerFn({ method: "POST" })
     const { data: res, error } = await context.supabase.rpc("set_close_task_status", {
       _task_id: data.taskId,
       _status: data.status,
-      _note: data.note ?? null,
+      _note: data.note ?? "",
     });
     if (error) throw new Error(error.message);
     return res;

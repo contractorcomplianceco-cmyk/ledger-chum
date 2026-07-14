@@ -353,3 +353,44 @@ transaction.
 - No ServiceConnect-specific rules (integrations remain generic).
 - No fake financial intelligence or hardcoded customer logic.
 - No APEX redesign — the control surfaces are LedgerOS-native.
+
+---
+
+## Milestone 5 — Integration Layer + ServiceConnect Pilot ✅
+
+**Status:** complete.
+
+M5 introduces a generic, configurable integration framework so external
+systems (ServiceConnect first, more later) can push financial events into
+LedgerOS without hard-coded client rules.
+
+### What M5 ships
+
+- **`integration_sources`** — per-org registry of external systems.
+- **`integration_event_mappings`** — per-org config mapping
+  `(source, external_event_type)` → LedgerOS financial object +
+  optional `account_mappings.purpose`.
+- **`sync_history` extensions** — `retry_count`, `last_retry_at`,
+  `source_id`, `event_type`, plus supporting indexes.
+- **`/admin/integrations`** — operator workspace to register sources,
+  edit mappings, and retry failed inbound calls.
+- **API surface** unchanged: existing `/api/public/integrations/*`
+  endpoints continue to serve customers, invoices, payments, refunds,
+  and inventory consumption. Business logic now consults the mapping
+  tables instead of encoding source-specific rules.
+- **Docs** — `docs/ledgeros/18-integration-layer.md` covers architecture,
+  event model, mapping model, sync lifecycle, error handling, and
+  security model.
+
+### Preserved invariants
+
+Double-entry integrity, fiscal controls, audit lineage, close workflow,
+Control Center, organization isolation, and source traceability are all
+unchanged by M5 — the layer is strictly additive.
+
+### What M5 explicitly does NOT add
+
+- No ServiceConnect-specific rules baked into LedgerOS code.
+- No hardcoded customer logic.
+- No APEX redesign.
+- No fake integrations.

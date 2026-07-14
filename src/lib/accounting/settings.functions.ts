@@ -32,7 +32,15 @@ export const upsertOrganizationSettings = createServerFn({ method: "POST" })
     }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = { org_id: data.orgId };
+    const patch: {
+      org_id: string;
+      accounting_basis?: string;
+      default_currency?: string;
+      timezone?: string;
+      fiscal_calendar?: string;
+      audit_retention_months?: number;
+      close_policy?: { soft_close_days: number; hard_close_days: number };
+    } = { org_id: data.orgId };
     if (data.accountingBasis) patch.accounting_basis = data.accountingBasis;
     if (data.defaultCurrency) patch.default_currency = data.defaultCurrency;
     if (data.timezone) patch.timezone = data.timezone;

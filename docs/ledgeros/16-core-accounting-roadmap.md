@@ -9,7 +9,7 @@
 | Milestone | Scope | Status |
 |-----------|-------|--------|
 | **M1 — Ledger core** | Chart of Accounts, General Ledger, Journal Entries + reversals | **✅ Shipped** |
-| M2 — AR expansion + AP | Customer statements, aging, collections. Vendors, bills, bill payments. | Planned |
+| **M2 — AR expansion + AP** | Dimensions & source-lineage framework. AR aging + statements. Vendors, bills, bill payments with posting. | **✅ Shipped** |
 | M3 — Banking + Reports | Bank accounts, transactions, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | Planned |
 | M4 — Close + Settings | Period-close workflow, accounting settings, numbering, terms, tax. | Planned |
 

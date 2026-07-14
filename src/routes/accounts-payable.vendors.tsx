@@ -264,9 +264,11 @@ function VendorsPage() {
                     <SelectContent>
                       <SelectItem value="__none__">(none)</SelectItem>
                       {expenseAccounts.map((a) => (
-                        <SelectItem key={a.account_id} value={a.account_id}>
-                          {a.code} · {a.name}
-                        </SelectItem>
+                        a.account_id ? (
+                          <SelectItem key={a.account_id} value={a.account_id}>
+                            {a.code} · {a.name}
+                          </SelectItem>
+                        ) : null
                       ))}
                     </SelectContent>
                   </Select>

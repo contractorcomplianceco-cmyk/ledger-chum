@@ -110,7 +110,7 @@ export const approvePeriodClose = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("approve_period_close", {
       _close_run_id: data.closeRunId,
-      _note: data.note ?? null,
+      _note: data.note ?? "",
     });
     if (error) throw new Error(error.message);
     return res as { close_run_id: string; period_id: string; status: string };

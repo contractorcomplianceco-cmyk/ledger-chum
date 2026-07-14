@@ -154,6 +154,7 @@ import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
 import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
 import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
@@ -937,6 +938,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountsPayableVendorsRoute = AccountsPayableVendorsRouteImport.update({
+  id: '/accounts-payable/vendors',
+  path: '/accounts-payable/vendors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationStatementsIndexRoute =
   CompensationStatementsIndexRouteImport.update({
     id: '/compensation/statements/',
@@ -1171,6 +1177,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1353,6 +1360,7 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1539,6 +1547,7 @@ export interface FileRoutesById {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1726,6 +1735,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -1908,6 +1918,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2093,6 +2104,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2279,6 +2291,7 @@ export interface RootRouteChildren {
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
+  AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
   ApexAssetsRoute: typeof ApexAssetsRoute
@@ -3428,6 +3441,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accounts-payable/vendors': {
+      id: '/accounts-payable/vendors'
+      path: '/accounts-payable/vendors'
+      fullPath: '/accounts-payable/vendors'
+      preLoaderRoute: typeof AccountsPayableVendorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/statements/': {
       id: '/compensation/statements/'
       path: '/compensation/statements'
@@ -3929,6 +3949,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
+  AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
   ApexAssetsRoute: ApexAssetsRoute,

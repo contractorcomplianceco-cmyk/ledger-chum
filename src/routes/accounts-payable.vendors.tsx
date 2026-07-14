@@ -255,13 +255,14 @@ function VendorsPage() {
                 <div>
                   <Label>Default expense account</Label>
                   <Select
-                    value={editing.defaultExpenseAccountId ?? ""}
+                    value={editing.defaultExpenseAccountId ?? "__none__"}
                     onValueChange={(v) =>
-                      setEditing({ ...editing, defaultExpenseAccountId: v || null })
+                      setEditing({ ...editing, defaultExpenseAccountId: v === "__none__" ? null : v })
                     }
                   >
                     <SelectTrigger><SelectValue placeholder="(none)" /></SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__none__">(none)</SelectItem>
                       {expenseAccounts.map((a) => (
                         <SelectItem key={a.account_id} value={a.account_id}>
                           {a.code} · {a.name}

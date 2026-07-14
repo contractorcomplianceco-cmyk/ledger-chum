@@ -34,6 +34,7 @@ import { Route as CompensationIndexRouteImport } from './routes/compensation.ind
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
+import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
 import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
@@ -315,6 +316,11 @@ const ApexIndexRoute = ApexIndexRouteImport.update({
   id: '/apex/',
   path: '/apex/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsServiceconnectRoute = SettingsServiceconnectRouteImport.update({
+  id: '/serviceconnect',
+  path: '/serviceconnect',
+  getParentRoute: () => SettingsRoute,
 } as any)
 const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
   id: '/account-mappings',
@@ -1277,6 +1283,7 @@ export interface FileRoutesByFullPath {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1457,6 +1464,7 @@ export interface FileRoutesByTo {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
@@ -1641,6 +1649,7 @@ export interface FileRoutesById {
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1826,6 +1835,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -2006,6 +2016,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex'
     | '/banking'
     | '/cash-availability'
@@ -2189,6 +2200,7 @@ export interface FileRouteTypes {
     | '/readiness/migration'
     | '/readiness/production'
     | '/settings/account-mappings'
+    | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -2563,6 +2575,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/apex/'
       preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/settings/serviceconnect': {
+      id: '/settings/serviceconnect'
+      path: '/serviceconnect'
+      fullPath: '/settings/serviceconnect'
+      preLoaderRoute: typeof SettingsServiceconnectRouteImport
+      parentRoute: typeof SettingsRoute
     }
     '/settings/account-mappings': {
       id: '/settings/account-mappings'
@@ -3762,10 +3781,12 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
 
 interface SettingsRouteChildren {
   SettingsAccountMappingsRoute: typeof SettingsAccountMappingsRoute
+  SettingsServiceconnectRoute: typeof SettingsServiceconnectRoute
 }
 
 const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsAccountMappingsRoute: SettingsAccountMappingsRoute,
+  SettingsServiceconnectRoute: SettingsServiceconnectRoute,
 }
 
 const SettingsRouteWithChildren = SettingsRoute._addFileChildren(

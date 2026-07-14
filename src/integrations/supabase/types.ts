@@ -817,6 +817,177 @@ export type Database = {
           },
         ]
       }
+      close_approvals: {
+        Row: {
+          approver_id: string
+          close_run_id: string
+          created_at: string
+          decision: string
+          id: string
+          note: string | null
+          org_id: string
+        }
+        Insert: {
+          approver_id: string
+          close_run_id: string
+          created_at?: string
+          decision: string
+          id?: string
+          note?: string | null
+          org_id: string
+        }
+        Update: {
+          approver_id?: string
+          close_run_id?: string
+          created_at?: string
+          decision?: string
+          id?: string
+          note?: string | null
+          org_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "close_approvals_close_run_id_fkey"
+            columns: ["close_run_id"]
+            isOneToOne: false
+            referencedRelation: "close_runs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "close_approvals_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      close_runs: {
+        Row: {
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          fiscal_period_id: string
+          id: string
+          notes: string | null
+          org_id: string
+          started_at: string
+          started_by: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          fiscal_period_id: string
+          id?: string
+          notes?: string | null
+          org_id: string
+          started_at?: string
+          started_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          fiscal_period_id?: string
+          id?: string
+          notes?: string | null
+          org_id?: string
+          started_at?: string
+          started_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "close_runs_fiscal_period_id_fkey"
+            columns: ["fiscal_period_id"]
+            isOneToOne: true
+            referencedRelation: "fiscal_periods"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "close_runs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      close_tasks: {
+        Row: {
+          category: string
+          close_run_id: string
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          description: string | null
+          id: string
+          note: string | null
+          order_index: number
+          org_id: string
+          required: boolean
+          status: string
+          task_key: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          close_run_id: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          note?: string | null
+          order_index?: number
+          org_id: string
+          required?: boolean
+          status?: string
+          task_key: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          close_run_id?: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          note?: string | null
+          order_index?: number
+          org_id?: string
+          required?: boolean
+          status?: string
+          task_key?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "close_tasks_close_run_id_fkey"
+            columns: ["close_run_id"]
+            isOneToOne: false
+            referencedRelation: "close_runs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "close_tasks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       credit_applications: {
         Row: {
           amount_applied: number
@@ -2135,6 +2306,17 @@ export type Database = {
           },
         ]
       }
+      v_control_exceptions: {
+        Row: {
+          category: string | null
+          message: string | null
+          occurred_on: string | null
+          org_id: string | null
+          ref_id: string | null
+          severity: string | null
+        }
+        Relationships: []
+      }
       v_general_ledger: {
         Row: {
           account_code: string | null
@@ -2206,6 +2388,10 @@ export type Database = {
       }
     }
     Functions: {
+      approve_period_close: {
+        Args: { _close_run_id: string; _note: string }
+        Returns: Json
+      }
       client_has_scope: {
         Args: { _client_id: string; _scope: string }
         Returns: boolean
@@ -2335,12 +2521,28 @@ export type Database = {
         }
         Returns: Json
       }
+      reopen_period: {
+        Args: { _org_id: string; _period_id: string; _reason: string }
+        Returns: Json
+      }
       resolve_account: {
         Args: { _org: string; _purpose: string }
         Returns: string
       }
       reverse_journal: {
         Args: { _journal_id: string; _org_id: string; _reason: string }
+        Returns: Json
+      }
+      seed_default_close_tasks: {
+        Args: { _org: string; _run: string }
+        Returns: undefined
+      }
+      set_close_task_status: {
+        Args: { _note: string; _status: string; _task_id: string }
+        Returns: Json
+      }
+      start_period_close: {
+        Args: { _org_id: string; _period_id: string }
         Returns: Json
       }
       unmatch_bank_transaction: {

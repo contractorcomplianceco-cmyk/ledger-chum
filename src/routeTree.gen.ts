@@ -181,6 +181,7 @@ import { Route as ApexAiPersonasPersonaRouteImport } from './routes/apex.ai-pers
 import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
 import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
+import { Route as ApiPublicIntegrationsRefundsRouteImport } from './routes/api/public/integrations/refunds'
 import { Route as ApiPublicIntegrationsPaymentsRouteImport } from './routes/api/public/integrations/payments'
 import { Route as ApiPublicIntegrationsInvoicesRouteImport } from './routes/api/public/integrations/invoices'
 import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from './routes/api/public/integrations/inventory-consumption'
@@ -1086,6 +1087,12 @@ const CompensationCalculationsIdPreviewRoute =
     path: '/preview',
     getParentRoute: () => CompensationCalculationsIdRoute,
   } as any)
+const ApiPublicIntegrationsRefundsRoute =
+  ApiPublicIntegrationsRefundsRouteImport.update({
+    id: '/api/public/integrations/refunds',
+    path: '/api/public/integrations/refunds',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicIntegrationsPaymentsRoute =
   ApiPublicIntegrationsPaymentsRouteImport.update({
     id: '/api/public/integrations/payments',
@@ -1298,6 +1305,7 @@ export interface FileRoutesByFullPath {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
+  '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1475,6 +1483,7 @@ export interface FileRoutesByTo {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
+  '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1656,6 +1665,7 @@ export interface FileRoutesById {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
+  '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
@@ -1838,6 +1848,7 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
+    | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -2015,6 +2026,7 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
+    | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -2195,6 +2207,7 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
+    | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
@@ -2346,6 +2359,7 @@ export interface RootRouteChildren {
   ApiPublicIntegrationsInventoryConsumptionRoute: typeof ApiPublicIntegrationsInventoryConsumptionRoute
   ApiPublicIntegrationsInvoicesRoute: typeof ApiPublicIntegrationsInvoicesRoute
   ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
+  ApiPublicIntegrationsRefundsRoute: typeof ApiPublicIntegrationsRefundsRoute
   ApiPublicIntegrationsWorkOrdersCompletedRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 
@@ -3555,6 +3569,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
       parentRoute: typeof CompensationCalculationsIdRoute
     }
+    '/api/public/integrations/refunds': {
+      id: '/api/public/integrations/refunds'
+      path: '/api/public/integrations/refunds'
+      fullPath: '/api/public/integrations/refunds'
+      preLoaderRoute: typeof ApiPublicIntegrationsRefundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/integrations/payments': {
       id: '/api/public/integrations/payments'
       path: '/api/public/integrations/payments'
@@ -3933,6 +3954,7 @@ const rootRouteChildren: RootRouteChildren = {
     ApiPublicIntegrationsInventoryConsumptionRoute,
   ApiPublicIntegrationsInvoicesRoute: ApiPublicIntegrationsInvoicesRoute,
   ApiPublicIntegrationsPaymentsRoute: ApiPublicIntegrationsPaymentsRoute,
+  ApiPublicIntegrationsRefundsRoute: ApiPublicIntegrationsRefundsRoute,
   ApiPublicIntegrationsWorkOrdersCompletedRoute:
     ApiPublicIntegrationsWorkOrdersCompletedRoute,
 }

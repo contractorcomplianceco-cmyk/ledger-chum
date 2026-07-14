@@ -68,26 +68,24 @@ const AUDIT_EVENT_KIND: Record<string, keyof typeof EVENT_LABEL | undefined> = {
 function AccountingDashboard() {
   const orgId = useOrgId();
   const live = !!orgId;
+  const metricsFn = useServerFn(getDashboardMetrics);
+  const draftsFn = useServerFn(listInvoices);
+  const eventsFn = useServerFn(listIntegrationEvents);
 
   const metrics = useQuery({
     queryKey: ["dashboard-metrics", orgId],
-    queryFn: () => useServerFn(getDashboardMetrics)({ data: { orgId: orgId! } }),
-    enabled: live,
-    retry: false,
+    queryFn: () => metricsFn({ data: { orgId: orgId! } }),
+    enabled: live, retry: false,
   });
   const drafts = useQuery({
     queryKey: ["invoices", "draft", orgId],
-    queryFn: () =>
-      useServerFn(listInvoices)({ data: { orgId: orgId!, status: "draft", limit: 20 } }),
-    enabled: live,
-    retry: false,
+    queryFn: () => draftsFn({ data: { orgId: orgId!, status: "draft", limit: 20 } }),
+    enabled: live, retry: false,
   });
   const events = useQuery({
     queryKey: ["integration-events", orgId, 50],
-    queryFn: () =>
-      useServerFn(listIntegrationEvents)({ data: { orgId: orgId!, limit: 50 } }),
-    enabled: live,
-    retry: false,
+    queryFn: () => eventsFn({ data: { orgId: orgId!, limit: 50 } }),
+    enabled: live, retry: false,
   });
 
   // Fallback to Phase 3 demo values if not signed in / not wired.

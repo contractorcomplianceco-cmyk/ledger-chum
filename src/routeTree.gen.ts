@@ -34,6 +34,7 @@ import { Route as CompensationIndexRouteImport } from './routes/compensation.ind
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
+import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
@@ -314,6 +315,11 @@ const ApexIndexRoute = ApexIndexRouteImport.update({
   id: '/apex/',
   path: '/apex/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
+  id: '/account-mappings',
+  path: '/account-mappings',
+  getParentRoute: () => SettingsRoute,
 } as any)
 const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
   id: '/readiness/production',
@@ -1151,7 +1157,7 @@ export interface FileRoutesByFullPath {
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1270,6 +1276,7 @@ export interface FileRoutesByFullPath {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1330,7 +1337,7 @@ export interface FileRoutesByTo {
   '/integrations': typeof IntegrationsRoute
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1449,6 +1456,7 @@ export interface FileRoutesByTo {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
@@ -1513,7 +1521,7 @@ export interface FileRoutesById {
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1632,6 +1640,7 @@ export interface FileRoutesById {
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1816,6 +1825,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -1995,6 +2005,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex'
     | '/banking'
     | '/cash-availability'
@@ -2177,6 +2188,7 @@ export interface FileRouteTypes {
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -2241,7 +2253,7 @@ export interface RootRouteChildren {
   InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
   ReportsRoute: typeof ReportsRoute
-  SettingsRoute: typeof SettingsRoute
+  SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -2551,6 +2563,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/apex/'
       preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/settings/account-mappings': {
+      id: '/settings/account-mappings'
+      path: '/account-mappings'
+      fullPath: '/settings/account-mappings'
+      preLoaderRoute: typeof SettingsAccountMappingsRouteImport
+      parentRoute: typeof SettingsRoute
     }
     '/readiness/production': {
       id: '/readiness/production'
@@ -3741,6 +3760,18 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
   InvoicesRouteChildren,
 )
 
+interface SettingsRouteChildren {
+  SettingsAccountMappingsRoute: typeof SettingsAccountMappingsRoute
+}
+
+const SettingsRouteChildren: SettingsRouteChildren = {
+  SettingsAccountMappingsRoute: SettingsAccountMappingsRoute,
+}
+
+const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
+  SettingsRouteChildren,
+)
+
 interface ApexDigitalTwinScenariosRouteChildren {
   ApexDigitalTwinScenariosIdRoute: typeof ApexDigitalTwinScenariosIdRoute
 }
@@ -3844,7 +3875,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
   ReportsRoute: ReportsRoute,
-  SettingsRoute: SettingsRoute,
+  SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

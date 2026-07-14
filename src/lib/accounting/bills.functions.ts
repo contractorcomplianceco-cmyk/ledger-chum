@@ -87,7 +87,7 @@ export const postBill = createServerFn({ method: "POST" })
       _bill_number: data.billNumber,
       _issue_date: data.issueDate,
       _due_date: data.dueDate,
-      _memo: data.memo ?? null,
+      _memo: data.memo ?? "",
       _lines: data.lines.map((l) => ({
         account_id: l.accountId,
         description: l.description ?? "",
@@ -101,11 +101,11 @@ export const postBill = createServerFn({ method: "POST" })
         product_id: l.productId ?? "",
       })),
       _tax: data.tax,
-      _external_source: data.externalSource ?? null,
-      _external_id: data.externalId ?? null,
+      _external_source: data.externalSource ?? "",
+      _external_id: data.externalId ?? "",
       _source_system: data.sourceSystem ?? "ledgeros.manual",
-      _source_ref: data.sourceRef ?? null,
-      _correlation_id: data.correlationId ?? null,
+      _source_ref: data.sourceRef ?? "",
+      _correlation_id: data.correlationId ?? "",
     };
     const { data: result, error } = await context.supabase.rpc(
       "post_bill_with_posting",

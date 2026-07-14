@@ -235,3 +235,121 @@ Payment date must be within an open period
 - Reversals never mutate posted journals.
 - No mocked financial data in shipped screens. Balances always resolve from
   `v_account_balances` or filtered `journal_lines`.
+
+---
+
+## M4 — Close + Settings + Accounting Controls (shipped)
+
+### Close workflow
+
+Tables:
+
+- `close_runs (id, org_id, fiscal_period_id, status, started_by/at,
+  completed_by/at, notes)` — one per period-close attempt, unique per
+  period.
+- `close_tasks (id, org_id, close_run_id, task_key, title, category,
+  required, order_index, status, note, completed_by/at)` — checklist
+  items seeded by `seed_default_close_tasks`.
+- `close_approvals (id, org_id, close_run_id, approver_id, decision,
+  note)` — append-only approve/reject decisions.
+
+Default checklist (`bank_recon`, `ar_review`, `ap_review`,
+`unposted_journals`, `trial_balance`, `variance_review`,
+`accrual_review`, `lead_approval`, `lock_period`) is applied by
+`seed_default_close_tasks(_org, _run)` when a close starts.
+
+RPCs (all `SECURITY DEFINER`, RLS-checked, audit-logged):
+
+- `start_period_close(_org_id, _period_id)` — owner or accounting lead
+  only. Moves the period to `pending_close`, seeds the checklist,
+  writes `close.started`.
+- `set_close_task_status(_task_id, _status, _note)` — any org member.
+  Records completion metadata and emits `close.task.<status>`.
+- `approve_period_close(_close_run_id, _note)` — owner or accounting
+  lead. Rejects if any required task is still open or the trial
+  balance (sum of debits vs credits on posted journal lines) does not
+  balance. On success, moves the period to `closed` and locks postings
+  through the existing `is_period_open` guard.
+- `reopen_period(_org_id, _period_id, _reason)` — owner only. Refuses
+  `locked` periods. Marks the prior close run as `reopened` and
+  reverts the period to `open`.
+
+### Period lock rules
+
+- `is_period_open(org, date)` is the single source of truth for whether
+  a posting is allowed. All posting RPCs (`post_invoice_with_posting`,
+  `record_payment_with_posting`, `post_bill_with_posting`,
+  `record_vendor_payment_with_posting`, `post_manual_journal`,
+  `record_refund_with_posting`, `record_inventory_consumption_with_posting`)
+  call it before writing.
+- Status transitions: `open → pending_close → closed → (reopened →) open`.
+  `locked` is a terminal state and cannot be reopened via `reopen_period`.
+- The `enforce_balanced_journal` and `tg_journal_entry_immutable`
+  triggers continue to enforce double-entry integrity independent of
+  close status.
+
+### Settings model
+
+`organization_settings` (existing, extended via UI):
+
+- `accounting_basis` (`cash` | `accrual`)
+- `default_currency`, `timezone`, `fiscal_calendar`
+- `close_policy` JSONB — `{ soft_close_days, hard_close_days }`
+- `audit_retention_months`
+
+Read/write policies: read = `is_org_member`, write = `owner` or
+`accounting_lead`. Every upsert emits an `org_settings.updated`
+audit event.
+
+### Account mapping architecture
+
+Purpose-keyed mappings (`account_mappings` table, one row per
+`org_id`/`purpose`) drive the `resolve_account(_org, _purpose)` RPC.
+Every posting RPC that needs a well-known account (AR, AP, cash,
+labor revenue, material revenue, inventory, COGS, refund clearing,
+credit liability) resolves through this indirection so integrations
+never hard-code account IDs. Unmapped purposes fall back to a
+heuristic and surface as an inbox event.
+
+### Control Center
+
+`v_control_exceptions` (security_invoker view) unions live rows from
+the sub-ledgers:
+
+- Draft journals (`journal_entries.status = 'draft'`)
+- Unmatched bank transactions older than 7 days
+- Past-due invoices (`invoices.balance > 0 AND due_date < today`)
+- Past-due bills (`bills.balance > 0 AND due_date < today`)
+
+Every row includes `category`, `severity` (`warning` | `critical`),
+and `occurred_on`. Severities escalate to `critical` past 30/60 days
+depending on the sub-ledger.
+
+The `/controls` route rolls these into KPI tiles alongside the current
+fiscal period and recent close runs, so operators can see close
+readiness and outstanding exceptions at a glance.
+
+### Report lineage architecture
+
+Every posted amount in every report can be traced to a `journal_line`
+whose parent `journal_entry` carries:
+
+- `source_type` — `manual` | `invoice` | `payment` | `bill` |
+  `vendor_payment` | `refund` | `inventory_consumption` | `reversal`.
+- `source_id` — pointer to the originating sub-ledger row.
+- `source_system` + `source_ref` — external system envelope.
+- `external_id` + `correlation_id` — idempotency + request tracing.
+- `ledger_impact` (JSONB) — snapshot of what the posting RPC decided,
+  including which mapping resolved which account.
+
+The reporting views (`v_trial_balance`, `v_general_ledger`,
+`v_ar_aging`, `v_ap_aging`) select from `journal_lines` filtered by
+`journal_entries.status = 'posted'`, so a drill-down from any report
+cell can walk back to the exact `journal_entry` and thus the source
+transaction.
+
+### What M4 explicitly does NOT add
+
+- No ServiceConnect-specific rules (integrations remain generic).
+- No fake financial intelligence or hardcoded customer logic.
+- No APEX redesign — the control surfaces are LedgerOS-native.

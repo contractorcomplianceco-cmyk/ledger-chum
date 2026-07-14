@@ -18,6 +18,7 @@ import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as EstimatesRouteImport } from './routes/estimates'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as ControlsRouteImport } from './routes/controls'
 import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
@@ -247,6 +248,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const CustomersRoute = CustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ControlsRoute = ControlsRouteImport.update({
+  id: '/controls',
+  path: '/controls',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CloseRoute = CloseRouteImport.update({
@@ -1227,6 +1233,7 @@ export interface FileRoutesByFullPath {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
+  '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
@@ -1422,6 +1429,7 @@ export interface FileRoutesByTo {
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRoute
+  '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
@@ -1617,6 +1625,7 @@ export interface FileRoutesById {
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
   '/close': typeof CloseRoute
+  '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/estimates': typeof EstimatesRouteWithChildren
@@ -1815,6 +1824,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/cash-availability'
     | '/close'
+    | '/controls'
     | '/customers'
     | '/dashboard'
     | '/estimates'
@@ -2010,6 +2020,7 @@ export interface FileRouteTypes {
     | '/automation-center'
     | '/bills'
     | '/close'
+    | '/controls'
     | '/customers'
     | '/dashboard'
     | '/estimates'
@@ -2204,6 +2215,7 @@ export interface FileRouteTypes {
     | '/bills'
     | '/cash-availability'
     | '/close'
+    | '/controls'
     | '/customers'
     | '/dashboard'
     | '/estimates'
@@ -2401,6 +2413,7 @@ export interface RootRouteChildren {
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
   CloseRoute: typeof CloseRoute
+  ControlsRoute: typeof ControlsRoute
   CustomersRoute: typeof CustomersRouteWithChildren
   DashboardRoute: typeof DashboardRoute
   EstimatesRoute: typeof EstimatesRouteWithChildren
@@ -2616,6 +2629,13 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/customers'
       preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/controls': {
+      id: '/controls'
+      path: '/controls'
+      fullPath: '/controls'
+      preLoaderRoute: typeof ControlsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/close': {
@@ -4150,6 +4170,7 @@ const rootRouteChildren: RootRouteChildren = {
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
   CloseRoute: CloseRoute,
+  ControlsRoute: ControlsRoute,
   CustomersRoute: CustomersRouteWithChildren,
   DashboardRoute: DashboardRoute,
   EstimatesRoute: EstimatesRouteWithChildren,

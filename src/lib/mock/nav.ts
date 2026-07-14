@@ -127,6 +127,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Balance Sheet", to: "/reports/balance-sheet", icon: BarChart3 },
       { title: "Cash Flow", to: "/reports/cash-flow", icon: BarChart3 },
       { title: "Monthly Close", to: "/close", icon: CalendarClock },
+      { title: "Control Center", to: "/controls", icon: ShieldCheck },
+
     ],
   },
   {

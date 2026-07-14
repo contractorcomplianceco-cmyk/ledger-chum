@@ -161,6 +161,7 @@ import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
@@ -202,6 +203,7 @@ import { Route as ApiPublicIntegrationsRefundsRouteImport } from './routes/api/p
 import { Route as ApiPublicIntegrationsPaymentsRouteImport } from './routes/api/public/integrations/payments'
 import { Route as ApiPublicIntegrationsInvoicesRouteImport } from './routes/api/public/integrations/invoices'
 import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from './routes/api/public/integrations/inventory-consumption'
+import { Route as ApiPublicIntegrationsEventsRouteImport } from './routes/api/public/integrations/events'
 import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
 import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
 import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
@@ -985,6 +987,11 @@ const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   path: '/admin/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
+  id: '/admin/financial-events',
+  path: '/admin/financial-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
   id: '/accounts-receivable/aging',
   path: '/accounts-receivable/aging',
@@ -1213,6 +1220,12 @@ const ApiPublicIntegrationsInventoryConsumptionRoute =
     path: '/api/public/integrations/inventory-consumption',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicIntegrationsEventsRoute =
+  ApiPublicIntegrationsEventsRouteImport.update({
+    id: '/api/public/integrations/events',
+    path: '/api/public/integrations/events',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicIntegrationsCustomersRoute =
   ApiPublicIntegrationsCustomersRouteImport.update({
     id: '/api/public/integrations/customers',
@@ -1254,6 +1267,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1421,6 +1435,7 @@ export interface FileRoutesByFullPath {
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/events': typeof ApiPublicIntegrationsEventsRoute
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
@@ -1449,6 +1464,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1616,6 +1632,7 @@ export interface FileRoutesByTo {
   '/compensation/statements': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/events': typeof ApiPublicIntegrationsEventsRoute
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
@@ -1648,6 +1665,7 @@ export interface FileRoutesById {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1815,6 +1833,7 @@ export interface FileRoutesById {
   '/compensation/statements/': typeof CompensationStatementsIndexRoute
   '/apex/digital-twin/scenarios/$id': typeof ApexDigitalTwinScenariosIdRoute
   '/api/public/integrations/customers': typeof ApiPublicIntegrationsCustomersRoute
+  '/api/public/integrations/events': typeof ApiPublicIntegrationsEventsRoute
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
@@ -1848,6 +1867,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2015,6 +2035,7 @@ export interface FileRouteTypes {
     | '/compensation/statements/'
     | '/apex/digital-twin/scenarios/$id'
     | '/api/public/integrations/customers'
+    | '/api/public/integrations/events'
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
@@ -2043,6 +2064,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2210,6 +2232,7 @@ export interface FileRouteTypes {
     | '/compensation/statements'
     | '/apex/digital-twin/scenarios/$id'
     | '/api/public/integrations/customers'
+    | '/api/public/integrations/events'
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
@@ -2241,6 +2264,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2408,6 +2432,7 @@ export interface FileRouteTypes {
     | '/compensation/statements/'
     | '/apex/digital-twin/scenarios/$id'
     | '/api/public/integrations/customers'
+    | '/api/public/integrations/events'
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
@@ -2440,6 +2465,7 @@ export interface RootRouteChildren {
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
+  AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -2572,6 +2598,7 @@ export interface RootRouteChildren {
   CompensationPlansIndexRoute: typeof CompensationPlansIndexRoute
   CompensationStatementsIndexRoute: typeof CompensationStatementsIndexRoute
   ApiPublicIntegrationsCustomersRoute: typeof ApiPublicIntegrationsCustomersRoute
+  ApiPublicIntegrationsEventsRoute: typeof ApiPublicIntegrationsEventsRoute
   ApiPublicIntegrationsInventoryConsumptionRoute: typeof ApiPublicIntegrationsInventoryConsumptionRoute
   ApiPublicIntegrationsInvoicesRoute: typeof ApiPublicIntegrationsInvoicesRoute
   ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
@@ -3645,6 +3672,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/financial-events': {
+      id: '/admin/financial-events'
+      path: '/admin/financial-events'
+      fullPath: '/admin/financial-events'
+      preLoaderRoute: typeof AdminFinancialEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts-receivable/aging': {
       id: '/accounts-receivable/aging'
       path: '/accounts-receivable/aging'
@@ -3932,6 +3966,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicIntegrationsInventoryConsumptionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/integrations/events': {
+      id: '/api/public/integrations/events'
+      path: '/api/public/integrations/events'
+      fullPath: '/api/public/integrations/events'
+      preLoaderRoute: typeof ApiPublicIntegrationsEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/integrations/customers': {
       id: '/api/public/integrations/customers'
       path: '/api/public/integrations/customers'
@@ -4205,6 +4246,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
+  AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
@@ -4337,6 +4379,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompensationPlansIndexRoute: CompensationPlansIndexRoute,
   CompensationStatementsIndexRoute: CompensationStatementsIndexRoute,
   ApiPublicIntegrationsCustomersRoute: ApiPublicIntegrationsCustomersRoute,
+  ApiPublicIntegrationsEventsRoute: ApiPublicIntegrationsEventsRoute,
   ApiPublicIntegrationsInventoryConsumptionRoute:
     ApiPublicIntegrationsInventoryConsumptionRoute,
   ApiPublicIntegrationsInvoicesRoute: ApiPublicIntegrationsInvoicesRoute,

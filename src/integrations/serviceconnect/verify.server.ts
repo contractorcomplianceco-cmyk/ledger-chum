@@ -94,11 +94,14 @@ export function requireScope(client: ResolvedClient, scope: IntegrationScope): v
 export async function beginIntegrationCall(
   request: Request,
   endpoint: string,
+  requiredScope?: IntegrationScope,
 ): Promise<
   | { status: "new"; ctx: IntegrationContext; body: unknown }
   | { status: "duplicate"; response: unknown }
 > {
   const client = await verifyBearer(request);
+  if (requiredScope) requireScope(client, requiredScope);
+
 
   const idempotencyKey = request.headers.get("idempotency-key");
   if (!idempotencyKey) throw new IntegrationError(400, "Missing Idempotency-Key header");

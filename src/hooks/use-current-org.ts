@@ -4,9 +4,8 @@ import { getCurrentOrg } from "@/lib/accounting/workspace.functions";
 
 /**
  * Returns the caller's primary org. When the user is not signed in — or
- * has no membership yet — the query returns null and the query state is
- * "success". The Phase 3 UI uses this to decide whether to render live
- * data or fall back to demo data.
+ * has no membership yet — the query resolves to null (state: success),
+ * so the Phase 3 UI can fall back to demo data.
  */
 export function useCurrentOrg() {
   const fn = useServerFn(getCurrentOrg);
@@ -16,7 +15,6 @@ export function useCurrentOrg() {
       try {
         return await fn();
       } catch {
-        // Unauthenticated (build:dev prerender, logged-out demo, etc.)
         return null;
       }
     },

@@ -1236,6 +1236,113 @@ export type Database = {
           },
         ]
       }
+      integration_event_mappings: {
+        Row: {
+          account_purpose: string | null
+          active: boolean
+          config: Json
+          created_at: string
+          description: string | null
+          external_event_type: string
+          id: string
+          ledger_object: string
+          org_id: string
+          source_id: string
+          updated_at: string
+        }
+        Insert: {
+          account_purpose?: string | null
+          active?: boolean
+          config?: Json
+          created_at?: string
+          description?: string | null
+          external_event_type: string
+          id?: string
+          ledger_object: string
+          org_id: string
+          source_id: string
+          updated_at?: string
+        }
+        Update: {
+          account_purpose?: string | null
+          active?: boolean
+          config?: Json
+          created_at?: string
+          description?: string | null
+          external_event_type?: string
+          id?: string
+          ledger_object?: string
+          org_id?: string
+          source_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integration_event_mappings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "integration_event_mappings_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "integration_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      integration_sources: {
+        Row: {
+          active: boolean
+          config: Json
+          contact_email: string | null
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          notes: string | null
+          org_id: string
+          source_key: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          config?: Json
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          name: string
+          notes?: string | null
+          org_id: string
+          source_key: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          config?: Json
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          notes?: string | null
+          org_id?: string
+          source_key?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integration_sources_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inventory_consumption: {
         Row: {
           consumed_at: string
@@ -2040,39 +2147,51 @@ export type Database = {
           created_at: string
           endpoint: string
           error: string | null
+          event_type: string | null
           external_id: string | null
           id: string
           idempotency_key: string
+          last_retry_at: string | null
           org_id: string
           request: Json | null
           response: Json | null
+          retry_count: number
           source: string
+          source_id: string | null
           status: string
         }
         Insert: {
           created_at?: string
           endpoint: string
           error?: string | null
+          event_type?: string | null
           external_id?: string | null
           id?: string
           idempotency_key: string
+          last_retry_at?: string | null
           org_id: string
           request?: Json | null
           response?: Json | null
+          retry_count?: number
           source: string
+          source_id?: string | null
           status: string
         }
         Update: {
           created_at?: string
           endpoint?: string
           error?: string | null
+          event_type?: string | null
           external_id?: string | null
           id?: string
           idempotency_key?: string
+          last_retry_at?: string | null
           org_id?: string
           request?: Json | null
           response?: Json | null
+          retry_count?: number
           source?: string
+          source_id?: string | null
           status?: string
         }
         Relationships: [
@@ -2081,6 +2200,13 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sync_history_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "integration_sources"
             referencedColumns: ["id"]
           },
         ]

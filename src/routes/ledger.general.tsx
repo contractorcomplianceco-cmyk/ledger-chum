@@ -179,7 +179,7 @@ function GeneralLedgerPage() {
                   <Label className="text-[11px]">Account</Label>
                   <Select
                     value={search.accountId ?? "all"}
-                    onValueChange={(v) => navigate({ search: (p) => ({ ...p, accountId: v === "all" ? undefined : v }) })}
+                    onValueChange={(v) => navigate({ to: ".", search: (p) => ({ ...p, accountId: v === "all" ? undefined : v }) })}
                   >
                     <SelectTrigger><SelectValue placeholder="All accounts" /></SelectTrigger>
                     <SelectContent>
@@ -197,7 +197,7 @@ function GeneralLedgerPage() {
                   <Input
                     type="date"
                     value={search.from ?? ""}
-                    onChange={(e) => navigate({ search: (p) => ({ ...p, from: e.target.value || undefined }) })}
+                    onChange={(e) => navigate({ to: ".", search: (p) => ({ ...p, from: e.target.value || undefined }) })}
                   />
                 </div>
                 <div>
@@ -205,14 +205,14 @@ function GeneralLedgerPage() {
                   <Input
                     type="date"
                     value={search.to ?? ""}
-                    onChange={(e) => navigate({ search: (p) => ({ ...p, to: e.target.value || undefined }) })}
+                    onChange={(e) => navigate({ to: ".", search: (p) => ({ ...p, to: e.target.value || undefined }) })}
                   />
                 </div>
                 <div>
                   <Label className="text-[11px]">Source</Label>
                   <Select
                     value={search.sourceType ?? "all"}
-                    onValueChange={(v) => navigate({ search: (p) => ({ ...p, sourceType: v === "all" ? undefined : v }) })}
+                    onValueChange={(v) => navigate({ to: ".", search: (p) => ({ ...p, sourceType: v === "all" ? undefined : v }) })}
                   >
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -226,7 +226,7 @@ function GeneralLedgerPage() {
                   <Label className="text-[11px]">Status</Label>
                   <Select
                     value={search.status ?? "posted"}
-                    onValueChange={(v) => navigate({ search: (p) => ({ ...p, status: v as "draft" | "posted" | "void" }) })}
+                    onValueChange={(v) => navigate({ to: ".", search: (p) => ({ ...p, status: v as "draft" | "posted" | "void" }) })}
                   >
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -243,7 +243,7 @@ function GeneralLedgerPage() {
                   value={localSearch}
                   onChange={(e) => setLocalSearch(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") navigate({ search: (p) => ({ ...p, q: localSearch || undefined }) });
+                    if (e.key === "Enter") navigate({ to: ".", search: (p) => ({ ...p, q: localSearch || undefined }) });
                   }}
                   className="max-w-sm"
                 />

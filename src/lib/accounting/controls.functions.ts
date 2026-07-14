@@ -60,8 +60,8 @@ export const getControlSummary = createServerFn({ method: "GET" })
     const byCategory: Record<string, number> = {};
     const bySeverity: Record<string, number> = { warning: 0, critical: 0 };
     for (const e of exceptions.data ?? []) {
-      byCategory[e.category] = (byCategory[e.category] ?? 0) + 1;
-      bySeverity[e.severity] = (bySeverity[e.severity] ?? 0) + 1;
+      if (e.category) byCategory[e.category] = (byCategory[e.category] ?? 0) + 1;
+      if (e.severity) bySeverity[e.severity] = (bySeverity[e.severity] ?? 0) + 1;
     }
 
     return {

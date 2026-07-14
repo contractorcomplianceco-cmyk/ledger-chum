@@ -39,6 +39,7 @@ import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migra
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
 import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
 import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
@@ -338,6 +339,11 @@ const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
   id: '/ledger/accounts',
   path: '/ledger/accounts',
   getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesReviewRoute = InvoicesReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => InvoicesRoute,
 } as any)
 const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
   id: '/recurring',
@@ -1258,6 +1264,7 @@ export interface FileRoutesByFullPath {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -1436,6 +1443,7 @@ export interface FileRoutesByTo {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -1618,6 +1626,7 @@ export interface FileRoutesById {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
@@ -1801,6 +1810,7 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -1979,6 +1989,7 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -2160,6 +2171,7 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
@@ -2574,6 +2586,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/ledger/accounts'
       preLoaderRoute: typeof LedgerAccountsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/invoices/review': {
+      id: '/invoices/review'
+      path: '/review'
+      fullPath: '/invoices/review'
+      preLoaderRoute: typeof InvoicesReviewRouteImport
+      parentRoute: typeof InvoicesRoute
     }
     '/invoices/recurring': {
       id: '/invoices/recurring'
@@ -3705,6 +3724,7 @@ interface InvoicesRouteChildren {
   InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
   InvoicesNewRoute: typeof InvoicesNewRoute
   InvoicesRecurringRoute: typeof InvoicesRecurringRoute
+  InvoicesReviewRoute: typeof InvoicesReviewRoute
   InvoicesIndexRoute: typeof InvoicesIndexRoute
 }
 
@@ -3713,6 +3733,7 @@ const InvoicesRouteChildren: InvoicesRouteChildren = {
   InvoicesCreditNotesRoute: InvoicesCreditNotesRoute,
   InvoicesNewRoute: InvoicesNewRoute,
   InvoicesRecurringRoute: InvoicesRecurringRoute,
+  InvoicesReviewRoute: InvoicesReviewRoute,
   InvoicesIndexRoute: InvoicesIndexRoute,
 }
 

@@ -155,6 +155,7 @@ import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
+import { Route as AccountsPayableBillsRouteImport } from './routes/accounts-payable.bills'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
 import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
@@ -943,6 +944,11 @@ const AccountsPayableVendorsRoute = AccountsPayableVendorsRouteImport.update({
   path: '/accounts-payable/vendors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountsPayableBillsRoute = AccountsPayableBillsRouteImport.update({
+  id: '/accounts-payable/bills',
+  path: '/accounts-payable/bills',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationStatementsIndexRoute =
   CompensationStatementsIndexRouteImport.update({
     id: '/compensation/statements/',
@@ -1177,6 +1183,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1360,6 +1367,7 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1547,6 +1555,7 @@ export interface FileRoutesById {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1735,6 +1744,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/bills'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -1918,6 +1928,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/bills'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -2104,6 +2115,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/bills'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -2291,6 +2303,7 @@ export interface RootRouteChildren {
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
+  AccountsPayableBillsRoute: typeof AccountsPayableBillsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -3448,6 +3461,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountsPayableVendorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accounts-payable/bills': {
+      id: '/accounts-payable/bills'
+      path: '/accounts-payable/bills'
+      fullPath: '/accounts-payable/bills'
+      preLoaderRoute: typeof AccountsPayableBillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/statements/': {
       id: '/compensation/statements/'
       path: '/compensation/statements'
@@ -3949,6 +3969,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
+  AccountsPayableBillsRoute: AccountsPayableBillsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

@@ -34,11 +34,13 @@ import { Route as CompensationIndexRouteImport } from './routes/compensation.ind
 import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
+import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
 import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
 import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
@@ -314,6 +316,11 @@ const ApexIndexRoute = ApexIndexRouteImport.update({
   path: '/apex/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
+  id: '/account-mappings',
+  path: '/account-mappings',
+  getParentRoute: () => SettingsRoute,
+} as any)
 const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
   id: '/readiness/production',
   path: '/readiness/production',
@@ -338,6 +345,11 @@ const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
   id: '/ledger/accounts',
   path: '/ledger/accounts',
   getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesReviewRoute = InvoicesReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => InvoicesRoute,
 } as any)
 const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
   id: '/recurring',
@@ -1145,7 +1157,7 @@ export interface FileRoutesByFullPath {
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1258,11 +1270,13 @@ export interface FileRoutesByFullPath {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1323,7 +1337,7 @@ export interface FileRoutesByTo {
   '/integrations': typeof IntegrationsRoute
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1436,11 +1450,13 @@ export interface FileRoutesByTo {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
   '/cash-availability': typeof CashAvailabilityIndexRoute
@@ -1505,7 +1521,7 @@ export interface FileRoutesById {
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
   '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
+  '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1618,11 +1634,13 @@ export interface FileRoutesById {
   '/invoices/credit-notes': typeof InvoicesCreditNotesRoute
   '/invoices/new': typeof InvoicesNewRoute
   '/invoices/recurring': typeof InvoicesRecurringRoute
+  '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
   '/cash-availability/': typeof CashAvailabilityIndexRoute
@@ -1801,11 +1819,13 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -1979,11 +1999,13 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex'
     | '/banking'
     | '/cash-availability'
@@ -2160,11 +2182,13 @@ export interface FileRouteTypes {
     | '/invoices/credit-notes'
     | '/invoices/new'
     | '/invoices/recurring'
+    | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/settings/account-mappings'
     | '/apex/'
     | '/banking/'
     | '/cash-availability/'
@@ -2229,7 +2253,7 @@ export interface RootRouteChildren {
   InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
   ReportsRoute: typeof ReportsRoute
-  SettingsRoute: typeof SettingsRoute
+  SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -2540,6 +2564,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/account-mappings': {
+      id: '/settings/account-mappings'
+      path: '/account-mappings'
+      fullPath: '/settings/account-mappings'
+      preLoaderRoute: typeof SettingsAccountMappingsRouteImport
+      parentRoute: typeof SettingsRoute
+    }
     '/readiness/production': {
       id: '/readiness/production'
       path: '/readiness/production'
@@ -2574,6 +2605,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/ledger/accounts'
       preLoaderRoute: typeof LedgerAccountsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/invoices/review': {
+      id: '/invoices/review'
+      path: '/review'
+      fullPath: '/invoices/review'
+      preLoaderRoute: typeof InvoicesReviewRouteImport
+      parentRoute: typeof InvoicesRoute
     }
     '/invoices/recurring': {
       id: '/invoices/recurring'
@@ -3705,6 +3743,7 @@ interface InvoicesRouteChildren {
   InvoicesCreditNotesRoute: typeof InvoicesCreditNotesRoute
   InvoicesNewRoute: typeof InvoicesNewRoute
   InvoicesRecurringRoute: typeof InvoicesRecurringRoute
+  InvoicesReviewRoute: typeof InvoicesReviewRoute
   InvoicesIndexRoute: typeof InvoicesIndexRoute
 }
 
@@ -3713,11 +3752,24 @@ const InvoicesRouteChildren: InvoicesRouteChildren = {
   InvoicesCreditNotesRoute: InvoicesCreditNotesRoute,
   InvoicesNewRoute: InvoicesNewRoute,
   InvoicesRecurringRoute: InvoicesRecurringRoute,
+  InvoicesReviewRoute: InvoicesReviewRoute,
   InvoicesIndexRoute: InvoicesIndexRoute,
 }
 
 const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
   InvoicesRouteChildren,
+)
+
+interface SettingsRouteChildren {
+  SettingsAccountMappingsRoute: typeof SettingsAccountMappingsRoute
+}
+
+const SettingsRouteChildren: SettingsRouteChildren = {
+  SettingsAccountMappingsRoute: SettingsAccountMappingsRoute,
+}
+
+const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
+  SettingsRouteChildren,
 )
 
 interface ApexDigitalTwinScenariosRouteChildren {
@@ -3823,7 +3875,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
   ReportsRoute: ReportsRoute,
-  SettingsRoute: SettingsRoute,
+  SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

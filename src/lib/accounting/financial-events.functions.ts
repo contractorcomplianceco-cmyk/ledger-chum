@@ -97,7 +97,7 @@ export const approveFinancialEvent = createServerFn({ method: "POST" })
       },
     );
     if (error) throw new Error(error.message);
-    return res as Record<string, unknown>;
+    return res as { event_id: string; status: string };
   });
 
 export const rejectFinancialEvent = createServerFn({ method: "POST" })
@@ -121,7 +121,7 @@ export const rejectFinancialEvent = createServerFn({ method: "POST" })
       },
     );
     if (error) throw new Error(error.message);
-    return res as Record<string, unknown>;
+    return res as { event_id: string; status: string };
   });
 
 // ---------- rules -----------------------------------------------------

@@ -157,6 +157,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
 import { Route as AccountsPayableBillsRouteImport } from './routes/accounts-payable.bills'
+import { Route as AccountsPayableAgingRouteImport } from './routes/accounts-payable.aging'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
 import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
@@ -955,6 +956,11 @@ const AccountsPayableBillsRoute = AccountsPayableBillsRouteImport.update({
   path: '/accounts-payable/bills',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountsPayableAgingRoute = AccountsPayableAgingRouteImport.update({
+  id: '/accounts-payable/aging',
+  path: '/accounts-payable/aging',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompensationStatementsIndexRoute =
   CompensationStatementsIndexRouteImport.update({
     id: '/compensation/statements/',
@@ -1189,6 +1195,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
@@ -1374,6 +1381,7 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
@@ -1563,6 +1571,7 @@ export interface FileRoutesById {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
@@ -1753,6 +1762,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
@@ -1938,6 +1948,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
@@ -2126,6 +2137,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/vendors'
+    | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
@@ -2315,6 +2327,7 @@ export interface RootRouteChildren {
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
+  AccountsPayableAgingRoute: typeof AccountsPayableAgingRoute
   AccountsPayableBillsRoute: typeof AccountsPayableBillsRoute
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
@@ -3488,6 +3501,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountsPayableBillsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accounts-payable/aging': {
+      id: '/accounts-payable/aging'
+      path: '/accounts-payable/aging'
+      fullPath: '/accounts-payable/aging'
+      preLoaderRoute: typeof AccountsPayableAgingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compensation/statements/': {
       id: '/compensation/statements/'
       path: '/compensation/statements'
@@ -3989,6 +4009,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
+  AccountsPayableAgingRoute: AccountsPayableAgingRoute,
   AccountsPayableBillsRoute: AccountsPayableBillsRoute,
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,

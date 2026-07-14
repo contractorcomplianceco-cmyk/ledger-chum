@@ -6,7 +6,6 @@ import {
   finishIntegrationCall,
   integrationResponse,
   recordIntegrationError,
-  writeAudit,
   IntegrationError,
   type IntegrationContext,
 } from "@/integrations/serviceconnect/verify.server";
@@ -29,7 +28,11 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(request, "/inventory-consumption", "inventory.consume");
+          const start = await beginIntegrationCall(
+            request,
+            "/inventory-consumption",
+            "inventory.consume",
+          );
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;
@@ -38,32 +41,41 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
           if (!parsed.success) throw new IntegrationError(422, parsed.error.message);
           const p = parsed.data;
 
-          const totalCost = round2(p.quantity * p.unit_cost);
-
-          const { data: row, error } = await supabaseAdmin
-            .from("inventory_consumption")
-            .insert({
-              org_id: ctx.orgId,
-              external_source: "serviceconnect",
-              external_id: p.external_id,
-              work_order_ref: p.work_order_ref,
-              item_ref: p.item_ref,
-              item_description: p.item_description ?? null,
-              quantity: p.quantity,
-              unit_cost: p.unit_cost,
-              total_cost: totalCost,
-              consumed_at: p.consumed_at ?? new Date().toISOString(),
-            }).select().single();
-          if (error) throw new IntegrationError(500, error.message);
-
-          const auditId = await writeAudit(
-            ctx, "inventory.consumed", "inventory_consumption", row.id, null, row,
+          const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
+            "record_inventory_consumption_with_posting" as never,
+            {
+              _org_id: ctx.orgId,
+              _external_source: "serviceconnect",
+              _external_id: p.external_id,
+              _work_order_ref: p.work_order_ref,
+              _item_ref: p.item_ref,
+              _item_description: p.item_description ?? null,
+              _quantity: p.quantity,
+              _unit_cost: p.unit_cost,
+              _consumed_at: p.consumed_at ?? new Date().toISOString(),
+              _actor_type: "api_client",
+              _actor_id: ctx.clientId,
+              _correlation_id: ctx.correlationId,
+            } as never,
           );
+          if (rpcErr) {
+            if (rpcErr.code === "23505") {
+              throw new IntegrationError(409, "Inventory consumption already recorded");
+            }
+            throw new IntegrationError(422, rpcErr.message);
+          }
+
+          const result = rpc as {
+            consumption_id: string;
+            journal_id: string | null;
+            total_cost: number;
+          };
 
           const response = {
-            id: row.id, work_order_ref: p.work_order_ref,
-            total_cost: totalCost,
-            audit_event_id: auditId,
+            id: result.consumption_id,
+            journal_id: result.journal_id,
+            work_order_ref: p.work_order_ref,
+            total_cost: result.total_cost,
             correlation_id: ctx.correlationId,
           };
           await finishIntegrationCall(ctx, p.external_id, body, response);
@@ -76,5 +88,3 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
     },
   },
 });
-
-function round2(n: number) { return Math.round(n * 100) / 100; }

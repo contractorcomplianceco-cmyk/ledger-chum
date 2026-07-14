@@ -214,7 +214,9 @@ function BankingPage() {
                   <SelectTrigger><SelectValue placeholder="Pick a cash account" /></SelectTrigger>
                   <SelectContent>
                     {cashAccounts.map((a) => (
-                      <SelectItem key={a.account_id} value={a.account_id}>{a.code} · {a.name}</SelectItem>
+                      a.account_id ? (
+                        <SelectItem key={a.account_id} value={a.account_id}>{a.code} · {a.name}</SelectItem>
+                      ) : null
                     ))}
                   </SelectContent>
                 </Select>

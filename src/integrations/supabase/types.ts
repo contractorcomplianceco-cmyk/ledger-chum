@@ -268,6 +268,241 @@ export type Database = {
           },
         ]
       }
+      bank_accounts: {
+        Row: {
+          account_number_last4: string | null
+          bank_name: string | null
+          created_at: string
+          currency: string
+          gl_account_id: string
+          id: string
+          is_active: boolean
+          name: string
+          notes: string | null
+          opening_balance: number
+          opening_balance_date: string | null
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          account_number_last4?: string | null
+          bank_name?: string | null
+          created_at?: string
+          currency?: string
+          gl_account_id: string
+          id?: string
+          is_active?: boolean
+          name: string
+          notes?: string | null
+          opening_balance?: number
+          opening_balance_date?: string | null
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          account_number_last4?: string | null
+          bank_name?: string | null
+          created_at?: string
+          currency?: string
+          gl_account_id?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          notes?: string | null
+          opening_balance?: number
+          opening_balance_date?: string | null
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bank_accounts_gl_account_id_fkey"
+            columns: ["gl_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bank_accounts_gl_account_id_fkey"
+            columns: ["gl_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "bank_accounts_gl_account_id_fkey"
+            columns: ["gl_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "bank_accounts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bank_reconciliations: {
+        Row: {
+          bank_account_id: string
+          cleared_balance: number
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          org_id: string
+          statement_end_date: string
+          statement_ending_balance: number
+          statement_start_date: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          bank_account_id: string
+          cleared_balance?: number
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          org_id: string
+          statement_end_date: string
+          statement_ending_balance: number
+          statement_start_date: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          bank_account_id?: string
+          cleared_balance?: number
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          org_id?: string
+          statement_end_date?: string
+          statement_ending_balance?: number
+          statement_start_date?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bank_reconciliations_bank_account_id_fkey"
+            columns: ["bank_account_id"]
+            isOneToOne: false
+            referencedRelation: "bank_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bank_reconciliations_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bank_transactions: {
+        Row: {
+          amount: number
+          balance_after: number | null
+          bank_account_id: string
+          created_at: string
+          description: string
+          external_id: string | null
+          external_source: string | null
+          id: string
+          matched_at: string | null
+          matched_by: string | null
+          matched_journal_line_id: string | null
+          org_id: string
+          posted_date: string | null
+          raw: Json | null
+          reference: string | null
+          source_ref: string | null
+          status: string
+          txn_date: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          balance_after?: number | null
+          bank_account_id: string
+          created_at?: string
+          description: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          matched_at?: string | null
+          matched_by?: string | null
+          matched_journal_line_id?: string | null
+          org_id: string
+          posted_date?: string | null
+          raw?: Json | null
+          reference?: string | null
+          source_ref?: string | null
+          status?: string
+          txn_date: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          balance_after?: number | null
+          bank_account_id?: string
+          created_at?: string
+          description?: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          matched_at?: string | null
+          matched_by?: string | null
+          matched_journal_line_id?: string | null
+          org_id?: string
+          posted_date?: string | null
+          raw?: Json | null
+          reference?: string | null
+          source_ref?: string | null
+          status?: string
+          txn_date?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bank_transactions_bank_account_id_fkey"
+            columns: ["bank_account_id"]
+            isOneToOne: false
+            referencedRelation: "bank_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bank_transactions_matched_journal_line_id_fkey"
+            columns: ["matched_journal_line_id"]
+            isOneToOne: false
+            referencedRelation: "journal_lines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bank_transactions_matched_journal_line_id_fkey"
+            columns: ["matched_journal_line_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["line_id"]
+          },
+          {
+            foreignKeyName: "bank_transactions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bill_lines: {
         Row: {
           account_id: string
@@ -343,6 +578,13 @@ export type Database = {
             referencedRelation: "bills"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "bill_lines_bill_id_fkey"
+            columns: ["bill_id"]
+            isOneToOne: false
+            referencedRelation: "v_ap_aging"
+            referencedColumns: ["bill_id"]
+          },
         ]
       }
       bill_payment_applications: {
@@ -374,6 +616,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "bills"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bill_payment_applications_bill_id_fkey"
+            columns: ["bill_id"]
+            isOneToOne: false
+            referencedRelation: "v_ap_aging"
+            referencedColumns: ["bill_id"]
           },
           {
             foreignKeyName: "bill_payment_applications_bill_payment_id_fkey"
@@ -1508,6 +1757,65 @@ export type Database = {
           },
         ]
       }
+      reconciliation_lines: {
+        Row: {
+          amount: number
+          bank_transaction_id: string | null
+          cleared: boolean
+          created_at: string
+          id: string
+          journal_line_id: string | null
+          reconciliation_id: string
+        }
+        Insert: {
+          amount: number
+          bank_transaction_id?: string | null
+          cleared?: boolean
+          created_at?: string
+          id?: string
+          journal_line_id?: string | null
+          reconciliation_id: string
+        }
+        Update: {
+          amount?: number
+          bank_transaction_id?: string | null
+          cleared?: boolean
+          created_at?: string
+          id?: string
+          journal_line_id?: string | null
+          reconciliation_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reconciliation_lines_bank_transaction_id_fkey"
+            columns: ["bank_transaction_id"]
+            isOneToOne: false
+            referencedRelation: "bank_transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reconciliation_lines_journal_line_id_fkey"
+            columns: ["journal_line_id"]
+            isOneToOne: false
+            referencedRelation: "journal_lines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reconciliation_lines_journal_line_id_fkey"
+            columns: ["journal_line_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["line_id"]
+          },
+          {
+            foreignKeyName: "reconciliation_lines_reconciliation_id_fkey"
+            columns: ["reconciliation_id"]
+            isOneToOne: false
+            referencedRelation: "bank_reconciliations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       refunds: {
         Row: {
           amount: number
@@ -1767,6 +2075,36 @@ export type Database = {
           },
         ]
       }
+      v_ap_aging: {
+        Row: {
+          balance: number | null
+          bill_id: string | null
+          bill_number: string | null
+          bucket: string | null
+          days_past_due: number | null
+          due_date: string | null
+          issue_date: string | null
+          org_id: string | null
+          vendor_id: string | null
+          vendor_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bills_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bills_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       v_ar_aging: {
         Row: {
           balance: number | null
@@ -1872,6 +2210,15 @@ export type Database = {
         Args: { _client_id: string; _scope: string }
         Returns: boolean
       }
+      complete_bank_reconciliation: {
+        Args: {
+          _cleared_bank_txn_ids: string[]
+          _org_id: string
+          _reconciliation_id: string
+          _statement_ending_balance: number
+        }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _org: string
@@ -1884,6 +2231,14 @@ export type Database = {
       is_period_open: {
         Args: { _date: string; _org: string }
         Returns: boolean
+      }
+      match_bank_transaction: {
+        Args: {
+          _bank_txn_id: string
+          _journal_line_id: string
+          _org_id: string
+        }
+        Returns: Json
       }
       post_bill_with_posting: {
         Args: {
@@ -1986,6 +2341,10 @@ export type Database = {
       }
       reverse_journal: {
         Args: { _journal_id: string; _org_id: string; _reason: string }
+        Returns: Json
+      }
+      unmatch_bank_transaction: {
+        Args: { _bank_txn_id: string; _org_id: string }
         Returns: Json
       }
     }

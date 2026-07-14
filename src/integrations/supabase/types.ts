@@ -54,6 +54,13 @@ export type Database = {
             foreignKeyName: "account_mappings_account_id_fkey"
             columns: ["account_id"]
             isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
             referencedRelation: "v_trial_balance"
             referencedColumns: ["account_id"]
           },
@@ -72,10 +79,12 @@ export type Database = {
           created_at: string
           id: string
           is_active: boolean
+          is_system: boolean
           name: string
           normal_balance: string
           org_id: string
           parent_id: string | null
+          sort_order: number
           type: string
         }
         Insert: {
@@ -83,10 +92,12 @@ export type Database = {
           created_at?: string
           id?: string
           is_active?: boolean
+          is_system?: boolean
           name: string
           normal_balance: string
           org_id: string
           parent_id?: string | null
+          sort_order?: number
           type: string
         }
         Update: {
@@ -94,10 +105,12 @@ export type Database = {
           created_at?: string
           id?: string
           is_active?: boolean
+          is_system?: boolean
           name?: string
           normal_balance?: string
           org_id?: string
           parent_id?: string | null
+          sort_order?: number
           type?: string
         }
         Relationships: [
@@ -114,6 +127,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "accounts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
           },
           {
             foreignKeyName: "accounts_parent_id_fkey"
@@ -609,6 +629,13 @@ export type Database = {
             foreignKeyName: "invoice_lines_account_id_fkey"
             columns: ["account_id"]
             isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "invoice_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
             referencedRelation: "v_trial_balance"
             referencedColumns: ["account_id"]
           },
@@ -707,12 +734,15 @@ export type Database = {
         Row: {
           correlation_id: string | null
           created_at: string
+          description: string | null
           entry_date: string
           id: string
           memo: string | null
           org_id: string
           posted_at: string | null
           posted_by: string | null
+          reversal_of: string | null
+          reversed_by: string | null
           source_id: string | null
           source_type: string | null
           status: string
@@ -720,12 +750,15 @@ export type Database = {
         Insert: {
           correlation_id?: string | null
           created_at?: string
+          description?: string | null
           entry_date: string
           id?: string
           memo?: string | null
           org_id: string
           posted_at?: string | null
           posted_by?: string | null
+          reversal_of?: string | null
+          reversed_by?: string | null
           source_id?: string | null
           source_type?: string | null
           status?: string
@@ -733,12 +766,15 @@ export type Database = {
         Update: {
           correlation_id?: string | null
           created_at?: string
+          description?: string | null
           entry_date?: string
           id?: string
           memo?: string | null
           org_id?: string
           posted_at?: string | null
           posted_by?: string | null
+          reversal_of?: string | null
+          reversed_by?: string | null
           source_id?: string | null
           source_type?: string | null
           status?: string
@@ -750,6 +786,34 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_reversal_of_fkey"
+            columns: ["reversal_of"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_reversal_of_fkey"
+            columns: ["reversal_of"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "journal_entries_reversed_by_fkey"
+            columns: ["reversed_by"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_reversed_by_fkey"
+            columns: ["reversed_by"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
           },
         ]
       }
@@ -788,6 +852,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "accounts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
           },
           {
             foreignKeyName: "journal_lines_account_id_fkey"
@@ -971,6 +1042,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "accounts"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
           },
           {
             foreignKeyName: "payment_account_mappings_account_id_fkey"
@@ -1226,6 +1304,53 @@ export type Database = {
       }
     }
     Views: {
+      v_account_balances: {
+        Row: {
+          account_id: string | null
+          balance: number | null
+          code: string | null
+          credit_total: number | null
+          debit_total: number | null
+          is_active: boolean | null
+          is_system: boolean | null
+          name: string | null
+          normal_balance: string | null
+          org_id: string | null
+          parent_id: string | null
+          sort_order: number | null
+          type: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "accounts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+        ]
+      }
       v_ar_aging: {
         Row: {
           balance: number | null
@@ -1292,6 +1417,13 @@ export type Database = {
             foreignKeyName: "journal_lines_account_id_fkey"
             columns: ["account_id"]
             isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "journal_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
             referencedRelation: "v_trial_balance"
             referencedColumns: ["account_id"]
           },
@@ -1336,6 +1468,16 @@ export type Database = {
       is_period_open: {
         Args: { _date: string; _org: string }
         Returns: boolean
+      }
+      post_manual_journal: {
+        Args: {
+          _description: string
+          _entry_date: string
+          _lines: Json
+          _memo: string
+          _org_id: string
+        }
+        Returns: Json
       }
       record_inventory_consumption_with_posting: {
         Args: {
@@ -1389,6 +1531,10 @@ export type Database = {
       resolve_account: {
         Args: { _org: string; _purpose: string }
         Returns: string
+      }
+      reverse_journal: {
+        Args: { _journal_id: string; _org_id: string; _reason: string }
+        Returns: Json
       }
     }
     Enums: {

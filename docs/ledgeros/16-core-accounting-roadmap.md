@@ -17,6 +17,52 @@ Each milestone typechecks cleanly, runs one migration, updates this doc.
 
 ---
 
+## Foundational concepts (adopted in M2, applied everywhere after)
+
+### Accounting dimensions
+
+Every posted `journal_line` may carry any subset of the following dimensions,
+so reports can slice results without denormalising into per-report tables.
+All are nullable UUIDs / short codes, indexed individually, and always
+scoped to the same `org_id` as the line's account.
+
+| Dimension    | Purpose                                                        |
+|--------------|----------------------------------------------------------------|
+| `department` | Cost / revenue center inside the org.                          |
+| `location`   | Physical or logical operating site.                            |
+| `project`    | Job, engagement, or capital project.                           |
+| `customer`   | Counterparty on the revenue side.                              |
+| `vendor`     | Counterparty on the expense side.                              |
+| `service`    | Service line delivered.                                        |
+| `product`    | Inventory or SKU consumed / sold.                              |
+| `entity`     | Legal entity within a group (future consolidation).            |
+
+Dimensions are **descriptive**, not part of the balance identity — the
+double-entry rule stays enforced at the journal level. Aging, profitability,
+and segment reports read `journal_lines` filtered by dimension.
+
+### Universal source-transaction framework
+
+Every financial event carries a consistent lineage envelope so any posted
+row can be traced back to its origin without joining through business
+tables:
+
+- `source_type`    — canonical event name (`invoice`, `bill`, `payment`,
+  `refund`, `inventory_consumption`, `manual`, `reversal`, ...).
+- `source_system`  — originating system (`ledgeros.manual`,
+  `serviceconnect`, `csv_import`, external partner name).
+- `external_id`    — stable identifier in the source system.
+- `source_ref`     — human-readable pointer (work order #, bill #, etc.).
+- `ledger_impact`  — jsonb summary of the resulting debits/credits and
+  affected accounts, mirrored into `audit_events.after`.
+- `correlation_id` — request/idempotency key propagated end-to-end.
+
+AR and AP are the first surfaces designed around these fields; older
+integration-owned rows already carry `(external_source, external_id)` and
+are compatible with the new framework.
+
+---
+
 ## M1 — Ledger core (Shipped)
 
 ### Database changes

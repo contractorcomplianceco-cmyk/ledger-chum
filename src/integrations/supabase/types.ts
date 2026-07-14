@@ -14,6 +14,58 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_mappings: {
+        Row: {
+          account_id: string
+          created_at: string
+          description: string | null
+          id: string
+          org_id: string
+          purpose: string
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          org_id: string
+          purpose: string
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          org_id?: string
+          purpose?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "account_mappings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "account_mappings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       accounts: {
         Row: {
           code: string
@@ -78,6 +130,7 @@ export type Database = {
           created_at: string
           created_by: string | null
           description: string | null
+          environment: string
           expires_at: string | null
           id: string
           key_hash: string
@@ -87,6 +140,7 @@ export type Database = {
           org_id: string
           provider: string
           revoked_at: string | null
+          scopes: string[]
           updated_at: string
         }
         Insert: {
@@ -94,6 +148,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          environment?: string
           expires_at?: string | null
           id?: string
           key_hash: string
@@ -103,6 +158,7 @@ export type Database = {
           org_id: string
           provider?: string
           revoked_at?: string | null
+          scopes?: string[]
           updated_at?: string
         }
         Update: {
@@ -110,6 +166,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          environment?: string
           expires_at?: string | null
           id?: string
           key_hash?: string
@@ -119,6 +176,7 @@ export type Database = {
           org_id?: string
           provider?: string
           revoked_at?: string | null
+          scopes?: string[]
           updated_at?: string
         }
         Relationships: [
@@ -446,6 +504,7 @@ export type Database = {
           id: string
           item_description: string | null
           item_ref: string
+          journal_entry_id: string | null
           org_id: string
           quantity: number
           total_cost: number
@@ -459,6 +518,7 @@ export type Database = {
           id?: string
           item_description?: string | null
           item_ref: string
+          journal_entry_id?: string | null
           org_id: string
           quantity: number
           total_cost: number
@@ -472,6 +532,7 @@ export type Database = {
           id?: string
           item_description?: string | null
           item_ref?: string
+          journal_entry_id?: string | null
           org_id?: string
           quantity?: number
           total_cost?: number
@@ -479,6 +540,20 @@ export type Database = {
           work_order_ref?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "inventory_consumption_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_consumption_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
           {
             foreignKeyName: "inventory_consumption_org_id_fkey"
             columns: ["org_id"]
@@ -1245,6 +1320,10 @@ export type Database = {
       }
     }
     Functions: {
+      client_has_scope: {
+        Args: { _client_id: string; _scope: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _org: string
@@ -1257,6 +1336,23 @@ export type Database = {
       is_period_open: {
         Args: { _date: string; _org: string }
         Returns: boolean
+      }
+      record_inventory_consumption_with_posting: {
+        Args: {
+          _actor_id: string
+          _actor_type: string
+          _consumed_at: string
+          _correlation_id: string
+          _external_id: string
+          _external_source: string
+          _item_description: string
+          _item_ref: string
+          _org_id: string
+          _quantity: number
+          _unit_cost: number
+          _work_order_ref: string
+        }
+        Returns: Json
       }
       record_payment_with_posting: {
         Args: {
@@ -1289,6 +1385,10 @@ export type Database = {
           _refund_date: string
         }
         Returns: Json
+      }
+      resolve_account: {
+        Args: { _org: string; _purpose: string }
+        Returns: string
       }
     }
     Enums: {

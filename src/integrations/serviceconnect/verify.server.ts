@@ -15,10 +15,23 @@
 import { createHash, randomUUID } from "crypto";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+export type IntegrationScope =
+  | "customers.read"
+  | "customers.write"
+  | "work_orders.completed"
+  | "invoices.create"
+  | "invoices.read"
+  | "payments.create"
+  | "refunds.create"
+  | "inventory.consume"
+  | "reports.read";
+
 export interface ResolvedClient {
   clientId: string;
   orgId: string;
   clientName: string;
+  scopes: string[];
+  environment: "sandbox" | "production";
 }
 
 export interface IntegrationContext extends ResolvedClient {
@@ -47,7 +60,7 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
 
   const { data, error } = await supabaseAdmin
     .from("api_clients")
-    .select("id, org_id, name, active")
+    .select("id, org_id, name, active, scopes, environment")
     .eq("key_hash", hashKey(token))
     .maybeSingle();
 
@@ -61,17 +74,34 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
     .eq("id", data.id)
     .then(() => {}, () => {});
 
-  return { clientId: data.id, orgId: data.org_id, clientName: data.name };
+  return {
+    clientId: data.id,
+    orgId: data.org_id,
+    clientName: data.name,
+    scopes: (data as { scopes?: string[] }).scopes ?? [],
+    environment: ((data as { environment?: string }).environment ?? "production") as
+      | "sandbox"
+      | "production",
+  };
+}
+
+export function requireScope(client: ResolvedClient, scope: IntegrationScope): void {
+  if (!client.scopes.includes(scope)) {
+    throw new IntegrationError(403, `Missing required scope: ${scope}`);
+  }
 }
 
 export async function beginIntegrationCall(
   request: Request,
   endpoint: string,
+  requiredScope?: IntegrationScope,
 ): Promise<
   | { status: "new"; ctx: IntegrationContext; body: unknown }
   | { status: "duplicate"; response: unknown }
 > {
   const client = await verifyBearer(request);
+  if (requiredScope) requireScope(client, requiredScope);
+
 
   const idempotencyKey = request.headers.get("idempotency-key");
   if (!idempotencyKey) throw new IntegrationError(400, "Missing Idempotency-Key header");

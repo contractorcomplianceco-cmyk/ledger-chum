@@ -13,15 +13,14 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const schema = z.object({
   external_id: z.string().min(1),
-  work_order_ref: z.string().min(1),
-  item_ref: z.string().min(1),
-  item_description: z.string().optional().nullable(),
-  quantity: z.number().positive(),
-  unit_cost: z.number().nonnegative(),
-  consumed_at: z.string().optional().nullable(),
+  payment_external_id: z.string().min(1),
+  refund_date: z.string(),
+  amount: z.number().positive(),
+  method: z.string().optional().nullable(),
+  memo: z.string().optional().nullable(),
 });
 
-export const Route = createFileRoute("/api/public/integrations/inventory-consumption")({
+export const Route = createFileRoute("/api/public/integrations/refunds")({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -30,8 +29,8 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
         try {
           const start = await beginIntegrationCall(
             request,
-            "/inventory-consumption",
-            "inventory.consume",
+            "/refunds",
+            "refunds.create",
           );
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
@@ -41,41 +40,43 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
           if (!parsed.success) throw new IntegrationError(422, parsed.error.message);
           const p = parsed.data;
 
+          // Resolve payment by external id
+          const { data: payment, error: perr } = await supabaseAdmin
+            .from("payments")
+            .select("id")
+            .eq("org_id", ctx.orgId)
+            .eq("external_source", "serviceconnect")
+            .eq("external_id", p.payment_external_id)
+            .maybeSingle();
+          if (perr) throw new IntegrationError(500, perr.message);
+          if (!payment)
+            throw new IntegrationError(
+              422,
+              `Payment ${p.payment_external_id} not found`,
+            );
+
           const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
-            "record_inventory_consumption_with_posting" as never,
+            "record_refund_with_posting" as never,
             {
               _org_id: ctx.orgId,
-              _external_source: "serviceconnect",
-              _external_id: p.external_id,
-              _work_order_ref: p.work_order_ref,
-              _item_ref: p.item_ref,
-              _item_description: p.item_description ?? null,
-              _quantity: p.quantity,
-              _unit_cost: p.unit_cost,
-              _consumed_at: p.consumed_at ?? new Date().toISOString(),
+              _payment_id: payment.id,
+              _refund_date: p.refund_date,
+              _amount: p.amount,
+              _method: p.method ?? null,
+              _memo: p.memo ?? null,
               _actor_type: "api_client",
               _actor_id: ctx.clientId,
               _correlation_id: ctx.correlationId,
             } as never,
           );
-          if (rpcErr) {
-            if (rpcErr.code === "23505") {
-              throw new IntegrationError(409, "Inventory consumption already recorded");
-            }
-            throw new IntegrationError(422, rpcErr.message);
-          }
+          if (rpcErr) throw new IntegrationError(422, rpcErr.message);
 
-          const result = rpc as {
-            consumption_id: string;
-            journal_id: string | null;
-            total_cost: number;
-          };
+          const result = rpc as { refund_id: string; journal_id: string };
 
           const response = {
-            id: result.consumption_id,
+            id: result.refund_id,
             journal_id: result.journal_id,
-            work_order_ref: p.work_order_ref,
-            total_cost: result.total_cost,
+            amount: p.amount,
             correlation_id: ctx.correlationId,
           };
           await finishIntegrationCall(ctx, p.external_id, body, response);

@@ -9,11 +9,57 @@
 | Milestone | Scope | Status |
 |-----------|-------|--------|
 | **M1 — Ledger core** | Chart of Accounts, General Ledger, Journal Entries + reversals | **✅ Shipped** |
-| M2 — AR expansion + AP | Customer statements, aging, collections. Vendors, bills, bill payments. | Planned |
+| **M2 — AR expansion + AP** | Dimensions & source-lineage framework. AR aging + statements. Vendors, bills, bill payments with posting. | **✅ Shipped** |
 | M3 — Banking + Reports | Bank accounts, transactions, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | Planned |
 | M4 — Close + Settings | Period-close workflow, accounting settings, numbering, terms, tax. | Planned |
 
 Each milestone typechecks cleanly, runs one migration, updates this doc.
+
+---
+
+## Foundational concepts (adopted in M2, applied everywhere after)
+
+### Accounting dimensions
+
+Every posted `journal_line` may carry any subset of the following dimensions,
+so reports can slice results without denormalising into per-report tables.
+All are nullable UUIDs / short codes, indexed individually, and always
+scoped to the same `org_id` as the line's account.
+
+| Dimension    | Purpose                                                        |
+|--------------|----------------------------------------------------------------|
+| `department` | Cost / revenue center inside the org.                          |
+| `location`   | Physical or logical operating site.                            |
+| `project`    | Job, engagement, or capital project.                           |
+| `customer`   | Counterparty on the revenue side.                              |
+| `vendor`     | Counterparty on the expense side.                              |
+| `service`    | Service line delivered.                                        |
+| `product`    | Inventory or SKU consumed / sold.                              |
+| `entity`     | Legal entity within a group (future consolidation).            |
+
+Dimensions are **descriptive**, not part of the balance identity — the
+double-entry rule stays enforced at the journal level. Aging, profitability,
+and segment reports read `journal_lines` filtered by dimension.
+
+### Universal source-transaction framework
+
+Every financial event carries a consistent lineage envelope so any posted
+row can be traced back to its origin without joining through business
+tables:
+
+- `source_type`    — canonical event name (`invoice`, `bill`, `payment`,
+  `refund`, `inventory_consumption`, `manual`, `reversal`, ...).
+- `source_system`  — originating system (`ledgeros.manual`,
+  `serviceconnect`, `csv_import`, external partner name).
+- `external_id`    — stable identifier in the source system.
+- `source_ref`     — human-readable pointer (work order #, bill #, etc.).
+- `ledger_impact`  — jsonb summary of the resulting debits/credits and
+  affected accounts, mirrored into `audit_events.after`.
+- `correlation_id` — request/idempotency key propagated end-to-end.
+
+AR and AP are the first surfaces designed around these fields; older
+integration-owned rows already carry `(external_source, external_id)` and
+are compatible with the new framework.
 
 ---
 
@@ -92,16 +138,75 @@ linkages without joining back.
 
 ---
 
-## M2 — AR expansion + AP (planned)
+## M2 — AR expansion + AP (Shipped)
 
-- Customer detail with transactions and a statement generator.
-- AR aging (0 / 30 / 60 / 90+) sourced from posted invoices' `balance`.
-- Collections queue with contact log and promise-to-pay notes.
-- New tables: `vendors`, `bills`, `bill_lines`, `bill_payments`,
-  `bill_payment_applications`.
-- New RPCs: `post_bill_with_posting` (DR Expense / CR AP),
-  `record_vendor_payment_with_posting` (DR AP / CR Cash).
-- UI: `/accounts-payable/*` mirroring the AR surface.
+### Database changes
+
+**`journal_lines`** — dimension columns (all nullable, indexed)
+- `department_id`, `location_id`, `project_id`, `customer_id`, `vendor_id`,
+  `service_id`, `product_id`, `entity_id`.
+- Applied to every future posting; older rows stay `NULL`.
+
+**`journal_entries`** — source-lineage columns
+- `source_system text` (originating system).
+- `source_ref text` (human-readable pointer).
+- `ledger_impact jsonb` (mirrored summary of debits/credits).
+- `external_id text` (idempotency across integrations).
+
+**AP tables**
+- `vendors (org, external_source, external_id, name, email, phone, terms_days, default_expense_account_id, ...)`.
+- `bills (org, vendor_id, bill_number, issue_date, due_date, status, subtotal, tax, total, balance, memo, external_source, external_id, source_system, source_ref)`.
+- `bill_lines (bill_id, account_id, description, quantity, unit_price, amount, dimensions...)`.
+- `bill_payments (org, vendor_id, payment_date, method, amount, unapplied_amount, memo, source_*)`.
+- `bill_payment_applications (bill_payment_id, bill_id, amount_applied)`.
+
+All new tables: `GRANT` → `ENABLE RLS` → policies scoped via `is_org_member`.
+
+### RPCs
+
+- `post_bill_with_posting(_org, _vendor, ...)` → creates a bill and a
+  posted journal (DR expense accounts per line / CR AP), idempotent on
+  `(org, external_source, external_id)`, period-checked, audit row.
+- `record_vendor_payment_with_posting(_org, _vendor, _apply_to, ...)`
+  → allocates payment across bills (DR AP / CR Cash), balanced,
+  period-checked, updates bill balances/statuses, audit row.
+
+### Server functions
+
+- `src/lib/accounting/vendors.functions.ts`
+- `src/lib/accounting/bills.functions.ts`
+- `src/lib/accounting/bill-payments.functions.ts`
+- `src/lib/accounting/ar-aging.functions.ts` (aging + statements from
+  `invoices`/`payment_applications`).
+
+### UI routes
+
+| Route | What it does |
+|-------|--------------|
+| `/accounts-receivable/aging` | 0/30/60/90+ buckets from posted invoices' `balance`. |
+| `/accounts-payable/vendors` | Vendor master with balances. |
+| `/accounts-payable/bills` | Bill list + create/post workspace. |
+| `/accounts-payable/payments` | Record vendor payment, allocate across bills. |
+| `/accounts-payable/aging` | AP aging buckets. |
+
+### Posting rules — bills
+
+```text
+Bill total = sum(bill_lines.amount) + tax
+Post: DR each line's expense account, CR AP for total
+Bill date must be within an open period
+Reversal creates an offsetting journal + resets bill balance/status
+```
+
+### Posting rules — vendor payments
+
+```text
+Applied total <= payment amount (remainder becomes unapplied credit)
+Post: DR AP for applied amount, CR Cash for payment amount
+Each application decrements bill.balance and re-derives status
+Payment date must be within an open period
+```
+
 
 ## M3 — Banking + Reports (planned)
 

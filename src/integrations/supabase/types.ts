@@ -268,6 +268,306 @@ export type Database = {
           },
         ]
       }
+      bill_lines: {
+        Row: {
+          account_id: string
+          amount: number
+          bill_id: string
+          department_id: string | null
+          description: string | null
+          id: string
+          line_order: number
+          location_id: string | null
+          product_id: string | null
+          project_id: string | null
+          quantity: number
+          service_id: string | null
+          unit_price: number
+        }
+        Insert: {
+          account_id: string
+          amount?: number
+          bill_id: string
+          department_id?: string | null
+          description?: string | null
+          id?: string
+          line_order?: number
+          location_id?: string | null
+          product_id?: string | null
+          project_id?: string | null
+          quantity?: number
+          service_id?: string | null
+          unit_price?: number
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          bill_id?: string
+          department_id?: string | null
+          description?: string | null
+          id?: string
+          line_order?: number
+          location_id?: string | null
+          product_id?: string | null
+          project_id?: string | null
+          quantity?: number
+          service_id?: string | null
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bill_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bill_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "bill_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "bill_lines_bill_id_fkey"
+            columns: ["bill_id"]
+            isOneToOne: false
+            referencedRelation: "bills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bill_payment_applications: {
+        Row: {
+          amount_applied: number
+          bill_id: string
+          bill_payment_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          amount_applied: number
+          bill_id: string
+          bill_payment_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          amount_applied?: number
+          bill_id?: string
+          bill_payment_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bill_payment_applications_bill_id_fkey"
+            columns: ["bill_id"]
+            isOneToOne: false
+            referencedRelation: "bills"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bill_payment_applications_bill_payment_id_fkey"
+            columns: ["bill_payment_id"]
+            isOneToOne: false
+            referencedRelation: "bill_payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bill_payments: {
+        Row: {
+          amount: number
+          created_at: string
+          external_id: string | null
+          external_source: string | null
+          id: string
+          memo: string | null
+          method: string | null
+          org_id: string
+          payment_date: string
+          posted_journal_id: string | null
+          reference: string | null
+          source_ref: string | null
+          source_system: string | null
+          unapplied_amount: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          memo?: string | null
+          method?: string | null
+          org_id: string
+          payment_date: string
+          posted_journal_id?: string | null
+          reference?: string | null
+          source_ref?: string | null
+          source_system?: string | null
+          unapplied_amount?: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          memo?: string | null
+          method?: string | null
+          org_id?: string
+          payment_date?: string
+          posted_journal_id?: string | null
+          reference?: string | null
+          source_ref?: string | null
+          source_system?: string | null
+          unapplied_amount?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bill_payments_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bill_payments_posted_journal_id_fkey"
+            columns: ["posted_journal_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bill_payments_posted_journal_id_fkey"
+            columns: ["posted_journal_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "bill_payments_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bills: {
+        Row: {
+          balance: number
+          bill_number: string
+          created_at: string
+          due_date: string
+          external_id: string | null
+          external_source: string | null
+          id: string
+          issue_date: string
+          memo: string | null
+          org_id: string
+          posted_at: string | null
+          posted_journal_id: string | null
+          source_ref: string | null
+          source_system: string | null
+          status: string
+          subtotal: number
+          tax: number
+          total: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          balance?: number
+          bill_number: string
+          created_at?: string
+          due_date: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          issue_date: string
+          memo?: string | null
+          org_id: string
+          posted_at?: string | null
+          posted_journal_id?: string | null
+          source_ref?: string | null
+          source_system?: string | null
+          status?: string
+          subtotal?: number
+          tax?: number
+          total?: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          balance?: number
+          bill_number?: string
+          created_at?: string
+          due_date?: string
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          issue_date?: string
+          memo?: string | null
+          org_id?: string
+          posted_at?: string | null
+          posted_journal_id?: string | null
+          source_ref?: string | null
+          source_system?: string | null
+          status?: string
+          subtotal?: number
+          tax?: number
+          total?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bills_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bills_posted_journal_id_fkey"
+            columns: ["posted_journal_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bills_posted_journal_id_fkey"
+            columns: ["posted_journal_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "bills_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       credit_applications: {
         Row: {
           amount_applied: number
@@ -736,7 +1036,9 @@ export type Database = {
           created_at: string
           description: string | null
           entry_date: string
+          external_id: string | null
           id: string
+          ledger_impact: Json | null
           memo: string | null
           org_id: string
           posted_at: string | null
@@ -744,6 +1046,8 @@ export type Database = {
           reversal_of: string | null
           reversed_by: string | null
           source_id: string | null
+          source_ref: string | null
+          source_system: string | null
           source_type: string | null
           status: string
         }
@@ -752,7 +1056,9 @@ export type Database = {
           created_at?: string
           description?: string | null
           entry_date: string
+          external_id?: string | null
           id?: string
+          ledger_impact?: Json | null
           memo?: string | null
           org_id: string
           posted_at?: string | null
@@ -760,6 +1066,8 @@ export type Database = {
           reversal_of?: string | null
           reversed_by?: string | null
           source_id?: string | null
+          source_ref?: string | null
+          source_system?: string | null
           source_type?: string | null
           status?: string
         }
@@ -768,7 +1076,9 @@ export type Database = {
           created_at?: string
           description?: string | null
           entry_date?: string
+          external_id?: string | null
           id?: string
+          ledger_impact?: Json | null
           memo?: string | null
           org_id?: string
           posted_at?: string | null
@@ -776,6 +1086,8 @@ export type Database = {
           reversal_of?: string | null
           reversed_by?: string | null
           source_id?: string | null
+          source_ref?: string | null
+          source_system?: string | null
           source_type?: string | null
           status?: string
         }
@@ -821,29 +1133,53 @@ export type Database = {
         Row: {
           account_id: string
           credit: number
+          customer_id: string | null
           debit: number
+          department_id: string | null
+          entity_id: string | null
           id: string
           journal_id: string
           line_order: number
+          location_id: string | null
           memo: string | null
+          product_id: string | null
+          project_id: string | null
+          service_id: string | null
+          vendor_id: string | null
         }
         Insert: {
           account_id: string
           credit?: number
+          customer_id?: string | null
           debit?: number
+          department_id?: string | null
+          entity_id?: string | null
           id?: string
           journal_id: string
           line_order?: number
+          location_id?: string | null
           memo?: string | null
+          product_id?: string | null
+          project_id?: string | null
+          service_id?: string | null
+          vendor_id?: string | null
         }
         Update: {
           account_id?: string
           credit?: number
+          customer_id?: string | null
           debit?: number
+          department_id?: string | null
+          entity_id?: string | null
           id?: string
           journal_id?: string
           line_order?: number
+          location_id?: string | null
           memo?: string | null
+          product_id?: string | null
+          project_id?: string | null
+          service_id?: string | null
+          vendor_id?: string | null
         }
         Relationships: [
           {
@@ -1302,6 +1638,86 @@ export type Database = {
           },
         ]
       }
+      vendors: {
+        Row: {
+          address: Json | null
+          created_at: string
+          default_expense_account_id: string | null
+          email: string | null
+          external_id: string | null
+          external_source: string | null
+          id: string
+          memo: string | null
+          name: string
+          org_id: string
+          phone: string | null
+          status: string
+          terms_days: number
+          updated_at: string
+        }
+        Insert: {
+          address?: Json | null
+          created_at?: string
+          default_expense_account_id?: string | null
+          email?: string | null
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          memo?: string | null
+          name: string
+          org_id: string
+          phone?: string | null
+          status?: string
+          terms_days?: number
+          updated_at?: string
+        }
+        Update: {
+          address?: Json | null
+          created_at?: string
+          default_expense_account_id?: string | null
+          email?: string | null
+          external_id?: string | null
+          external_source?: string | null
+          id?: string
+          memo?: string | null
+          name?: string
+          org_id?: string
+          phone?: string | null
+          status?: string
+          terms_days?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vendors_default_expense_account_id_fkey"
+            columns: ["default_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vendors_default_expense_account_id_fkey"
+            columns: ["default_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "vendors_default_expense_account_id_fkey"
+            columns: ["default_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "vendors_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       v_account_balances: {
@@ -1469,6 +1885,24 @@ export type Database = {
         Args: { _date: string; _org: string }
         Returns: boolean
       }
+      post_bill_with_posting: {
+        Args: {
+          _bill_number: string
+          _correlation_id: string
+          _due_date: string
+          _external_id: string
+          _external_source: string
+          _issue_date: string
+          _lines: Json
+          _memo: string
+          _org_id: string
+          _source_ref: string
+          _source_system: string
+          _tax: number
+          _vendor_id: string
+        }
+        Returns: Json
+      }
       post_manual_journal: {
         Args: {
           _description: string
@@ -1525,6 +1959,24 @@ export type Database = {
           _org_id: string
           _payment_id: string
           _refund_date: string
+        }
+        Returns: Json
+      }
+      record_vendor_payment_with_posting: {
+        Args: {
+          _amount: number
+          _apply_to: Json
+          _correlation_id: string
+          _external_id: string
+          _external_source: string
+          _memo: string
+          _method: string
+          _org_id: string
+          _payment_date: string
+          _reference: string
+          _source_ref: string
+          _source_system: string
+          _vendor_id: string
         }
         Returns: Json
       }

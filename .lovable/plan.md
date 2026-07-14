@@ -1,98 +1,90 @@
-# Phase 1 — Ledger Accounting Backend for ServiceConnect
+# Phase 5 — Core Accounting Product
 
-Build an **independent** accounting backend that ServiceConnect calls over HTTP. Not a CCA-wide platform, not embedded. Ledger stays its own app; ServiceConnect is one API consumer.
+Goal: make LedgerOS a complete standalone accounting platform. No new ServiceConnect features. All numbers come from the posting engine — no mock financial data in shipped UIs.
 
-## Scope
+## Scope & sequencing
 
-Backend only this phase. UI stays on mocks — we'll wire it in a later phase once endpoints are stable. This keeps the current Design Lab, APEX, and role workspaces untouched.
+Phase 5 is too large for a single ship. I'll deliver it as four milestones, each independently valuable and typecheck-clean. After each milestone I'll pause for review before starting the next.
 
-## 1. Platform
+```text
+M1  Ledger core        →  Chart of Accounts, General Ledger, Journal Entry workspace
+M2  AR + AP            →  AR expansion, Vendors, Bills, Vendor payments
+M3  Banking + Reports  →  Bank accounts, transactions, reconciliation, 6 financial reports
+M4  Close + Settings   →  Period close workflow, accounting settings, roadmap doc
+```
 
-Enable **Lovable Cloud** (Supabase under the hood) for Postgres, auth, RLS, and server-function hosting. All endpoints implemented as TanStack `createServerFn` for internal calls and `src/routes/api/public/integrations/*` server routes for ServiceConnect's inbound HTTP.
+## M1 — Ledger core
 
-## 2. Foundation tables (migration)
+**Backend (one migration)**
+- `accounts`: add `parent_id uuid`, `is_system boolean`, `sort_order int`; recursive view `account_tree_v` for hierarchy + rollup balances from `journal_lines` (posted only).
+- `journal_entries`: add `reversal_of uuid`, `reversed_by uuid`, `approval_status`, `approved_by`, `approved_at`.
+- `journal_attachments` table (file refs + metadata, RLS by org).
+- RPCs: `post_manual_journal`, `reverse_journal` (creates offsetting balanced entry, links both ways, respects period lock), `account_balance(_account, _as_of)`.
+- Seed system default accounts on org create (idempotent).
 
-- `organizations` — tenant root (id, name, slug, created_at)
-- `org_members` — user ↔ org join (user_id, org_id, created_at)
-- `app_role` enum: `owner | accounting_lead | accountant | systems_reviewer | team_member | integration_service`
-- `user_roles` — (user_id, org_id, role) with `has_role(_user, _org, _role)` security-definer fn
-- `api_clients` — external system credentials (id, org_id, name='serviceconnect', key_hash, active, created_at)
-- `audit_events` — (id, org_id, actor_type, actor_id, event_type, target_type, target_id, before jsonb, after jsonb, correlation_id, created_at)
-- `sync_history` — (id, org_id, source, endpoint, external_id, idempotency_key, status, request jsonb, response jsonb, error, created_at) with unique index on (org_id, idempotency_key)
+**Server functions** (`src/lib/accounting/`)
+- `accounts.functions.ts` — list tree, create/update/deactivate, reorder, resolve balances as-of.
+- `general-ledger.functions.ts` — paginated journal query with filters (account, date range, source, status, text), running balance per account.
+- `journals.functions.ts` — create draft, add/edit lines (draft only), post (balanced check + period check), reverse, list attachments.
 
-All tables: GRANTs to `authenticated` + `service_role`, RLS enabled, policies scope by `org_id` via `org_members`.
+**UI routes**
+- `/accounting/chart-of-accounts` — tree with expand/collapse, type-grouped, balances column, drill-down opens filtered GL, edit dialog, activate/deactivate.
+- `/accounting/general-ledger` — filter bar (account, date range, source type, status), virtualized table, DR/CR columns, running balance, CSV export.
+- `/accounting/journals` — list + create workspace: header form, line editor with live DR/CR totals + balance indicator, save draft, post, reverse action on posted entries, timeline of audit events.
 
-## 3. Accounting tables (migration)
+## M2 — AR expansion + AP
 
-- `customers` (id, org_id, external_id, external_source, name, email, phone, billing_address jsonb, status, created_at) — unique (org_id, external_source, external_id)
-- `accounts` — chart of accounts (id, org_id, code, name, type: asset|liability|equity|revenue|expense, parent_id, is_active, normal_balance)
-- `journal_entries` (id, org_id, entry_date, memo, source_type, source_id, status: draft|posted|void, posted_at, posted_by, correlation_id)
-- `journal_lines` (id, journal_id, account_id, debit numeric(18,2), credit numeric(18,2), memo) — CHECK debit≥0 AND credit≥0 AND (debit=0 OR credit=0)
-- `invoices` (id, org_id, customer_id, external_id, external_source, invoice_number, issue_date, due_date, status: draft|sent|partial|paid|void, subtotal, tax, total, balance, work_order_ref, memo)
-- `invoice_lines` (id, invoice_id, description, quantity, unit_price, tax_rate, amount, account_id)
-- `payments` (id, org_id, customer_id, external_id, external_source, payment_date, method, amount, unapplied_amount, memo)
-- `payment_applications` (id, payment_id, invoice_id, amount_applied)
-- `credits` (id, org_id, customer_id, credit_date, amount, unapplied_amount, memo, source_type, source_id)
-- `credit_applications` (id, credit_id, invoice_id, amount_applied)
-- `refunds` (id, org_id, payment_id, refund_date, amount, method, memo)
-- `inventory_consumption` (id, org_id, work_order_ref, item_ref, quantity, unit_cost, total_cost, external_id) — feeds journal via COGS entry
+**AR (uses existing schema)**
+- `/accounts-receivable/customers` — list, detail with balance, transactions, statement generator (PDF-ready HTML).
+- `/accounts-receivable/aging` — 0/30/60/90+ buckets from posted invoices.
+- `/accounts-receivable/collections` — overdue queue, contact log, promise-to-pay notes.
 
-All: GRANTs, RLS by `org_id`. Every mutation writes an `audit_events` row.
+**AP (new tables + posting)**
+- Migration: `vendors`, `bills`, `bill_lines`, `bill_payments`, `bill_payment_applications`. Grants + RLS scoped to `is_org_member`. Reuse fiscal-period + audit patterns.
+- RPCs: `post_bill_with_posting` (DR expense / CR AP), `record_vendor_payment_with_posting` (DR AP / CR Cash), balanced + period-checked, audit + idempotency by `(org, external_source, external_id)`.
+- Server fns + UI: `/accounts-payable/vendors`, `/accounts-payable/bills` (list, create, approve, post), `/accounts-payable/payments`, `/accounts-payable/aging`.
 
-## 4. Trial-balance guarantee
+## M3 — Banking + Reports
 
-Postgres trigger on `journal_entries` transition to `posted`: sum of `debit` = sum of `credit` across its lines, else raise. Views: `v_general_ledger`, `v_ar_aging` (buckets 0-30/31-60/61-90/90+), `v_trial_balance`.
+**Banking foundation**
+- Migration: `bank_accounts` (linked to a GL cash account), `bank_transactions` (imported/manual), `bank_transfers`, `bank_reconciliations` + `reconciliation_lines`.
+- UI: `/banking/accounts`, `/banking/transactions`, `/banking/transfers`, `/banking/reconcile/$id` (statement balance vs cleared, match/clear/create).
+- No external feed integration — manual entry + CSV import only.
 
-## 5. Internal server functions (`src/lib/api/*.functions.ts`)
+**Financial reports** (server-computed from `journal_lines`)
+- `/reports/trial-balance` — as-of date, DR/CR per account, totals prove.
+- `/reports/profit-and-loss` — period, revenue − expense, comparative optional.
+- `/reports/balance-sheet` — as-of, asset = liability + equity check.
+- `/reports/cash-flow` — indirect method from P&L + balance-sheet deltas.
+- `/reports/ar-aging`, `/reports/ap-aging`.
+- All share a `<ReportShell>` with date pickers, org scope, CSV/print export, drill-down to GL.
 
-Auth via `requireSupabaseAuth`. One file per domain: customers, accounts, journals, invoices, payments, credits, refunds, reports. Each exports list/get/create/update/void. Void = reversing journal, never hard delete.
+## M4 — Close + Settings + Docs
 
-## 6. Public integration routes (`src/routes/api/public/integrations/*`)
+**Period close** (extends existing `fiscal_periods`)
+- Checklist server-side: unposted journals, draft invoices, unreconciled bank accounts, unapplied payments.
+- `/accounting/period-close` — checklist view, warnings, "Close period" action requires role check, writes audit event, sets `fiscal_periods.status='closed'`. Reopen requires admin + audit.
 
-Called by ServiceConnect. Each verifies `Authorization: Bearer <api_client_key>` against `api_clients.key_hash`, resolves org, enforces idempotency via `sync_history.idempotency_key`, writes audit + sync rows.
+**Accounting settings**
+- `/settings/accounting` tabs: Fiscal (year start, period cadence), Account defaults (system mappings deep-link to `/settings/account-mappings`), Numbering (invoice/bill/journal prefixes + next-number), Invoice defaults, Payment terms (Net 15/30/etc CRUD), Tax rates (rate table, per-jurisdiction).
+- Backed by `organization_settings` + new `numbering_sequences`, `payment_terms`, `tax_rates` tables.
 
-- `POST /api/public/integrations/customers` — upsert by external_id
-- `POST /api/public/integrations/work-orders/completed` — creates draft invoice from completed WO payload (lines from services/parts, links `work_order_ref`), status=`draft`
-- `POST /api/public/integrations/invoices` — direct invoice push (bypass WO path)
-- `POST /api/public/integrations/payments` — record payment, optional apply-to-invoices array
-- `POST /api/public/integrations/inventory-consumption` — records consumption; creates COGS journal on completion
+**Docs**
+- `docs/ledgeros/16-core-accounting-roadmap.md` — milestones, data model additions, posting rules for bills, reconciliation model, report definitions, period-close semantics.
 
-Each returns `{ id, external_id, idempotency_key, audit_event_id }`. Duplicate idempotency_key returns the original response.
+## Cross-cutting rules
 
-## 7. API key issuance
+- Every new `public.<table>` migration: `GRANT` → `ENABLE RLS` → policies scoped via `is_org_member` / `has_role`.
+- Every posting path goes through a SECURITY DEFINER RPC that checks `is_period_open` and writes an `audit_events` row.
+- Reversals never mutate posted journals — always insert an offsetting entry.
+- Approval-gated actions (post bill, close period, reverse) require `has_role(auth.uid(), _org, 'admin'|'accountant')`.
+- All shipped screens use real server fns; demo fallback only where the user has no org yet.
+- Design: reuse `AppShell`, `PageHeader`, `Card`, tabular numerics, semantic tokens only.
 
-Server function `issueApiClientKey({ orgId, name })` (owner-only) generates a random token, stores `key_hash` (sha256), returns raw once. Managed via a lightweight admin route later — not built this phase; seed one key via a follow-up migration for the pilot org.
+## Deliverable per milestone
 
-## 8. Reporting
+Typecheck clean, build clean, migration approved, docs updated, brief change summary. Nav entries added under an "Accounting" section in the sidebar.
 
-Server functions returning JSON:
-- `getTrialBalance(period)`
-- `getBalanceSheet(asOf)`
-- `getIncomeStatement(from,to)`
-- `getARAging(asOf)`
-- `getCustomerStatement(customerId, from, to)`
+## Starting point
 
-## 9. Out of scope this phase
-
-- UI wiring — mocks remain
-- Bank reconciliation, budgets, compensation, guardrails
-- Multi-currency
-- Tax engine beyond flat rate per line
-- Approval workflows (`draft`→`posted` is a single call, permission-gated)
-
-## Technical notes
-
-- Money stored as `numeric(18,2)`.
-- Every write inside a transaction with audit insert.
-- RLS: `SELECT` allowed when `org_id ∈ org_members(user_id=auth.uid())`. Public routes use `supabaseAdmin` after bearer verification.
-- Sync history is the source of truth for "did ServiceConnect already send this?".
-
-## Deliverables
-
-1. One migration establishing all tables + RLS + GRANTs + trigger + views.
-2. `src/integrations/serviceconnect/verify.ts` — bearer + idempotency helpers.
-3. Server functions per domain under `src/lib/accounting/*.functions.ts`.
-4. Public integration routes under `src/routes/api/public/integrations/`.
-5. `docs/production-handoff/serviceconnect-api.md` — endpoint contracts + example payloads.
-
-No changes to existing UI, APEX, mocks, or auth pages.
+On approval I begin **M1 (Ledger core)**: migration → server fns → three routes → nav → typecheck. Estimated as one focused ship. I'll pause after M1 for your review before M2.

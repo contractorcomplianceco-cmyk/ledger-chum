@@ -48,6 +48,7 @@ export const getArAging = createServerFn({ method: "GET" })
     for (const r of rows ?? []) {
       const bal = Number(r.balance ?? 0);
       if (bal <= 0) continue;
+      if (!r.due_date) continue;
       const due = new Date(r.due_date);
       const daysOverdue = Math.floor((asOf.getTime() - due.getTime()) / 86400000);
       const bucket = bucketize(daysOverdue);

@@ -74,6 +74,6 @@ export const recordVendorPayment = createServerFn({ method: "POST" })
       bill_payment_id: string;
       journal_id: string;
       unapplied_amount: number;
-      applications: unknown[];
+      applications: Array<Record<string, unknown>>;
     };
   });

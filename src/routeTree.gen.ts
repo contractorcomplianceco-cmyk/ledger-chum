@@ -155,6 +155,7 @@ import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
+import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
 import { Route as AccountsPayableBillsRouteImport } from './routes/accounts-payable.bills'
 import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
 import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
@@ -944,6 +945,11 @@ const AccountsPayableVendorsRoute = AccountsPayableVendorsRouteImport.update({
   path: '/accounts-payable/vendors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountsPayablePaymentsRoute = AccountsPayablePaymentsRouteImport.update({
+  id: '/accounts-payable/payments',
+  path: '/accounts-payable/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsPayableBillsRoute = AccountsPayableBillsRouteImport.update({
   id: '/accounts-payable/bills',
   path: '/accounts-payable/bills',
@@ -1184,6 +1190,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
+  '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1368,6 +1375,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
+  '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1556,6 +1564,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
+  '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1745,6 +1754,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/accounts-payable/bills'
+    | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -1929,6 +1939,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/accounts-payable/bills'
+    | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -2116,6 +2127,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/vendors'
     | '/accounts-payable/bills'
+    | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/admin/users'
     | '/apex/architecture'
@@ -2304,6 +2316,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
   AccountsPayableBillsRoute: typeof AccountsPayableBillsRoute
+  AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -3461,6 +3474,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountsPayableVendorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accounts-payable/payments': {
+      id: '/accounts-payable/payments'
+      path: '/accounts-payable/payments'
+      fullPath: '/accounts-payable/payments'
+      preLoaderRoute: typeof AccountsPayablePaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts-payable/bills': {
       id: '/accounts-payable/bills'
       path: '/accounts-payable/bills'
@@ -3970,6 +3990,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
   AccountsPayableBillsRoute: AccountsPayableBillsRoute,
+  AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

@@ -93,7 +93,7 @@ export const postManualJournal = createServerFn({ method: "POST" })
       _org_id: data.orgId,
       _entry_date: data.entryDate,
       _memo: data.memo,
-      _description: data.description ?? null,
+      _description: data.description ?? "",
       _lines: data.lines.map((l) => ({
         account_id: l.accountId,
         debit: l.debit,

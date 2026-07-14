@@ -74,7 +74,10 @@ export const updateAccount = createServerFn({ method: "POST" })
     }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = {};
+    const patch: {
+      name?: string; code?: string; parent_id?: string | null;
+      sort_order?: number; is_active?: boolean;
+    } = {};
     if (data.name !== undefined) patch.name = data.name;
     if (data.code !== undefined) patch.code = data.code;
     if (data.parentId !== undefined) patch.parent_id = data.parentId;

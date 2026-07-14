@@ -29,7 +29,7 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(request, "/inventory-consumption");
+          const start = await beginIntegrationCall(request, "/inventory-consumption", "inventory.consume");
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;

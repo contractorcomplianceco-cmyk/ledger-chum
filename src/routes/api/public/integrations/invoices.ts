@@ -38,7 +38,7 @@ export const Route = createFileRoute("/api/public/integrations/invoices")({
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(request, "/invoices");
+          const start = await beginIntegrationCall(request, "/invoices", "invoices.create");
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;

@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/public/integrations/customers")({
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(request, "/customers");
+          const start = await beginIntegrationCall(request, "/customers", "customers.write");
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;

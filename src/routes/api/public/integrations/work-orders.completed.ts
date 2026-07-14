@@ -18,6 +18,8 @@ const lineSchema = z.object({
   unit_price: z.number().nonnegative(),
   tax_rate: z.number().nonnegative().default(0),
   account_code: z.string().optional().nullable(),
+  // Hint used to pick a mapped revenue account when no account_code is supplied.
+  line_type: z.enum(["labor", "material", "other"]).optional().nullable(),
 });
 
 const schema = z.object({

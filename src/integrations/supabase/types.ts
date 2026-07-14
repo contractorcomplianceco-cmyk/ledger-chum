@@ -1138,6 +1138,201 @@ export type Database = {
           },
         ]
       }
+      financial_event_approvals: {
+        Row: {
+          approver_id: string | null
+          created_at: string
+          decision: string
+          event_id: string
+          id: string
+          note: string | null
+          org_id: string
+        }
+        Insert: {
+          approver_id?: string | null
+          created_at?: string
+          decision: string
+          event_id: string
+          id?: string
+          note?: string | null
+          org_id: string
+        }
+        Update: {
+          approver_id?: string | null
+          created_at?: string
+          decision?: string
+          event_id?: string
+          id?: string
+          note?: string | null
+          org_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_event_approvals_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "financial_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_event_approvals_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_event_rules: {
+        Row: {
+          actions: Json
+          active: boolean
+          conditions: Json
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          org_id: string
+          priority: number
+          updated_at: string
+        }
+        Insert: {
+          actions?: Json
+          active?: boolean
+          conditions?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          org_id: string
+          priority?: number
+          updated_at?: string
+        }
+        Update: {
+          actions?: Json
+          active?: boolean
+          conditions?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          org_id?: string
+          priority?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_event_rules_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_events: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          correlation_id: string | null
+          created_at: string
+          error: string | null
+          external_event_type: string
+          external_id: string | null
+          id: string
+          idempotency_key: string
+          ledger_object: string | null
+          mapping_id: string | null
+          matched_rule_id: string | null
+          materialized_target_id: string | null
+          materialized_target_type: string | null
+          org_id: string
+          payload: Json
+          rejected_at: string | null
+          rejected_by: string | null
+          requires_approval: boolean
+          source_id: string | null
+          source_system: string
+          status: string
+          updated_at: string
+          validation_errors: Json | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          correlation_id?: string | null
+          created_at?: string
+          error?: string | null
+          external_event_type: string
+          external_id?: string | null
+          id?: string
+          idempotency_key: string
+          ledger_object?: string | null
+          mapping_id?: string | null
+          matched_rule_id?: string | null
+          materialized_target_id?: string | null
+          materialized_target_type?: string | null
+          org_id: string
+          payload?: Json
+          rejected_at?: string | null
+          rejected_by?: string | null
+          requires_approval?: boolean
+          source_id?: string | null
+          source_system: string
+          status?: string
+          updated_at?: string
+          validation_errors?: Json | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          correlation_id?: string | null
+          created_at?: string
+          error?: string | null
+          external_event_type?: string
+          external_id?: string | null
+          id?: string
+          idempotency_key?: string
+          ledger_object?: string | null
+          mapping_id?: string | null
+          matched_rule_id?: string | null
+          materialized_target_id?: string | null
+          materialized_target_type?: string | null
+          org_id?: string
+          payload?: Json
+          rejected_at?: string | null
+          rejected_by?: string | null
+          requires_approval?: boolean
+          source_id?: string | null
+          source_system?: string
+          status?: string
+          updated_at?: string
+          validation_errors?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_events_mapping_id_fkey"
+            columns: ["mapping_id"]
+            isOneToOne: false
+            referencedRelation: "integration_event_mappings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_events_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_events_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "integration_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fiscal_periods: {
         Row: {
           closed_at: string | null
@@ -2514,6 +2709,10 @@ export type Database = {
       }
     }
     Functions: {
+      approve_financial_event: {
+        Args: { _event_id: string; _note: string; _org_id: string }
+        Returns: Json
+      }
       approve_period_close: {
         Args: { _close_run_id: string; _note: string }
         Returns: Json
@@ -2538,6 +2737,19 @@ export type Database = {
           _user: string
         }
         Returns: boolean
+      }
+      ingest_financial_event: {
+        Args: {
+          _correlation_id: string
+          _external_event_type: string
+          _external_id: string
+          _idempotency_key: string
+          _org_id: string
+          _payload: Json
+          _source_id: string
+          _source_system: string
+        }
+        Returns: Json
       }
       is_org_member: { Args: { _org: string }; Returns: boolean }
       is_period_open: {
@@ -2645,6 +2857,10 @@ export type Database = {
           _source_system: string
           _vendor_id: string
         }
+        Returns: Json
+      }
+      reject_financial_event: {
+        Args: { _event_id: string; _org_id: string; _reason: string }
         Returns: Json
       }
       reopen_period: {

@@ -250,6 +250,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { title: "Settings", to: "/settings", icon: SettingsIcon },
       { title: "Integrations", to: "/integrations", icon: Plug, badge: "3", badgeTone: "violet" },
+      { title: "Integrations Admin", to: "/admin/integrations", icon: Plug, keywords: ["sources", "mappings", "sync", "retry"] },
       { title: "Users", to: "/admin/users", icon: UserCog },
       { title: "Audit Log", to: "/audit", icon: ShieldCheck },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },

@@ -161,6 +161,7 @@ import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
@@ -986,6 +987,11 @@ const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   path: '/admin/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
+  id: '/admin/financial-events',
+  path: '/admin/financial-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
   id: '/accounts-receivable/aging',
   path: '/accounts-receivable/aging',
@@ -1261,6 +1267,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1457,6 +1464,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1657,6 +1665,7 @@ export interface FileRoutesById {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1858,6 +1867,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2054,6 +2064,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2253,6 +2264,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/financial-events'
     | '/admin/integrations'
     | '/admin/users'
     | '/apex/architecture'
@@ -2453,6 +2465,7 @@ export interface RootRouteChildren {
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
+  AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -3659,6 +3672,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/financial-events': {
+      id: '/admin/financial-events'
+      path: '/admin/financial-events'
+      fullPath: '/admin/financial-events'
+      preLoaderRoute: typeof AdminFinancialEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts-receivable/aging': {
       id: '/accounts-receivable/aging'
       path: '/accounts-receivable/aging'
@@ -4226,6 +4246,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
+  AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

@@ -157,7 +157,6 @@ function FinancialEventsPage() {
   return (
     <AppShell>
       <PageHeader
-        icon={Workflow}
         eyebrow="M6"
         title="Financial Event Bus"
         description="External systems record events here — never journal entries. Approve, reject, or configure rules."

@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VendorsRouteImport } from './routes/vendors'
 import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as InvoicesRouteImport } from './routes/invoices'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
@@ -25,6 +24,7 @@ import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AutomationCenterRouteImport } from './routes/automation-center'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
 import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
 import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
@@ -36,10 +36,15 @@ import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
 import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
 import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
+import { Route as ReportsTrialBalanceRouteImport } from './routes/reports.trial-balance'
+import { Route as ReportsProfitLossRouteImport } from './routes/reports.profit-loss'
+import { Route as ReportsCashFlowRouteImport } from './routes/reports.cash-flow'
+import { Route as ReportsBalanceSheetRouteImport } from './routes/reports.balance-sheet'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
+import { Route as LedgerBankingRouteImport } from './routes/ledger.banking'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
 import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
 import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
@@ -169,6 +174,7 @@ import { Route as CompensationCalculationsIndexRouteImport } from './routes/comp
 import { Route as CompensationAttributionIndexRouteImport } from './routes/compensation.attribution.index'
 import { Route as ApexWorkspacesIndexRouteImport } from './routes/apex.workspaces.index'
 import { Route as ApexAiPersonasIndexRouteImport } from './routes/apex.ai-personas.index'
+import { Route as LedgerBankingReconcileRouteImport } from './routes/ledger.banking.reconcile'
 import { Route as CompensationStatementsIdRouteImport } from './routes/compensation.statements.$id'
 import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
 import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
@@ -206,11 +212,6 @@ const VendorsRoute = VendorsRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentsRoute = PaymentsRouteImport.update({
@@ -278,6 +279,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/reports/',
+  path: '/reports/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -333,6 +339,26 @@ const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
   path: '/account-mappings',
   getParentRoute: () => SettingsRoute,
 } as any)
+const ReportsTrialBalanceRoute = ReportsTrialBalanceRouteImport.update({
+  id: '/reports/trial-balance',
+  path: '/reports/trial-balance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsProfitLossRoute = ReportsProfitLossRouteImport.update({
+  id: '/reports/profit-loss',
+  path: '/reports/profit-loss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsCashFlowRoute = ReportsCashFlowRouteImport.update({
+  id: '/reports/cash-flow',
+  path: '/reports/cash-flow',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsBalanceSheetRoute = ReportsBalanceSheetRouteImport.update({
+  id: '/reports/balance-sheet',
+  path: '/reports/balance-sheet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
   id: '/readiness/production',
   path: '/readiness/production',
@@ -351,6 +377,11 @@ const LedgerJournalsRoute = LedgerJournalsRouteImport.update({
 const LedgerGeneralRoute = LedgerGeneralRouteImport.update({
   id: '/ledger/general',
   path: '/ledger/general',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerBankingRoute = LedgerBankingRouteImport.update({
+  id: '/ledger/banking',
+  path: '/ledger/banking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
@@ -1024,6 +1055,11 @@ const ApexAiPersonasIndexRoute = ApexAiPersonasIndexRouteImport.update({
   path: '/apex/ai-personas/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LedgerBankingReconcileRoute = LedgerBankingReconcileRouteImport.update({
+  id: '/reconcile',
+  path: '/reconcile',
+  getParentRoute: () => LedgerBankingRoute,
+} as any)
 const CompensationStatementsIdRoute =
   CompensationStatementsIdRouteImport.update({
     id: '/compensation/statements/$id',
@@ -1198,7 +1234,6 @@ export interface FileRoutesByFullPath {
   '/integrations': typeof IntegrationsRouteWithChildren
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
@@ -1320,10 +1355,15 @@ export interface FileRoutesByFullPath {
   '/invoices/recurring': typeof InvoicesRecurringRoute
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/banking': typeof LedgerBankingRouteWithChildren
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
+  '/reports/cash-flow': typeof ReportsCashFlowRoute
+  '/reports/profit-loss': typeof ReportsProfitLossRoute
+  '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
@@ -1335,6 +1375,7 @@ export interface FileRoutesByFullPath {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/reports/': typeof ReportsIndexRoute
   '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
@@ -1353,6 +1394,7 @@ export interface FileRoutesByFullPath {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/ledger/banking/reconcile': typeof LedgerBankingReconcileRoute
   '/apex/ai-personas/': typeof ApexAiPersonasIndexRoute
   '/apex/workspaces/': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
@@ -1385,7 +1427,6 @@ export interface FileRoutesByTo {
   '/estimates': typeof EstimatesRouteWithChildren
   '/integrations': typeof IntegrationsRouteWithChildren
   '/payments': typeof PaymentsRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
@@ -1507,10 +1548,15 @@ export interface FileRoutesByTo {
   '/invoices/recurring': typeof InvoicesRecurringRoute
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/banking': typeof LedgerBankingRouteWithChildren
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
+  '/reports/cash-flow': typeof ReportsCashFlowRoute
+  '/reports/profit-loss': typeof ReportsProfitLossRoute
+  '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex': typeof ApexIndexRoute
@@ -1522,6 +1568,7 @@ export interface FileRoutesByTo {
   '/implementation': typeof ImplementationIndexRoute
   '/intelligence': typeof IntelligenceIndexRoute
   '/invoices': typeof InvoicesIndexRoute
+  '/reports': typeof ReportsIndexRoute
   '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
@@ -1540,6 +1587,7 @@ export interface FileRoutesByTo {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/ledger/banking/reconcile': typeof LedgerBankingReconcileRoute
   '/apex/ai-personas': typeof ApexAiPersonasIndexRoute
   '/apex/workspaces': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution': typeof CompensationAttributionIndexRoute
@@ -1576,7 +1624,6 @@ export interface FileRoutesById {
   '/integrations': typeof IntegrationsRouteWithChildren
   '/invoices': typeof InvoicesRouteWithChildren
   '/payments': typeof PaymentsRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
@@ -1698,10 +1745,15 @@ export interface FileRoutesById {
   '/invoices/recurring': typeof InvoicesRecurringRoute
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
+  '/ledger/banking': typeof LedgerBankingRouteWithChildren
   '/ledger/general': typeof LedgerGeneralRoute
   '/ledger/journals': typeof LedgerJournalsRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
+  '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
+  '/reports/cash-flow': typeof ReportsCashFlowRoute
+  '/reports/profit-loss': typeof ReportsProfitLossRoute
+  '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
@@ -1713,6 +1765,7 @@ export interface FileRoutesById {
   '/implementation/': typeof ImplementationIndexRoute
   '/intelligence/': typeof IntelligenceIndexRoute
   '/invoices/': typeof InvoicesIndexRoute
+  '/reports/': typeof ReportsIndexRoute
   '/apex/ai-personas/$persona': typeof ApexAiPersonasPersonaRoute
   '/apex/digital-twin/scenarios': typeof ApexDigitalTwinScenariosRouteWithChildren
   '/apex/financial-dna/$id': typeof ApexFinancialDnaIdRoute
@@ -1731,6 +1784,7 @@ export interface FileRoutesById {
   '/compensation/plans/$id': typeof CompensationPlansIdRouteWithChildren
   '/compensation/plans/new': typeof CompensationPlansNewRoute
   '/compensation/statements/$id': typeof CompensationStatementsIdRoute
+  '/ledger/banking/reconcile': typeof LedgerBankingReconcileRoute
   '/apex/ai-personas/': typeof ApexAiPersonasIndexRoute
   '/apex/workspaces/': typeof ApexWorkspacesIndexRoute
   '/compensation/attribution/': typeof CompensationAttributionIndexRoute
@@ -1768,7 +1822,6 @@ export interface FileRouteTypes {
     | '/integrations'
     | '/invoices'
     | '/payments'
-    | '/reports'
     | '/settings'
     | '/vendors'
     | '/accounts-payable/aging'
@@ -1890,10 +1943,15 @@ export interface FileRouteTypes {
     | '/invoices/recurring'
     | '/invoices/review'
     | '/ledger/accounts'
+    | '/ledger/banking'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/reports/balance-sheet'
+    | '/reports/cash-flow'
+    | '/reports/profit-loss'
+    | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/serviceconnect'
     | '/apex/'
@@ -1905,6 +1963,7 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/reports/'
     | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
@@ -1923,6 +1982,7 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/ledger/banking/reconcile'
     | '/apex/ai-personas/'
     | '/apex/workspaces/'
     | '/compensation/attribution/'
@@ -1955,7 +2015,6 @@ export interface FileRouteTypes {
     | '/estimates'
     | '/integrations'
     | '/payments'
-    | '/reports'
     | '/settings'
     | '/vendors'
     | '/accounts-payable/aging'
@@ -2077,10 +2136,15 @@ export interface FileRouteTypes {
     | '/invoices/recurring'
     | '/invoices/review'
     | '/ledger/accounts'
+    | '/ledger/banking'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/reports/balance-sheet'
+    | '/reports/cash-flow'
+    | '/reports/profit-loss'
+    | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/serviceconnect'
     | '/apex'
@@ -2092,6 +2156,7 @@ export interface FileRouteTypes {
     | '/implementation'
     | '/intelligence'
     | '/invoices'
+    | '/reports'
     | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
@@ -2110,6 +2175,7 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/ledger/banking/reconcile'
     | '/apex/ai-personas'
     | '/apex/workspaces'
     | '/compensation/attribution'
@@ -2145,7 +2211,6 @@ export interface FileRouteTypes {
     | '/integrations'
     | '/invoices'
     | '/payments'
-    | '/reports'
     | '/settings'
     | '/vendors'
     | '/accounts-payable/aging'
@@ -2267,10 +2332,15 @@ export interface FileRouteTypes {
     | '/invoices/recurring'
     | '/invoices/review'
     | '/ledger/accounts'
+    | '/ledger/banking'
     | '/ledger/general'
     | '/ledger/journals'
     | '/readiness/migration'
     | '/readiness/production'
+    | '/reports/balance-sheet'
+    | '/reports/cash-flow'
+    | '/reports/profit-loss'
+    | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/serviceconnect'
     | '/apex/'
@@ -2282,6 +2352,7 @@ export interface FileRouteTypes {
     | '/implementation/'
     | '/intelligence/'
     | '/invoices/'
+    | '/reports/'
     | '/apex/ai-personas/$persona'
     | '/apex/digital-twin/scenarios'
     | '/apex/financial-dna/$id'
@@ -2300,6 +2371,7 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id'
     | '/compensation/plans/new'
     | '/compensation/statements/$id'
+    | '/ledger/banking/reconcile'
     | '/apex/ai-personas/'
     | '/apex/workspaces/'
     | '/compensation/attribution/'
@@ -2336,7 +2408,6 @@ export interface RootRouteChildren {
   IntegrationsRoute: typeof IntegrationsRouteWithChildren
   InvoicesRoute: typeof InvoicesRouteWithChildren
   PaymentsRoute: typeof PaymentsRoute
-  ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
   AccountsPayableAgingRoute: typeof AccountsPayableAgingRoute
@@ -2434,16 +2505,22 @@ export interface RootRouteChildren {
   IntelligenceTechRoute: typeof IntelligenceTechRoute
   IntelligenceTechPortfolioRoute: typeof IntelligenceTechPortfolioRoute
   LedgerAccountsRoute: typeof LedgerAccountsRoute
+  LedgerBankingRoute: typeof LedgerBankingRouteWithChildren
   LedgerGeneralRoute: typeof LedgerGeneralRoute
   LedgerJournalsRoute: typeof LedgerJournalsRoute
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
+  ReportsBalanceSheetRoute: typeof ReportsBalanceSheetRoute
+  ReportsCashFlowRoute: typeof ReportsCashFlowRoute
+  ReportsProfitLossRoute: typeof ReportsProfitLossRoute
+  ReportsTrialBalanceRoute: typeof ReportsTrialBalanceRoute
   ApexIndexRoute: typeof ApexIndexRoute
   BankingIndexRoute: typeof BankingIndexRoute
   CompensationIndexRoute: typeof CompensationIndexRoute
   FeatureRegistryIndexRoute: typeof FeatureRegistryIndexRoute
   ImplementationIndexRoute: typeof ImplementationIndexRoute
   IntelligenceIndexRoute: typeof IntelligenceIndexRoute
+  ReportsIndexRoute: typeof ReportsIndexRoute
   ApexAiPersonasPersonaRoute: typeof ApexAiPersonasPersonaRoute
   ApexWorkspacesRoleRoute: typeof ApexWorkspacesRoleRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
@@ -2490,13 +2567,6 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/payments': {
@@ -2590,6 +2660,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof ReportsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/invoices/': {
       id: '/invoices/'
       path: '/'
@@ -2667,6 +2744,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsAccountMappingsRouteImport
       parentRoute: typeof SettingsRoute
     }
+    '/reports/trial-balance': {
+      id: '/reports/trial-balance'
+      path: '/reports/trial-balance'
+      fullPath: '/reports/trial-balance'
+      preLoaderRoute: typeof ReportsTrialBalanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/profit-loss': {
+      id: '/reports/profit-loss'
+      path: '/reports/profit-loss'
+      fullPath: '/reports/profit-loss'
+      preLoaderRoute: typeof ReportsProfitLossRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/cash-flow': {
+      id: '/reports/cash-flow'
+      path: '/reports/cash-flow'
+      fullPath: '/reports/cash-flow'
+      preLoaderRoute: typeof ReportsCashFlowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/balance-sheet': {
+      id: '/reports/balance-sheet'
+      path: '/reports/balance-sheet'
+      fullPath: '/reports/balance-sheet'
+      preLoaderRoute: typeof ReportsBalanceSheetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/readiness/production': {
       id: '/readiness/production'
       path: '/readiness/production'
@@ -2693,6 +2798,13 @@ declare module '@tanstack/react-router' {
       path: '/ledger/general'
       fullPath: '/ledger/general'
       preLoaderRoute: typeof LedgerGeneralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/banking': {
+      id: '/ledger/banking'
+      path: '/ledger/banking'
+      fullPath: '/ledger/banking'
+      preLoaderRoute: typeof LedgerBankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ledger/accounts': {
@@ -3598,6 +3710,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexAiPersonasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ledger/banking/reconcile': {
+      id: '/ledger/banking/reconcile'
+      path: '/reconcile'
+      fullPath: '/ledger/banking/reconcile'
+      preLoaderRoute: typeof LedgerBankingReconcileRouteImport
+      parentRoute: typeof LedgerBankingRoute
+    }
     '/compensation/statements/$id': {
       id: '/compensation/statements/$id'
       path: '/compensation/statements/$id'
@@ -3984,6 +4103,18 @@ const ApexTimelineRouteWithChildren = ApexTimelineRoute._addFileChildren(
   ApexTimelineRouteChildren,
 )
 
+interface LedgerBankingRouteChildren {
+  LedgerBankingReconcileRoute: typeof LedgerBankingReconcileRoute
+}
+
+const LedgerBankingRouteChildren: LedgerBankingRouteChildren = {
+  LedgerBankingReconcileRoute: LedgerBankingReconcileRoute,
+}
+
+const LedgerBankingRouteWithChildren = LedgerBankingRoute._addFileChildren(
+  LedgerBankingRouteChildren,
+)
+
 interface CompensationCalculationsIdRouteChildren {
   CompensationCalculationsIdPreviewRoute: typeof CompensationCalculationsIdPreviewRoute
 }
@@ -4026,7 +4157,6 @@ const rootRouteChildren: RootRouteChildren = {
   IntegrationsRoute: IntegrationsRouteWithChildren,
   InvoicesRoute: InvoicesRouteWithChildren,
   PaymentsRoute: PaymentsRoute,
-  ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
   AccountsPayableAgingRoute: AccountsPayableAgingRoute,
@@ -4124,16 +4254,22 @@ const rootRouteChildren: RootRouteChildren = {
   IntelligenceTechRoute: IntelligenceTechRoute,
   IntelligenceTechPortfolioRoute: IntelligenceTechPortfolioRoute,
   LedgerAccountsRoute: LedgerAccountsRoute,
+  LedgerBankingRoute: LedgerBankingRouteWithChildren,
   LedgerGeneralRoute: LedgerGeneralRoute,
   LedgerJournalsRoute: LedgerJournalsRoute,
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
+  ReportsBalanceSheetRoute: ReportsBalanceSheetRoute,
+  ReportsCashFlowRoute: ReportsCashFlowRoute,
+  ReportsProfitLossRoute: ReportsProfitLossRoute,
+  ReportsTrialBalanceRoute: ReportsTrialBalanceRoute,
   ApexIndexRoute: ApexIndexRoute,
   BankingIndexRoute: BankingIndexRoute,
   CompensationIndexRoute: CompensationIndexRoute,
   FeatureRegistryIndexRoute: FeatureRegistryIndexRoute,
   ImplementationIndexRoute: ImplementationIndexRoute,
   IntelligenceIndexRoute: IntelligenceIndexRoute,
+  ReportsIndexRoute: ReportsIndexRoute,
   ApexAiPersonasPersonaRoute: ApexAiPersonasPersonaRoute,
   ApexWorkspacesRoleRoute: ApexWorkspacesRoleRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,
@@ -4170,13 +4306,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

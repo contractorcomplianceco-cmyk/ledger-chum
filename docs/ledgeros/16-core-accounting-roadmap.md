@@ -10,7 +10,7 @@
 |-----------|-------|--------|
 | **M1 — Ledger core** | Chart of Accounts, General Ledger, Journal Entries + reversals | **✅ Shipped** |
 | **M2 — AR expansion + AP** | Dimensions & source-lineage framework. AR aging + statements. Vendors, bills, bill payments with posting. | **✅ Shipped** |
-| M3 — Banking + Reports | Bank accounts, transactions, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | Planned |
+| **M3 — Banking + Reports** | Bank accounts, transactions, matching, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | **✅ Shipped** — see [17-banking-and-reports.md](./17-banking-and-reports.md) |
 | M4 — Close + Settings | Period-close workflow, accounting settings, numbering, terms, tax. | Planned |
 
 Each milestone typechecks cleanly, runs one migration, updates this doc.

@@ -88,16 +88,16 @@ export const approveFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await context.supabase.rpc(
-      "approve_financial_event" as never,
+    const { data: res, error } = await (context.supabase.rpc as any)(
+      "approve_financial_event",
       {
         _org_id: data.orgId,
         _event_id: data.id,
         _note: data.note ?? null,
-      } as never,
+      },
     );
     if (error) throw new Error(error.message);
-    return res as unknown;
+    return res as Record<string, unknown>;
   });
 
 export const rejectFinancialEvent = createServerFn({ method: "POST" })
@@ -112,16 +112,16 @@ export const rejectFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await context.supabase.rpc(
-      "reject_financial_event" as never,
+    const { data: res, error } = await (context.supabase.rpc as any)(
+      "reject_financial_event",
       {
         _org_id: data.orgId,
         _event_id: data.id,
         _reason: data.reason,
-      } as never,
+      },
     );
     if (error) throw new Error(error.message);
-    return res as unknown;
+    return res as Record<string, unknown>;
   });
 
 // ---------- rules -----------------------------------------------------
@@ -165,19 +165,10 @@ export const upsertEventRule = createServerFn({ method: "POST" })
       conditions: data.conditions,
       actions: data.actions,
     };
+    const table = context.supabase.from("financial_event_rules") as any;
     const query = data.id
-      ? context.supabase
-          .from("financial_event_rules")
-          .update(payload)
-          .eq("id", data.id)
-          .eq("org_id", data.orgId)
-          .select()
-          .single()
-      : context.supabase
-          .from("financial_event_rules")
-          .insert(payload)
-          .select()
-          .single();
+      ? table.update(payload).eq("id", data.id).eq("org_id", data.orgId).select().single()
+      : table.insert(payload).select().single();
     const { data: row, error } = await query;
     if (error) throw new Error(error.message);
 

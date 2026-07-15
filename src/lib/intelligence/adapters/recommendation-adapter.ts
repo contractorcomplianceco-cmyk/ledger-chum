@@ -66,7 +66,7 @@ export function useRecommendationAdapter(options?: {
     freshness: (r.freshness ?? "fresh") as IntelligenceItem["freshness"],
     assumptions: (r.assumptions as string[]) ?? [],
     missingData: (r.missing_data as string[]) ?? [],
-    recommendedAction: r.recommended_action ?? undefined,
+    recommendedAction: r.estimated_impact ?? undefined,
     approvalRequirement: r.approval_requirement ?? undefined,
     demonstrationOnly: r.demonstration_only ?? false,
     severity: "info",

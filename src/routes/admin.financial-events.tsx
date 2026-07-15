@@ -70,6 +70,9 @@ function FinancialEventsPage() {
   const rejectFn = useServerFn(rejectFinancialEvent);
   const upsertRuleFn = useServerFn(upsertEventRule);
   const deleteRuleFn = useServerFn(deleteEventRule);
+  const materializeFn = useServerFn(materializeFinancialEvent);
+  const retryFn = useServerFn(retryMaterialization);
+  const listMatFn = useServerFn(listMaterializations);
 
   const eventsQ = useQuery({
     queryKey: ["financial-events", orgId, status],
@@ -81,10 +84,40 @@ function FinancialEventsPage() {
     queryFn: () => listRulesFn({ data: { orgId: orgId! } }),
     enabled: !!orgId,
   });
+  const materializationsQ = useQuery({
+    queryKey: ["financial-event-materializations", orgId],
+    queryFn: () => listMatFn({ data: { orgId: orgId!, status: "all", limit: 200 } }),
+    enabled: !!orgId,
+  });
 
   const invalidate = () => {
     qc.invalidateQueries({ queryKey: ["financial-events"] });
     qc.invalidateQueries({ queryKey: ["financial-event-rules"] });
+    qc.invalidateQueries({ queryKey: ["financial-event-materializations"] });
+  };
+
+  const handleMaterialize = async (id: string) => {
+    try {
+      const res = await materializeFn({ data: { orgId: orgId!, id } });
+      if (res.status === "completed") {
+        toast.success(`Materialized → ${res.target_object_type}`);
+      } else {
+        toast.error(`Materialization ${res.status}: ${res.error_message ?? res.error_code ?? ""}`);
+      }
+      invalidate();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Materialization failed");
+    }
+  };
+
+  const handleRetry = async (eventId: string) => {
+    try {
+      await retryFn({ data: { orgId: orgId!, id: eventId } });
+      toast.success("Retry attempted");
+      invalidate();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Retry failed");
+    }
   };
 
   const handleApprove = async (id: string) => {

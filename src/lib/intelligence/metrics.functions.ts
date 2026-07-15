@@ -50,7 +50,7 @@ export const listMetrics = createServerFn({ method: "GET" })
       .order("category", { ascending: true })
       .order("metric_name", { ascending: true });
     if (data.status !== "all") q = q.eq("status", data.status);
-    if (data.category) q = q.eq("category", data.category);
+    if (data.category) q = q.eq("category", data.category as never);
 
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);

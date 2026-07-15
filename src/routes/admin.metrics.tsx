@@ -98,7 +98,6 @@ function MetricCenterPage() {
       <PageHeader
         title="Metric Center"
         description="Canonical financial metrics. Every value carries a formula, lineage, confidence, and freshness signal."
-        breadcrumbs={[{ label: "Admin" }, { label: "Metrics" }]}
       />
       <PageBody>
         {!orgId ? (

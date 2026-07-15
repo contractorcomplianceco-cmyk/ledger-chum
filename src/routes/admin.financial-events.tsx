@@ -264,6 +264,57 @@ function FinancialEventsPage() {
         </Card>
 
         <div className="mt-8">
+          <h2 className="text-lg font-semibold">Materialization Queue</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Approved events materialize into draft financial objects (customers, invoices, payments, credits). Journal posting still requires a human step in the ledger.
+          </p>
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-muted/40 text-left">
+                  <tr>
+                    <th className="p-3">Created</th>
+                    <th className="p-3">Type</th>
+                    <th className="p-3">Target</th>
+                    <th className="p-3">Status</th>
+                    <th className="p-3">Error</th>
+                    <th className="p-3">Retries</th>
+                    <th className="p-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(materializationsQ.data ?? []).length === 0 ? (
+                    <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">No materializations yet.</td></tr>
+                  ) : (materializationsQ.data ?? []).map((m) => (
+                    <tr key={m.id} className="border-t border-border">
+                      <td className="p-3 text-muted-foreground">{new Date(m.created_at).toLocaleString()}</td>
+                      <td className="p-3">{m.materialization_type}</td>
+                      <td className="p-3 font-mono text-xs">
+                        {m.target_object_type ? `${m.target_object_type}:${m.target_object_id?.slice(0,8)}` : "—"}
+                      </td>
+                      <td className="p-3">
+                        <Badge className={STATUS_TONE[m.status] ?? "bg-muted"}>{m.status}</Badge>
+                      </td>
+                      <td className="p-3 text-xs text-red-500">
+                        {m.error_code ? `${m.error_code}: ${m.error_message ?? ""}` : "—"}
+                      </td>
+                      <td className="p-3">{m.retry_count}</td>
+                      <td className="p-3 text-right">
+                        {["failed", "requires_review"].includes(m.status) && (
+                          <Button size="sm" variant="outline" onClick={() => handleRetry(m.event_id)}>
+                            <RefreshCw className="h-4 w-4 mr-1" /> Retry
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
+
+        <div className="mt-8">
           <h2 className="text-lg font-semibold">Rules</h2>
           <p className="text-sm text-muted-foreground mb-4">
             Highest priority (lowest number) wins. Match by any combination of source system, event type, and mapped ledger object.

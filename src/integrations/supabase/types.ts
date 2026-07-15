@@ -73,6 +73,83 @@ export type Database = {
           },
         ]
       }
+      accounting_insights: {
+        Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
+          advisory_only: boolean
+          category: string
+          confidence: number
+          created_at: string
+          evidence: Json
+          id: string
+          org_id: string
+          period_end: string | null
+          period_start: string | null
+          persona: string
+          recommended_action: string | null
+          related_object_id: string | null
+          related_object_type: string | null
+          status: string
+          title: string
+          updated_at: string
+          what_happened: string
+          why: string | null
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          advisory_only?: boolean
+          category: string
+          confidence?: number
+          created_at?: string
+          evidence?: Json
+          id?: string
+          org_id: string
+          period_end?: string | null
+          period_start?: string | null
+          persona?: string
+          recommended_action?: string | null
+          related_object_id?: string | null
+          related_object_type?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          what_happened: string
+          why?: string | null
+        }
+        Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          advisory_only?: boolean
+          category?: string
+          confidence?: number
+          created_at?: string
+          evidence?: Json
+          id?: string
+          org_id?: string
+          period_end?: string | null
+          period_start?: string | null
+          persona?: string
+          recommended_action?: string | null
+          related_object_id?: string | null
+          related_object_type?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          what_happened?: string
+          why?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounting_insights_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       accounts: {
         Row: {
           code: string
@@ -1587,6 +1664,287 @@ export type Database = {
           },
         ]
       }
+      fixed_asset_categories: {
+        Row: {
+          accumulated_depreciation_account_id: string | null
+          asset_account_id: string | null
+          created_at: string
+          default_depreciation_method: string
+          default_useful_life_months: number | null
+          depreciation_expense_account_id: string | null
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          accumulated_depreciation_account_id?: string | null
+          asset_account_id?: string | null
+          created_at?: string
+          default_depreciation_method?: string
+          default_useful_life_months?: number | null
+          depreciation_expense_account_id?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          accumulated_depreciation_account_id?: string | null
+          asset_account_id?: string | null
+          created_at?: string
+          default_depreciation_method?: string
+          default_useful_life_months?: number | null
+          depreciation_expense_account_id?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fixed_asset_categories_accumulated_depreciation_account_id_fkey"
+            columns: ["accumulated_depreciation_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_accumulated_depreciation_account_id_fkey"
+            columns: ["accumulated_depreciation_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_accumulated_depreciation_account_id_fkey"
+            columns: ["accumulated_depreciation_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_depreciation_expense_account_id_fkey"
+            columns: ["depreciation_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_depreciation_expense_account_id_fkey"
+            columns: ["depreciation_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_depreciation_expense_account_id_fkey"
+            columns: ["depreciation_expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_categories_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fixed_asset_depreciation: {
+        Row: {
+          asset_id: string
+          created_at: string
+          depreciation_amount: number
+          id: string
+          journal_entry_id: string | null
+          memo: string | null
+          org_id: string
+          period_end: string
+          period_start: string
+          posted_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          depreciation_amount: number
+          id?: string
+          journal_entry_id?: string | null
+          memo?: string | null
+          org_id: string
+          period_end: string
+          period_start: string
+          posted_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          depreciation_amount?: number
+          id?: string
+          journal_entry_id?: string | null
+          memo?: string | null
+          org_id?: string
+          period_end?: string
+          period_start?: string
+          posted_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fixed_asset_depreciation_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "fixed_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_depreciation_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_depreciation_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "fixed_asset_depreciation_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fixed_assets: {
+        Row: {
+          accumulated_depreciation: number
+          acquisition_cost: number
+          acquisition_date: string
+          asset_number: string
+          book_value: number | null
+          category_id: string | null
+          created_at: string
+          depreciation_method: string
+          description: string | null
+          disposal_date: string | null
+          id: string
+          in_service_date: string | null
+          location: string | null
+          name: string
+          notes: string | null
+          org_id: string
+          salvage_value: number
+          status: string
+          updated_at: string
+          useful_life_months: number | null
+          vendor_id: string | null
+        }
+        Insert: {
+          accumulated_depreciation?: number
+          acquisition_cost: number
+          acquisition_date: string
+          asset_number: string
+          book_value?: number | null
+          category_id?: string | null
+          created_at?: string
+          depreciation_method?: string
+          description?: string | null
+          disposal_date?: string | null
+          id?: string
+          in_service_date?: string | null
+          location?: string | null
+          name: string
+          notes?: string | null
+          org_id: string
+          salvage_value?: number
+          status?: string
+          updated_at?: string
+          useful_life_months?: number | null
+          vendor_id?: string | null
+        }
+        Update: {
+          accumulated_depreciation?: number
+          acquisition_cost?: number
+          acquisition_date?: string
+          asset_number?: string
+          book_value?: number | null
+          category_id?: string | null
+          created_at?: string
+          depreciation_method?: string
+          description?: string | null
+          disposal_date?: string | null
+          id?: string
+          in_service_date?: string | null
+          location?: string | null
+          name?: string
+          notes?: string | null
+          org_id?: string
+          salvage_value?: number
+          status?: string
+          updated_at?: string
+          useful_life_months?: number | null
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fixed_assets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "fixed_asset_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_assets_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fixed_assets_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       integration_event_mappings: {
         Row: {
           account_purpose: string | null
@@ -1694,6 +2052,203 @@ export type Database = {
           },
         ]
       }
+      intercompany_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          description: string | null
+          from_entity_id: string
+          from_journal_entry_id: string | null
+          id: string
+          memo: string | null
+          org_id: string
+          settled_at: string | null
+          status: string
+          to_entity_id: string
+          to_journal_entry_id: string | null
+          txn_date: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          from_entity_id: string
+          from_journal_entry_id?: string | null
+          id?: string
+          memo?: string | null
+          org_id: string
+          settled_at?: string | null
+          status?: string
+          to_entity_id: string
+          to_journal_entry_id?: string | null
+          txn_date: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          from_entity_id?: string
+          from_journal_entry_id?: string | null
+          id?: string
+          memo?: string | null
+          org_id?: string
+          settled_at?: string | null
+          status?: string
+          to_entity_id?: string
+          to_journal_entry_id?: string | null
+          txn_date?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intercompany_transactions_from_entity_id_fkey"
+            columns: ["from_entity_id"]
+            isOneToOne: false
+            referencedRelation: "legal_entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_from_journal_entry_id_fkey"
+            columns: ["from_journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_from_journal_entry_id_fkey"
+            columns: ["from_journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_to_entity_id_fkey"
+            columns: ["to_entity_id"]
+            isOneToOne: false
+            referencedRelation: "legal_entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_to_journal_entry_id_fkey"
+            columns: ["to_journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_to_journal_entry_id_fkey"
+            columns: ["to_journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+        ]
+      }
+      inventory_categories: {
+        Row: {
+          asset_account_id: string | null
+          cogs_account_id: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          parent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          asset_account_id?: string | null
+          cogs_account_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          asset_account_id?: string | null
+          cogs_account_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inventory_consumption: {
         Row: {
           consumed_at: string
@@ -1754,6 +2309,254 @@ export type Database = {
           },
           {
             foreignKeyName: "inventory_consumption_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_items: {
+        Row: {
+          asset_account_id: string | null
+          category_id: string | null
+          cogs_account_id: string | null
+          cost_method: string
+          created_at: string
+          current_avg_cost: number
+          description: string | null
+          id: string
+          is_active: boolean
+          is_tracked: boolean
+          name: string
+          org_id: string
+          quantity_on_hand: number
+          sku: string
+          standard_cost: number | null
+          unit_of_measure: string
+          updated_at: string
+        }
+        Insert: {
+          asset_account_id?: string | null
+          category_id?: string | null
+          cogs_account_id?: string | null
+          cost_method?: string
+          created_at?: string
+          current_avg_cost?: number
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_tracked?: boolean
+          name: string
+          org_id: string
+          quantity_on_hand?: number
+          sku: string
+          standard_cost?: number | null
+          unit_of_measure?: string
+          updated_at?: string
+        }
+        Update: {
+          asset_account_id?: string | null
+          category_id?: string | null
+          cogs_account_id?: string | null
+          cost_method?: string
+          created_at?: string
+          current_avg_cost?: number
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_tracked?: boolean
+          name?: string
+          org_id?: string
+          quantity_on_hand?: number
+          sku?: string
+          standard_cost?: number | null
+          unit_of_measure?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_asset_account_id_fkey"
+            columns: ["asset_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_cogs_account_id_fkey"
+            columns: ["cogs_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_locations: {
+        Row: {
+          address: string | null
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_locations_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_transactions: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          item_id: string
+          journal_entry_id: string | null
+          location_id: string | null
+          memo: string | null
+          occurred_at: string
+          org_id: string
+          quantity: number
+          reference_id: string | null
+          reference_type: string | null
+          total_cost: number
+          txn_type: string
+          unit_cost: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          item_id: string
+          journal_entry_id?: string | null
+          location_id?: string | null
+          memo?: string | null
+          occurred_at?: string
+          org_id: string
+          quantity: number
+          reference_id?: string | null
+          reference_type?: string | null
+          total_cost?: number
+          txn_type: string
+          unit_cost?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          item_id?: string
+          journal_entry_id?: string | null
+          location_id?: string | null
+          memo?: string | null
+          occurred_at?: string
+          org_id?: string
+          quantity?: number
+          reference_id?: string | null
+          reference_type?: string | null
+          total_cost?: number
+          txn_type?: string
+          unit_cost?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_transactions_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_transactions_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_transactions_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "inventory_transactions_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_transactions_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
@@ -2094,6 +2897,117 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_general_ledger"
             referencedColumns: ["journal_id"]
+          },
+        ]
+      }
+      legal_entities: {
+        Row: {
+          code: string
+          country: string | null
+          created_at: string
+          entity_type: string
+          functional_currency: string
+          id: string
+          intercompany_ap_account_id: string | null
+          intercompany_ar_account_id: string | null
+          is_active: boolean
+          is_consolidated: boolean
+          name: string
+          org_id: string
+          parent_entity_id: string | null
+          tax_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          country?: string | null
+          created_at?: string
+          entity_type?: string
+          functional_currency?: string
+          id?: string
+          intercompany_ap_account_id?: string | null
+          intercompany_ar_account_id?: string | null
+          is_active?: boolean
+          is_consolidated?: boolean
+          name: string
+          org_id: string
+          parent_entity_id?: string | null
+          tax_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          country?: string | null
+          created_at?: string
+          entity_type?: string
+          functional_currency?: string
+          id?: string
+          intercompany_ap_account_id?: string | null
+          intercompany_ar_account_id?: string | null
+          is_active?: boolean
+          is_consolidated?: boolean
+          name?: string
+          org_id?: string
+          parent_entity_id?: string | null
+          tax_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "legal_entities_intercompany_ap_account_id_fkey"
+            columns: ["intercompany_ap_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "legal_entities_intercompany_ap_account_id_fkey"
+            columns: ["intercompany_ap_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "legal_entities_intercompany_ap_account_id_fkey"
+            columns: ["intercompany_ap_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "legal_entities_intercompany_ar_account_id_fkey"
+            columns: ["intercompany_ar_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "legal_entities_intercompany_ar_account_id_fkey"
+            columns: ["intercompany_ar_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "legal_entities_intercompany_ar_account_id_fkey"
+            columns: ["intercompany_ar_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "legal_entities_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "legal_entities_parent_entity_id_fkey"
+            columns: ["parent_entity_id"]
+            isOneToOne: false
+            referencedRelation: "legal_entities"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -2558,6 +3472,290 @@ export type Database = {
             columns: ["source_id"]
             isOneToOne: false
             referencedRelation: "integration_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tax_categories: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          kind: string
+          name: string
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: string
+          name: string
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kind?: string
+          name?: string
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tax_categories_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tax_jurisdictions: {
+        Row: {
+          code: string
+          country: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          region: string | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          country?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          region?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          country?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          region?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tax_jurisdictions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tax_liabilities: {
+        Row: {
+          category_id: string
+          created_at: string
+          filed_at: string | null
+          id: string
+          journal_entry_id: string | null
+          jurisdiction_id: string
+          memo: string | null
+          org_id: string
+          paid_at: string | null
+          period_end: string
+          period_start: string
+          status: string
+          tax_amount: number
+          taxable_amount: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          filed_at?: string | null
+          id?: string
+          journal_entry_id?: string | null
+          jurisdiction_id: string
+          memo?: string | null
+          org_id: string
+          paid_at?: string | null
+          period_end: string
+          period_start: string
+          status?: string
+          tax_amount?: number
+          taxable_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          filed_at?: string | null
+          id?: string
+          journal_entry_id?: string | null
+          jurisdiction_id?: string
+          memo?: string | null
+          org_id?: string
+          paid_at?: string | null
+          period_end?: string
+          period_start?: string
+          status?: string
+          tax_amount?: number
+          taxable_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tax_liabilities_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "tax_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_liabilities_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_liabilities_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "v_general_ledger"
+            referencedColumns: ["journal_id"]
+          },
+          {
+            foreignKeyName: "tax_liabilities_jurisdiction_id_fkey"
+            columns: ["jurisdiction_id"]
+            isOneToOne: false
+            referencedRelation: "tax_jurisdictions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_liabilities_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tax_rates: {
+        Row: {
+          category_id: string
+          created_at: string
+          effective_from: string
+          effective_to: string | null
+          expense_account_id: string | null
+          id: string
+          is_active: boolean
+          jurisdiction_id: string
+          liability_account_id: string | null
+          org_id: string
+          rate: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          effective_from: string
+          effective_to?: string | null
+          expense_account_id?: string | null
+          id?: string
+          is_active?: boolean
+          jurisdiction_id: string
+          liability_account_id?: string | null
+          org_id: string
+          rate: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          effective_from?: string
+          effective_to?: string | null
+          expense_account_id?: string | null
+          id?: string
+          is_active?: boolean
+          jurisdiction_id?: string
+          liability_account_id?: string | null
+          org_id?: string
+          rate?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tax_rates_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "tax_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_rates_expense_account_id_fkey"
+            columns: ["expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_rates_expense_account_id_fkey"
+            columns: ["expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "tax_rates_expense_account_id_fkey"
+            columns: ["expense_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "tax_rates_jurisdiction_id_fkey"
+            columns: ["jurisdiction_id"]
+            isOneToOne: false
+            referencedRelation: "tax_jurisdictions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_rates_liability_account_id_fkey"
+            columns: ["liability_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tax_rates_liability_account_id_fkey"
+            columns: ["liability_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "tax_rates_liability_account_id_fkey"
+            columns: ["liability_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "tax_rates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

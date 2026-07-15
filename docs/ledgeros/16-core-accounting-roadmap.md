@@ -396,3 +396,60 @@ unchanged by M5 — the layer is strictly additive.
 - No hardcoded customer logic.
 - No APEX redesign.
 - No fake integrations.
+
+## Milestone 8 — Accounting Completeness Layer ✅
+
+Completes the foundation required before activating full LedgerOS
+Intelligence, without changing any prior invariant.
+
+### What M8 ships
+
+- **Inventory** — `inventory_categories`, `inventory_locations`,
+  `inventory_items`, `inventory_transactions`. Cost methods scaffolded
+  (`average`, `fifo`, `standard`, `specific`); no auto-posting.
+- **Fixed assets** — `fixed_asset_categories`, `fixed_assets`,
+  `fixed_asset_depreciation`. Straight-line schedule generation as
+  `scheduled` rows only; posting flows through the accounting engine.
+  `book_value` is a stored generated column.
+- **Tax framework** — `tax_jurisdictions`, `tax_categories`,
+  `tax_rates`, `tax_liabilities`. Framework only; no calculation.
+- **Multi-entity** — `legal_entities`, `intercompany_transactions`,
+  live due-to / due-from aggregation. Consolidation deferred.
+- **Accounting Intelligence** — `accounting_insights` (advisory,
+  service-role insert only). DB trigger `tg_insights_advisory_guard`
+  enforces immutability of the narrative, evidence, confidence, and
+  `advisory_only` flag. Users may only acknowledge / dismiss / resolve.
+- **UI routes** — `/ledger/inventory`, `/ledger/fixed-assets`,
+  `/ledger/tax`, `/ledger/entities`, `/close/ai-assistant`.
+- **Docs** — `docs/ledgeros/21-accounting-completeness.md`.
+
+### Preserved invariants
+
+Financial Event Bus, Materialization Engine, Accounting Engine,
+double-entry integrity, fiscal controls, audit lineage, close workflow,
+Control Center, and organization isolation are all unchanged by M8.
+
+### What M8 explicitly does NOT add
+
+- No ServiceConnect-specific accounting code.
+- No hardcoded customer logic.
+- No automatic tax calculations.
+- No auto-posting of depreciation, COGS, or intercompany journals.
+- No AI ability to write to the ledger, approve transactions, or
+  override controls.
+- No APEX redesign.
+
+### AI capability boundary (mandatory)
+
+The Accounting Intelligence layer can:
+
+- Explain what happened, why, evidence, confidence
+- Recommend a human action
+
+The Accounting Intelligence layer cannot:
+
+- Post journal entries
+- Change accounting records
+- Approve transactions
+- Override controls
+- Alter fiscal-period state

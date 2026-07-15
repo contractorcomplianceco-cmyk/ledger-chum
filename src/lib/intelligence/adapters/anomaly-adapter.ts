@@ -65,7 +65,7 @@ export function useAnomalyAdapter(options?: {
       approvalRequirement: a.approval_requirement ?? undefined,
       demonstrationOnly: a.demonstration_only ?? false,
       severity: (a.severity ?? "info") as IntelligenceItem["severity"],
-      category: a.category ?? "anomaly",
+      category: a.detector ?? "anomaly",
       createdAt: a.created_at,
     };
   });

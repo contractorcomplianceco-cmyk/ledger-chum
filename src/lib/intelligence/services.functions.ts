@@ -157,7 +157,13 @@ export const updateRecommendationState = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = {
+    const patch: {
+      state: typeof data.state;
+      reviewed_by: string;
+      reviewed_at: string;
+      outcome_note?: string;
+      outcome_value?: number;
+    } = {
       state: data.state,
       reviewed_by: context.userId,
       reviewed_at: new Date().toISOString(),

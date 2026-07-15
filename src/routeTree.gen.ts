@@ -165,6 +165,7 @@ import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
 import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
@@ -1012,6 +1013,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminMetricsRoute = AdminMetricsRouteImport.update({
+  id: '/admin/metrics',
+  path: '/admin/metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   id: '/admin/integrations',
   path: '/admin/integrations',
@@ -1299,6 +1305,7 @@ export interface FileRoutesByFullPath {
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/metrics': typeof AdminMetricsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1501,6 +1508,7 @@ export interface FileRoutesByTo {
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/metrics': typeof AdminMetricsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1707,6 +1715,7 @@ export interface FileRoutesById {
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/metrics': typeof AdminMetricsRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1914,6 +1923,7 @@ export interface FileRouteTypes {
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
     | '/admin/integrations'
+    | '/admin/metrics'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2116,6 +2126,7 @@ export interface FileRouteTypes {
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
     | '/admin/integrations'
+    | '/admin/metrics'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2321,6 +2332,7 @@ export interface FileRouteTypes {
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
     | '/admin/integrations'
+    | '/admin/metrics'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2527,6 +2539,7 @@ export interface RootRouteChildren {
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
+  AdminMetricsRoute: typeof AdminMetricsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
   ApexAssetsRoute: typeof ApexAssetsRoute
@@ -3764,6 +3777,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/metrics': {
+      id: '/admin/metrics'
+      path: '/admin/metrics'
+      fullPath: '/admin/metrics'
+      preLoaderRoute: typeof AdminMetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/integrations': {
       id: '/admin/integrations'
       path: '/admin/integrations'
@@ -4357,6 +4377,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
+  AdminMetricsRoute: AdminMetricsRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
   ApexAssetsRoute: ApexAssetsRoute,

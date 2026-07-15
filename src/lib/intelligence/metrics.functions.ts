@@ -508,7 +508,7 @@ export const getMetricAiResponse = createServerFn({ method: "GET" })
           metric.confidence_rule ??
           "Confidence reflects source freshness and completeness.",
       },
-      freshness: (value?.freshness_status ?? "unavailable") as MetricAiResponse["freshness"],
+      freshness: value?.freshness_status ?? "unavailable",
       assumptions: value?.assumptions ?? [],
       missing_data: value?.missing_data ?? [],
       demonstration_only: metric.demonstration_only,

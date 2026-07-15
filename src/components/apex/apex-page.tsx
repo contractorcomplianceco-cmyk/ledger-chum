@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 export const APEX_TABS: Array<{ to: string; label: string; exact?: boolean }> = [
   { to: "/apex", label: "Overview", exact: true },
+  { to: "/apex/insights", label: "Insights" },
   { to: "/apex/architecture", label: "Experience Architecture" },
   { to: "/apex/navigation", label: "Navigation 3.0" },
   { to: "/apex/widgets", label: "Widgets" },

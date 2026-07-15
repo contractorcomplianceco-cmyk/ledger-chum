@@ -98,6 +98,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { title: "Operational Dashboard", to: "/dashboard", icon: LayoutDashboard, keywords: ["home", "kpi", "operational"] },
       { title: "Executive Home", to: "/apex", icon: LayoutDashboard, keywords: ["executive", "apex", "home"] },
+      { title: "APEX Insights", to: "/apex/insights", icon: LayoutDashboard, keywords: ["insights", "intelligence", "apex", "feed"] },
       { title: "Money Workspace", to: "/apex/money", icon: LayoutDashboard, keywords: ["executive", "apex", "money", "cash"] },
       { title: "Growth Workspace", to: "/apex/growth", icon: LayoutDashboard, keywords: ["executive", "apex", "growth", "revenue"] },
       { title: "People Workspace", to: "/apex/people", icon: LayoutDashboard, keywords: ["executive", "apex", "people", "payroll"] },

@@ -155,6 +155,7 @@ import { Route as ApexPeopleRouteImport } from './routes/apex.people'
 import { Route as ApexOpportunitiesRouteImport } from './routes/apex.opportunities'
 import { Route as ApexNavigationRouteImport } from './routes/apex.navigation'
 import { Route as ApexMoneyRouteImport } from './routes/apex.money'
+import { Route as ApexInsightsRouteImport } from './routes/apex.insights'
 import { Route as ApexHandoffRouteImport } from './routes/apex.handoff'
 import { Route as ApexGrowthRouteImport } from './routes/apex.growth'
 import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dna'
@@ -964,6 +965,11 @@ const ApexMoneyRoute = ApexMoneyRouteImport.update({
   path: '/apex/money',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApexInsightsRoute = ApexInsightsRouteImport.update({
+  id: '/apex/insights',
+  path: '/apex/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApexHandoffRoute = ApexHandoffRouteImport.update({
   id: '/apex/handoff',
   path: '/apex/handoff',
@@ -1323,6 +1329,7 @@ export interface FileRoutesByFullPath {
   '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/insights': typeof ApexInsightsRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
@@ -1527,6 +1534,7 @@ export interface FileRoutesByTo {
   '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/insights': typeof ApexInsightsRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
@@ -1735,6 +1743,7 @@ export interface FileRoutesById {
   '/apex/financial-dna': typeof ApexFinancialDnaRouteWithChildren
   '/apex/growth': typeof ApexGrowthRoute
   '/apex/handoff': typeof ApexHandoffRoute
+  '/apex/insights': typeof ApexInsightsRoute
   '/apex/money': typeof ApexMoneyRoute
   '/apex/navigation': typeof ApexNavigationRoute
   '/apex/opportunities': typeof ApexOpportunitiesRouteWithChildren
@@ -1944,6 +1953,7 @@ export interface FileRouteTypes {
     | '/apex/financial-dna'
     | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/insights'
     | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
@@ -2148,6 +2158,7 @@ export interface FileRouteTypes {
     | '/apex/financial-dna'
     | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/insights'
     | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
@@ -2355,6 +2366,7 @@ export interface FileRouteTypes {
     | '/apex/financial-dna'
     | '/apex/growth'
     | '/apex/handoff'
+    | '/apex/insights'
     | '/apex/money'
     | '/apex/navigation'
     | '/apex/opportunities'
@@ -2563,6 +2575,7 @@ export interface RootRouteChildren {
   ApexFinancialDnaRoute: typeof ApexFinancialDnaRouteWithChildren
   ApexGrowthRoute: typeof ApexGrowthRoute
   ApexHandoffRoute: typeof ApexHandoffRoute
+  ApexInsightsRoute: typeof ApexInsightsRoute
   ApexMoneyRoute: typeof ApexMoneyRoute
   ApexNavigationRoute: typeof ApexNavigationRoute
   ApexOpportunitiesRoute: typeof ApexOpportunitiesRouteWithChildren
@@ -3720,6 +3733,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexMoneyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apex/insights': {
+      id: '/apex/insights'
+      path: '/apex/insights'
+      fullPath: '/apex/insights'
+      preLoaderRoute: typeof ApexInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apex/handoff': {
       id: '/apex/handoff'
       path: '/apex/handoff'
@@ -4409,6 +4429,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApexFinancialDnaRoute: ApexFinancialDnaRouteWithChildren,
   ApexGrowthRoute: ApexGrowthRoute,
   ApexHandoffRoute: ApexHandoffRoute,
+  ApexInsightsRoute: ApexInsightsRoute,
   ApexMoneyRoute: ApexMoneyRoute,
   ApexNavigationRoute: ApexNavigationRoute,
   ApexOpportunitiesRoute: ApexOpportunitiesRouteWithChildren,

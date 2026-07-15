@@ -256,6 +256,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Integrations", to: "/integrations", icon: Plug, badge: "3", badgeTone: "violet" },
       { title: "Integrations Admin", to: "/admin/integrations", icon: Plug, keywords: ["sources", "mappings", "sync", "retry"] },
       { title: "Financial Event Bus", to: "/admin/financial-events", icon: Workflow, keywords: ["events", "rules", "approvals", "ingestion"] },
+      { title: "Metric Center", to: "/admin/metrics", icon: Gauge, keywords: ["metrics", "canonical", "kpi", "lineage", "confidence", "intelligence"] },
       { title: "Users", to: "/admin/users", icon: UserCog },
       { title: "Audit Log", to: "/audit", icon: ShieldCheck },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },

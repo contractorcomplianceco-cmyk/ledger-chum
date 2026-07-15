@@ -53,7 +53,7 @@ export function useRecommendationAdapter(options?: {
     kind: "recommendation",
     title: r.title,
     summary: r.narrative ?? r.title,
-    sourceMetricKey: r.metric_key ?? undefined,
+    sourceMetricKey: r.supporting_metric_keys?.[0] ?? undefined,
     evidence: Array.isArray(r.evidence)
       ? (r.evidence as unknown[]).slice(0, 6).map((e, i) => ({
           label:

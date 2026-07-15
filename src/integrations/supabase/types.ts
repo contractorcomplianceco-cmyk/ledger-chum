@@ -1302,6 +1302,111 @@ export type Database = {
           },
         ]
       }
+      financial_anomalies: {
+        Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
+          advisory_only: boolean
+          approval_requirement: string | null
+          assumptions: string[]
+          confidence: number
+          created_at: string
+          demonstration_only: boolean
+          detector: string
+          deviation: number | null
+          evidence: Json
+          expected_value: number | null
+          freshness: string
+          id: string
+          metric_id: string | null
+          metric_key: string
+          missing_data: string[]
+          narrative: string
+          observed_value: number | null
+          org_id: string
+          period_end: string | null
+          period_start: string | null
+          recommended_action: string | null
+          severity: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          advisory_only?: boolean
+          approval_requirement?: string | null
+          assumptions?: string[]
+          confidence?: number
+          created_at?: string
+          demonstration_only?: boolean
+          detector?: string
+          deviation?: number | null
+          evidence?: Json
+          expected_value?: number | null
+          freshness?: string
+          id?: string
+          metric_id?: string | null
+          metric_key: string
+          missing_data?: string[]
+          narrative: string
+          observed_value?: number | null
+          org_id: string
+          period_end?: string | null
+          period_start?: string | null
+          recommended_action?: string | null
+          severity?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          advisory_only?: boolean
+          approval_requirement?: string | null
+          assumptions?: string[]
+          confidence?: number
+          created_at?: string
+          demonstration_only?: boolean
+          detector?: string
+          deviation?: number | null
+          evidence?: Json
+          expected_value?: number | null
+          freshness?: string
+          id?: string
+          metric_id?: string | null
+          metric_key?: string
+          missing_data?: string[]
+          narrative?: string
+          observed_value?: number | null
+          org_id?: string
+          period_end?: string | null
+          period_start?: string | null
+          recommended_action?: string | null
+          severity?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_anomalies_metric_id_fkey"
+            columns: ["metric_id"]
+            isOneToOne: false
+            referencedRelation: "financial_metrics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_anomalies_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       financial_event_approvals: {
         Row: {
           approver_id: string | null
@@ -1753,6 +1858,114 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_recommendations: {
+        Row: {
+          advisory_only: boolean
+          approval_requirement: string
+          assumptions: string[]
+          category: string
+          confidence: number
+          created_at: string
+          demonstration_only: boolean
+          estimated_impact: string | null
+          evidence: Json
+          freshness: string
+          id: string
+          impact_value: number | null
+          missing_data: string[]
+          narrative: string
+          org_id: string
+          outcome_note: string | null
+          outcome_value: number | null
+          owner_role: string | null
+          persona: string
+          related_anomaly_id: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          risk: string
+          state: string
+          supporting_metric_keys: string[]
+          time_horizon: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          advisory_only?: boolean
+          approval_requirement?: string
+          assumptions?: string[]
+          category: string
+          confidence?: number
+          created_at?: string
+          demonstration_only?: boolean
+          estimated_impact?: string | null
+          evidence?: Json
+          freshness?: string
+          id?: string
+          impact_value?: number | null
+          missing_data?: string[]
+          narrative: string
+          org_id: string
+          outcome_note?: string | null
+          outcome_value?: number | null
+          owner_role?: string | null
+          persona?: string
+          related_anomaly_id?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk?: string
+          state?: string
+          supporting_metric_keys?: string[]
+          time_horizon?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          advisory_only?: boolean
+          approval_requirement?: string
+          assumptions?: string[]
+          category?: string
+          confidence?: number
+          created_at?: string
+          demonstration_only?: boolean
+          estimated_impact?: string | null
+          evidence?: Json
+          freshness?: string
+          id?: string
+          impact_value?: number | null
+          missing_data?: string[]
+          narrative?: string
+          org_id?: string
+          outcome_note?: string | null
+          outcome_value?: number | null
+          owner_role?: string | null
+          persona?: string
+          related_anomaly_id?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk?: string
+          state?: string
+          supporting_metric_keys?: string[]
+          time_horizon?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_recommendations_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_recommendations_related_anomaly_id_fkey"
+            columns: ["related_anomaly_id"]
+            isOneToOne: false
+            referencedRelation: "financial_anomalies"
             referencedColumns: ["id"]
           },
         ]
@@ -2236,6 +2449,77 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "integration_sources_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      intelligence_explanations: {
+        Row: {
+          advisory_only: boolean
+          answer: string
+          approval_requirement: string | null
+          assumptions: string[]
+          confidence: number
+          created_at: string
+          created_by: string | null
+          demonstration_only: boolean
+          evidence: Json
+          freshness: string
+          id: string
+          missing_data: string[]
+          org_id: string
+          question: string | null
+          recommended_action: string | null
+          subject_key: string
+          subject_type: string
+          supporting_metric_keys: string[]
+        }
+        Insert: {
+          advisory_only?: boolean
+          answer: string
+          approval_requirement?: string | null
+          assumptions?: string[]
+          confidence?: number
+          created_at?: string
+          created_by?: string | null
+          demonstration_only?: boolean
+          evidence?: Json
+          freshness?: string
+          id?: string
+          missing_data?: string[]
+          org_id: string
+          question?: string | null
+          recommended_action?: string | null
+          subject_key: string
+          subject_type: string
+          supporting_metric_keys?: string[]
+        }
+        Update: {
+          advisory_only?: boolean
+          answer?: string
+          approval_requirement?: string | null
+          assumptions?: string[]
+          confidence?: number
+          created_at?: string
+          created_by?: string | null
+          demonstration_only?: boolean
+          evidence?: Json
+          freshness?: string
+          id?: string
+          missing_data?: string[]
+          org_id?: string
+          question?: string | null
+          recommended_action?: string | null
+          subject_key?: string
+          subject_type?: string
+          supporting_metric_keys?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intelligence_explanations_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"

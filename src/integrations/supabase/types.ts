@@ -1566,6 +1566,197 @@ export type Database = {
           },
         ]
       }
+      financial_metric_lineage: {
+        Row: {
+          created_at: string
+          dependency_metric_key: string | null
+          id: string
+          metric_id: string
+          org_id: string
+          source_field: string | null
+          source_table: string | null
+          source_type: Database["public"]["Enums"]["metric_source_type"]
+          transformation_description: string
+        }
+        Insert: {
+          created_at?: string
+          dependency_metric_key?: string | null
+          id?: string
+          metric_id: string
+          org_id: string
+          source_field?: string | null
+          source_table?: string | null
+          source_type: Database["public"]["Enums"]["metric_source_type"]
+          transformation_description: string
+        }
+        Update: {
+          created_at?: string
+          dependency_metric_key?: string | null
+          id?: string
+          metric_id?: string
+          org_id?: string
+          source_field?: string | null
+          source_table?: string | null
+          source_type?: Database["public"]["Enums"]["metric_source_type"]
+          transformation_description?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_metric_lineage_metric_id_fkey"
+            columns: ["metric_id"]
+            isOneToOne: false
+            referencedRelation: "financial_metrics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_metric_lineage_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_metric_values: {
+        Row: {
+          assumptions: string[]
+          calculated_by: string | null
+          calculation_timestamp: string
+          confidence_score: number
+          created_at: string
+          freshness_status: Database["public"]["Enums"]["metric_freshness"]
+          id: string
+          metric_id: string
+          missing_data: string[]
+          notes: string | null
+          org_id: string
+          period_end: string | null
+          period_start: string | null
+          source_count: number
+          value: number | null
+          value_json: Json | null
+        }
+        Insert: {
+          assumptions?: string[]
+          calculated_by?: string | null
+          calculation_timestamp?: string
+          confidence_score?: number
+          created_at?: string
+          freshness_status?: Database["public"]["Enums"]["metric_freshness"]
+          id?: string
+          metric_id: string
+          missing_data?: string[]
+          notes?: string | null
+          org_id: string
+          period_end?: string | null
+          period_start?: string | null
+          source_count?: number
+          value?: number | null
+          value_json?: Json | null
+        }
+        Update: {
+          assumptions?: string[]
+          calculated_by?: string | null
+          calculation_timestamp?: string
+          confidence_score?: number
+          created_at?: string
+          freshness_status?: Database["public"]["Enums"]["metric_freshness"]
+          id?: string
+          metric_id?: string
+          missing_data?: string[]
+          notes?: string | null
+          org_id?: string
+          period_end?: string | null
+          period_start?: string | null
+          source_count?: number
+          value?: number | null
+          value_json?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_metric_values_metric_id_fkey"
+            columns: ["metric_id"]
+            isOneToOne: false
+            referencedRelation: "financial_metrics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_metric_values_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_metrics: {
+        Row: {
+          calculation_method: string
+          category: Database["public"]["Enums"]["metric_category"]
+          confidence_rule: string | null
+          created_at: string
+          demonstration_only: boolean
+          description: string
+          formula_definition: string
+          id: string
+          is_sensitive: boolean
+          metric_key: string
+          metric_name: string
+          org_id: string
+          owner_role: string
+          refresh_frequency: Database["public"]["Enums"]["metric_refresh_frequency"]
+          required_permission: string | null
+          status: Database["public"]["Enums"]["metric_status"]
+          updated_at: string
+        }
+        Insert: {
+          calculation_method: string
+          category: Database["public"]["Enums"]["metric_category"]
+          confidence_rule?: string | null
+          created_at?: string
+          demonstration_only?: boolean
+          description: string
+          formula_definition: string
+          id?: string
+          is_sensitive?: boolean
+          metric_key: string
+          metric_name: string
+          org_id: string
+          owner_role?: string
+          refresh_frequency?: Database["public"]["Enums"]["metric_refresh_frequency"]
+          required_permission?: string | null
+          status?: Database["public"]["Enums"]["metric_status"]
+          updated_at?: string
+        }
+        Update: {
+          calculation_method?: string
+          category?: Database["public"]["Enums"]["metric_category"]
+          confidence_rule?: string | null
+          created_at?: string
+          demonstration_only?: boolean
+          description?: string
+          formula_definition?: string
+          id?: string
+          is_sensitive?: boolean
+          metric_key?: string
+          metric_name?: string
+          org_id?: string
+          owner_role?: string
+          refresh_frequency?: Database["public"]["Enums"]["metric_refresh_frequency"]
+          required_permission?: string | null
+          status?: Database["public"]["Enums"]["metric_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_metrics_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fiscal_periods: {
         Row: {
           closed_at: string | null
@@ -4237,6 +4428,7 @@ export type Database = {
         Args: { _journal_id: string; _org_id: string; _reason: string }
         Returns: Json
       }
+      seed_canonical_metrics: { Args: { _org_id: string }; Returns: number }
       seed_default_close_tasks: {
         Args: { _org: string; _run: string }
         Returns: undefined
@@ -4262,6 +4454,32 @@ export type Database = {
         | "systems_reviewer"
         | "team_member"
         | "integration_service"
+      metric_category:
+        | "cash"
+        | "revenue"
+        | "profitability"
+        | "ar"
+        | "ap"
+        | "expenses"
+        | "banking"
+        | "growth"
+        | "operations"
+        | "people"
+        | "compensation"
+        | "technology"
+        | "risk"
+        | "company_health"
+      metric_freshness: "fresh" | "delayed" | "stale" | "unavailable"
+      metric_refresh_frequency:
+        | "realtime"
+        | "minutely"
+        | "hourly"
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "on_demand"
+      metric_source_type: "table" | "view" | "rpc" | "derived" | "external"
+      metric_status: "draft" | "active" | "deprecated"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -4397,6 +4615,34 @@ export const Constants = {
         "team_member",
         "integration_service",
       ],
+      metric_category: [
+        "cash",
+        "revenue",
+        "profitability",
+        "ar",
+        "ap",
+        "expenses",
+        "banking",
+        "growth",
+        "operations",
+        "people",
+        "compensation",
+        "technology",
+        "risk",
+        "company_health",
+      ],
+      metric_freshness: ["fresh", "delayed", "stale", "unavailable"],
+      metric_refresh_frequency: [
+        "realtime",
+        "minutely",
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly",
+        "on_demand",
+      ],
+      metric_source_type: ["table", "view", "rpc", "derived", "external"],
+      metric_status: ["draft", "active", "deprecated"],
     },
   },
 } as const

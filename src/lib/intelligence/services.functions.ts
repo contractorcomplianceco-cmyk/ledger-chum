@@ -379,7 +379,7 @@ export const getFinancialHealthScore = createServerFn({ method: "GET" })
         value: numeric,
         score: Math.round(ratio * 100),
         weight: d.weight,
-        freshness: v.freshness_status,
+        freshness: String(v.freshness_status),
       });
     }
 

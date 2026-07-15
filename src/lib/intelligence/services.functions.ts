@@ -70,7 +70,11 @@ export const updateAnomalyStatus = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = { status: data.status };
+    const patch: {
+      status: typeof data.status;
+      acknowledged_by?: string;
+      acknowledged_at?: string;
+    } = { status: data.status };
     if (data.status === "acknowledged") {
       patch.acknowledged_by = context.userId;
       patch.acknowledged_at = new Date().toISOString();

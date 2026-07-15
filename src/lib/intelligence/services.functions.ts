@@ -333,7 +333,13 @@ export const getFinancialHealthScore = createServerFn({ method: "GET" })
       { key: "cash_runway", weight: 0.1, good: 12, bad: 2 },
     ] as const;
 
-    const evidence: unknown[] = [];
+    const evidence: Array<{
+      metric_key: string;
+      value: number;
+      score: number;
+      weight: number;
+      freshness: string;
+    }> = [];
     const missing: string[] = [];
     let score = 0;
     let totalWeight = 0;

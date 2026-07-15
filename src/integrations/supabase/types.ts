@@ -1138,6 +1138,93 @@ export type Database = {
           },
         ]
       }
+      financial_account_mappings: {
+        Row: {
+          approved_by: string | null
+          created_at: string
+          effective_date: string
+          expiration_date: string | null
+          external_type: string
+          external_value: string
+          id: string
+          integration_source_id: string | null
+          ledger_account_id: string | null
+          ledger_object_type: string | null
+          notes: string | null
+          org_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_by?: string | null
+          created_at?: string
+          effective_date?: string
+          expiration_date?: string | null
+          external_type: string
+          external_value: string
+          id?: string
+          integration_source_id?: string | null
+          ledger_account_id?: string | null
+          ledger_object_type?: string | null
+          notes?: string | null
+          org_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_by?: string | null
+          created_at?: string
+          effective_date?: string
+          expiration_date?: string | null
+          external_type?: string
+          external_value?: string
+          id?: string
+          integration_source_id?: string | null
+          ledger_account_id?: string | null
+          ledger_object_type?: string | null
+          notes?: string | null
+          org_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_account_mappings_integration_source_id_fkey"
+            columns: ["integration_source_id"]
+            isOneToOne: false
+            referencedRelation: "integration_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_account_mappings_ledger_account_id_fkey"
+            columns: ["ledger_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_account_mappings_ledger_account_id_fkey"
+            columns: ["ledger_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "financial_account_mappings_ledger_account_id_fkey"
+            columns: ["ledger_account_id"]
+            isOneToOne: false
+            referencedRelation: "v_trial_balance"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "financial_account_mappings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       financial_event_approvals: {
         Row: {
           approver_id: string | null
@@ -1176,6 +1263,75 @@ export type Database = {
           },
           {
             foreignKeyName: "financial_event_approvals_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_event_materializations: {
+        Row: {
+          audit_event_id: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          error_code: string | null
+          error_message: string | null
+          event_id: string
+          id: string
+          materialization_type: string
+          org_id: string
+          retry_count: number
+          status: string
+          target_object_id: string | null
+          target_object_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          audit_event_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_code?: string | null
+          error_message?: string | null
+          event_id: string
+          id?: string
+          materialization_type: string
+          org_id: string
+          retry_count?: number
+          status?: string
+          target_object_id?: string | null
+          target_object_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          audit_event_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_code?: string | null
+          error_message?: string | null
+          event_id?: string
+          id?: string
+          materialization_type?: string
+          org_id?: string
+          retry_count?: number
+          status?: string
+          target_object_id?: string | null
+          target_object_type?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_event_materializations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "financial_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_event_materializations_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
@@ -2764,6 +2920,10 @@ export type Database = {
         }
         Returns: Json
       }
+      materialize_financial_event: {
+        Args: { _event_id: string; _org_id: string }
+        Returns: Json
+      }
       post_bill_with_posting: {
         Args: {
           _bill_number: string
@@ -2870,6 +3030,10 @@ export type Database = {
       resolve_account: {
         Args: { _org: string; _purpose: string }
         Returns: string
+      }
+      retry_materialization: {
+        Args: { _event_id: string; _org_id: string }
+        Returns: Json
       }
       reverse_journal: {
         Args: { _journal_id: string; _org_id: string; _reason: string }

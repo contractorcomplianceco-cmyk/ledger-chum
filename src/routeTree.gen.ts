@@ -166,9 +166,13 @@ import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
 import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
+import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
+import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
 import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
 import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
@@ -1020,6 +1024,21 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReadinessRoute = AdminReadinessRouteImport.update({
+  id: '/admin/readiness',
+  path: '/admin/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminObservabilityRoute = AdminObservabilityRouteImport.update({
+  id: '/admin/observability',
+  path: '/admin/observability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMigrationRoute = AdminMigrationRouteImport.update({
+  id: '/admin/migration',
+  path: '/admin/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminMetricsRoute = AdminMetricsRouteImport.update({
   id: '/admin/metrics',
   path: '/admin/metrics',
@@ -1033,6 +1052,11 @@ const AdminIntelligenceRoute = AdminIntelligenceRouteImport.update({
 const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   id: '/admin/integrations',
   path: '/admin/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIntegrationTestingRoute = AdminIntegrationTestingRouteImport.update({
+  id: '/admin/integration-testing',
+  path: '/admin/integration-testing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
@@ -1316,9 +1340,13 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
+  '/admin/observability': typeof AdminObservabilityRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1521,9 +1549,13 @@ export interface FileRoutesByTo {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
+  '/admin/observability': typeof AdminObservabilityRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1730,9 +1762,13 @@ export interface FileRoutesById {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
+  '/admin/observability': typeof AdminObservabilityRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1940,9 +1976,13 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
+    | '/admin/observability'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2145,9 +2185,13 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
+    | '/admin/observability'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2353,9 +2397,13 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
+    | '/admin/observability'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2562,9 +2610,13 @@ export interface RootRouteChildren {
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
+  AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminIntelligenceRoute: typeof AdminIntelligenceRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
+  AdminMigrationRoute: typeof AdminMigrationRoute
+  AdminObservabilityRoute: typeof AdminObservabilityRoute
+  AdminReadinessRoute: typeof AdminReadinessRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
   ApexAssetsRoute: typeof ApexAssetsRoute
@@ -3810,6 +3862,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/readiness': {
+      id: '/admin/readiness'
+      path: '/admin/readiness'
+      fullPath: '/admin/readiness'
+      preLoaderRoute: typeof AdminReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/observability': {
+      id: '/admin/observability'
+      path: '/admin/observability'
+      fullPath: '/admin/observability'
+      preLoaderRoute: typeof AdminObservabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/migration': {
+      id: '/admin/migration'
+      path: '/admin/migration'
+      fullPath: '/admin/migration'
+      preLoaderRoute: typeof AdminMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/metrics': {
       id: '/admin/metrics'
       path: '/admin/metrics'
@@ -3829,6 +3902,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/integrations'
       fullPath: '/admin/integrations'
       preLoaderRoute: typeof AdminIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/integration-testing': {
+      id: '/admin/integration-testing'
+      path: '/admin/integration-testing'
+      fullPath: '/admin/integration-testing'
+      preLoaderRoute: typeof AdminIntegrationTestingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/financial-events': {
@@ -4416,9 +4496,13 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
+  AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminIntelligenceRoute: AdminIntelligenceRoute,
   AdminMetricsRoute: AdminMetricsRoute,
+  AdminMigrationRoute: AdminMigrationRoute,
+  AdminObservabilityRoute: AdminObservabilityRoute,
+  AdminReadinessRoute: AdminReadinessRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
   ApexAssetsRoute: ApexAssetsRoute,

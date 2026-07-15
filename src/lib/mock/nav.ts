@@ -261,8 +261,12 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Intelligence Center", to: "/admin/intelligence", icon: Bot, keywords: ["intelligence", "anomalies", "recommendations", "explanations", "ai", "advisory", "governance"] },
       { title: "Users", to: "/admin/users", icon: UserCog },
       { title: "Audit Log", to: "/audit", icon: ShieldCheck },
+      { title: "Integration Testing", to: "/admin/integration-testing", icon: Activity, keywords: ["pilot", "simulator", "serviceconnect", "test", "harness", "m10"] },
+      { title: "Observability", to: "/admin/observability", icon: Activity, keywords: ["telemetry", "health", "retry", "queue", "errors"] },
+      { title: "Data Migration", to: "/admin/migration", icon: Database, keywords: ["migration", "import", "cutover", "coa", "opening balances"] },
+      { title: "Production Readiness", to: "/admin/readiness", icon: Gauge, keywords: ["readiness", "cutover", "go/no-go", "pilot"] },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
-      { title: "Production Readiness", to: "/readiness/production", icon: ShieldCheck },
+      { title: "Production Readiness (legacy)", to: "/readiness/production", icon: ShieldCheck },
       { title: "Master Feature Registry", to: "/feature-registry", icon: ClipboardList, badge: "Planning", badgeTone: "violet", permission: "implementation.view" },
       { title: "Project APEX", to: "/apex", icon: Compass, badge: "Planning", badgeTone: "violet", permission: "implementation.view", keywords: ["executive", "intelligence", "apex"] },
       // Implementation subsection — narrower gating than admin.view

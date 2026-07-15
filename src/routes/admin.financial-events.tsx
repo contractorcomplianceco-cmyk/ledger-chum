@@ -21,8 +21,11 @@ import {
   listEventRules,
   upsertEventRule,
   deleteEventRule,
+  materializeFinancialEvent,
+  retryMaterialization,
+  listMaterializations,
 } from "@/lib/accounting/financial-events.functions";
-import { Workflow, CheckCircle2, XCircle, Trash2 } from "lucide-react";
+import { CheckCircle2, XCircle, Trash2, Play, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/admin/financial-events")({
   head: () => ({
@@ -67,6 +70,9 @@ function FinancialEventsPage() {
   const rejectFn = useServerFn(rejectFinancialEvent);
   const upsertRuleFn = useServerFn(upsertEventRule);
   const deleteRuleFn = useServerFn(deleteEventRule);
+  const materializeFn = useServerFn(materializeFinancialEvent);
+  const retryFn = useServerFn(retryMaterialization);
+  const listMatFn = useServerFn(listMaterializations);
 
   const eventsQ = useQuery({
     queryKey: ["financial-events", orgId, status],
@@ -78,10 +84,40 @@ function FinancialEventsPage() {
     queryFn: () => listRulesFn({ data: { orgId: orgId! } }),
     enabled: !!orgId,
   });
+  const materializationsQ = useQuery({
+    queryKey: ["financial-event-materializations", orgId],
+    queryFn: () => listMatFn({ data: { orgId: orgId!, status: "all", limit: 200 } }),
+    enabled: !!orgId,
+  });
 
   const invalidate = () => {
     qc.invalidateQueries({ queryKey: ["financial-events"] });
     qc.invalidateQueries({ queryKey: ["financial-event-rules"] });
+    qc.invalidateQueries({ queryKey: ["financial-event-materializations"] });
+  };
+
+  const handleMaterialize = async (id: string) => {
+    try {
+      const res = await materializeFn({ data: { orgId: orgId!, id } });
+      if (res.status === "completed") {
+        toast.success(`Materialized → ${res.target_object_type}`);
+      } else {
+        toast.error(`Materialization ${res.status}: ${res.error_message ?? res.error_code ?? ""}`);
+      }
+      invalidate();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Materialization failed");
+    }
+  };
+
+  const handleRetry = async (eventId: string) => {
+    try {
+      await retryFn({ data: { orgId: orgId!, id: eventId } });
+      toast.success("Retry attempted");
+      invalidate();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Retry failed");
+    }
   };
 
   const handleApprove = async (id: string) => {
@@ -214,6 +250,11 @@ function FinancialEventsPage() {
                           </Button>
                         </div>
                       )}
+                      {r.status === "approved" && (
+                        <Button size="sm" variant="outline" onClick={() => handleMaterialize(r.id)}>
+                          <Play className="h-4 w-4 mr-1" /> Materialize
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -221,6 +262,57 @@ function FinancialEventsPage() {
             </table>
           </div>
         </Card>
+
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold">Materialization Queue</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Approved events materialize into draft financial objects (customers, invoices, payments, credits). Journal posting still requires a human step in the ledger.
+          </p>
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-muted/40 text-left">
+                  <tr>
+                    <th className="p-3">Created</th>
+                    <th className="p-3">Type</th>
+                    <th className="p-3">Target</th>
+                    <th className="p-3">Status</th>
+                    <th className="p-3">Error</th>
+                    <th className="p-3">Retries</th>
+                    <th className="p-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(materializationsQ.data ?? []).length === 0 ? (
+                    <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">No materializations yet.</td></tr>
+                  ) : (materializationsQ.data ?? []).map((m) => (
+                    <tr key={m.id} className="border-t border-border">
+                      <td className="p-3 text-muted-foreground">{new Date(m.created_at).toLocaleString()}</td>
+                      <td className="p-3">{m.materialization_type}</td>
+                      <td className="p-3 font-mono text-xs">
+                        {m.target_object_type ? `${m.target_object_type}:${m.target_object_id?.slice(0,8)}` : "—"}
+                      </td>
+                      <td className="p-3">
+                        <Badge className={STATUS_TONE[m.status] ?? "bg-muted"}>{m.status}</Badge>
+                      </td>
+                      <td className="p-3 text-xs text-red-500">
+                        {m.error_code ? `${m.error_code}: ${m.error_message ?? ""}` : "—"}
+                      </td>
+                      <td className="p-3">{m.retry_count}</td>
+                      <td className="p-3 text-right">
+                        {["failed", "requires_review"].includes(m.status) && (
+                          <Button size="sm" variant="outline" onClick={() => handleRetry(m.event_id)}>
+                            <RefreshCw className="h-4 w-4 mr-1" /> Retry
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
 
         <div className="mt-8">
           <h2 className="text-lg font-semibold">Rules</h2>

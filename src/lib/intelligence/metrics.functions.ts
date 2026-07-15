@@ -293,7 +293,7 @@ export const calculateMetric = createServerFn({ method: "POST" })
     if (metric.is_sensitive && metric.required_permission) {
       const { data: allowed } = await context.supabase.rpc("has_role", {
         _user_id: context.userId,
-        _role: metric.required_permission,
+        _role: metric.required_permission as never,
       });
       if (!allowed) throw new Error("Forbidden: metric requires elevated permission");
     }

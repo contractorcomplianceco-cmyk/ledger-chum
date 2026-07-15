@@ -250,6 +250,11 @@ function FinancialEventsPage() {
                           </Button>
                         </div>
                       )}
+                      {r.status === "approved" && (
+                        <Button size="sm" variant="outline" onClick={() => handleMaterialize(r.id)}>
+                          <Play className="h-4 w-4 mr-1" /> Materialize
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 ))}

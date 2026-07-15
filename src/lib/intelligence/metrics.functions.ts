@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import type { MetricAiResponse } from "./types";
+// AI response contract shape lives in ./types (client-side).
 
 /**
  * M9A — Canonical Financial Metrics Layer

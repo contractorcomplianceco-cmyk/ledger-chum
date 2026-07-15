@@ -225,7 +225,7 @@ function IntegrationTestCenter() {
     setState((s) => ({ ...s, [id]: { outcome, detail } }));
   }
 
-  async function runAuthValid() {
+  async function runAuthValid(): Promise<void> {
     if (!token) return toast.error("Provide a Bearer token first.");
     mark("auth.valid", "running");
     const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });

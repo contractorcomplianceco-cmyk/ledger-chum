@@ -169,6 +169,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
 import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
@@ -1035,6 +1036,11 @@ const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   path: '/admin/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIntegrationTestingRoute = AdminIntegrationTestingRouteImport.update({
+  id: '/admin/integration-testing',
+  path: '/admin/integration-testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
   id: '/admin/financial-events',
   path: '/admin/financial-events',
@@ -1316,6 +1322,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -1521,6 +1528,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -1730,6 +1738,7 @@ export interface FileRoutesById {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
+  '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
@@ -1940,6 +1949,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
@@ -2145,6 +2155,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
@@ -2353,6 +2364,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/financial-events'
+    | '/admin/integration-testing'
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
@@ -2562,6 +2574,7 @@ export interface RootRouteChildren {
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
+  AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminIntelligenceRoute: typeof AdminIntelligenceRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
@@ -3831,6 +3844,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/integration-testing': {
+      id: '/admin/integration-testing'
+      path: '/admin/integration-testing'
+      fullPath: '/admin/integration-testing'
+      preLoaderRoute: typeof AdminIntegrationTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/financial-events': {
       id: '/admin/financial-events'
       path: '/admin/financial-events'
@@ -4416,6 +4436,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
+  AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminIntelligenceRoute: AdminIntelligenceRoute,
   AdminMetricsRoute: AdminMetricsRoute,

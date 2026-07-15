@@ -168,6 +168,7 @@ import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
 import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
+import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
 import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
 import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
@@ -1033,6 +1034,11 @@ const AdminObservabilityRoute = AdminObservabilityRouteImport.update({
   path: '/admin/observability',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminMigrationRoute = AdminMigrationRouteImport.update({
+  id: '/admin/migration',
+  path: '/admin/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminMetricsRoute = AdminMetricsRouteImport.update({
   id: '/admin/metrics',
   path: '/admin/metrics',
@@ -1338,6 +1344,7 @@ export interface FileRoutesByFullPath {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -1546,6 +1553,7 @@ export interface FileRoutesByTo {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -1758,6 +1766,7 @@ export interface FileRoutesById {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -1971,6 +1980,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
     | '/admin/observability'
     | '/admin/readiness'
     | '/admin/users'
@@ -2179,6 +2189,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
     | '/admin/observability'
     | '/admin/readiness'
     | '/admin/users'
@@ -2390,6 +2401,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/migration'
     | '/admin/observability'
     | '/admin/readiness'
     | '/admin/users'
@@ -2602,6 +2614,7 @@ export interface RootRouteChildren {
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminIntelligenceRoute: typeof AdminIntelligenceRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
+  AdminMigrationRoute: typeof AdminMigrationRoute
   AdminObservabilityRoute: typeof AdminObservabilityRoute
   AdminReadinessRoute: typeof AdminReadinessRoute
   AdminUsersRoute: typeof AdminUsersRoute
@@ -3863,6 +3876,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminObservabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/migration': {
+      id: '/admin/migration'
+      path: '/admin/migration'
+      fullPath: '/admin/migration'
+      preLoaderRoute: typeof AdminMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/metrics': {
       id: '/admin/metrics'
       path: '/admin/metrics'
@@ -4480,6 +4500,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminIntelligenceRoute: AdminIntelligenceRoute,
   AdminMetricsRoute: AdminMetricsRoute,
+  AdminMigrationRoute: AdminMigrationRoute,
   AdminObservabilityRoute: AdminObservabilityRoute,
   AdminReadinessRoute: AdminReadinessRoute,
   AdminUsersRoute: AdminUsersRoute,

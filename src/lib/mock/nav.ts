@@ -127,8 +127,12 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Balance Sheet", to: "/reports/balance-sheet", icon: BarChart3 },
       { title: "Cash Flow", to: "/reports/cash-flow", icon: BarChart3 },
       { title: "Monthly Close", to: "/close", icon: CalendarClock },
+      { title: "AI Controller", to: "/close/ai-assistant", icon: Brain, badge: "Advisory", badgeTone: "violet", keywords: ["ai", "controller", "insights", "advisory", "close assistant"] },
       { title: "Control Center", to: "/controls", icon: ShieldCheck },
-
+      { title: "Inventory", to: "/ledger/inventory", icon: ShoppingCart, keywords: ["items", "cost", "cogs", "stock"] },
+      { title: "Fixed Assets", to: "/ledger/fixed-assets", icon: Building2, keywords: ["assets", "depreciation", "book value"] },
+      { title: "Tax Framework", to: "/ledger/tax", icon: Receipt, keywords: ["tax", "jurisdictions", "rates", "liabilities"] },
+      { title: "Legal Entities", to: "/ledger/entities", icon: Building2, keywords: ["multi-entity", "intercompany", "consolidation"] },
     ],
   },
   {

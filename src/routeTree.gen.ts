@@ -43,8 +43,12 @@ import { Route as ReportsCashFlowRouteImport } from './routes/reports.cash-flow'
 import { Route as ReportsBalanceSheetRouteImport } from './routes/reports.balance-sheet'
 import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
 import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
+import { Route as LedgerTaxRouteImport } from './routes/ledger.tax'
 import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
+import { Route as LedgerInventoryRouteImport } from './routes/ledger.inventory'
 import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
+import { Route as LedgerFixedAssetsRouteImport } from './routes/ledger.fixed-assets'
+import { Route as LedgerEntitiesRouteImport } from './routes/ledger.entities'
 import { Route as LedgerBankingRouteImport } from './routes/ledger.banking'
 import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
 import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
@@ -123,6 +127,7 @@ import { Route as CompensationClawbacksRouteImport } from './routes/compensation
 import { Route as CompensationAuditRouteImport } from './routes/compensation.audit'
 import { Route as CompensationApprovalsRouteImport } from './routes/compensation.approvals'
 import { Route as CompensationAdjustmentsRouteImport } from './routes/compensation.adjustments'
+import { Route as CloseAiAssistantRouteImport } from './routes/close.ai-assistant'
 import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
 import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
 import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
@@ -378,14 +383,34 @@ const ReadinessMigrationRoute = ReadinessMigrationRouteImport.update({
   path: '/readiness/migration',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LedgerTaxRoute = LedgerTaxRouteImport.update({
+  id: '/ledger/tax',
+  path: '/ledger/tax',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LedgerJournalsRoute = LedgerJournalsRouteImport.update({
   id: '/ledger/journals',
   path: '/ledger/journals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LedgerInventoryRoute = LedgerInventoryRouteImport.update({
+  id: '/ledger/inventory',
+  path: '/ledger/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LedgerGeneralRoute = LedgerGeneralRouteImport.update({
   id: '/ledger/general',
   path: '/ledger/general',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerFixedAssetsRoute = LedgerFixedAssetsRouteImport.update({
+  id: '/ledger/fixed-assets',
+  path: '/ledger/fixed-assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerEntitiesRoute = LedgerEntitiesRouteImport.update({
+  id: '/ledger/entities',
+  path: '/ledger/entities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LedgerBankingRoute = LedgerBankingRouteImport.update({
@@ -791,6 +816,11 @@ const CompensationAdjustmentsRoute = CompensationAdjustmentsRouteImport.update({
   id: '/compensation/adjustments',
   path: '/compensation/adjustments',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CloseAiAssistantRoute = CloseAiAssistantRouteImport.update({
+  id: '/ai-assistant',
+  path: '/ai-assistant',
+  getParentRoute: () => CloseRoute,
 } as any)
 const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
   id: '/rules',
@@ -1251,7 +1281,7 @@ export interface FileRoutesByFullPath {
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
-  '/close': typeof CloseRoute
+  '/close': typeof CloseRouteWithChildren
   '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -1306,6 +1336,7 @@ export interface FileRoutesByFullPath {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/close/ai-assistant': typeof CloseAiAssistantRoute
   '/compensation/adjustments': typeof CompensationAdjustmentsRoute
   '/compensation/approvals': typeof CompensationApprovalsRoute
   '/compensation/audit': typeof CompensationAuditRoute
@@ -1384,8 +1415,12 @@ export interface FileRoutesByFullPath {
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/banking': typeof LedgerBankingRouteWithChildren
+  '/ledger/entities': typeof LedgerEntitiesRoute
+  '/ledger/fixed-assets': typeof LedgerFixedAssetsRoute
   '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/inventory': typeof LedgerInventoryRoute
   '/ledger/journals': typeof LedgerJournalsRoute
+  '/ledger/tax': typeof LedgerTaxRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
@@ -1450,7 +1485,7 @@ export interface FileRoutesByTo {
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
-  '/close': typeof CloseRoute
+  '/close': typeof CloseRouteWithChildren
   '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -1503,6 +1538,7 @@ export interface FileRoutesByTo {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/close/ai-assistant': typeof CloseAiAssistantRoute
   '/compensation/adjustments': typeof CompensationAdjustmentsRoute
   '/compensation/approvals': typeof CompensationApprovalsRoute
   '/compensation/audit': typeof CompensationAuditRoute
@@ -1581,8 +1617,12 @@ export interface FileRoutesByTo {
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/banking': typeof LedgerBankingRouteWithChildren
+  '/ledger/entities': typeof LedgerEntitiesRoute
+  '/ledger/fixed-assets': typeof LedgerFixedAssetsRoute
   '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/inventory': typeof LedgerInventoryRoute
   '/ledger/journals': typeof LedgerJournalsRoute
+  '/ledger/tax': typeof LedgerTaxRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
@@ -1649,7 +1689,7 @@ export interface FileRoutesById {
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
-  '/close': typeof CloseRoute
+  '/close': typeof CloseRouteWithChildren
   '/controls': typeof ControlsRoute
   '/customers': typeof CustomersRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -1704,6 +1744,7 @@ export interface FileRoutesById {
   '/banking/transactions': typeof BankingTransactionsRoute
   '/cash-availability/allocations': typeof CashAvailabilityAllocationsRoute
   '/cash-availability/rules': typeof CashAvailabilityRulesRoute
+  '/close/ai-assistant': typeof CloseAiAssistantRoute
   '/compensation/adjustments': typeof CompensationAdjustmentsRoute
   '/compensation/approvals': typeof CompensationApprovalsRoute
   '/compensation/audit': typeof CompensationAuditRoute
@@ -1782,8 +1823,12 @@ export interface FileRoutesById {
   '/invoices/review': typeof InvoicesReviewRoute
   '/ledger/accounts': typeof LedgerAccountsRoute
   '/ledger/banking': typeof LedgerBankingRouteWithChildren
+  '/ledger/entities': typeof LedgerEntitiesRoute
+  '/ledger/fixed-assets': typeof LedgerFixedAssetsRoute
   '/ledger/general': typeof LedgerGeneralRoute
+  '/ledger/inventory': typeof LedgerInventoryRoute
   '/ledger/journals': typeof LedgerJournalsRoute
+  '/ledger/tax': typeof LedgerTaxRoute
   '/readiness/migration': typeof ReadinessMigrationRoute
   '/readiness/production': typeof ReadinessProductionRoute
   '/reports/balance-sheet': typeof ReportsBalanceSheetRoute
@@ -1906,6 +1951,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/close/ai-assistant'
     | '/compensation/adjustments'
     | '/compensation/approvals'
     | '/compensation/audit'
@@ -1984,8 +2030,12 @@ export interface FileRouteTypes {
     | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/banking'
+    | '/ledger/entities'
+    | '/ledger/fixed-assets'
     | '/ledger/general'
+    | '/ledger/inventory'
     | '/ledger/journals'
+    | '/ledger/tax'
     | '/readiness/migration'
     | '/readiness/production'
     | '/reports/balance-sheet'
@@ -2103,6 +2153,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/close/ai-assistant'
     | '/compensation/adjustments'
     | '/compensation/approvals'
     | '/compensation/audit'
@@ -2181,8 +2232,12 @@ export interface FileRouteTypes {
     | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/banking'
+    | '/ledger/entities'
+    | '/ledger/fixed-assets'
     | '/ledger/general'
+    | '/ledger/inventory'
     | '/ledger/journals'
+    | '/ledger/tax'
     | '/readiness/migration'
     | '/readiness/production'
     | '/reports/balance-sheet'
@@ -2303,6 +2358,7 @@ export interface FileRouteTypes {
     | '/banking/transactions'
     | '/cash-availability/allocations'
     | '/cash-availability/rules'
+    | '/close/ai-assistant'
     | '/compensation/adjustments'
     | '/compensation/approvals'
     | '/compensation/audit'
@@ -2381,8 +2437,12 @@ export interface FileRouteTypes {
     | '/invoices/review'
     | '/ledger/accounts'
     | '/ledger/banking'
+    | '/ledger/entities'
+    | '/ledger/fixed-assets'
     | '/ledger/general'
+    | '/ledger/inventory'
     | '/ledger/journals'
+    | '/ledger/tax'
     | '/readiness/migration'
     | '/readiness/production'
     | '/reports/balance-sheet'
@@ -2449,7 +2509,7 @@ export interface RootRouteChildren {
   AutomationCenterRoute: typeof AutomationCenterRoute
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
-  CloseRoute: typeof CloseRoute
+  CloseRoute: typeof CloseRouteWithChildren
   ControlsRoute: typeof ControlsRoute
   CustomersRoute: typeof CustomersRouteWithChildren
   DashboardRoute: typeof DashboardRoute
@@ -2558,8 +2618,12 @@ export interface RootRouteChildren {
   IntelligenceTechPortfolioRoute: typeof IntelligenceTechPortfolioRoute
   LedgerAccountsRoute: typeof LedgerAccountsRoute
   LedgerBankingRoute: typeof LedgerBankingRouteWithChildren
+  LedgerEntitiesRoute: typeof LedgerEntitiesRoute
+  LedgerFixedAssetsRoute: typeof LedgerFixedAssetsRoute
   LedgerGeneralRoute: typeof LedgerGeneralRoute
+  LedgerInventoryRoute: typeof LedgerInventoryRoute
   LedgerJournalsRoute: typeof LedgerJournalsRoute
+  LedgerTaxRoute: typeof LedgerTaxRoute
   ReadinessMigrationRoute: typeof ReadinessMigrationRoute
   ReadinessProductionRoute: typeof ReadinessProductionRoute
   ReportsBalanceSheetRoute: typeof ReportsBalanceSheetRoute
@@ -2846,6 +2910,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReadinessMigrationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ledger/tax': {
+      id: '/ledger/tax'
+      path: '/ledger/tax'
+      fullPath: '/ledger/tax'
+      preLoaderRoute: typeof LedgerTaxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ledger/journals': {
       id: '/ledger/journals'
       path: '/ledger/journals'
@@ -2853,11 +2924,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LedgerJournalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ledger/inventory': {
+      id: '/ledger/inventory'
+      path: '/ledger/inventory'
+      fullPath: '/ledger/inventory'
+      preLoaderRoute: typeof LedgerInventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ledger/general': {
       id: '/ledger/general'
       path: '/ledger/general'
       fullPath: '/ledger/general'
       preLoaderRoute: typeof LedgerGeneralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/fixed-assets': {
+      id: '/ledger/fixed-assets'
+      path: '/ledger/fixed-assets'
+      fullPath: '/ledger/fixed-assets'
+      preLoaderRoute: typeof LedgerFixedAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/entities': {
+      id: '/ledger/entities'
+      path: '/ledger/entities'
+      fullPath: '/ledger/entities'
+      preLoaderRoute: typeof LedgerEntitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ledger/banking': {
@@ -3405,6 +3497,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/compensation/adjustments'
       preLoaderRoute: typeof CompensationAdjustmentsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/close/ai-assistant': {
+      id: '/close/ai-assistant'
+      path: '/ai-assistant'
+      fullPath: '/close/ai-assistant'
+      preLoaderRoute: typeof CloseAiAssistantRouteImport
+      parentRoute: typeof CloseRoute
     }
     '/cash-availability/rules': {
       id: '/cash-availability/rules'
@@ -4012,6 +4111,16 @@ const CashAvailabilityRouteChildren: CashAvailabilityRouteChildren = {
 const CashAvailabilityRouteWithChildren =
   CashAvailabilityRoute._addFileChildren(CashAvailabilityRouteChildren)
 
+interface CloseRouteChildren {
+  CloseAiAssistantRoute: typeof CloseAiAssistantRoute
+}
+
+const CloseRouteChildren: CloseRouteChildren = {
+  CloseAiAssistantRoute: CloseAiAssistantRoute,
+}
+
+const CloseRouteWithChildren = CloseRoute._addFileChildren(CloseRouteChildren)
+
 interface CustomersRouteChildren {
   CustomersCustomerIdRoute: typeof CustomersCustomerIdRoute
 }
@@ -4230,7 +4339,7 @@ const rootRouteChildren: RootRouteChildren = {
   AutomationCenterRoute: AutomationCenterRoute,
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
-  CloseRoute: CloseRoute,
+  CloseRoute: CloseRouteWithChildren,
   ControlsRoute: ControlsRoute,
   CustomersRoute: CustomersRouteWithChildren,
   DashboardRoute: DashboardRoute,
@@ -4339,8 +4448,12 @@ const rootRouteChildren: RootRouteChildren = {
   IntelligenceTechPortfolioRoute: IntelligenceTechPortfolioRoute,
   LedgerAccountsRoute: LedgerAccountsRoute,
   LedgerBankingRoute: LedgerBankingRouteWithChildren,
+  LedgerEntitiesRoute: LedgerEntitiesRoute,
+  LedgerFixedAssetsRoute: LedgerFixedAssetsRoute,
   LedgerGeneralRoute: LedgerGeneralRoute,
+  LedgerInventoryRoute: LedgerInventoryRoute,
   LedgerJournalsRoute: LedgerJournalsRoute,
+  LedgerTaxRoute: LedgerTaxRoute,
   ReadinessMigrationRoute: ReadinessMigrationRoute,
   ReadinessProductionRoute: ReadinessProductionRoute,
   ReportsBalanceSheetRoute: ReportsBalanceSheetRoute,

@@ -226,7 +226,7 @@ function IntegrationTestCenter() {
   }
 
   async function runAuthValid(): Promise<void> {
-    if (!token) return toast.error("Provide a Bearer token first.");
+    if (!token) { toast.error("Provide a Bearer token first."); return; }
     mark("auth.valid", "running");
     const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
     mark("auth.valid", r.status === 202 || r.status === 200 ? "pass" : "fail", `HTTP ${r.status}`);
@@ -242,13 +242,13 @@ function IntegrationTestCenter() {
     mark("auth.missing", r.status === 401 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runIdemFirst() {
-    if (!token) return toast.error("Provide a Bearer token first.");
+    if (!token) { toast.error("Provide a Bearer token first."); return; }
     mark("idem.first", "running");
     const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
     mark("idem.first", r.status < 300 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runIdemSecond() {
-    if (!token) return toast.error("Provide a Bearer token first.");
+    if (!token) { toast.error("Provide a Bearer token first."); return; }
     mark("idem.second", "running");
     const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
     mark("idem.second", r.status < 300 ? "pass" : "fail", `HTTP ${r.status} — should mirror first response`);

@@ -226,7 +226,7 @@ export const recordExplanation = createServerFn({ method: "POST" })
         subject_key: z.string().min(1).max(200),
         question: z.string().max(2000).optional(),
         answer: z.string().min(1).max(8000),
-        evidence: z.array(z.record(z.unknown())).default([]),
+        evidence: z.array(z.any()).default([]),
         supporting_metric_keys: z.array(z.string()).default([]),
         confidence: z.number().min(0).max(1).default(0.5),
         freshness: z.enum(["fresh", "delayed", "stale", "unavailable"]).default("fresh"),
@@ -247,7 +247,7 @@ export const recordExplanation = createServerFn({ method: "POST" })
         subject_key: data.subject_key,
         question: data.question ?? null,
         answer: data.answer,
-        evidence: data.evidence,
+        evidence: data.evidence as never,
         supporting_metric_keys: data.supporting_metric_keys,
         confidence: data.confidence,
         freshness: data.freshness,
@@ -333,7 +333,7 @@ export const getFinancialHealthScore = createServerFn({ method: "GET" })
       { key: "cash_runway", weight: 0.1, good: 12, bad: 2 },
     ] as const;
 
-    const evidence: Array<Record<string, unknown>> = [];
+    const evidence: unknown[] = [];
     const missing: string[] = [];
     let score = 0;
     let totalWeight = 0;
@@ -428,7 +428,7 @@ export const getCloseCompletionScore = createServerFn({ method: "GET" })
       .from("close_tasks")
       .select("id, status")
       .eq("org_id", data.orgId)
-      .eq("run_id", runId);
+      .eq("close_run_id", runId);
     if (error) throw new Error(error.message);
 
     const total = tasks?.length ?? 0;

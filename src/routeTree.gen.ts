@@ -166,6 +166,7 @@ import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
 import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
 import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
 import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
@@ -1021,6 +1022,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReadinessRoute = AdminReadinessRouteImport.update({
+  id: '/admin/readiness',
+  path: '/admin/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminMetricsRoute = AdminMetricsRouteImport.update({
   id: '/admin/metrics',
   path: '/admin/metrics',
@@ -1326,6 +1332,7 @@ export interface FileRoutesByFullPath {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1532,6 +1539,7 @@ export interface FileRoutesByTo {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1742,6 +1750,7 @@ export interface FileRoutesById {
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/intelligence': typeof AdminIntelligenceRoute
   '/admin/metrics': typeof AdminMetricsRoute
+  '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
   '/apex/assets': typeof ApexAssetsRoute
@@ -1953,6 +1962,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2159,6 +2169,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2368,6 +2379,7 @@ export interface FileRouteTypes {
     | '/admin/integrations'
     | '/admin/intelligence'
     | '/admin/metrics'
+    | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
     | '/apex/assets'
@@ -2578,6 +2590,7 @@ export interface RootRouteChildren {
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
   AdminIntelligenceRoute: typeof AdminIntelligenceRoute
   AdminMetricsRoute: typeof AdminMetricsRoute
+  AdminReadinessRoute: typeof AdminReadinessRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
   ApexAssetsRoute: typeof ApexAssetsRoute
@@ -3823,6 +3836,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/readiness': {
+      id: '/admin/readiness'
+      path: '/admin/readiness'
+      fullPath: '/admin/readiness'
+      preLoaderRoute: typeof AdminReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/metrics': {
       id: '/admin/metrics'
       path: '/admin/metrics'
@@ -4440,6 +4460,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIntegrationsRoute: AdminIntegrationsRoute,
   AdminIntelligenceRoute: AdminIntelligenceRoute,
   AdminMetricsRoute: AdminMetricsRoute,
+  AdminReadinessRoute: AdminReadinessRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,
   ApexAssetsRoute: ApexAssetsRoute,

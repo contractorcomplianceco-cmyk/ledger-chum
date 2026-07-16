@@ -98,7 +98,10 @@ function GeneralLedgerPage() {
     enabled: !!orgId, retry: false,
   });
 
-  const rows: Row[] = (linesQ.data as unknown as Row[]) ?? [];
+  const rows: Row[] = useMemo(
+    () => (linesQ.data as unknown as Row[]) ?? [],
+    [linesQ.data],
+  );
 
   const totals = useMemo(() => {
     const d = rows.reduce((s, r) => s + Number(r.debit ?? 0), 0);

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CompensationShell } from "@/components/compensation/compensation-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -37,11 +37,11 @@ function EligibilityPage() {
     api.compensation.listParticipants().then((r) => setParticipants(r.data));
   }, []);
 
-  const run = async () => {
+  const run = useCallback(async () => {
     setResult(await api.compensation.checkEligibility({ planId, participantId, opportunityId }));
-  };
+  }, [planId, participantId, opportunityId]);
 
-  useEffect(() => { run(); /* eslint-disable-next-line */ }, [planId, participantId, opportunityId]);
+  useEffect(() => { run(); }, [run]);
 
   return (
     <CompensationShell

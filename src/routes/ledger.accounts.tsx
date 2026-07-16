@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -78,7 +78,10 @@ function ChartOfAccountsPage() {
     retry: false,
   });
 
-  const rows: AccountRow[] = (accountsQ.data ?? []) as AccountRow[];
+  const rows: AccountRow[] = useMemo(
+    () => (accountsQ.data ?? []) as AccountRow[],
+    [accountsQ.data],
+  );
 
   const filtered = useMemo(() => {
     const s = search.trim().toLowerCase();
@@ -335,8 +338,9 @@ function AccountDialog({
   const [sortOrder, setSortOrder] = useState(editing?.sort_order ?? 0);
   const [isActive, setIsActive] = useState(editing?.is_active ?? true);
 
-  // Reset on open change
-  useMemo(() => {
+  // Reset form fields whenever the dialog opens or the edit target changes
+  useEffect(() => {
+    if (!open) return;
     setCode(editing?.code ?? "");
     setName(editing?.name ?? "");
     setType(editing?.type ?? "asset");

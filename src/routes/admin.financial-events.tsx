@@ -181,7 +181,7 @@ function FinancialEventsPage() {
     }
   };
 
-  const rows = eventsQ.data ?? [];
+  const rows = useMemo(() => eventsQ.data ?? [], [eventsQ.data]);
   const rules = rulesQ.data ?? [];
 
   const counts = useMemo(() => {

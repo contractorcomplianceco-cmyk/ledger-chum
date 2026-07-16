@@ -125,7 +125,7 @@ function IntegrationsAdminPage() {
     } catch (e: any) { toast.error(e.message ?? "Failed"); }
   };
 
-  const sources = sourcesQ.data ?? [];
+  const sources = useMemo(() => sourcesQ.data ?? [], [sourcesQ.data]);
   const mappings = mappingsQ.data ?? [];
   const sync = syncQ.data ?? [];
 

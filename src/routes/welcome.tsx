@@ -20,7 +20,18 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { DEMO_URL, DEMO_IS_EXTERNAL } from "@/config/marketing";
+
+/** localStorage flag so the walkthrough only auto-opens once per visitor. */
+const VIDEO_SEEN_KEY = "ledgeros:welcome:video-seen";
 
 export const Route = createFileRoute("/welcome")({
   head: () => ({
@@ -271,11 +282,26 @@ const SECURITY = [
 /* ------------------------------------------------------------------ */
 
 function MarketingPage() {
+  const [videoOpen, setVideoOpen] = useState(false);
+
+  // Auto-open the walkthrough on first visit only, then remember the visitor.
+  // The hero button can still re-open it any time regardless of this flag.
+  useEffect(() => {
+    try {
+      if (!localStorage.getItem(VIDEO_SEEN_KEY)) {
+        setVideoOpen(true);
+        localStorage.setItem(VIDEO_SEEN_KEY, "1");
+      }
+    } catch {
+      // localStorage may be unavailable (private mode / SSR) — skip auto-open.
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main>
-        <Hero />
+        <Hero onWatch={() => setVideoOpen(true)} />
         <TrustBar />
         <Features />
         <HowItWorks />
@@ -283,7 +309,64 @@ function MarketingPage() {
         <FinalCTA />
       </main>
       <SiteFooter />
+      <WalkthroughModal open={videoOpen} onOpenChange={setVideoOpen} />
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Walkthrough video modal                                            */
+/* ------------------------------------------------------------------ */
+
+function WalkthroughModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        aria-label="LedgerOS product walkthrough video"
+        className="w-[calc(100vw-2rem)] max-w-[900px] gap-0 overflow-hidden border-white/10 bg-navy p-0 text-navy-foreground shadow-lifted sm:rounded-2xl motion-reduce:animate-none"
+      >
+        <DialogHeader className="px-6 pb-4 pt-6 text-left">
+          <DialogTitle className="text-navy-foreground">Product walkthrough</DialogTitle>
+          <DialogDescription className="text-navy-foreground/70">
+            A narrated tour of LedgerOS — invoices, payments, banking, and the Apex
+            intelligence layer, all backed by a live ledger.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="px-6">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-black">
+            {/* Only mount the iframe while open so audio/video stops the moment
+                the modal closes; reopening remounts it with a fresh src. */}
+            {open ? (
+              <iframe
+                src="/walkthrough.html"
+                title="LedgerOS walkthrough"
+                className="absolute inset-0 h-full w-full"
+                allow="autoplay; fullscreen"
+              />
+            ) : null}
+          </div>
+        </div>
+
+        <DialogFooter className="flex-col gap-3 px-6 pb-6 pt-5 sm:flex-row sm:justify-end">
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="border-white/25 bg-transparent text-navy-foreground hover:bg-white/10 hover:text-navy-foreground"
+          >
+            See More Info
+          </Button>
+          <LaunchDemoButton size="lg">Enter Demo</LaunchDemoButton>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -324,7 +407,7 @@ function SiteHeader() {
   );
 }
 
-function Hero() {
+function Hero({ onWatch }: { onWatch: () => void }) {
   return (
     <section className="relative overflow-hidden bg-gradient-navy text-navy-foreground">
       {/* decorative gradient wash */}
@@ -375,6 +458,16 @@ function Hero() {
           <Reveal delay={240}>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <LaunchDemoButton size="lg" />
+              <Button
+                type="button"
+                size="lg"
+                variant="outline"
+                onClick={onWatch}
+                className="border-white/25 bg-transparent text-navy-foreground hover:bg-white/10 hover:text-navy-foreground"
+              >
+                <PlayCircle aria-hidden="true" />
+                Watch walkthrough
+              </Button>
               <Button asChild size="lg" variant="outline" className="border-white/25 bg-transparent text-navy-foreground hover:bg-white/10 hover:text-navy-foreground">
                 <a href="#how-it-works">
                   See how it works

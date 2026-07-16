@@ -16,6 +16,7 @@ import {
 import { useRouterState } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommandPalette, useCommandPalette } from "@/components/command-palette";
+import { TourLauncher } from "@/components/tour/tour-launcher";
 
 export function TopBar() {
   const { open, setOpen } = useCommandPalette();
@@ -51,6 +52,7 @@ export function TopBar() {
           </Badge>
 
           <div className="ml-auto flex items-center gap-1.5">
+            <TourLauncher variant="icon" />
             <Button
               size="icon"
               className="h-9 w-9 rounded-xl bg-gradient-brand-full text-white shadow-[0_6px_18px_-6px_rgba(99,102,241,0.55)] hover:brightness-110"
@@ -137,6 +139,7 @@ export function TopBar() {
         </Badge>
 
         <div className="ml-auto flex items-center gap-2 lg:ml-2">
+          <TourLauncher variant="pill" />
           <button
             type="button"
             className="hidden h-10 items-center gap-2 rounded-xl border border-border/70 bg-surface px-3 text-[13px] font-medium text-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-border-strong sm:inline-flex"

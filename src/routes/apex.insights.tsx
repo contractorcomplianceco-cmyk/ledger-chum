@@ -125,7 +125,7 @@ function ApexInsightsPage() {
       </ApexSection>
 
       <ApexSection title={`Feed · ${merged.length} items`}>
-        <div className="grid gap-3">
+        <div data-tour="apex-insights" className="grid gap-3">
           {merged.length === 0 && (
             <Card className="border-border/70 p-6 text-center text-[13px] text-muted-foreground">
               No intelligence items for this audience/kind combination.

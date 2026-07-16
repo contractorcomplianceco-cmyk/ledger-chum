@@ -24,6 +24,7 @@ import { Route as CashAvailabilityRouteImport } from './routes/cash-availability
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AutomationCenterRouteImport } from './routes/automation-center'
 import { Route as AuditRouteImport } from './routes/audit'
+import { Route as AccountingCenterRouteImport } from './routes/accounting-center'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
@@ -293,6 +294,11 @@ const AutomationCenterRoute = AutomationCenterRouteImport.update({
 const AuditRoute = AuditRouteImport.update({
   id: '/audit',
   path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountingCenterRoute = AccountingCenterRouteImport.update({
+  id: '/accounting-center',
+  path: '/accounting-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -1319,6 +1325,7 @@ const ApiPublicIntegrationsWorkOrdersCompletedRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1531,6 +1538,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1741,6 +1749,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1955,6 +1964,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -2167,6 +2177,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -2376,6 +2387,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -2589,6 +2601,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountingCenterRoute: typeof AccountingCenterRoute
   AuditRoute: typeof AuditRoute
   AutomationCenterRoute: typeof AutomationCenterRoute
   BillsRoute: typeof BillsRoute
@@ -2866,6 +2879,13 @@ declare module '@tanstack/react-router' {
       path: '/audit'
       fullPath: '/audit'
       preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounting-center': {
+      id: '/accounting-center'
+      path: '/accounting-center'
+      fullPath: '/accounting-center'
+      preLoaderRoute: typeof AccountingCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -4475,6 +4495,7 @@ const CompensationPlansIdRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountingCenterRoute: AccountingCenterRoute,
   AuditRoute: AuditRoute,
   AutomationCenterRoute: AutomationCenterRoute,
   BillsRoute: BillsRoute,
@@ -4651,13 +4672,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -94,24 +94,25 @@ export function BankAccountCard({ account }: { account: BankAccount }) {
         </DropdownMenu>
       </header>
 
-      <div className="relative grid grid-cols-2 gap-4">
-        <div>
+      <div className="relative grid grid-cols-2 gap-3">
+        <div className="min-w-0">
           <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Bank balance
           </div>
-          <div className="mt-0.5 font-tabular text-2xl font-semibold tracking-tight">
+          <div className="mt-0.5 truncate font-tabular text-lg font-semibold tracking-tight">
             {currencyPrecise(account.bankBalance)}
           </div>
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Ledger balance
           </div>
-          <div className="mt-0.5 font-tabular text-2xl font-semibold tracking-tight text-muted-foreground">
+          <div className="mt-0.5 truncate font-tabular text-lg font-semibold tracking-tight text-muted-foreground">
             {currencyPrecise(account.ledgerBalance)}
           </div>
         </div>
       </div>
+
 
       <div className="relative flex flex-wrap items-center gap-2 text-[11px]">
         <span

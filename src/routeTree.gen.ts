@@ -170,6 +170,7 @@ import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
 import { Route as AdminProductionReviewRouteImport } from './routes/admin.production-review'
+import { Route as AdminPilotSuccessRouteImport } from './routes/admin.pilot-success'
 import { Route as AdminPilotSimulationRouteImport } from './routes/admin.pilot-simulation'
 import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
 import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
@@ -1050,6 +1051,11 @@ const AdminProductionReviewRoute = AdminProductionReviewRouteImport.update({
   path: '/admin/production-review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPilotSuccessRoute = AdminPilotSuccessRouteImport.update({
+  id: '/admin/pilot-success',
+  path: '/admin/pilot-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPilotSimulationRoute = AdminPilotSimulationRouteImport.update({
   id: '/admin/pilot-simulation',
   path: '/admin/pilot-simulation',
@@ -1386,6 +1392,7 @@ export interface FileRoutesByFullPath {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/pilot-success': typeof AdminPilotSuccessRoute
   '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -1601,6 +1608,7 @@ export interface FileRoutesByTo {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/pilot-success': typeof AdminPilotSuccessRoute
   '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -1820,6 +1828,7 @@ export interface FileRoutesById {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/pilot-success': typeof AdminPilotSuccessRoute
   '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
@@ -2040,6 +2049,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/pilot-success'
     | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
@@ -2255,6 +2265,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/pilot-success'
     | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
@@ -2473,6 +2484,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/pilot-success'
     | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
@@ -2692,6 +2704,7 @@ export interface RootRouteChildren {
   AdminMigrationRoute: typeof AdminMigrationRoute
   AdminObservabilityRoute: typeof AdminObservabilityRoute
   AdminPilotSimulationRoute: typeof AdminPilotSimulationRoute
+  AdminPilotSuccessRoute: typeof AdminPilotSuccessRoute
   AdminProductionReviewRoute: typeof AdminProductionReviewRoute
   AdminReadinessRoute: typeof AdminReadinessRoute
   AdminUsersRoute: typeof AdminUsersRoute
@@ -3968,6 +3981,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProductionReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/pilot-success': {
+      id: '/admin/pilot-success'
+      path: '/admin/pilot-success'
+      fullPath: '/admin/pilot-success'
+      preLoaderRoute: typeof AdminPilotSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/pilot-simulation': {
       id: '/admin/pilot-simulation'
       path: '/admin/pilot-simulation'
@@ -4626,6 +4646,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMigrationRoute: AdminMigrationRoute,
   AdminObservabilityRoute: AdminObservabilityRoute,
   AdminPilotSimulationRoute: AdminPilotSimulationRoute,
+  AdminPilotSuccessRoute: AdminPilotSuccessRoute,
   AdminProductionReviewRoute: AdminProductionReviewRoute,
   AdminReadinessRoute: AdminReadinessRoute,
   AdminUsersRoute: AdminUsersRoute,

@@ -333,7 +333,7 @@ function NavRow({
           compact && "h-9 text-[13px]",
         )}
       >
-        <Link to={item.to} className="flex items-center gap-2.5">
+        <Link to={item.to} data-tour={`nav:${item.to}`} className="flex items-center gap-2.5">
           <Icon
             className={cn(
               "h-[17px] w-[17px] shrink-0 transition-colors",

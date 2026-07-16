@@ -113,7 +113,7 @@ function ExecutiveDashboard() {
 
       <PageBody>
         {/* KPI Row */}
-        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <section data-tour="dashboard-kpis" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {KPIS.map((k, i) => (
             <KpiCard
               key={k.label}

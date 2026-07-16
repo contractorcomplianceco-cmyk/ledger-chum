@@ -179,7 +179,7 @@ function BankingOverview() {
         <DemoNotice />
 
         {/* KPI row */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-6">
+        <div data-tour="banking-overview" className="grid grid-cols-2 gap-3 lg:grid-cols-6">
           <SummaryCell label="Total cash (bank)" value={currencyPrecise(totalBank)} icon={Banknote} tone="brand" />
           <SummaryCell label="Ledger cash" value={currencyPrecise(totalLedger)} icon={Wallet} />
           <SummaryCell label="Pending transactions" value={pending.toString()} tone="warning" />

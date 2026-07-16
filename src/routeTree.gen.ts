@@ -175,6 +175,7 @@ import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligen
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
 import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
+import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
@@ -1070,6 +1071,11 @@ const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
   path: '/admin/financial-events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
+  id: '/admin/customer-onboarding',
+  path: '/admin/customer-onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
   id: '/accounts-receivable/aging',
   path: '/accounts-receivable/aging',
@@ -1346,6 +1352,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1556,6 +1563,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1770,6 +1778,7 @@ export interface FileRoutesById {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1985,6 +1994,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2195,6 +2205,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2408,6 +2419,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2622,6 +2634,7 @@ export interface RootRouteChildren {
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
+  AdminCustomerOnboardingRoute: typeof AdminCustomerOnboardingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
@@ -3938,6 +3951,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFinancialEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/customer-onboarding': {
+      id: '/admin/customer-onboarding'
+      path: '/admin/customer-onboarding'
+      fullPath: '/admin/customer-onboarding'
+      preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts-receivable/aging': {
       id: '/accounts-receivable/aging'
       path: '/accounts-receivable/aging'
@@ -4516,6 +4536,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
+  AdminCustomerOnboardingRoute: AdminCustomerOnboardingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,

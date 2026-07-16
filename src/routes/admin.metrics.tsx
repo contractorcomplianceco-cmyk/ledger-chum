@@ -57,7 +57,7 @@ function MetricCenterPage() {
 
   const metrics = metricsQ.data ?? [];
   const active = useMemo(
-    () => metrics.find((m: any) => m.metric_key === selected) ?? metrics[0],
+    () => metrics.find((m) => m.metric_key === selected) ?? metrics[0],
     [metrics, selected],
   );
 
@@ -79,8 +79,8 @@ function MetricCenterPage() {
       await calcFn({ data: { orgId, metricKey: active.metric_key } });
       toast.success(`Recalculated ${active.metric_name}`);
       qc.invalidateQueries({ queryKey: ["metric-value", orgId, active.id] });
-    } catch (e: any) {
-      toast.error(e.message ?? "Calculation failed");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Calculation failed");
     }
   }
 
@@ -88,7 +88,7 @@ function MetricCenterPage() {
   const history = valueQ.data ?? [];
 
   const byCategory = useMemo(() => {
-    const g: Record<string, any[]> = {};
+    const g: Record<string, (typeof metrics)[number][]> = {};
     for (const m of metrics) (g[m.category] ??= []).push(m);
     return g;
   }, [metrics]);
@@ -242,8 +242,8 @@ function MetricCenterPage() {
                       <TabsContent value="sources" className="pt-3">
                         <div className="space-y-2 text-sm">
                           {(lineageQ.data ?? [])
-                            .filter((l: any) => !l.dependency_metric_key)
-                            .map((l: any) => (
+                            .filter((l) => !l.dependency_metric_key)
+                            .map((l) => (
                               <div key={l.id} className="rounded-md border border-border/60 p-2">
                                 <div className="flex items-center gap-2 text-xs">
                                   <Badge variant="outline">{l.source_type}</Badge>
@@ -262,8 +262,8 @@ function MetricCenterPage() {
                       <TabsContent value="dependencies" className="pt-3">
                         <div className="space-y-2 text-sm">
                           {(lineageQ.data ?? [])
-                            .filter((l: any) => l.dependency_metric_key)
-                            .map((l: any) => (
+                            .filter((l) => l.dependency_metric_key)
+                            .map((l) => (
                               <div key={l.id} className="rounded-md border border-border/60 p-2 text-xs">
                                 <Badge variant="outline" className="mr-2">
                                   {l.dependency_metric_key}
@@ -271,7 +271,7 @@ function MetricCenterPage() {
                                 {l.transformation_description}
                               </div>
                             ))}
-                          {(lineageQ.data ?? []).filter((l: any) => l.dependency_metric_key)
+                          {(lineageQ.data ?? []).filter((l) => l.dependency_metric_key)
                             .length === 0 && (
                             <div className="text-xs text-muted-foreground">
                               No dependencies — leaf metric.
@@ -289,7 +289,7 @@ function MetricCenterPage() {
                       </TabsContent>
                       <TabsContent value="history" className="pt-3">
                         <div className="space-y-1 text-xs">
-                          {history.map((h: any) => (
+                          {history.map((h) => (
                             <div
                               key={h.id}
                               className="flex items-center justify-between border-b border-border/40 py-1 last:border-0"
@@ -333,7 +333,7 @@ function MetricCenterPage() {
                         <div className="text-[10px] uppercase text-muted-foreground">Sources</div>
                         <div>
                           {(lineageQ.data ?? [])
-                            .filter((l: any) => !l.dependency_metric_key).length}{" "}
+                            .filter((l) => !l.dependency_metric_key).length}{" "}
                           tables/fields
                         </div>
                       </div>
@@ -341,8 +341,8 @@ function MetricCenterPage() {
                         <div className="text-[10px] uppercase text-muted-foreground">Dependencies</div>
                         <div>
                           {(lineageQ.data ?? [])
-                            .filter((l: any) => l.dependency_metric_key)
-                            .map((l: any) => l.dependency_metric_key)
+                            .filter((l) => l.dependency_metric_key)
+                            .map((l) => l.dependency_metric_key)
                             .join(", ") || "—"}
                         </div>
                       </div>

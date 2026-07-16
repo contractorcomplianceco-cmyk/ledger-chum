@@ -56,7 +56,7 @@ export const Route = createFileRoute("/api/public/integrations/refunds")({
             );
 
           const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
-            "record_refund_with_posting" as never,
+            "record_refund_with_posting",
             {
               _org_id: ctx.orgId,
               _payment_id: payment.id,
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/api/public/integrations/refunds")({
               _actor_type: "api_client",
               _actor_id: ctx.clientId,
               _correlation_id: ctx.correlationId,
-            } as never,
+            },
           );
           if (rpcErr) throw new IntegrationError(422, rpcErr.message);
 

@@ -11,6 +11,7 @@ import {
   type IntegrationContext,
 } from "@/integrations/serviceconnect/verify.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { Json } from "@/integrations/supabase/types";
 
 const schema = z.object({
   external_id: z.string().min(1),
@@ -53,7 +54,7 @@ export const Route = createFileRoute("/api/public/integrations/customers")({
                 name: p.name,
                 email: p.email ?? null,
                 phone: p.phone ?? null,
-                billing_address: (p.billing_address ?? null) as never,
+                billing_address: (p.billing_address ?? null) as Json,
                 status: p.status ?? existing.status,
                 updated_at: new Date().toISOString(),
               })
@@ -73,7 +74,7 @@ export const Route = createFileRoute("/api/public/integrations/customers")({
                 name: p.name,
                 email: p.email ?? null,
                 phone: p.phone ?? null,
-                billing_address: (p.billing_address ?? null) as never,
+                billing_address: (p.billing_address ?? null) as Json,
                 status: p.status ?? "active",
               })
               .select()

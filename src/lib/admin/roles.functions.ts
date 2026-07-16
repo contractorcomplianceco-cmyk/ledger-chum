@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
 const ROLE_VALUES = [
   "owner",
@@ -14,7 +16,7 @@ const ROLE_VALUES = [
 const roleEnum = z.enum(ROLE_VALUES);
 
 async function assertOwner(
-  context: { supabase: any; userId: string },
+  context: { supabase: SupabaseClient<Database>; userId: string },
   orgId: string,
 ): Promise<void> {
   const { data, error } = await context.supabase.rpc("has_role", {

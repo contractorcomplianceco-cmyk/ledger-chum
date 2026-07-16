@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
 // SHA-256 hash of a token using WebCrypto (Workers-compatible).
 async function sha256Hex(input: string): Promise<string> {
@@ -18,7 +20,7 @@ function randomToken(len = 40): string {
 }
 
 async function assertOwner(
-  context: { supabase: any; userId: string },
+  context: { supabase: SupabaseClient<Database>; userId: string },
   orgId: string,
 ): Promise<void> {
   const { data, error } = await context.supabase.rpc("has_role", {

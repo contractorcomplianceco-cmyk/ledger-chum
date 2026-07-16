@@ -42,7 +42,7 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
           const p = parsed.data;
 
           const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
-            "record_inventory_consumption_with_posting" as never,
+            "record_inventory_consumption_with_posting",
             {
               _org_id: ctx.orgId,
               _external_source: "serviceconnect",
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/api/public/integrations/inventory-consump
               _actor_type: "api_client",
               _actor_id: ctx.clientId,
               _correlation_id: ctx.correlationId,
-            } as never,
+            },
           );
           if (rpcErr) {
             if (rpcErr.code === "23505") {

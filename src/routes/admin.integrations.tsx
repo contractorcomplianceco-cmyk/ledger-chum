@@ -99,7 +99,7 @@ function IntegrationsAdminPage() {
       toast.success(`Source ${srcName} saved`);
       setSrcKey(""); setSrcName(""); setSrcEmail(""); setSrcNotes("");
       invalidateAll();
-    } catch (e: any) { toast.error(e.message ?? "Failed"); }
+    } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
   };
 
   // ---- New mapping form
@@ -122,7 +122,7 @@ function IntegrationsAdminPage() {
       toast.success(`Mapping saved for ${mEvent}`);
       setMEvent(""); setMPurpose(""); setMDesc("");
       invalidateAll();
-    } catch (e: any) { toast.error(e.message ?? "Failed"); }
+    } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
   };
 
   const sources = sourcesQ.data ?? [];
@@ -130,7 +130,7 @@ function IntegrationsAdminPage() {
   const sync = syncQ.data ?? [];
 
   const sourceById = useMemo(
-    () => new Map(sources.map((s: any) => [s.id, s])),
+    () => new Map(sources.map((s) => [s.id, s])),
     [sources],
   );
 
@@ -150,7 +150,7 @@ function IntegrationsAdminPage() {
               <Badge variant="outline" className="ml-auto">{sources.length}</Badge>
             </div>
             <div className="space-y-2">
-              {sources.map((s: any) => (
+              {sources.map((s) => (
                 <div key={s.id} className="flex items-center gap-3 rounded border border-border/60 p-3">
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{s.name}</div>
@@ -167,7 +167,7 @@ function IntegrationsAdminPage() {
                       try {
                         await toggleSource({ data: { orgId: orgId!, id: s.id, active: v } });
                         invalidateAll();
-                      } catch (e: any) { toast.error(e.message); }
+                      } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
                     }}
                   />
                 </div>
@@ -182,7 +182,7 @@ function IntegrationsAdminPage() {
               <div className="grid grid-cols-2 gap-2">
                 <Input placeholder="source_key (e.g. serviceconnect)" value={srcKey} onChange={(e) => setSrcKey(e.target.value.toLowerCase())} />
                 <Input placeholder="Display name" value={srcName} onChange={(e) => setSrcName(e.target.value)} />
-                <Select value={srcKind} onValueChange={(v) => setSrcKind(v as any)}>
+                <Select value={srcKind} onValueChange={(v) => setSrcKind(v as (typeof KINDS)[number])}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     {KINDS.map((k) => <SelectItem key={k} value={k}>{k}</SelectItem>)}
@@ -203,12 +203,12 @@ function IntegrationsAdminPage() {
               <Badge variant="outline" className="ml-auto">{mappings.length}</Badge>
             </div>
             <div className="space-y-2 max-h-80 overflow-auto">
-              {mappings.map((m: any) => (
+              {mappings.map((m) => (
                 <div key={m.id} className="flex items-center gap-3 rounded border border-border/60 p-3">
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-mono truncate">{m.external_event_type}</div>
                     <div className="text-xs text-muted-foreground truncate">
-                      {(sourceById.get(m.source_id) as any)?.name ?? "—"} → {m.ledger_object}
+                      {sourceById.get(m.source_id)?.name ?? "—"} → {m.ledger_object}
                       {m.account_purpose ? ` · ${m.account_purpose}` : ""}
                     </div>
                   </div>
@@ -221,7 +221,7 @@ function IntegrationsAdminPage() {
                       try {
                         await deleteMapping({ data: { orgId: orgId!, id: m.id } });
                         invalidateAll();
-                      } catch (e: any) { toast.error(e.message); }
+                      } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
                     }}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -238,12 +238,12 @@ function IntegrationsAdminPage() {
               <Select value={mSource} onValueChange={setMSource}>
                 <SelectTrigger><SelectValue placeholder="Source system" /></SelectTrigger>
                 <SelectContent>
-                  {sources.map((s: any) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
+                  {sources.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
                 </SelectContent>
               </Select>
               <Input placeholder="external_event_type (e.g. work_order.completed)" value={mEvent} onChange={(e) => setMEvent(e.target.value)} />
               <div className="grid grid-cols-2 gap-2">
-                <Select value={mObject} onValueChange={(v) => setMObject(v as any)}>
+                <Select value={mObject} onValueChange={(v) => setMObject(v as (typeof LEDGER_OBJECTS)[number])}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     {LEDGER_OBJECTS.map((k) => <SelectItem key={k} value={k}>{k}</SelectItem>)}
@@ -281,7 +281,7 @@ function IntegrationsAdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {sync.map((r: any) => (
+                {sync.map((r) => (
                   <tr key={r.id} className="border-b border-border/40">
                     <td className="py-2 pr-4 text-xs">{new Date(r.created_at).toLocaleString()}</td>
                     <td className="py-2 pr-4 font-mono text-xs">{r.source}</td>
@@ -297,7 +297,7 @@ function IntegrationsAdminPage() {
                             await retryFn({ data: { orgId: orgId!, id: r.id } });
                             toast.success("Retry signal recorded — re-post with same Idempotency-Key.");
                             invalidateAll();
-                          } catch (e: any) { toast.error(e.message); }
+                          } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
                         }}
                       >
                         <RefreshCw className="h-3 w-3 mr-1" /> Retry

@@ -650,18 +650,18 @@ function FinalCTA() {
 function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-border bg-muted/40">
+    <footer className="border-t border-white/10 bg-navy text-navy-foreground">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
         <div className="max-w-sm">
           <img
             src="/ledgeros-logo.png"
             alt="LedgerOS"
-            width={148}
-            height={133}
-            className="h-14 w-auto"
+            width={320}
+            height={88}
+            className="h-12 w-auto"
           />
           <p className="sr-only">LedgerOS</p>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 text-sm text-navy-foreground/70">
             Double-entry accounting and financial operations for the Contractors Compliance
             Authority.
           </p>
@@ -678,15 +678,15 @@ function SiteFooter() {
             <a
               key={l.label}
               href={l.href}
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="text-navy-foreground/70 transition-colors hover:text-navy-foreground"
             >
               {l.label}
             </a>
           ))}
         </nav>
       </div>
-      <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-navy-foreground/60 sm:flex-row">
           <p>© {year} Contractors Compliance Authority. All rights reserved.</p>
           <p>LedgerOS — Financial Operating System</p>
         </div>

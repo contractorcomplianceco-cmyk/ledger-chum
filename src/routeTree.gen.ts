@@ -114,6 +114,7 @@ import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.inte
 import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
 import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
 import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
+import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
@@ -758,6 +759,11 @@ const EstimatesNewRoute = EstimatesNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => EstimatesRoute,
+} as any)
+const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
+  id: '/docs/integrations',
+  path: '/docs/integrations',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
   id: '/dashboards/team',
@@ -1414,6 +1420,7 @@ export interface FileRoutesByFullPath {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1625,6 +1632,7 @@ export interface FileRoutesByTo {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1840,6 +1848,7 @@ export interface FileRoutesById {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -2056,6 +2065,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2267,6 +2277,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2481,6 +2492,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2692,6 +2704,7 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  DocsIntegrationsRoute: typeof DocsIntegrationsRoute
   FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
@@ -3523,6 +3536,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/estimates/new'
       preLoaderRoute: typeof EstimatesNewRouteImport
       parentRoute: typeof EstimatesRoute
+    }
+    '/docs/integrations': {
+      id: '/docs/integrations'
+      path: '/docs/integrations'
+      fullPath: '/docs/integrations'
+      preLoaderRoute: typeof DocsIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/dashboards/team': {
       id: '/dashboards/team'
@@ -4594,6 +4614,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  DocsIntegrationsRoute: DocsIntegrationsRoute,
   FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,

@@ -169,6 +169,7 @@ import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
 import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
+import { Route as AdminProductionReviewRouteImport } from './routes/admin.production-review'
 import { Route as AdminPilotSimulationRouteImport } from './routes/admin.pilot-simulation'
 import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
 import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
@@ -1043,6 +1044,11 @@ const AdminReadinessRoute = AdminReadinessRouteImport.update({
   path: '/admin/readiness',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProductionReviewRoute = AdminProductionReviewRouteImport.update({
+  id: '/admin/production-review',
+  path: '/admin/production-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPilotSimulationRoute = AdminPilotSimulationRouteImport.update({
   id: '/admin/pilot-simulation',
   path: '/admin/pilot-simulation',
@@ -1373,6 +1379,7 @@ export interface FileRoutesByFullPath {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1586,6 +1593,7 @@ export interface FileRoutesByTo {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -1803,6 +1811,7 @@ export interface FileRoutesById {
   '/admin/migration': typeof AdminMigrationRoute
   '/admin/observability': typeof AdminObservabilityRoute
   '/admin/pilot-simulation': typeof AdminPilotSimulationRoute
+  '/admin/production-review': typeof AdminProductionReviewRoute
   '/admin/readiness': typeof AdminReadinessRoute
   '/admin/users': typeof AdminUsersRoute
   '/apex/architecture': typeof ApexArchitectureRoute
@@ -2021,6 +2030,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
@@ -2234,6 +2244,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
@@ -2450,6 +2461,7 @@ export interface FileRouteTypes {
     | '/admin/migration'
     | '/admin/observability'
     | '/admin/pilot-simulation'
+    | '/admin/production-review'
     | '/admin/readiness'
     | '/admin/users'
     | '/apex/architecture'
@@ -2667,6 +2679,7 @@ export interface RootRouteChildren {
   AdminMigrationRoute: typeof AdminMigrationRoute
   AdminObservabilityRoute: typeof AdminObservabilityRoute
   AdminPilotSimulationRoute: typeof AdminPilotSimulationRoute
+  AdminProductionReviewRoute: typeof AdminProductionReviewRoute
   AdminReadinessRoute: typeof AdminReadinessRoute
   AdminUsersRoute: typeof AdminUsersRoute
   ApexArchitectureRoute: typeof ApexArchitectureRoute
@@ -3935,6 +3948,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReadinessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/production-review': {
+      id: '/admin/production-review'
+      path: '/admin/production-review'
+      fullPath: '/admin/production-review'
+      preLoaderRoute: typeof AdminProductionReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/pilot-simulation': {
       id: '/admin/pilot-simulation'
       path: '/admin/pilot-simulation'
@@ -4585,6 +4605,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminMigrationRoute: AdminMigrationRoute,
   AdminObservabilityRoute: AdminObservabilityRoute,
   AdminPilotSimulationRoute: AdminPilotSimulationRoute,
+  AdminProductionReviewRoute: AdminProductionReviewRoute,
   AdminReadinessRoute: AdminReadinessRoute,
   AdminUsersRoute: AdminUsersRoute,
   ApexArchitectureRoute: ApexArchitectureRoute,

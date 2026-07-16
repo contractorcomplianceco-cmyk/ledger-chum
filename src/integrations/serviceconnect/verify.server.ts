@@ -63,12 +63,16 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
 
   const { data, error } = await supabaseAdmin
     .from("api_clients")
-    .select("id, org_id, name, active, scopes, environment")
+    .select("id, org_id, name, active, scopes, environment, expires_at, revoked_at")
     .eq("key_hash", hashKey(token))
     .maybeSingle();
 
   if (error) throw new IntegrationError(500, `Auth lookup failed: ${error.message}`);
   if (!data || !data.active) throw new IntegrationError(401, "Invalid or inactive API key");
+  if (data.revoked_at !== null) throw new IntegrationError(401, "Invalid or inactive API key");
+  if (data.expires_at !== null && new Date(data.expires_at) < new Date()) {
+    throw new IntegrationError(401, "Invalid or inactive API key");
+  }
 
   // Fire-and-forget last_used_at update.
   supabaseAdmin

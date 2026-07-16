@@ -179,6 +179,7 @@ import { Route as AdminIntegrationsRouteImport } from './routes/admin.integratio
 import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
+import { Route as AdminAcceptanceTestsRouteImport } from './routes/admin.acceptance-tests'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
@@ -1094,6 +1095,11 @@ const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
   path: '/admin/customer-onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAcceptanceTestsRoute = AdminAcceptanceTestsRouteImport.update({
+  id: '/admin/acceptance-tests',
+  path: '/admin/acceptance-tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
   id: '/accounts-receivable/aging',
   path: '/accounts-receivable/aging',
@@ -1370,6 +1376,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1584,6 +1591,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1802,6 +1810,7 @@ export interface FileRoutesById {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -2021,6 +2030,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/acceptance-tests'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2235,6 +2245,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/acceptance-tests'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2452,6 +2463,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/acceptance-tests'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2670,6 +2682,7 @@ export interface RootRouteChildren {
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
+  AdminAcceptanceTestsRoute: typeof AdminAcceptanceTestsRoute
   AdminCustomerOnboardingRoute: typeof AdminCustomerOnboardingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
@@ -4018,6 +4031,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/acceptance-tests': {
+      id: '/admin/acceptance-tests'
+      path: '/admin/acceptance-tests'
+      fullPath: '/admin/acceptance-tests'
+      preLoaderRoute: typeof AdminAcceptanceTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts-receivable/aging': {
       id: '/accounts-receivable/aging'
       path: '/accounts-receivable/aging'
@@ -4596,6 +4616,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
+  AdminAcceptanceTestsRoute: AdminAcceptanceTestsRoute,
   AdminCustomerOnboardingRoute: AdminCustomerOnboardingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,

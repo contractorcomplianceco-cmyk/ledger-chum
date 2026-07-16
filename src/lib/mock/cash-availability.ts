@@ -16,19 +16,27 @@ export type Spendability = "restricted" | "reserved" | "operating";
 
 export const TREATMENT_META: Record<
   Treatment,
-  { label: string; spendability: Spendability; glAccount: string; description: string; reviewNeeded?: boolean }
+  {
+    label: string;
+    spendability: Spendability;
+    glAccount: string;
+    description: string;
+    reviewNeeded?: boolean;
+  }
 > = {
   cca_revenue: {
     label: "CCA Service Revenue",
     spendability: "operating",
     glAccount: "4000 - Service Revenue",
-    description: "Earned revenue for compliance, audit, application, and consulting services delivered by CCA.",
+    description:
+      "Earned revenue for compliance, audit, application, and consulting services delivered by CCA.",
   },
   pass_through: {
     label: "Pass-Through",
     spendability: "restricted",
     glAccount: "2200 - Client Trust Liability",
-    description: "Funds collected from a client that must be paid to a third party (state, agency, vendor). Never spendable.",
+    description:
+      "Funds collected from a client that must be paid to a third party (state, agency, vendor). Never spendable.",
     reviewNeeded: true,
   },
   commissionable: {
@@ -47,33 +55,38 @@ export const TREATMENT_META: Record<
     label: "Reimbursable Expense",
     spendability: "restricted",
     glAccount: "1350 - Reimbursables Receivable",
-    description: "Client-billed expenses paid to a third party then recouped. Offset against expense, not revenue.",
+    description:
+      "Client-billed expenses paid to a third party then recouped. Offset against expense, not revenue.",
   },
   tax_reserve: {
     label: "Tax Reserve",
     spendability: "reserved",
     glAccount: "2400 - Tax Reserve",
-    description: "Portion of collected revenue set aside for sales, use, and income tax obligations.",
+    description:
+      "Portion of collected revenue set aside for sales, use, and income tax obligations.",
     reviewNeeded: true,
   },
   refundable_deposit: {
     label: "Refundable Deposit",
     spendability: "restricted",
     glAccount: "2300 - Refundable Deposits",
-    description: "Client deposit held until service delivery or contract completion. Liability, not revenue.",
+    description:
+      "Client deposit held until service delivery or contract completion. Liability, not revenue.",
   },
   deferred_revenue: {
     label: "Deferred Revenue",
     spendability: "reserved",
     glAccount: "2500 - Deferred Revenue",
-    description: "Cash collected for services not yet delivered. Recognized over the delivery period.",
+    description:
+      "Cash collected for services not yet delivered. Recognized over the delivery period.",
     reviewNeeded: true,
   },
   other_restricted: {
     label: "Other Restricted Funds",
     spendability: "restricted",
     glAccount: "2290 - Other Restricted",
-    description: "Escrow, retainer, or contract-restricted funds that cannot be commingled with operating cash.",
+    description:
+      "Escrow, retainer, or contract-restricted funds that cannot be commingled with operating cash.",
   },
 };
 
@@ -105,8 +118,18 @@ export const CLIENT_PAYMENTS: ClientPayment[] = [
     gross: 5_000,
     method: "ACH",
     lines: [
-      { label: "TX state filing fee", amount: 1_250, treatment: "pass_through", payeeHint: "TX SOS" },
-      { label: "Qualifier retention (FL)", amount: 750, treatment: "pass_through", payeeHint: "Qualifier network" },
+      {
+        label: "TX state filing fee",
+        amount: 1_250,
+        treatment: "pass_through",
+        payeeHint: "TX SOS",
+      },
+      {
+        label: "Qualifier retention (FL)",
+        amount: 750,
+        treatment: "pass_through",
+        payeeHint: "Qualifier network",
+      },
       { label: "Sales commission — B. Rivera", amount: 300, treatment: "commissionable" },
       { label: "CCA service — application prep", amount: 2_700, treatment: "cca_revenue" },
     ],
@@ -121,7 +144,11 @@ export const CLIENT_PAYMENTS: ClientPayment[] = [
     method: "Wire",
     lines: [
       { label: "Compliance audit fee", amount: 6_000, treatment: "cca_revenue" },
-      { label: "Monthly compliance retainer (advance)", amount: 2_500, treatment: "deferred_revenue" },
+      {
+        label: "Monthly compliance retainer (advance)",
+        amount: 2_500,
+        treatment: "deferred_revenue",
+      },
     ],
   },
   {
@@ -133,10 +160,30 @@ export const CLIENT_PAYMENTS: ClientPayment[] = [
     gross: 12_400,
     method: "ACH",
     lines: [
-      { label: "CA CSLB application fee", amount: 730, treatment: "pass_through", payeeHint: "CSLB" },
-      { label: "WA L&I contractor fee", amount: 220, treatment: "pass_through", payeeHint: "WA L&I" },
-      { label: "Background check pkg", amount: 180, treatment: "pass_through", payeeHint: "IdentoGO" },
-      { label: "Surety bond premium (client-paid)", amount: 1_450, treatment: "pass_through", payeeHint: "Surety carrier" },
+      {
+        label: "CA CSLB application fee",
+        amount: 730,
+        treatment: "pass_through",
+        payeeHint: "CSLB",
+      },
+      {
+        label: "WA L&I contractor fee",
+        amount: 220,
+        treatment: "pass_through",
+        payeeHint: "WA L&I",
+      },
+      {
+        label: "Background check pkg",
+        amount: 180,
+        treatment: "pass_through",
+        payeeHint: "IdentoGO",
+      },
+      {
+        label: "Surety bond premium (client-paid)",
+        amount: 1_450,
+        treatment: "pass_through",
+        payeeHint: "Surety carrier",
+      },
       { label: "Sales commission — D. Ortega", amount: 720, treatment: "commissionable" },
       { label: "Tax reserve (est.)", amount: 480, treatment: "tax_reserve" },
       { label: "CCA application prep", amount: 8_620, treatment: "cca_revenue" },
@@ -152,7 +199,12 @@ export const CLIENT_PAYMENTS: ClientPayment[] = [
     method: "Wire",
     lines: [
       { label: "State portal & filing fees (6)", amount: 4_650, treatment: "pass_through" },
-      { label: "Registered agent (partner)", amount: 1_100, treatment: "pass_through", payeeHint: "Third-party RA" },
+      {
+        label: "Registered agent (partner)",
+        amount: 1_100,
+        treatment: "pass_through",
+        payeeHint: "Third-party RA",
+      },
       { label: "Sales commission — B. Rivera", amount: 1_200, treatment: "commissionable" },
       { label: "Tax reserve", amount: 620, treatment: "tax_reserve" },
       { label: "Expansion roadmap fee", amount: 10_430, treatment: "cca_revenue" },
@@ -234,11 +286,11 @@ const _totals = totalsFrom(CLIENT_PAYMENTS);
 /** Bank cash and reserves that layer on top of the allocation totals. */
 export const CASH_POSITION = {
   bankTotal: 892_430,
-  passThroughHeld: 158_420,     // client trust liabilities aggregated
-  commissionReserve: 42_600,    // accrued commissions payable
-  taxReserve: 68_900,           // sales + estimated tax
-  payrollReserve: 96_800,       // ~1.6 payroll cycles held
-  deferredRevenue: 74_200,      // service not yet delivered
+  passThroughHeld: 158_420, // client trust liabilities aggregated
+  commissionReserve: 42_600, // accrued commissions payable
+  taxReserve: 68_900, // sales + estimated tax
+  payrollReserve: 96_800, // ~1.6 payroll cycles held
+  deferredRevenue: 74_200, // service not yet delivered
 };
 
 export const CASH_POSITION_DERIVED = {
@@ -259,13 +311,48 @@ export const CASH_POSITION_DERIVED = {
 
 /** Waterfall steps for the hero card. */
 export const WATERFALL_STEPS = [
-  { key: "bank", label: "Total cash in bank", delta: CASH_POSITION.bankTotal, kind: "start" as const },
-  { key: "pt", label: "− Pass-through obligations", delta: -CASH_POSITION.passThroughHeld, kind: "restricted" as const },
-  { key: "com", label: "− Commission reserve", delta: -CASH_POSITION.commissionReserve, kind: "reserved" as const },
-  { key: "tax", label: "− Tax reserve", delta: -CASH_POSITION.taxReserve, kind: "reserved" as const },
-  { key: "pay", label: "− Payroll reserve", delta: -CASH_POSITION.payrollReserve, kind: "reserved" as const },
-  { key: "def", label: "− Deferred revenue", delta: -CASH_POSITION.deferredRevenue, kind: "reserved" as const },
-  { key: "avail", label: "True available operating cash", delta: CASH_POSITION_DERIVED.trueAvailable, kind: "end" as const },
+  {
+    key: "bank",
+    label: "Total cash in bank",
+    delta: CASH_POSITION.bankTotal,
+    kind: "start" as const,
+  },
+  {
+    key: "pt",
+    label: "− Pass-through obligations",
+    delta: -CASH_POSITION.passThroughHeld,
+    kind: "restricted" as const,
+  },
+  {
+    key: "com",
+    label: "− Commission reserve",
+    delta: -CASH_POSITION.commissionReserve,
+    kind: "reserved" as const,
+  },
+  {
+    key: "tax",
+    label: "− Tax reserve",
+    delta: -CASH_POSITION.taxReserve,
+    kind: "reserved" as const,
+  },
+  {
+    key: "pay",
+    label: "− Payroll reserve",
+    delta: -CASH_POSITION.payrollReserve,
+    kind: "reserved" as const,
+  },
+  {
+    key: "def",
+    label: "− Deferred revenue",
+    delta: -CASH_POSITION.deferredRevenue,
+    kind: "reserved" as const,
+  },
+  {
+    key: "avail",
+    label: "True available operating cash",
+    delta: CASH_POSITION_DERIVED.trueAvailable,
+    kind: "end" as const,
+  },
 ];
 
 /** 12-month history of Available / Reserved / Restricted composition of bank cash. */
@@ -286,20 +373,77 @@ export const AVAILABILITY_HISTORY = [
 
 /** Upcoming pass-through disbursements (right rail). */
 export const UPCOMING_OBLIGATIONS = [
-  { id: "O-1", due: "May 17, 2025", payee: "TX Secretary of State", label: "Contractor filing — Acme", amount: 1_250, urgency: "high" as const },
-  { id: "O-2", due: "May 19, 2025", payee: "CSLB", label: "CA C-36 application — Cascade", amount: 730, urgency: "med" as const },
-  { id: "O-3", due: "May 20, 2025", payee: "Qualifier Network Inc.", label: "FL qualifier retention", amount: 750, urgency: "med" as const },
-  { id: "O-4", due: "May 22, 2025", payee: "Surety Carrier", label: "Bond premium — Cascade", amount: 1_450, urgency: "low" as const },
-  { id: "O-5", due: "May 24, 2025", payee: "WA L&I", label: "Contractor fee — Cascade", amount: 220, urgency: "low" as const },
-  { id: "O-6", due: "May 27, 2025", payee: "State portal batch", label: "Northstar expansion (6 states)", amount: 4_650, urgency: "med" as const },
+  {
+    id: "O-1",
+    due: "May 17, 2025",
+    payee: "TX Secretary of State",
+    label: "Contractor filing — Acme",
+    amount: 1_250,
+    urgency: "high" as const,
+  },
+  {
+    id: "O-2",
+    due: "May 19, 2025",
+    payee: "CSLB",
+    label: "CA C-36 application — Cascade",
+    amount: 730,
+    urgency: "med" as const,
+  },
+  {
+    id: "O-3",
+    due: "May 20, 2025",
+    payee: "Qualifier Network Inc.",
+    label: "FL qualifier retention",
+    amount: 750,
+    urgency: "med" as const,
+  },
+  {
+    id: "O-4",
+    due: "May 22, 2025",
+    payee: "Surety Carrier",
+    label: "Bond premium — Cascade",
+    amount: 1_450,
+    urgency: "low" as const,
+  },
+  {
+    id: "O-5",
+    due: "May 24, 2025",
+    payee: "WA L&I",
+    label: "Contractor fee — Cascade",
+    amount: 220,
+    urgency: "low" as const,
+  },
+  {
+    id: "O-6",
+    due: "May 27, 2025",
+    payee: "State portal batch",
+    label: "Northstar expansion (6 states)",
+    amount: 4_650,
+    urgency: "med" as const,
+  },
 ];
 
 /** Guardrail readouts. */
 export const GUARDRAILS = [
   { label: "Payroll cycles protected", value: "2.4", status: "ok" as const, hint: "Target ≥ 2.0" },
-  { label: "Pass-through held", value: "100%", status: "ok" as const, hint: "Never available for op spend" },
-  { label: "Tax reserve funded", value: "82%", status: "warn" as const, hint: "Target 100% of quarterly estimate" },
-  { label: "Commission accrual", value: "Current", status: "ok" as const, hint: "Matches payable ledger" },
+  {
+    label: "Pass-through held",
+    value: "100%",
+    status: "ok" as const,
+    hint: "Never available for op spend",
+  },
+  {
+    label: "Tax reserve funded",
+    value: "82%",
+    status: "warn" as const,
+    hint: "Target 100% of quarterly estimate",
+  },
+  {
+    label: "Commission accrual",
+    value: "Current",
+    status: "ok" as const,
+    hint: "Matches payable ledger",
+  },
 ];
 
 /** Aggregate this-period allocation split for the KPI tiles. */

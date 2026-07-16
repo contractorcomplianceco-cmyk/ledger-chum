@@ -93,11 +93,23 @@ export interface AiPolicy {
 export interface IntelligenceService {
   listSuggestions(): Promise<string[]>;
   ask(question: string): Promise<AiAnswer>;
-  getBrief(): Promise<{ summary: string; highlights: Array<{ label: string; value: string; delta?: string }>; recommendations: AiRecommendation[] }>;
+  getBrief(): Promise<{
+    summary: string;
+    highlights: Array<{ label: string; value: string; delta?: string }>;
+    recommendations: AiRecommendation[];
+  }>;
   listRecommendations(): Promise<AiRecommendation[]>;
   getRecommendation(id: ID): Promise<AiRecommendation>;
-  updateRecommendationState(id: ID, state: RecommendationState, reason: string): Promise<DemoResult<AiRecommendation>>;
-  submitFeedback(input: { answerId: ID; rating: "up" | "down"; comment?: string }): Promise<DemoResult<{ answerId: ID }>>;
+  updateRecommendationState(
+    id: ID,
+    state: RecommendationState,
+    reason: string,
+  ): Promise<DemoResult<AiRecommendation>>;
+  submitFeedback(input: {
+    answerId: ID;
+    rating: "up" | "down";
+    comment?: string;
+  }): Promise<DemoResult<{ answerId: ID }>>;
   listHistory(): Promise<AiAnswer[]>;
   getPolicy(): Promise<AiPolicy>;
   updatePolicy(policy: AiPolicy): Promise<DemoResult<AiPolicy>>;
@@ -122,8 +134,26 @@ const SUGGESTIONS = [
 ];
 
 const SAMPLE_EVIDENCE: Evidence[] = [
-  { sourceSystem: "LedgerOS Cash Availability", recordType: "AllocationRule", recordId: "alloc_pass_through", metric: "$18,420 restricted", lastUpdated: "2026-07-12T13:00:00Z", dataQuality: "high", permissionScope: "company", relatedAuditEventId: "aud_cash_1" },
-  { sourceSystem: "Zoho Billing", recordType: "Invoice", recordId: "inv_2145", metric: "$5,000 paid", lastUpdated: "2026-07-12T10:00:00Z", dataQuality: "high", permissionScope: "company", relatedAuditEventId: "aud_pay_1" },
+  {
+    sourceSystem: "LedgerOS Cash Availability",
+    recordType: "AllocationRule",
+    recordId: "alloc_pass_through",
+    metric: "$18,420 restricted",
+    lastUpdated: "2026-07-12T13:00:00Z",
+    dataQuality: "high",
+    permissionScope: "company",
+    relatedAuditEventId: "aud_cash_1",
+  },
+  {
+    sourceSystem: "Zoho Billing",
+    recordType: "Invoice",
+    recordId: "inv_2145",
+    metric: "$5,000 paid",
+    lastUpdated: "2026-07-12T10:00:00Z",
+    dataQuality: "high",
+    permissionScope: "company",
+    relatedAuditEventId: "aud_pay_1",
+  },
 ];
 
 const MOCK_RECOMMENDATIONS: AiRecommendation[] = [
@@ -134,7 +164,15 @@ const MOCK_RECOMMENDATIONS: AiRecommendation[] = [
     narrative:
       "Two Zoho Creator seats have shown zero session activity for 62 days. Cancelling reclaims $84/month with no functional impact based on current usage data.",
     evidence: [
-      { sourceSystem: "Zoho Admin", recordType: "SeatUsage", recordId: "seat_zc_42", metric: "0 sessions / 62d", lastUpdated: "2026-07-12T00:00:00Z", dataQuality: "high", permissionScope: "company" },
+      {
+        sourceSystem: "Zoho Admin",
+        recordType: "SeatUsage",
+        recordId: "seat_zc_42",
+        metric: "0 sessions / 62d",
+        lastUpdated: "2026-07-12T00:00:00Z",
+        dataQuality: "high",
+        permissionScope: "company",
+      },
     ],
     confidence: 0.92,
     estimatedImpact: "$1,008 annualized savings",
@@ -168,7 +206,15 @@ const MOCK_RECOMMENDATIONS: AiRecommendation[] = [
     narrative:
       "Attribution total for deal_51 is 50% — under-allocated by 50%. This blocks commission_calculation from advancing past pending_verification.",
     evidence: [
-      { sourceSystem: "Commissions", recordType: "Attribution", recordId: "attr_3", metric: "50% assigned", lastUpdated: "2026-07-10T15:00:00Z", dataQuality: "high", permissionScope: "company" },
+      {
+        sourceSystem: "Commissions",
+        recordType: "Attribution",
+        recordId: "attr_3",
+        metric: "50% assigned",
+        lastUpdated: "2026-07-10T15:00:00Z",
+        dataQuality: "high",
+        permissionScope: "company",
+      },
     ],
     confidence: 0.99,
     estimatedImpact: "Unblocks $1,200 payable",
@@ -182,14 +228,44 @@ const MOCK_RECOMMENDATIONS: AiRecommendation[] = [
 ];
 
 const MOCK_POLICY: AiPolicy = {
-  permittedScopes: ["Company financial data", "Anonymized customer data", "Aggregated payroll totals"],
-  prohibitedData: ["Individual employee compensation", "Bank account credentials", "Client PII outside scope"],
-  permittedCategories: ["Explain", "Summarize", "Suggest", "Rank", "Forecast", "Identify exceptions", "Propose task", "Propose draft"],
-  prohibitedActions: [
-    "Post journals", "Send payments", "Transfer funds", "Approve expenses", "Approve commissions",
-    "Lock periods", "Change permissions", "Cancel subscriptions", "Send invoices", "Modify payroll", "Delete records",
+  permittedScopes: [
+    "Company financial data",
+    "Anonymized customer data",
+    "Aggregated payroll totals",
   ],
-  approvalRequirements: ["All financial actions require human approver", "AI cannot approve its own recommendation", "Overrides require reason string"],
+  prohibitedData: [
+    "Individual employee compensation",
+    "Bank account credentials",
+    "Client PII outside scope",
+  ],
+  permittedCategories: [
+    "Explain",
+    "Summarize",
+    "Suggest",
+    "Rank",
+    "Forecast",
+    "Identify exceptions",
+    "Propose task",
+    "Propose draft",
+  ],
+  prohibitedActions: [
+    "Post journals",
+    "Send payments",
+    "Transfer funds",
+    "Approve expenses",
+    "Approve commissions",
+    "Lock periods",
+    "Change permissions",
+    "Cancel subscriptions",
+    "Send invoices",
+    "Modify payroll",
+    "Delete records",
+  ],
+  approvalRequirements: [
+    "All financial actions require human approver",
+    "AI cannot approve its own recommendation",
+    "Overrides require reason string",
+  ],
   providerSelection: "Configured via server-side gateway — not exposed to frontend",
   modelSelection: "Configured via server-side gateway — not exposed to frontend",
   dataRetention: "Prompt + response retained 90 days for audit; then anonymized",
@@ -213,9 +289,14 @@ export const mockIntelligence: IntelligenceService = {
         "Spendable = operating balance − pass-through obligations − commission reserve − scheduled payables (7-day) − guardrail floor.",
       confidence: 0.86,
       dataFreshness: "≤ 15 min old (mock)",
-      assumptions: ["No unrecorded pending refunds", "Payroll run on schedule", "All connected banks synced today"],
+      assumptions: [
+        "No unrecorded pending refunds",
+        "Payroll run on schedule",
+        "All connected banks synced today",
+      ],
       missingData: ["Deferred vendor deposits > $10k", "Uncleared ACH holds"],
-      recommendedAction: "Review the 3 outstanding invoices above 45 days before releasing discretionary spend.",
+      recommendedAction:
+        "Review the 3 outstanding invoices above 45 days before releasing discretionary spend.",
       requiredApproval: "Owner (for spend over guardrail)",
       recordLinks: [
         { label: "Cash Availability", href: "/cash-availability" },
@@ -225,7 +306,8 @@ export const mockIntelligence: IntelligenceService = {
     })),
   getBrief: () =>
     mockGet(() => ({
-      summary: "Cash position is stable. Two attribution conflicts and one subscription anomaly need review.",
+      summary:
+        "Cash position is stable. Two attribution conflicts and one subscription anomaly need review.",
       highlights: [
         { label: "Safely spendable", value: "$42,180", delta: "+$1,240 vs yesterday" },
         { label: "Commission reserve", value: "$3,450" },
@@ -247,7 +329,8 @@ export const mockIntelligence: IntelligenceService = {
       if (!r) throw new Error("Recommendation not found");
       return { ...r, state, outcome: reason };
     }, DEMO_MUTATION_MESSAGE),
-  submitFeedback: (input) => mockMutation(() => ({ answerId: input.answerId }), DEMO_MUTATION_MESSAGE),
+  submitFeedback: (input) =>
+    mockMutation(() => ({ answerId: input.answerId }), DEMO_MUTATION_MESSAGE),
   listHistory: () =>
     mockGet(() => [
       {
@@ -271,7 +354,19 @@ export const mockIntelligence: IntelligenceService = {
   updatePolicy: (policy) => mockMutation(() => policy, DEMO_MUTATION_MESSAGE),
   listAudit: () =>
     mockGet(() => [
-      { id: "aud_ai_1", type: "ai.query", actor: "Rose", at: "2026-07-12T13:00:00Z", summary: "Asked: what cash can we safely spend today?" },
-      { id: "aud_ai_2", type: "ai.recommendation", actor: "system", at: "2026-07-12T09:00:00Z", summary: "Generated rec_1 (cancel idle seats)" },
+      {
+        id: "aud_ai_1",
+        type: "ai.query",
+        actor: "Rose",
+        at: "2026-07-12T13:00:00Z",
+        summary: "Asked: what cash can we safely spend today?",
+      },
+      {
+        id: "aud_ai_2",
+        type: "ai.recommendation",
+        actor: "system",
+        at: "2026-07-12T09:00:00Z",
+        summary: "Generated rec_1 (cancel idle seats)",
+      },
     ]),
 };

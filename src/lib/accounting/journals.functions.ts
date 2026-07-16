@@ -23,14 +23,16 @@ const lineSchema = z.object({
 export const listJournals = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["draft", "posted", "void"]).optional(),
-      from: z.string().optional(),
-      to: z.string().optional(),
-      sourceType: z.string().optional(),
-      limit: z.number().int().min(1).max(500).default(100),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["draft", "posted", "void"]).optional(),
+        from: z.string().optional(),
+        to: z.string().optional(),
+        sourceType: z.string().optional(),
+        limit: z.number().int().min(1).max(500).default(100),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -74,13 +76,15 @@ export const getJournal = createServerFn({ method: "GET" })
 export const postManualJournal = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      entryDate: z.string(),
-      memo: z.string().min(1).max(200),
-      description: z.string().optional(),
-      lines: z.array(lineSchema).min(2),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        entryDate: z.string(),
+        memo: z.string().min(1).max(200),
+        description: z.string().optional(),
+        lines: z.array(lineSchema).min(2),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     // Client-side sanity check before the RPC (RPC will re-enforce)
@@ -108,11 +112,13 @@ export const postManualJournal = createServerFn({ method: "POST" })
 export const reverseJournal = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      journalId: z.string().uuid(),
-      reason: z.string().min(1).max(500),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        journalId: z.string().uuid(),
+        reason: z.string().min(1).max(500),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("reverse_journal", {

@@ -126,7 +126,9 @@ export function WorkspaceHealthBar({
           Workspace health
         </div>
         <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-[38px] font-bold leading-none tracking-tight tabular-nums">{health.score}</span>
+          <span className="text-[38px] font-bold leading-none tracking-tight tabular-nums">
+            {health.score}
+          </span>
           <span className="text-[13px] text-muted-foreground">/100</span>
         </div>
         <div className="mt-1 text-[13px] font-medium text-foreground">{health.label}</div>
@@ -275,9 +277,7 @@ export function WorkspaceSection({
     <section className="space-y-3">
       <div>
         <h2 className="text-[15px] font-semibold text-foreground">{title}</h2>
-        {description && (
-          <p className="text-[12.5px] text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="text-[12.5px] text-muted-foreground">{description}</p>}
       </div>
       {children}
     </section>
@@ -355,12 +355,7 @@ export function WorkspaceQuickActions({
             "hover:-translate-y-0.5 hover:shadow-sm hover:text-foreground",
           )}
         >
-          <span
-            className={cn(
-              "h-1.5 w-1.5 rounded-full bg-gradient-to-r",
-              theme.gradient,
-            )}
-          />
+          <span className={cn("h-1.5 w-1.5 rounded-full bg-gradient-to-r", theme.gradient)} />
           {a.label}
         </button>
       ))}
@@ -514,13 +509,7 @@ export function WorkspaceTimeline({
 /* WorkspaceSummary & WorkspaceInsights                                */
 /* ------------------------------------------------------------------ */
 
-export function WorkspaceSummary({
-  theme,
-  summary,
-}: {
-  theme: WorkspaceTheme;
-  summary: string;
-}) {
+export function WorkspaceSummary({ theme, summary }: { theme: WorkspaceTheme; summary: string }) {
   return (
     <Card className="relative overflow-hidden border-border/70 p-5">
       <div
@@ -582,11 +571,7 @@ export function WorkspaceShell({ def }: { def: WorkspaceDefinition }) {
         <PageBody className="space-y-6">
           <WorkspaceHero theme={def.theme} summary={def.summary} />
 
-          <WorkspaceHealthBar
-            theme={def.theme}
-            health={def.health}
-            priorities={def.priorities}
-          />
+          <WorkspaceHealthBar theme={def.theme} health={def.health} priorities={def.priorities} />
 
           <WorkspaceMetricsStrip theme={def.theme} metrics={def.metrics} />
 
@@ -596,7 +581,10 @@ export function WorkspaceShell({ def }: { def: WorkspaceDefinition }) {
 
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px]">
             <div className="space-y-5">
-              <WorkspaceSection title="Workspace surfaces" description="Every corner of this workspace at a glance">
+              <WorkspaceSection
+                title="Workspace surfaces"
+                description="Every corner of this workspace at a glance"
+              >
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {def.sections.map((s) => (
                     <WorkspaceSectionCard key={s.id} theme={def.theme} section={s} />

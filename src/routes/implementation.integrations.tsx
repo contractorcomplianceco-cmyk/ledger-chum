@@ -32,11 +32,21 @@ function IntegrationsPage() {
           <Card key={i.system} className="border-border/70 p-4">
             <div className="flex items-start justify-between gap-2">
               <div className="text-[13.5px] font-semibold">{i.system}</div>
-              <span className={cn("rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase", STATUS_TONE[i.status])}>
+              <span
+                className={cn(
+                  "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
+                  STATUS_TONE[i.status],
+                )}
+              >
                 {i.status}
               </span>
             </div>
-            <span className={cn("mt-1 inline-flex rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase", CAT_TONE[i.category])}>
+            <span
+              className={cn(
+                "mt-1 inline-flex rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
+                CAT_TONE[i.category],
+              )}
+            >
               {i.category}
             </span>
             <dl className="mt-3 space-y-1.5 text-[12px]">
@@ -52,9 +62,17 @@ function IntegrationsPage() {
         <div className="font-semibold text-foreground">Integration principles</div>
         <ul className="mt-1 list-disc space-y-1 pl-5">
           <li>Signed webhooks only. HMAC over raw body with rotating secrets stored in vault.</li>
-          <li>Every inbound event lands in the Integration Inbox first — never posts directly to the GL.</li>
-          <li>Retries are idempotent by <code>external_id</code>; duplicates are deduped, not re-posted.</li>
-          <li>Zoho Books stays parallel until reconciliation variance is under 0.5% for 30 days.</li>
+          <li>
+            Every inbound event lands in the Integration Inbox first — never posts directly to the
+            GL.
+          </li>
+          <li>
+            Retries are idempotent by <code>external_id</code>; duplicates are deduped, not
+            re-posted.
+          </li>
+          <li>
+            Zoho Books stays parallel until reconciliation variance is under 0.5% for 30 days.
+          </li>
         </ul>
       </Card>
     </ImplementationPage>
@@ -64,7 +82,9 @@ function IntegrationsPage() {
 function Row({ k, v }: { k: string; v: string }) {
   return (
     <div className="grid grid-cols-[80px_1fr] gap-2">
-      <dt className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{k}</dt>
+      <dt className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {k}
+      </dt>
       <dd className="text-foreground">{v}</dd>
     </div>
   );

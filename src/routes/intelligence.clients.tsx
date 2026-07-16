@@ -45,13 +45,27 @@ function ClientProfitPage() {
                   <tr key={c.id} className="border-t border-border/70 hover:bg-muted/30">
                     <td className="px-3 py-2 font-semibold">{c.client}</td>
                     <td className="px-3 py-2 text-right font-tabular">{currency(c.revenue)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.passthrough)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.commission)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.labor)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.expenses)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.tech)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.marketing)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.refunds)}</td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.passthrough)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.commission)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.labor)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.expenses)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.tech)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.marketing)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(c.refunds)}
+                    </td>
                     <td
                       className={cn(
                         "px-3 py-2 text-right font-tabular font-semibold",
@@ -66,7 +80,12 @@ function ClientProfitPage() {
                     <td className="px-3 py-2 text-muted-foreground">{c.payment}</td>
                     <td className="px-3 py-2 text-muted-foreground">{c.burden}</td>
                     <td className="px-3 py-2">
-                      <span className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap", meta.className)}>
+                      <span
+                        className={cn(
+                          "rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap",
+                          meta.className,
+                        )}
+                      >
                         {meta.label}
                       </span>
                     </td>

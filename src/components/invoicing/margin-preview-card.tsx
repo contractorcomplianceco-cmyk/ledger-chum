@@ -13,8 +13,16 @@ export function MarginPreviewCard({
 
   const rows = [
     { label: "Earned revenue", amount: m.earnedRevenue },
-    { label: "Fulfillment cost", amount: -invoice.lines.filter((l) => l.estCost > 0).reduce((s, l) => s + l.estCost, 0) },
-    { label: "Commission", amount: -invoice.lines.filter((l) => l.treatment === "commissionable").reduce((s, l) => s + l.qty * l.rate - l.discount, 0) },
+    {
+      label: "Fulfillment cost",
+      amount: -invoice.lines.filter((l) => l.estCost > 0).reduce((s, l) => s + l.estCost, 0),
+    },
+    {
+      label: "Commission",
+      amount: -invoice.lines
+        .filter((l) => l.treatment === "commissionable")
+        .reduce((s, l) => s + l.qty * l.rate - l.discount, 0),
+    },
     { label: "Labor", amount: -invoice.laborCost },
     { label: "Technology allocation", amount: -invoice.techAllocation },
     { label: "Marketing acquisition", amount: -invoice.marketingCac },
@@ -43,7 +51,12 @@ export function MarginPreviewCard({
         {rows.map((r) => (
           <div key={r.label} className="flex items-center justify-between text-[12px]">
             <span className="text-muted-foreground">{r.label}</span>
-            <span className={cn("font-tabular font-semibold", r.amount < 0 ? "text-foreground/80" : "text-foreground")}>
+            <span
+              className={cn(
+                "font-tabular font-semibold",
+                r.amount < 0 ? "text-foreground/80" : "text-foreground",
+              )}
+            >
               {r.amount < 0 ? "−" : ""}
               {currency(Math.abs(r.amount))}
             </span>
@@ -54,7 +67,9 @@ export function MarginPreviewCard({
       <div className="mt-3 rounded-lg bg-gradient-brand-cool/[0.07] p-3 ring-1 ring-inset ring-blue-500/15">
         <div className="flex items-baseline justify-between">
           <span className="text-[12px] font-semibold text-foreground">Contribution margin</span>
-          <span className="font-tabular text-[18px] font-bold text-foreground">{currency(m.contribution)}</span>
+          <span className="font-tabular text-[18px] font-bold text-foreground">
+            {currency(m.contribution)}
+          </span>
         </div>
         <div className="mt-1 flex items-center justify-between text-[11px]">
           <span className="text-muted-foreground">
@@ -66,7 +81,9 @@ export function MarginPreviewCard({
               m.belowTarget ? "bg-destructive/10 text-destructive" : "bg-success/10 text-success",
             )}
           >
-            {m.marginPct >= m.target ? "On target" : `${(m.target - m.marginPct).toFixed(1)}% below`}
+            {m.marginPct >= m.target
+              ? "On target"
+              : `${(m.target - m.marginPct).toFixed(1)}% below`}
           </span>
         </div>
       </div>
@@ -75,7 +92,8 @@ export function MarginPreviewCard({
         <div className="mt-2 flex items-start gap-2 rounded-lg bg-destructive/[0.06] p-2.5 text-[11px] leading-relaxed text-destructive">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>
-            This invoice is priced below the target margin. Consider adjusting rate or scope before sending.
+            This invoice is priced below the target margin. Consider adjusting rate or scope before
+            sending.
           </span>
         </div>
       )}

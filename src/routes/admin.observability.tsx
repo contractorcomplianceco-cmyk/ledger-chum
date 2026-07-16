@@ -101,7 +101,10 @@ function ObservabilityPage() {
       ? { state: "healthy", note: "No errors in the current window." }
       : stats.totalErrors < 5
         ? { state: "degraded", note: `${stats.totalErrors} errors — review the retry queue.` }
-        : { state: "unhealthy", note: `${stats.totalErrors} errors — escalate to integration owner.` };
+        : {
+            state: "unhealthy",
+            note: `${stats.totalErrors} errors — escalate to integration owner.`,
+          };
 
   const healthTone =
     health.state === "healthy"
@@ -121,7 +124,12 @@ function ObservabilityPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Tile icon={Workflow} label="Events (total)" value={stats.totalEvents} />
           <Tile icon={Clock} label="Events / last hour" value={stats.eventsLastHour} />
-          <Tile icon={AlertTriangle} label="Errors" value={stats.totalErrors} tone={stats.totalErrors ? "bad" : "muted"} />
+          <Tile
+            icon={AlertTriangle}
+            label="Errors"
+            value={stats.totalErrors}
+            tone={stats.totalErrors ? "bad" : "muted"}
+          />
           <Tile icon={Repeat} label="Retry queue" value={stats.retryQueue.length} />
         </div>
 
@@ -152,7 +160,10 @@ function ObservabilityPage() {
             ) : (
               <ul className="space-y-2 text-[13px]">
                 {stats.errorsByEndpoint.map(([endpoint, count]) => (
-                  <li key={endpoint} className="flex items-center justify-between rounded border border-border/60 bg-background/40 px-3 py-2">
+                  <li
+                    key={endpoint}
+                    className="flex items-center justify-between rounded border border-border/60 bg-background/40 px-3 py-2"
+                  >
                     <span className="font-mono">{endpoint}</span>
                     <Badge className="bg-red-500/10 text-red-500">{count}</Badge>
                   </li>
@@ -171,14 +182,18 @@ function ObservabilityPage() {
             ) : (
               <ul className="max-h-64 space-y-2 overflow-auto text-[12px]">
                 {stats.retryQueue.map((r, i) => (
-                  <li key={i} className="rounded border border-border/60 bg-background/40 px-3 py-2">
+                  <li
+                    key={i}
+                    className="rounded border border-border/60 bg-background/40 px-3 py-2"
+                  >
                     <div className="flex items-center justify-between">
                       <span className="font-mono">{r.endpoint}</span>
                       <Badge variant="outline">retry × {r.retry_count}</Badge>
                     </div>
                     {r.error && <div className="mt-1 text-[11px] text-red-400">{r.error}</div>}
                     <div className="mt-1 text-[11px] text-muted-foreground">
-                      last retry {r.last_retry_at ? new Date(r.last_retry_at).toLocaleString() : "—"}
+                      last retry{" "}
+                      {r.last_retry_at ? new Date(r.last_retry_at).toLocaleString() : "—"}
                     </div>
                   </li>
                 ))}
@@ -214,7 +229,8 @@ function Tile({
   value: number;
   tone?: "brand" | "bad" | "muted";
 }) {
-  const cls = tone === "bad" ? "text-red-500" : tone === "muted" ? "text-muted-foreground" : "text-brand";
+  const cls =
+    tone === "bad" ? "text-red-500" : tone === "muted" ? "text-muted-foreground" : "text-brand";
   return (
     <Card className="border-border/60 p-4">
       <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-muted-foreground">

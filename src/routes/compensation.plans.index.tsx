@@ -14,10 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { api } from "@/lib/api/client";
-import type {
-  CompensationPlan,
-  CompensationPlanStatus,
-} from "@/lib/api/services/compensation";
+import type { CompensationPlan, CompensationPlanStatus } from "@/lib/api/services/compensation";
 import { currency } from "@/lib/mock/finance";
 import { Plus, Filter } from "lucide-react";
 
@@ -111,7 +108,11 @@ function PlansPage() {
         base = base.filter((p) => new Date(p.effectiveDate) > new Date());
         break;
       case "expiring_soon":
-        base = base.filter((p) => p.expirationDate && new Date(p.expirationDate).getTime() - Date.now() < 60 * 24 * 3600 * 1000);
+        base = base.filter(
+          (p) =>
+            p.expirationDate &&
+            new Date(p.expirationDate).getTime() - Date.now() < 60 * 24 * 3600 * 1000,
+        );
         break;
       case "inactive":
         base = base.filter((p) => !p.active);
@@ -120,7 +121,9 @@ function PlansPage() {
         base = base.filter((p) => p.legalReviewRequired && p.legalReviewStatus !== "cleared");
         break;
       case "requires_accounting_review":
-        base = base.filter((p) => p.accountingReviewRequired && p.accountingReviewStatus !== "cleared");
+        base = base.filter(
+          (p) => p.accountingReviewRequired && p.accountingReviewStatus !== "cleared",
+        );
         break;
       case "tara":
         base = base.filter((p) => p.family === "brand_ambassador_participation");
@@ -200,19 +203,42 @@ function PlansPage() {
             {filtered.map((p) => (
               <TableRow key={p.id}>
                 <TableCell className="font-medium">
-                  <Link to="/compensation/plans/$id" params={{ id: p.id }} className="hover:underline">
+                  <Link
+                    to="/compensation/plans/$id"
+                    params={{ id: p.id }}
+                    className="hover:underline"
+                  >
                     {p.name}
                   </Link>
-                  <div className="mt-0.5 text-xs text-muted-foreground line-clamp-1">{p.description}</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground line-clamp-1">
+                    {p.description}
+                  </div>
                 </TableCell>
-                <TableCell><Badge variant="outline">{p.family.replaceAll("_", " ")}</Badge></TableCell>
-                <TableCell className="text-xs">{p.disbursementClass.replaceAll("_", " ")}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">{p.family.replaceAll("_", " ")}</Badge>
+                </TableCell>
+                <TableCell className="text-xs">
+                  {p.disbursementClass.replaceAll("_", " ")}
+                </TableCell>
                 <TableCell className="text-xs">{p.basis.replaceAll("_", " ")}</TableCell>
-                <TableCell>{p.defaultRate ? `${(p.defaultRate * 100).toFixed(1)}%` : p.fixedAmount ? currency(p.fixedAmount) : "—"}</TableCell>
-                <TableCell className="text-xs">{p.effectiveDate}{p.expirationDate ? ` → ${p.expirationDate}` : ""}</TableCell>
+                <TableCell>
+                  {p.defaultRate
+                    ? `${(p.defaultRate * 100).toFixed(1)}%`
+                    : p.fixedAmount
+                      ? currency(p.fixedAmount)
+                      : "—"}
+                </TableCell>
+                <TableCell className="text-xs">
+                  {p.effectiveDate}
+                  {p.expirationDate ? ` → ${p.expirationDate}` : ""}
+                </TableCell>
                 <TableCell>{p.participantCount}</TableCell>
-                <TableCell className="text-xs">{p.collectionRequirement.replaceAll("_", " ")}</TableCell>
-                <TableCell className="text-xs">{p.passThroughTreatment.replaceAll("_", " ")}</TableCell>
+                <TableCell className="text-xs">
+                  {p.collectionRequirement.replaceAll("_", " ")}
+                </TableCell>
+                <TableCell className="text-xs">
+                  {p.passThroughTreatment.replaceAll("_", " ")}
+                </TableCell>
                 <TableCell className="text-xs">{p.chargebackWindowDays}d</TableCell>
                 <TableCell className="text-xs">{(p.holdbackPercent * 100).toFixed(0)}%</TableCell>
                 <TableCell>v{p.currentVersion}</TableCell>
@@ -223,8 +249,15 @@ function PlansPage() {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button size="sm" variant="ghost" onClick={() => showDemoToast(`Opened ${p.name}`)} asChild>
-                    <Link to="/compensation/plans/$id" params={{ id: p.id }}>Open</Link>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => showDemoToast(`Opened ${p.name}`)}
+                    asChild
+                  >
+                    <Link to="/compensation/plans/$id" params={{ id: p.id }}>
+                      Open
+                    </Link>
                   </Button>
                 </TableCell>
               </TableRow>

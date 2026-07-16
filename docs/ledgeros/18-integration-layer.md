@@ -50,13 +50,13 @@ This document defines that layer.
 
 Every inbound call carries:
 
-| Field | Purpose |
-| --- | --- |
-| `Authorization: Bearer <token>` | `api_clients.key_hash` lookup — identifies caller org |
-| `Idempotency-Key` | Deduplicates retries; stored on `sync_history` |
-| `external_id` | Caller's stable ID for the record (customer, invoice, payment) |
-| `external_source` | System of origin (e.g. `serviceconnect`) — persisted on the created row |
-| Payload | JSON body specific to the ledger object |
+| Field                           | Purpose                                                                 |
+| ------------------------------- | ----------------------------------------------------------------------- |
+| `Authorization: Bearer <token>` | `api_clients.key_hash` lookup — identifies caller org                   |
+| `Idempotency-Key`               | Deduplicates retries; stored on `sync_history`                          |
+| `external_id`                   | Caller's stable ID for the record (customer, invoice, payment)          |
+| `external_source`               | System of origin (e.g. `serviceconnect`) — persisted on the created row |
+| Payload                         | JSON body specific to the ledger object                                 |
 
 Every generated LedgerOS row records `external_source` + `external_id`,
 enabling **round-trip traceability** — a payment posted from ServiceConnect
@@ -72,27 +72,27 @@ Two tables replace hard-coded ServiceConnect logic:
 
 Per-organization registry of external systems.
 
-| Field | Notes |
-| --- | --- |
-| `source_key` | Machine key (`serviceconnect`, `zoho_books`, `adp`, …) |
-| `name` | Display name |
-| `kind` | `inbound_api` \| `outbound_api` \| `webhook` \| `file_feed` \| `manual` |
-| `active` | Master enable/disable |
-| `config` | JSONB — adapter-specific hints (rate limits, feature flags) |
+| Field        | Notes                                                                   |
+| ------------ | ----------------------------------------------------------------------- |
+| `source_key` | Machine key (`serviceconnect`, `zoho_books`, `adp`, …)                  |
+| `name`       | Display name                                                            |
+| `kind`       | `inbound_api` \| `outbound_api` \| `webhook` \| `file_feed` \| `manual` |
+| `active`     | Master enable/disable                                                   |
+| `config`     | JSONB — adapter-specific hints (rate limits, feature flags)             |
 
 ### `integration_event_mappings`
 
 Per-organization mapping from an external event type to a LedgerOS
 financial object and (optionally) an `account_mappings.purpose`.
 
-| Field | Notes |
-| --- | --- |
-| `source_id` | FK to `integration_sources` |
-| `external_event_type` | e.g. `work_order.completed` |
-| `ledger_object` | `customer` \| `invoice` \| `payment` \| `refund` \| `inventory_consumption` \| `bill` \| `credit` |
-| `account_purpose` | Optional link to `account_mappings.purpose` (e.g. `ar`, `labor_revenue`) |
-| `active` | Per-event toggle |
-| `config` | JSONB — per-mapping adapter hints |
+| Field                 | Notes                                                                                             |
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| `source_id`           | FK to `integration_sources`                                                                       |
+| `external_event_type` | e.g. `work_order.completed`                                                                       |
+| `ledger_object`       | `customer` \| `invoice` \| `payment` \| `refund` \| `inventory_consumption` \| `bill` \| `credit` |
+| `account_purpose`     | Optional link to `account_mappings.purpose` (e.g. `ar`, `labor_revenue`)                          |
+| `active`              | Per-event toggle                                                                                  |
+| `config`              | JSONB — per-mapping adapter hints                                                                 |
 
 **Rule.** Business logic (e.g. "a completed work order becomes a draft
 invoice") lives in the endpoint handler + the mapping row — not in a
@@ -167,13 +167,13 @@ The ServiceConnect pilot is now a **configuration** of the generic framework:
    `kind='inbound_api'`.
 3. `integration_event_mappings` rows:
 
-   | external_event_type | ledger_object | account_purpose |
-   | --- | --- | --- |
-   | `work_order.completed` | `invoice` | `ar` |
-   | `payment.received` | `payment` | `cash_default` |
-   | `refund.created` | `refund` | `refund_clearing` |
-   | `inventory.consumed` | `inventory_consumption` | `inventory_asset` |
-   | `customer.upserted` | `customer` | *(none)* |
+   | external_event_type    | ledger_object           | account_purpose   |
+   | ---------------------- | ----------------------- | ----------------- |
+   | `work_order.completed` | `invoice`               | `ar`              |
+   | `payment.received`     | `payment`               | `cash_default`    |
+   | `refund.created`       | `refund`                | `refund_clearing` |
+   | `inventory.consumed`   | `inventory_consumption` | `inventory_asset` |
+   | `customer.upserted`    | `customer`              | _(none)_          |
 
 Adding a second pilot (e.g. Zoho Books) is done by inserting a new
 `integration_sources` row and a set of `integration_event_mappings` — no code

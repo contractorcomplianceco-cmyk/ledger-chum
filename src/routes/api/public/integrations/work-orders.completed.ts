@@ -23,10 +23,10 @@ const lineSchema = z.object({
 });
 
 const schema = z.object({
-  external_id: z.string().min(1),               // ServiceConnect work order id
-  work_order_ref: z.string().min(1),            // Human-readable WO number
+  external_id: z.string().min(1), // ServiceConnect work order id
+  work_order_ref: z.string().min(1), // Human-readable WO number
   customer_external_id: z.string().min(1),
-  issue_date: z.string(),                        // ISO date
+  issue_date: z.string(), // ISO date
   due_date: z.string().optional().nullable(),
   invoice_number: z.string().optional().nullable(),
   memo: z.string().optional().nullable(),
@@ -40,7 +40,11 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(request, "/work-orders/completed", "work_orders.completed");
+          const start = await beginIntegrationCall(
+            request,
+            "/work-orders/completed",
+            "work_orders.completed",
+          );
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;
@@ -126,13 +130,11 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
             });
           }
 
-
           subtotal = round2(subtotal);
           tax = round2(tax);
           const total = round2(subtotal + tax);
 
-          const invoiceNumber =
-            p.invoice_number ?? `WO-${p.work_order_ref}`;
+          const invoiceNumber = p.invoice_number ?? `WO-${p.work_order_ref}`;
 
           // Insert draft invoice
           const { data: inv, error: ierr } = await supabaseAdmin

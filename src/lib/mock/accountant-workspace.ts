@@ -34,7 +34,14 @@ export interface DraftInvoice {
   issueDate: string;
   status: "draft" | "posted" | "sent" | "partial" | "paid";
   labor: Array<{ description: string; hours: number; rate: number; account: string }>;
-  materials: Array<{ description: string; quantity: number; price: number; cost: number; account: string; inventoryAccount: string }>;
+  materials: Array<{
+    description: string;
+    quantity: number;
+    price: number;
+    cost: number;
+    account: string;
+    inventoryAccount: string;
+  }>;
   taxRate: number;
   createdVia: string;
 }
@@ -74,18 +81,99 @@ export interface ConnectedSystem {
 // ============= Demo data =============
 
 const now = new Date();
-const iso = (minutesAgo: number) =>
-  new Date(now.getTime() - minutesAgo * 60_000).toISOString();
+const iso = (minutesAgo: number) => new Date(now.getTime() - minutesAgo * 60_000).toISOString();
 
 export const DEMO_EVENTS: IntegrationEvent[] = [
-  { id: "evt_a1", source: "ServiceConnect", event: "work_order.completed", externalId: "WO-10001", customer: "Apex Marine Repair", amount: 650, timestamp: iso(3), status: "success", syncResult: "Invoice INV-WO-10001 drafted", correlationId: "corr_9f21" },
-  { id: "evt_a2", source: "ServiceConnect", event: "inventory.consumed", externalId: "WO-10001-mat-1", customer: "Apex Marine Repair", amount: 75, timestamp: iso(3), status: "success", syncResult: "COGS $75 posted · JE-2044" },
-  { id: "evt_a3", source: "LedgerOS", event: "invoice.posted", externalId: "INV-WO-10001", customer: "Apex Marine Repair", amount: 650, timestamp: iso(1), status: "success", syncResult: "AR $650 posted · JE-2045" },
-  { id: "evt_a4", source: "ServiceConnect", event: "payment.received", externalId: "PMT-88213", customer: "Harbor Logistics LLC", amount: 4200, timestamp: iso(24), status: "success", syncResult: "Cash $4,200 posted · JE-2038" },
-  { id: "evt_a5", source: "ServiceConnect", event: "work_order.completed", externalId: "WO-10002", customer: "Coastal Freight Co", amount: 1875, timestamp: iso(38), status: "pending", syncResult: "Awaiting accountant review" },
-  { id: "evt_a6", source: "ServiceConnect", event: "refund.created", externalId: "REF-771", customer: "Delta Yacht Club", amount: 250, timestamp: iso(120), status: "success", syncResult: "Refund reversal posted · JE-2031" },
-  { id: "evt_a7", source: "ServiceConnect", event: "work_order.completed", externalId: "WO-10003", customer: "Unknown customer", amount: 900, timestamp: iso(180), status: "failed", syncResult: "Customer SC-CUST-99 not found", error: "422 unknown_customer" },
-  { id: "evt_a8", source: "ServiceConnect", event: "inventory.consumed", externalId: "WO-10004-mat-2", customer: "Northwind Ops", amount: 320, timestamp: iso(240), status: "retrying", syncResult: "Retry 2 of 5 · backoff 15m" },
+  {
+    id: "evt_a1",
+    source: "ServiceConnect",
+    event: "work_order.completed",
+    externalId: "WO-10001",
+    customer: "Apex Marine Repair",
+    amount: 650,
+    timestamp: iso(3),
+    status: "success",
+    syncResult: "Invoice INV-WO-10001 drafted",
+    correlationId: "corr_9f21",
+  },
+  {
+    id: "evt_a2",
+    source: "ServiceConnect",
+    event: "inventory.consumed",
+    externalId: "WO-10001-mat-1",
+    customer: "Apex Marine Repair",
+    amount: 75,
+    timestamp: iso(3),
+    status: "success",
+    syncResult: "COGS $75 posted · JE-2044",
+  },
+  {
+    id: "evt_a3",
+    source: "LedgerOS",
+    event: "invoice.posted",
+    externalId: "INV-WO-10001",
+    customer: "Apex Marine Repair",
+    amount: 650,
+    timestamp: iso(1),
+    status: "success",
+    syncResult: "AR $650 posted · JE-2045",
+  },
+  {
+    id: "evt_a4",
+    source: "ServiceConnect",
+    event: "payment.received",
+    externalId: "PMT-88213",
+    customer: "Harbor Logistics LLC",
+    amount: 4200,
+    timestamp: iso(24),
+    status: "success",
+    syncResult: "Cash $4,200 posted · JE-2038",
+  },
+  {
+    id: "evt_a5",
+    source: "ServiceConnect",
+    event: "work_order.completed",
+    externalId: "WO-10002",
+    customer: "Coastal Freight Co",
+    amount: 1875,
+    timestamp: iso(38),
+    status: "pending",
+    syncResult: "Awaiting accountant review",
+  },
+  {
+    id: "evt_a6",
+    source: "ServiceConnect",
+    event: "refund.created",
+    externalId: "REF-771",
+    customer: "Delta Yacht Club",
+    amount: 250,
+    timestamp: iso(120),
+    status: "success",
+    syncResult: "Refund reversal posted · JE-2031",
+  },
+  {
+    id: "evt_a7",
+    source: "ServiceConnect",
+    event: "work_order.completed",
+    externalId: "WO-10003",
+    customer: "Unknown customer",
+    amount: 900,
+    timestamp: iso(180),
+    status: "failed",
+    syncResult: "Customer SC-CUST-99 not found",
+    error: "422 unknown_customer",
+  },
+  {
+    id: "evt_a8",
+    source: "ServiceConnect",
+    event: "inventory.consumed",
+    externalId: "WO-10004-mat-2",
+    customer: "Northwind Ops",
+    amount: 320,
+    timestamp: iso(240),
+    status: "retrying",
+    syncResult: "Retry 2 of 5 · backoff 15m",
+  },
 ];
 
 export const DEMO_DRAFT_INVOICES: DraftInvoice[] = [
@@ -98,12 +186,31 @@ export const DEMO_DRAFT_INVOICES: DraftInvoice[] = [
     issueDate: now.toISOString().slice(0, 10),
     status: "draft",
     labor: [
-      { description: "Diesel technician labor", hours: 6, rate: 145, account: "4100 · Labor Revenue" },
+      {
+        description: "Diesel technician labor",
+        hours: 6,
+        rate: 145,
+        account: "4100 · Labor Revenue",
+      },
       { description: "Diagnostic hours", hours: 2, rate: 145, account: "4100 · Labor Revenue" },
     ],
     materials: [
-      { description: "Fuel injector assembly", quantity: 1, price: 725, cost: 410, account: "4200 · Material Revenue", inventoryAccount: "1300 · Inventory Asset" },
-      { description: "Gasket kit", quantity: 2, price: 45, cost: 18, account: "4200 · Material Revenue", inventoryAccount: "1300 · Inventory Asset" },
+      {
+        description: "Fuel injector assembly",
+        quantity: 1,
+        price: 725,
+        cost: 410,
+        account: "4200 · Material Revenue",
+        inventoryAccount: "1300 · Inventory Asset",
+      },
+      {
+        description: "Gasket kit",
+        quantity: 2,
+        price: 45,
+        cost: 18,
+        account: "4200 · Material Revenue",
+        inventoryAccount: "1300 · Inventory Asset",
+      },
     ],
     taxRate: 0.06,
     createdVia: "ServiceConnect · work_order.completed",
@@ -116,9 +223,18 @@ export const DEMO_DRAFT_INVOICES: DraftInvoice[] = [
     workOrderRef: "WO-10005",
     issueDate: now.toISOString().slice(0, 10),
     status: "draft",
-    labor: [{ description: "Field service labor", hours: 3, rate: 155, account: "4100 · Labor Revenue" }],
+    labor: [
+      { description: "Field service labor", hours: 3, rate: 155, account: "4100 · Labor Revenue" },
+    ],
     materials: [
-      { description: "Hydraulic hose 3/4in", quantity: 4, price: 65, cost: 28, account: "4200 · Material Revenue", inventoryAccount: "1300 · Inventory Asset" },
+      {
+        description: "Hydraulic hose 3/4in",
+        quantity: 4,
+        price: 65,
+        cost: 28,
+        account: "4200 · Material Revenue",
+        inventoryAccount: "1300 · Inventory Asset",
+      },
     ],
     taxRate: 0,
     createdVia: "ServiceConnect · work_order.completed",
@@ -126,14 +242,78 @@ export const DEMO_DRAFT_INVOICES: DraftInvoice[] = [
 ];
 
 export const DEMO_MAPPINGS: AccountMappingRow[] = [
-  { purpose: "ar", label: "Accounts Receivable", serviceConnectSource: "invoice.created", ledgerAccount: "1200 · Accounts Receivable", accountCode: "1200", status: "mapped", updatedAt: iso(60 * 24 * 3) },
-  { purpose: "cash_default", label: "Cash (default)", serviceConnectSource: "payment.received", ledgerAccount: "1010 · Operating Cash", accountCode: "1010", status: "mapped", updatedAt: iso(60 * 24 * 5) },
-  { purpose: "labor_revenue", label: "Labor Revenue", serviceConnectSource: "work_order labor lines", ledgerAccount: "4100 · Labor Revenue", accountCode: "4100", status: "mapped", updatedAt: iso(60 * 24 * 3) },
-  { purpose: "material_revenue", label: "Material Revenue", serviceConnectSource: "work_order material lines", ledgerAccount: "4200 · Material Revenue", accountCode: "4200", status: "mapped", updatedAt: iso(60 * 24 * 3) },
-  { purpose: "inventory_asset", label: "Inventory Asset", serviceConnectSource: "inventory.consumed", ledgerAccount: "1300 · Inventory Asset", accountCode: "1300", status: "mapped", updatedAt: iso(60 * 24 * 3) },
-  { purpose: "material_cogs", label: "Material COGS", serviceConnectSource: "inventory.consumed", ledgerAccount: "5100 · Cost of Goods Sold", accountCode: "5100", status: "mapped", updatedAt: iso(60 * 24 * 3) },
-  { purpose: "refund_clearing", label: "Refund Clearing", serviceConnectSource: "refund.created", ledgerAccount: "1010 · Operating Cash", accountCode: "1010", status: "review", updatedAt: iso(60 * 24 * 12) },
-  { purpose: "credit_liability", label: "Customer Credit Liability", serviceConnectSource: "credit.issued", ledgerAccount: "—", accountCode: "—", status: "unmapped", updatedAt: iso(60 * 24 * 30) },
+  {
+    purpose: "ar",
+    label: "Accounts Receivable",
+    serviceConnectSource: "invoice.created",
+    ledgerAccount: "1200 · Accounts Receivable",
+    accountCode: "1200",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 3),
+  },
+  {
+    purpose: "cash_default",
+    label: "Cash (default)",
+    serviceConnectSource: "payment.received",
+    ledgerAccount: "1010 · Operating Cash",
+    accountCode: "1010",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 5),
+  },
+  {
+    purpose: "labor_revenue",
+    label: "Labor Revenue",
+    serviceConnectSource: "work_order labor lines",
+    ledgerAccount: "4100 · Labor Revenue",
+    accountCode: "4100",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 3),
+  },
+  {
+    purpose: "material_revenue",
+    label: "Material Revenue",
+    serviceConnectSource: "work_order material lines",
+    ledgerAccount: "4200 · Material Revenue",
+    accountCode: "4200",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 3),
+  },
+  {
+    purpose: "inventory_asset",
+    label: "Inventory Asset",
+    serviceConnectSource: "inventory.consumed",
+    ledgerAccount: "1300 · Inventory Asset",
+    accountCode: "1300",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 3),
+  },
+  {
+    purpose: "material_cogs",
+    label: "Material COGS",
+    serviceConnectSource: "inventory.consumed",
+    ledgerAccount: "5100 · Cost of Goods Sold",
+    accountCode: "5100",
+    status: "mapped",
+    updatedAt: iso(60 * 24 * 3),
+  },
+  {
+    purpose: "refund_clearing",
+    label: "Refund Clearing",
+    serviceConnectSource: "refund.created",
+    ledgerAccount: "1010 · Operating Cash",
+    accountCode: "1010",
+    status: "review",
+    updatedAt: iso(60 * 24 * 12),
+  },
+  {
+    purpose: "credit_liability",
+    label: "Customer Credit Liability",
+    serviceConnectSource: "credit.issued",
+    ledgerAccount: "—",
+    accountCode: "—",
+    status: "unmapped",
+    updatedAt: iso(60 * 24 * 30),
+  },
 ];
 
 export const DEMO_SYSTEMS: ConnectedSystem[] = [
@@ -208,7 +388,11 @@ export function fmtRelative(iso: string): string {
 }
 
 export function currency(n: number): string {
-  return n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
+  return n.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  });
 }
 
 export const EVENT_LABEL: Record<IntegrationEventType, string> = {

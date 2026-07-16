@@ -82,12 +82,12 @@ Each phase is tracked in the Customer Implementation Workspace at `/admin/custom
 
 ## On-call
 
-| Signal | Surface | First responder |
-| --- | --- | --- |
-| Ingestion failures | `/admin/observability` | Integration lead |
-| Materialization exceptions | `/admin/financial-events` | Accountant on duty |
-| Reconciliation drift | `/ledger/banking/reconcile` | Accountant on duty |
-| Advisory anomalies | `/admin/intelligence` | Controller |
+| Signal                     | Surface                     | First responder    |
+| -------------------------- | --------------------------- | ------------------ |
+| Ingestion failures         | `/admin/observability`      | Integration lead   |
+| Materialization exceptions | `/admin/financial-events`   | Accountant on duty |
+| Reconciliation drift       | `/ledger/banking/reconcile` | Accountant on duty |
+| Advisory anomalies         | `/admin/intelligence`       | Controller         |
 
 ## Success criteria
 

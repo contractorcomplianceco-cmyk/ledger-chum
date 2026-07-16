@@ -71,7 +71,11 @@ export function ReconciliationSummaryPanel({
             : "border-warning/40 bg-warning/5 text-warning",
         )}
       >
-        {balanced ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
+        {balanced ? (
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+        ) : (
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        )}
         <span>
           {balanced
             ? "Balanced. Ready to submit for approval."

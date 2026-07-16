@@ -150,23 +150,23 @@ Idempotency: all POST that produce a journal or a payment MUST accept an
 
 ### 2.1 Endpoint counts (net new)
 
-| Domain              | GET | POST | PATCH | DELETE |
-|---------------------|-----|------|-------|--------|
-| Owners              | 8   | 6    | 3     | 1      |
-| Legal               | 6   | 4    | 3     | 0      |
-| Tax                 | 9   | 7    | 4     | 1      |
-| Payroll             | 7   | 3    | 2     | 0      |
-| Events              | 6   | 5    | 3     | 1      |
-| Education           | 4   | 3    | 2     | 0      |
-| Appreciation        | 3   | 2    | 1     | 1      |
-| Promos              | 5   | 4    | 2     | 1      |
-| Charity             | 4   | 3    | 2     | 0      |
-| International       | 5   | 4    | 2     | 1      |
-| Consulting / R&D    | 5   | 3    | 2     | 1      |
-| Entities / Consol.  | 7   | 4    | 2     | 0      |
-| Invoicing v2 + AI   | 6   | 5    | 3     | 1      |
-| Billing recos       | 3   | 2    | 2     | 0      |
-| **Total net-new**   | 78  | 55   | 33    | 8      |
+| Domain             | GET | POST | PATCH | DELETE |
+| ------------------ | --- | ---- | ----- | ------ |
+| Owners             | 8   | 6    | 3     | 1      |
+| Legal              | 6   | 4    | 3     | 0      |
+| Tax                | 9   | 7    | 4     | 1      |
+| Payroll            | 7   | 3    | 2     | 0      |
+| Events             | 6   | 5    | 3     | 1      |
+| Education          | 4   | 3    | 2     | 0      |
+| Appreciation       | 3   | 2    | 1     | 1      |
+| Promos             | 5   | 4    | 2     | 1      |
+| Charity            | 4   | 3    | 2     | 0      |
+| International      | 5   | 4    | 2     | 1      |
+| Consulting / R&D   | 5   | 3    | 2     | 1      |
+| Entities / Consol. | 7   | 4    | 2     | 0      |
+| Invoicing v2 + AI  | 6   | 5    | 3     | 1      |
+| Billing recos      | 3   | 2    | 2     | 0      |
+| **Total net-new**  | 78  | 55   | 33    | 8      |
 
 Detailed request/response schemas produced in the per-domain contract docs (see §12).
 
@@ -184,41 +184,41 @@ automatically see privileged matters unless present in
 `legal_matter.access_list`. `systems_reviewer` can enumerate matter IDs and
 counts for audit but not content.
 
-| Permission                                    | Owner | Acct Lead | Reviewer | Accountant | Team | Integ | Legal | Ext. Acct |
-|-----------------------------------------------|-------|-----------|----------|------------|------|-------|-------|-----------|
-| `owners.capital.read`                         | ✓     | ✓         | ✓ (masked)| ✓         | —    | —     | —     | ✓         |
-| `owners.capital.write`                        | ✓     | ✓         | —        | approval   | —    | —     | —     | —         |
-| `owners.reimbursement.submit`                 | ✓     | —         | —        | —          | —    | —     | —     | —         |
-| `owners.dtfo.read`                            | ✓     | ✓         | ✓        | ✓          | —    | —     | —     | ✓         |
-| `legal.matter.read`                           | scoped| scoped    | count-only| scoped    | —    | —     | ✓     | scoped    |
-| `legal.matter.write`                          | scoped| —         | —        | —          | —    | —     | ✓     | —         |
-| `legal.bill.approve`                          | scoped| —         | —        | —          | —    | —     | ✓     | —         |
-| `tax.reserve.read`                            | ✓     | ✓         | ✓        | ✓          | —    | —     | —     | ✓         |
-| `tax.reserve.fund`                            | ✓     | approval  | —        | —          | —    | —     | —     | —         |
-| `tax.opportunity.read`                        | ✓     | ✓         | ✓        | ✓          | —    | —     | —     | ✓         |
-| `tax.opportunity.review`                      | —     | —         | —        | —          | —    | —     | —     | ✓         |
-| `tax.opportunity.accept`                      | ✓     | —         | —        | —          | —    | —     | —     | —         |
-| `tax.flag.write`                              | ✓     | ✓         | —        | ✓          | —    | —     | —     | ✓         |
-| `payroll.run.read`                            | ✓     | ✓         | ✓ (masked)| ✓         | own  | —     | —     | ✓         |
-| `payroll.special_pay.write`                   | ✓     | approval  | —        | —          | —    | —     | —     | —         |
-| `payroll.benefits.read`                       | ✓     | ✓         | ✓ (agg)  | ✓          | own  | —     | —     | ✓         |
-| `events.read` / `events.write`                | ✓     | ✓         | ✓ / —    | ✓ / —      | own  | —     | —     | ✓ / —     |
-| `education.budget.read`                       | ✓     | ✓         | ✓ (agg)  | ✓          | own  | —     | —     | ✓         |
-| `education.request.approve`                   | ✓     | ✓         | —        | limit      | —    | —     | —     | —         |
-| `appreciation.write`                          | ✓     | ✓         | —        | limit      | —    | —     | —     | —         |
-| `promos.program.write`                        | ✓     | ✓         | —        | —          | —    | —     | —     | —         |
-| `promos.award.write` (triggers 1099)          | ✓     | ✓         | —        | limit      | —    | —     | —     | —         |
-| `charity.contribution.write`                  | ✓     | approval  | —        | —          | —    | —     | —     | —         |
-| `intl.worker.read` / `intl.worker.write`      | ✓     | ✓         | ✓ (masked)/—| ✓/limit | —    | —     | —     | ✓ / —     |
-| `intl.payment.write`                          | ✓     | approval  | —        | —          | —    | —     | —     | —         |
-| `consulting.engagement.write`                 | ✓     | ✓         | —        | limit      | —    | —     | —     | —         |
-| `rd.project.classify` (§174)                  | ✓     | ✓         | ✓        | —          | —    | —     | —     | ✓         |
-| `entities.consolidate`                        | ✓     | ✓         | ✓        | —          | —    | —     | —     | ✓         |
-| `intercompany.write`                          | ✓     | approval  | —        | —          | —    | —     | —     | —         |
-| `invoicing.template.write`                    | ✓     | ✓         | —        | ✓          | —    | —     | —     | —         |
-| `invoicing.ai_draft.generate`                 | ✓     | ✓         | —        | ✓          | —    | —     | —     | —         |
-| `invoicing.ai_draft.approve` (human required) | ✓     | ✓         | —        | limit      | —    | —     | —     | —         |
-| `billing.recommendation.read`                 | ✓     | ✓         | ✓        | ✓          | —    | —     | —     | ✓         |
+| Permission                                    | Owner  | Acct Lead | Reviewer     | Accountant | Team | Integ | Legal | Ext. Acct |
+| --------------------------------------------- | ------ | --------- | ------------ | ---------- | ---- | ----- | ----- | --------- |
+| `owners.capital.read`                         | ✓      | ✓         | ✓ (masked)   | ✓          | —    | —     | —     | ✓         |
+| `owners.capital.write`                        | ✓      | ✓         | —            | approval   | —    | —     | —     | —         |
+| `owners.reimbursement.submit`                 | ✓      | —         | —            | —          | —    | —     | —     | —         |
+| `owners.dtfo.read`                            | ✓      | ✓         | ✓            | ✓          | —    | —     | —     | ✓         |
+| `legal.matter.read`                           | scoped | scoped    | count-only   | scoped     | —    | —     | ✓     | scoped    |
+| `legal.matter.write`                          | scoped | —         | —            | —          | —    | —     | ✓     | —         |
+| `legal.bill.approve`                          | scoped | —         | —            | —          | —    | —     | ✓     | —         |
+| `tax.reserve.read`                            | ✓      | ✓         | ✓            | ✓          | —    | —     | —     | ✓         |
+| `tax.reserve.fund`                            | ✓      | approval  | —            | —          | —    | —     | —     | —         |
+| `tax.opportunity.read`                        | ✓      | ✓         | ✓            | ✓          | —    | —     | —     | ✓         |
+| `tax.opportunity.review`                      | —      | —         | —            | —          | —    | —     | —     | ✓         |
+| `tax.opportunity.accept`                      | ✓      | —         | —            | —          | —    | —     | —     | —         |
+| `tax.flag.write`                              | ✓      | ✓         | —            | ✓          | —    | —     | —     | ✓         |
+| `payroll.run.read`                            | ✓      | ✓         | ✓ (masked)   | ✓          | own  | —     | —     | ✓         |
+| `payroll.special_pay.write`                   | ✓      | approval  | —            | —          | —    | —     | —     | —         |
+| `payroll.benefits.read`                       | ✓      | ✓         | ✓ (agg)      | ✓          | own  | —     | —     | ✓         |
+| `events.read` / `events.write`                | ✓      | ✓         | ✓ / —        | ✓ / —      | own  | —     | —     | ✓ / —     |
+| `education.budget.read`                       | ✓      | ✓         | ✓ (agg)      | ✓          | own  | —     | —     | ✓         |
+| `education.request.approve`                   | ✓      | ✓         | —            | limit      | —    | —     | —     | —         |
+| `appreciation.write`                          | ✓      | ✓         | —            | limit      | —    | —     | —     | —         |
+| `promos.program.write`                        | ✓      | ✓         | —            | —          | —    | —     | —     | —         |
+| `promos.award.write` (triggers 1099)          | ✓      | ✓         | —            | limit      | —    | —     | —     | —         |
+| `charity.contribution.write`                  | ✓      | approval  | —            | —          | —    | —     | —     | —         |
+| `intl.worker.read` / `intl.worker.write`      | ✓      | ✓         | ✓ (masked)/— | ✓/limit    | —    | —     | —     | ✓ / —     |
+| `intl.payment.write`                          | ✓      | approval  | —            | —          | —    | —     | —     | —         |
+| `consulting.engagement.write`                 | ✓      | ✓         | —            | limit      | —    | —     | —     | —         |
+| `rd.project.classify` (§174)                  | ✓      | ✓         | ✓            | —          | —    | —     | —     | ✓         |
+| `entities.consolidate`                        | ✓      | ✓         | ✓            | —          | —    | —     | —     | ✓         |
+| `intercompany.write`                          | ✓      | approval  | —            | —          | —    | —     | —     | —         |
+| `invoicing.template.write`                    | ✓      | ✓         | —            | ✓          | —    | —     | —     | —         |
+| `invoicing.ai_draft.generate`                 | ✓      | ✓         | —            | ✓          | —    | —     | —     | —         |
+| `invoicing.ai_draft.approve` (human required) | ✓      | ✓         | —            | limit      | —    | —     | —     | —         |
+| `billing.recommendation.read`                 | ✓      | ✓         | ✓            | ✓          | —    | —     | —     | ✓         |
 
 `approval` = requires workflow approval above threshold. `scoped` = only if in
 `legal_matter.access_list`. `masked` = amount/PII masked. `count-only` = count
@@ -311,25 +311,25 @@ The 14 commission plan types from earlier Phase 6 remain. Expanded to
 distinguish **participation classes** at the plan level so posting, tax
 treatment, and reporting differ:
 
-| Participation class     | Posting account   | Payroll?     | 1099? | W-2 box |
-|-------------------------|-------------------|--------------|-------|---------|
-| `commission`            | Comp — Commission | via ADP      | —     | Wages   |
-| `bonus`                 | Comp — Bonus      | via ADP      | —     | Wages   |
-| `profit_share`          | Comp — Profit Sh. | via ADP      | —     | Wages   |
-| `spot_award` (cash)     | Comp — Discretion.| via ADP      | —     | Wages   |
-| `referral_bonus_ee`     | Comp — Referral   | via ADP      | —     | Wages   |
-| `referral_fee_external` | Marketing         | —            | 1099  | —       |
-| `affiliate_fee`         | Marketing         | —            | 1099  | —       |
-| `strategic_partner_fee` | COGS/Marketing    | —            | 1099  | —       |
-| `contractor_payment`    | COGS/Ops          | —            | 1099  | —       |
-| `owner_draw`            | Equity — Draw     | —            | —     | K-1     |
-| `owner_distribution`    | Equity — Distrib. | —            | —     | K-1     |
-| `owner_reimbursement`   | Expense (actual)  | —            | —     | —       |
-| `employee_reimbursement`| Expense (actual)  | via ADP (non-cash)| —| non-taxable |
-| `investor_distribution` | Equity — Distrib. | —            | 1099-DIV possible | — |
-| `charitable_contribution`| Charity          | —            | —     | Sched A/1120 |
-| `marketing_sponsorship` | Marketing         | —            | 1099 if svc | — |
-| `pass_through_disburse` | Liability clearing| —            | —     | — |
+| Participation class       | Posting account    | Payroll?           | 1099?             | W-2 box      |
+| ------------------------- | ------------------ | ------------------ | ----------------- | ------------ |
+| `commission`              | Comp — Commission  | via ADP            | —                 | Wages        |
+| `bonus`                   | Comp — Bonus       | via ADP            | —                 | Wages        |
+| `profit_share`            | Comp — Profit Sh.  | via ADP            | —                 | Wages        |
+| `spot_award` (cash)       | Comp — Discretion. | via ADP            | —                 | Wages        |
+| `referral_bonus_ee`       | Comp — Referral    | via ADP            | —                 | Wages        |
+| `referral_fee_external`   | Marketing          | —                  | 1099              | —            |
+| `affiliate_fee`           | Marketing          | —                  | 1099              | —            |
+| `strategic_partner_fee`   | COGS/Marketing     | —                  | 1099              | —            |
+| `contractor_payment`      | COGS/Ops           | —                  | 1099              | —            |
+| `owner_draw`              | Equity — Draw      | —                  | —                 | K-1          |
+| `owner_distribution`      | Equity — Distrib.  | —                  | —                 | K-1          |
+| `owner_reimbursement`     | Expense (actual)   | —                  | —                 | —            |
+| `employee_reimbursement`  | Expense (actual)   | via ADP (non-cash) | —                 | non-taxable  |
+| `investor_distribution`   | Equity — Distrib.  | —                  | 1099-DIV possible | —            |
+| `charitable_contribution` | Charity            | —                  | —                 | Sched A/1120 |
+| `marketing_sponsorship`   | Marketing          | —                  | 1099 if svc       | —            |
+| `pass_through_disburse`   | Liability clearing | —                  | —                 | —            |
 
 Rules:
 
@@ -410,7 +410,7 @@ LedgerOS mirrors + posts.
   - `reimbursement.submitted` — non-taxable expense reimbursements to be paid
     with net pay.
 - Reconciliation: after each run, `payroll_reconciliation(run_id, gl_total,
-  adp_total, variance, resolved_at)`. Variance > $1 blocks close.
+adp_total, variance, resolved_at)`. Variance > $1 blocks close.
 - Contracts are documented in `payroll-adp-contract.md` (per §12).
 - International payroll (Deel/Remote/EOR) uses the same shape via
   `intl_payroll_provider` adapter — never merged with ADP records.
@@ -511,22 +511,22 @@ must be regenerated to incorporate the expanded scope. Do not partially update.
 **No collapsing.** Each class has its own posting account, its own tax report,
 its own permission, its own audit code, its own downstream integration route.
 
-| Class                     | GL bucket        | Tax reporting        | Cash-flow class | Routes via ADP? | Requires 1099? | Requires K-1? | Permission                                | Audit code root                     |
-|---------------------------|------------------|----------------------|-----------------|-----------------|----------------|---------------|-------------------------------------------|--------------------------------------|
-| Owner draw                | Equity           | K-1 (partnership) / — | Financing       | No              | No             | Yes (pship)   | `owners.capital.write` (draw)             | `owner.draw.*`                       |
-| Owner distribution        | Equity           | K-1 / 1099-DIV        | Financing       | No              | Sometimes      | Yes           | `owners.capital.write` (distrib)          | `owner.distribution.*`               |
-| Owner reimbursement       | Expense (actual) | Deduction on entity   | Operating       | No              | No             | No            | `owners.reimbursement.submit` + approval  | `owner.reimbursement.*`              |
-| Employee reimbursement    | Expense (actual) | Non-taxable to EE     | Operating       | Yes (non-cash)  | No             | No            | `expenses.reimburse.approve`              | `expense.reimbursement.*`            |
-| Bonus                     | Comp — Bonus     | W-2 wages             | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (bonus)       | `payroll.bonus.*`                    |
-| Commission                | Comp — Commission| W-2 wages             | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (comm)        | `payroll.commission.*`               |
-| Profit share              | Comp — PS        | W-2 wages / 401(k)PS  | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (ps)          | `payroll.profit_share.*`             |
-| Investor distribution     | Equity           | 1099-DIV / K-1        | Financing       | No              | Sometimes      | Sometimes     | `investors.distribute`                    | `investor.distribution.*`            |
-| Affiliate fee             | Marketing        | 1099-NEC              | Operating       | No              | Yes            | No            | `marketing.affiliate.pay`                 | `affiliate.fee.*`                    |
-| Strategic-partner payment | COGS / Marketing | 1099-NEC              | Operating       | No              | Yes            | No            | `partners.strategic.pay`                  | `partner.strategic.*`                |
-| Contractor payment        | COGS / Ops       | 1099-NEC              | Operating       | No              | Yes            | No            | `ap.contractor.pay`                       | `contractor.payment.*`               |
-| Charitable contribution   | Charity          | Sched A / 1120 line   | Operating       | No              | No             | No            | `charity.contribution.write`              | `charity.contribution.*`             |
-| Marketing sponsorship     | Marketing        | Ordinary business exp | Operating       | No              | If services    | No            | `marketing.sponsorship.pay`               | `marketing.sponsorship.*`            |
-| Pass-through disbursement | Liability clearing | Not income / not exp | Operating       | No              | No             | No            | `payments.passthrough.write`              | `passthrough.disbursement.*`         |
+| Class                     | GL bucket          | Tax reporting         | Cash-flow class | Routes via ADP? | Requires 1099? | Requires K-1? | Permission                               | Audit code root              |
+| ------------------------- | ------------------ | --------------------- | --------------- | --------------- | -------------- | ------------- | ---------------------------------------- | ---------------------------- |
+| Owner draw                | Equity             | K-1 (partnership) / — | Financing       | No              | No             | Yes (pship)   | `owners.capital.write` (draw)            | `owner.draw.*`               |
+| Owner distribution        | Equity             | K-1 / 1099-DIV        | Financing       | No              | Sometimes      | Yes           | `owners.capital.write` (distrib)         | `owner.distribution.*`       |
+| Owner reimbursement       | Expense (actual)   | Deduction on entity   | Operating       | No              | No             | No            | `owners.reimbursement.submit` + approval | `owner.reimbursement.*`      |
+| Employee reimbursement    | Expense (actual)   | Non-taxable to EE     | Operating       | Yes (non-cash)  | No             | No            | `expenses.reimburse.approve`             | `expense.reimbursement.*`    |
+| Bonus                     | Comp — Bonus       | W-2 wages             | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (bonus)      | `payroll.bonus.*`            |
+| Commission                | Comp — Commission  | W-2 wages             | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (comm)       | `payroll.commission.*`       |
+| Profit share              | Comp — PS          | W-2 wages / 401(k)PS  | Operating       | Yes             | No             | No            | `payroll.special_pay.write` (ps)         | `payroll.profit_share.*`     |
+| Investor distribution     | Equity             | 1099-DIV / K-1        | Financing       | No              | Sometimes      | Sometimes     | `investors.distribute`                   | `investor.distribution.*`    |
+| Affiliate fee             | Marketing          | 1099-NEC              | Operating       | No              | Yes            | No            | `marketing.affiliate.pay`                | `affiliate.fee.*`            |
+| Strategic-partner payment | COGS / Marketing   | 1099-NEC              | Operating       | No              | Yes            | No            | `partners.strategic.pay`                 | `partner.strategic.*`        |
+| Contractor payment        | COGS / Ops         | 1099-NEC              | Operating       | No              | Yes            | No            | `ap.contractor.pay`                      | `contractor.payment.*`       |
+| Charitable contribution   | Charity            | Sched A / 1120 line   | Operating       | No              | No             | No            | `charity.contribution.write`             | `charity.contribution.*`     |
+| Marketing sponsorship     | Marketing          | Ordinary business exp | Operating       | No              | If services    | No            | `marketing.sponsorship.pay`              | `marketing.sponsorship.*`    |
+| Pass-through disbursement | Liability clearing | Not income / not exp  | Operating       | No              | No             | No            | `payments.passthrough.write`             | `passthrough.disbursement.*` |
 
 Cross-class rules:
 

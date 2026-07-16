@@ -10,11 +10,13 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const listBillPayments = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      vendorId: z.string().uuid().optional(),
-      limit: z.number().int().min(1).max(500).default(100),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        vendorId: z.string().uuid().optional(),
+        limit: z.number().int().min(1).max(500).default(100),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -32,23 +34,25 @@ export const listBillPayments = createServerFn({ method: "GET" })
 export const recordVendorPayment = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      vendorId: z.string().uuid(),
-      paymentDate: z.string(),
-      method: z.string().optional(),
-      reference: z.string().optional(),
-      amount: z.number().positive(),
-      memo: z.string().optional(),
-      applyTo: z.array(
-        z.object({ billId: z.string().uuid(), amount: z.number().positive() }),
-      ).default([]),
-      externalSource: z.string().optional(),
-      externalId: z.string().optional(),
-      sourceSystem: z.string().optional(),
-      sourceRef: z.string().optional(),
-      correlationId: z.string().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        vendorId: z.string().uuid(),
+        paymentDate: z.string(),
+        method: z.string().optional(),
+        reference: z.string().optional(),
+        amount: z.number().positive(),
+        memo: z.string().optional(),
+        applyTo: z
+          .array(z.object({ billId: z.string().uuid(), amount: z.number().positive() }))
+          .default([]),
+        externalSource: z.string().optional(),
+        externalId: z.string().optional(),
+        sourceSystem: z.string().optional(),
+        sourceRef: z.string().optional(),
+        correlationId: z.string().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: result, error } = await context.supabase.rpc(

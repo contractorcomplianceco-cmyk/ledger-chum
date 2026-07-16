@@ -28,19 +28,21 @@ export const listFixedAssetCategories = createServerFn({ method: "GET" })
 export const upsertFixedAssetCategory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      name: z.string().min(1).max(200),
-      defaultUsefulLifeMonths: z.number().int().nullable().optional(),
-      defaultDepreciationMethod: z.enum([
-        "straight_line", "declining_balance", "units_of_production", "none",
-      ]).default("straight_line"),
-      assetAccountId: z.string().uuid().nullable().optional(),
-      accumulatedDepreciationAccountId: z.string().uuid().nullable().optional(),
-      depreciationExpenseAccountId: z.string().uuid().nullable().optional(),
-      isActive: z.boolean().default(true),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        name: z.string().min(1).max(200),
+        defaultUsefulLifeMonths: z.number().int().nullable().optional(),
+        defaultDepreciationMethod: z
+          .enum(["straight_line", "declining_balance", "units_of_production", "none"])
+          .default("straight_line"),
+        assetAccountId: z.string().uuid().nullable().optional(),
+        accumulatedDepreciationAccountId: z.string().uuid().nullable().optional(),
+        depreciationExpenseAccountId: z.string().uuid().nullable().optional(),
+        isActive: z.boolean().default(true),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -54,7 +56,12 @@ export const upsertFixedAssetCategory = createServerFn({ method: "POST" })
       is_active: data.isActive,
     };
     const q = data.id
-      ? context.supabase.from("fixed_asset_categories").update(payload).eq("id", data.id).select().single()
+      ? context.supabase
+          .from("fixed_asset_categories")
+          .update(payload)
+          .eq("id", data.id)
+          .select()
+          .single()
       : context.supabase.from("fixed_asset_categories").insert(payload).select().single();
     const { data: row, error } = await q;
     if (error) throw new Error(error.message);
@@ -64,11 +71,13 @@ export const upsertFixedAssetCategory = createServerFn({ method: "POST" })
 export const listFixedAssets = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["active", "disposed", "impaired", "pending", "all"]).default("all"),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["active", "disposed", "impaired", "pending", "all"]).default("all"),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -86,26 +95,28 @@ export const listFixedAssets = createServerFn({ method: "GET" })
 export const upsertFixedAsset = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      assetNumber: z.string().min(1).max(64),
-      name: z.string().min(1).max(200),
-      description: z.string().max(1000).optional(),
-      categoryId: z.string().uuid().nullable().optional(),
-      acquisitionDate: z.string(),
-      inServiceDate: z.string().nullable().optional(),
-      acquisitionCost: z.number().min(0),
-      salvageValue: z.number().min(0).default(0),
-      usefulLifeMonths: z.number().int().min(1).nullable().optional(),
-      depreciationMethod: z.enum([
-        "straight_line", "declining_balance", "units_of_production", "none",
-      ]).default("straight_line"),
-      status: z.enum(["active", "disposed", "impaired", "pending"]).default("active"),
-      vendorId: z.string().uuid().nullable().optional(),
-      location: z.string().max(200).optional(),
-      notes: z.string().max(2000).optional(),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        assetNumber: z.string().min(1).max(64),
+        name: z.string().min(1).max(200),
+        description: z.string().max(1000).optional(),
+        categoryId: z.string().uuid().nullable().optional(),
+        acquisitionDate: z.string(),
+        inServiceDate: z.string().nullable().optional(),
+        acquisitionCost: z.number().min(0),
+        salvageValue: z.number().min(0).default(0),
+        usefulLifeMonths: z.number().int().min(1).nullable().optional(),
+        depreciationMethod: z
+          .enum(["straight_line", "declining_balance", "units_of_production", "none"])
+          .default("straight_line"),
+        status: z.enum(["active", "disposed", "impaired", "pending"]).default("active"),
+        vendorId: z.string().uuid().nullable().optional(),
+        location: z.string().max(200).optional(),
+        notes: z.string().max(2000).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -162,7 +173,9 @@ export const generateDepreciationSchedule = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { data: asset, error: aErr } = await context.supabase
       .from("fixed_assets")
-      .select("id, acquisition_cost, salvage_value, useful_life_months, in_service_date, acquisition_date, depreciation_method")
+      .select(
+        "id, acquisition_cost, salvage_value, useful_life_months, in_service_date, acquisition_date, depreciation_method",
+      )
       .eq("id", data.assetId)
       .eq("org_id", data.orgId)
       .single();
@@ -187,8 +200,12 @@ export const generateDepreciationSchedule = createServerFn({ method: "POST" })
       .eq("status", "scheduled");
 
     const rows: Array<{
-      org_id: string; asset_id: string; period_start: string; period_end: string;
-      depreciation_amount: number; status: string;
+      org_id: string;
+      asset_id: string;
+      period_start: string;
+      period_end: string;
+      depreciation_amount: number;
+      status: string;
     }> = [];
     let running = 0;
     for (let i = 0; i < asset.useful_life_months; i++) {

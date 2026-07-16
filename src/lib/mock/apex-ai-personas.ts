@@ -72,7 +72,13 @@ export const AI_PERSONAS: Record<PersonaKey, AIPersona> = {
     tagline: "Strategic financial guidance for owner/executive decisions.",
     purpose: "Advise on hiring, expansion, prioritization, and overall financial health.",
     intendedRoles: ["Owner", "Sales Leadership"],
-    allowedData: ["Company financial summaries", "Profitability", "Forecasts", "Cash", "Growth metrics"],
+    allowedData: [
+      "Company financial summaries",
+      "Profitability",
+      "Forecasts",
+      "Cash",
+      "Growth metrics",
+    ],
     restrictedData: ["Individual payroll", "Personal HR records"],
     questions: [
       "Can we hire?",
@@ -170,11 +176,7 @@ export const AI_PERSONAS: Record<PersonaKey, AIPersona> = {
     intendedRoles: ["Operations"],
     allowedData: ["Tasks", "Exceptions", "Vendor issues", "Automation health"],
     restrictedData: ["Compensation detail", "Investor reporting"],
-    questions: [
-      "What is blocked today?",
-      "What processes are slow?",
-      "Where are the bottlenecks?",
-    ],
+    questions: ["What is blocked today?", "What processes are slow?", "Where are the bottlenecks?"],
     recommendations: ["Workload rebalance", "Automation candidates", "Retire redundant jobs"],
     approvalRequired: ["Ops lead sign-off on process changes"],
     escalation: "Escalate cross-team blockers to owner.",
@@ -197,7 +199,7 @@ export const AI_PERSONAS: Record<PersonaKey, AIPersona> = {
     recommendations: [
       "Flag items for accountant review",
       "Highlight potential classification gaps",
-      "Never state \"this is deductible\" — say \"this may require accountant review\"",
+      'Never state "this is deductible" — say "this may require accountant review"',
     ],
     approvalRequired: ["All conclusions require licensed accountant review"],
     escalation: "Escalate every flagged item to accountant of record.",
@@ -210,7 +212,12 @@ export const AI_PERSONAS: Record<PersonaKey, AIPersona> = {
     tagline: "Risk identification — cash, margin, vendor, client, technology.",
     purpose: "Identify risks across categories and stage them for owner review.",
     intendedRoles: ["Systems Reviewer", "Owner"],
-    allowedData: ["Concentration metrics", "Integration health", "Data quality", "Vendor stability"],
+    allowedData: [
+      "Concentration metrics",
+      "Integration health",
+      "Data quality",
+      "Vendor stability",
+    ],
     restrictedData: ["Individual HR records"],
     questions: [
       "What are our biggest risks today?",
@@ -231,11 +238,7 @@ export const AI_PERSONAS: Record<PersonaKey, AIPersona> = {
     intendedRoles: ["Owner"],
     allowedData: ["All companywide summary metrics"],
     restrictedData: ["Anything outside owner scope"],
-    questions: [
-      "What matters today?",
-      "What changed?",
-      "What should I do next?",
-    ],
+    questions: ["What matters today?", "What changed?", "What should I do next?"],
     recommendations: ["Daily priorities", "Cross-cutting decisions", "Approval routing"],
     approvalRequired: ["Owner sign-off on all recommended actions"],
     escalation: "Owner is the escalation endpoint.",

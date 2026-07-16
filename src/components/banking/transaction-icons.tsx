@@ -1,18 +1,18 @@
 import type { TransactionKind } from "@/lib/mock/banking";
-import {
-  ArrowDownLeft,
-  ArrowUpRight,
-  ArrowLeftRight,
-  Percent,
-  Receipt,
-  Undo2,
-} from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, ArrowLeftRight, Percent, Receipt, Undo2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const MAP: Record<TransactionKind, { icon: typeof ArrowDownLeft; label: string; className: string }> = {
+const MAP: Record<
+  TransactionKind,
+  { icon: typeof ArrowDownLeft; label: string; className: string }
+> = {
   deposit: { icon: ArrowDownLeft, label: "Deposit", className: "text-success bg-success/10" },
   withdrawal: { icon: ArrowUpRight, label: "Withdrawal", className: "text-foreground bg-muted" },
-  transfer: { icon: ArrowLeftRight, label: "Transfer", className: "text-brand-cyan bg-brand-cyan/15" },
+  transfer: {
+    icon: ArrowLeftRight,
+    label: "Transfer",
+    className: "text-brand-cyan bg-brand-cyan/15",
+  },
   fee: { icon: Receipt, label: "Fee", className: "text-muted-foreground bg-muted" },
   interest: { icon: Percent, label: "Interest", className: "text-success bg-success/10" },
   refund: { icon: Undo2, label: "Refund", className: "text-warning bg-warning/15" },

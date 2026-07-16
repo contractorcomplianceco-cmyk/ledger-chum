@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 
-export function AppValueScore({ score, size = "md" }: { score: number; size?: "sm" | "md" | "lg" }) {
+export function AppValueScore({
+  score,
+  size = "md",
+}: {
+  score: number;
+  size?: "sm" | "md" | "lg";
+}) {
   const tone =
     score >= 80
       ? "bg-success/10 text-success ring-success/20"

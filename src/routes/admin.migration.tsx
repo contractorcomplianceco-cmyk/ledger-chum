@@ -3,15 +3,7 @@ import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  BookOpen,
-  Users2,
-  Building2,
-  Wallet2,
-  History,
-  Download,
-  ShieldCheck,
-} from "lucide-react";
+import { BookOpen, Users2, Building2, Wallet2, History, Download, ShieldCheck } from "lucide-react";
 
 /**
  * M10 — Data Migration Framework.
@@ -66,14 +58,7 @@ const SPECS: MigrationSpec[] = [
     icon: Users2,
     description:
       "Customers keyed by external_id (Zoho contact ID) with billing/shipping addresses.",
-    templateColumns: [
-      "external_id",
-      "name",
-      "email",
-      "phone",
-      "billing_address_json",
-      "status",
-    ],
+    templateColumns: ["external_id", "name", "email", "phone", "billing_address_json", "status"],
     status: "pending",
     owner: "Ops",
     notes: "Zoho export scheduled; dedup against ServiceConnect customer IDs pending.",
@@ -105,12 +90,7 @@ const SPECS: MigrationSpec[] = [
     icon: History,
     description:
       "Last N months of ledger-preserving history. Posted through the Financial Event Bus — no direct writes.",
-    templateColumns: [
-      "external_id",
-      "event_type",
-      "occurred_at",
-      "payload_json",
-    ],
+    templateColumns: ["external_id", "event_type", "occurred_at", "payload_json"],
     status: "blocked",
     owner: "Integration Owner",
     notes: "Awaiting Zoho export cadence + retention decision.",
@@ -139,9 +119,13 @@ function MigrationPage() {
           </div>
           <ul className="mt-2 space-y-1 text-[13px] text-muted-foreground">
             <li>• Historical rows land as financial events, not as raw journal entries.</li>
-            <li>• Opening balances post as a single balanced journal under normal approval controls.</li>
+            <li>
+              • Opening balances post as a single balanced journal under normal approval controls.
+            </li>
             <li>• No client-specific rules encoded in this UI — templates are source-agnostic.</li>
-            <li>• Preparation only: files are staged for review; execution is a separate operator run.</li>
+            <li>
+              • Preparation only: files are staged for review; execution is a separate operator run.
+            </li>
           </ul>
         </Card>
 

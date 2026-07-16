@@ -29,12 +29,14 @@ export const listAccountMappings = createServerFn({ method: "GET" })
 export const upsertAccountMapping = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      purpose: purposeSchema,
-      accountId: z.string().uuid(),
-      description: z.string().max(500).optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        purpose: purposeSchema,
+        accountId: z.string().uuid(),
+        description: z.string().max(500).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase

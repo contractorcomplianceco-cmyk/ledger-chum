@@ -26,7 +26,8 @@ export function WaterfallCard() {
           </div>
           <div className="mt-1 max-w-xl text-[12.5px] text-white/60">
             Bank balance is never fully available. Every incoming payment is classified into
-            restricted (pass-through), reserved (commissions, tax, payroll, deferred), or operating cash.
+            restricted (pass-through), reserved (commissions, tax, payroll, deferred), or operating
+            cash.
           </div>
         </div>
         <div className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right">
@@ -46,7 +47,10 @@ export function WaterfallCard() {
         {WATERFALL_STEPS.map((step) => {
           const pct = Math.min(100, (Math.abs(step.delta) / max) * 100);
           return (
-            <div key={step.key} className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto] items-center gap-3">
+            <div
+              key={step.key}
+              className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto] items-center gap-3"
+            >
               <div
                 className={cn(
                   "truncate text-[12.5px] font-medium",
@@ -81,7 +85,8 @@ export function WaterfallCard() {
 
       <div className="mt-5 flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] text-white/70">
         <ArrowDownRight className="h-4 w-4 text-white/50" />
-        Restricted + reserved buckets are protected from operating spend by LedgerOS Cash Guardrails.
+        Restricted + reserved buckets are protected from operating spend by LedgerOS Cash
+        Guardrails.
       </div>
     </Card>
   );

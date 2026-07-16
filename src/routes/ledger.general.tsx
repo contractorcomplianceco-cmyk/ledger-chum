@@ -10,7 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listLedgerLines } from "@/lib/accounting/general-ledger.functions";
@@ -32,9 +36,15 @@ export const Route = createFileRoute("/ledger/general")({
   head: () => ({
     meta: [
       { title: "General Ledger — LedgerOS" },
-      { name: "description", content: "Every posted journal line, filterable by account, date, source, and status." },
+      {
+        name: "description",
+        content: "Every posted journal line, filterable by account, date, source, and status.",
+      },
       { property: "og:title", content: "General Ledger — LedgerOS" },
-      { property: "og:description", content: "Line-level detail across all posted transactions in your ledger." },
+      {
+        property: "og:description",
+        content: "Line-level detail across all posted transactions in your ledger.",
+      },
     ],
   }),
   component: GeneralLedgerPage,
@@ -60,9 +70,16 @@ type Row = {
   memo: string | null;
   account: { id: string; code: string; name: string; type: string; normal_balance: string };
   journal: {
-    id: string; entry_date: string; memo: string | null; description: string | null;
-    source_type: string | null; source_id: string | null; status: string;
-    posted_at: string | null; reversal_of: string | null; reversed_by: string | null;
+    id: string;
+    entry_date: string;
+    memo: string | null;
+    description: string | null;
+    source_type: string | null;
+    source_id: string | null;
+    status: string;
+    posted_at: string | null;
+    reversal_of: string | null;
+    reversed_by: string | null;
   };
 };
 
@@ -77,7 +94,8 @@ function GeneralLedgerPage() {
   const accountsQ = useQuery({
     queryKey: ["accounts", orgId],
     queryFn: () => accountsFn({ data: { orgId: orgId! } }),
-    enabled: !!orgId, retry: false,
+    enabled: !!orgId,
+    retry: false,
   });
 
   const linesQ = useQuery({
@@ -95,7 +113,8 @@ function GeneralLedgerPage() {
           limit: 500,
         },
       }),
-    enabled: !!orgId, retry: false,
+    enabled: !!orgId,
+    retry: false,
   });
 
   const rows: Row[] = (linesQ.data as unknown as Row[]) ?? [];
@@ -113,16 +132,26 @@ function GeneralLedgerPage() {
     let running = 0;
     const normal = asc[0]?.account.normal_balance ?? "debit";
     const withBal = asc.map((r) => {
-      running += normal === "debit"
-        ? Number(r.debit) - Number(r.credit)
-        : Number(r.credit) - Number(r.debit);
+      running +=
+        normal === "debit"
+          ? Number(r.debit) - Number(r.credit)
+          : Number(r.credit) - Number(r.debit);
       return { ...r, running };
     });
     return withBal.reverse();
   }, [rows, search.accountId]);
 
   const exportCsv = () => {
-    const header = ["Date", "Journal", "Account Code", "Account", "Debit", "Credit", "Memo", "Source"];
+    const header = [
+      "Date",
+      "Journal",
+      "Account Code",
+      "Account",
+      "Debit",
+      "Credit",
+      "Memo",
+      "Source",
+    ];
     const csv = [header.join(",")]
       .concat(
         rows.map((r) =>
@@ -147,7 +176,10 @@ function GeneralLedgerPage() {
   };
 
   const accounts = (accountsQ.data ?? []) as Array<{
-    account_id: string; code: string; name: string; type: string;
+    account_id: string;
+    code: string;
+    name: string;
+    type: string;
   }>;
 
   return (
@@ -157,7 +189,12 @@ function GeneralLedgerPage() {
         title="General Ledger"
         description="Every posted journal line across your ledger. Filter, drill down, export."
         actions={
-          <Button variant="outline" onClick={exportCsv} className="gap-2" disabled={rows.length === 0}>
+          <Button
+            variant="outline"
+            onClick={exportCsv}
+            className="gap-2"
+            disabled={rows.length === 0}
+          >
             <Download className="h-4 w-4" /> Export CSV
           </Button>
         }
@@ -179,9 +216,19 @@ function GeneralLedgerPage() {
                   <Label className="text-[11px]">Account</Label>
                   <Select
                     value={search.accountId ?? "all"}
-                    onValueChange={(v) => navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, accountId: v === "all" ? undefined : v }) })}
+                    onValueChange={(v) =>
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({
+                          ...prev,
+                          accountId: v === "all" ? undefined : v,
+                        }),
+                      })
+                    }
                   >
-                    <SelectTrigger><SelectValue placeholder="All accounts" /></SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue placeholder="All accounts" />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All accounts</SelectItem>
                       {accounts.map((a) => (
@@ -197,7 +244,15 @@ function GeneralLedgerPage() {
                   <Input
                     type="date"
                     value={search.from ?? ""}
-                    onChange={(e) => navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, from: e.target.value || undefined }) })}
+                    onChange={(e) =>
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({
+                          ...prev,
+                          from: e.target.value || undefined,
+                        }),
+                      })
+                    }
                   />
                 </div>
                 <div>
@@ -205,19 +260,39 @@ function GeneralLedgerPage() {
                   <Input
                     type="date"
                     value={search.to ?? ""}
-                    onChange={(e) => navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, to: e.target.value || undefined }) })}
+                    onChange={(e) =>
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({
+                          ...prev,
+                          to: e.target.value || undefined,
+                        }),
+                      })
+                    }
                   />
                 </div>
                 <div>
                   <Label className="text-[11px]">Source</Label>
                   <Select
                     value={search.sourceType ?? "all"}
-                    onValueChange={(v) => navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, sourceType: v === "all" ? undefined : v }) })}
+                    onValueChange={(v) =>
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({
+                          ...prev,
+                          sourceType: v === "all" ? undefined : v,
+                        }),
+                      })
+                    }
                   >
-                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
                     <SelectContent>
                       {SOURCE_OPTIONS.map((o) => (
-                        <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+                        <SelectItem key={o.value} value={o.value}>
+                          {o.label}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -226,9 +301,19 @@ function GeneralLedgerPage() {
                   <Label className="text-[11px]">Status</Label>
                   <Select
                     value={search.status ?? "posted"}
-                    onValueChange={(v) => navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, status: v as "draft" | "posted" | "void" }) })}
+                    onValueChange={(v) =>
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({
+                          ...prev,
+                          status: v as "draft" | "posted" | "void",
+                        }),
+                      })
+                    }
                   >
-                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="posted">Posted</SelectItem>
                       <SelectItem value="draft">Draft</SelectItem>
@@ -243,7 +328,11 @@ function GeneralLedgerPage() {
                   value={localSearch}
                   onChange={(e) => setLocalSearch(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") navigate({ to: ".", search: (prev: typeof search) => ({ ...prev, q: localSearch || undefined }) });
+                    if (e.key === "Enter")
+                      navigate({
+                        to: ".",
+                        search: (prev: typeof search) => ({ ...prev, q: localSearch || undefined }),
+                      });
                   }}
                   className="max-w-sm"
                 />
@@ -298,7 +387,9 @@ function GeneralLedgerPage() {
                     <th className="px-4 py-2 font-medium">Memo</th>
                     <th className="px-4 py-2 text-right font-medium">Debit</th>
                     <th className="px-4 py-2 text-right font-medium">Credit</th>
-                    {search.accountId && <th className="px-4 py-2 text-right font-medium">Running</th>}
+                    {search.accountId && (
+                      <th className="px-4 py-2 text-right font-medium">Running</th>
+                    )}
                     <th className="px-4 py-2 font-medium">Source</th>
                   </tr>
                 </thead>
@@ -309,10 +400,14 @@ function GeneralLedgerPage() {
                       <td className="px-4 py-2">
                         <div className="font-medium">{r.journal.memo}</div>
                         {r.journal.reversal_of && (
-                          <Badge variant="outline" className="mt-0.5 h-4 text-[9px]">Reversal</Badge>
+                          <Badge variant="outline" className="mt-0.5 h-4 text-[9px]">
+                            Reversal
+                          </Badge>
                         )}
                         {r.journal.reversed_by && (
-                          <Badge variant="outline" className="mt-0.5 h-4 text-[9px] text-amber-500">Reversed</Badge>
+                          <Badge variant="outline" className="mt-0.5 h-4 text-[9px] text-amber-500">
+                            Reversed
+                          </Badge>
                         )}
                       </td>
                       <td className="px-4 py-2">
@@ -337,7 +432,10 @@ function GeneralLedgerPage() {
                   ))}
                   {rows.length === 0 && !linesQ.isLoading && (
                     <tr>
-                      <td className="px-4 py-8 text-center text-muted-foreground" colSpan={search.accountId ? 8 : 7}>
+                      <td
+                        className="px-4 py-8 text-center text-muted-foreground"
+                        colSpan={search.accountId ? 8 : 7}
+                      >
                         No lines match these filters.
                       </td>
                     </tr>

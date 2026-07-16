@@ -55,14 +55,14 @@ AI response contract:
 
 ### Adapters shipped
 
-| Adapter                     | Server function                | Purpose                                    |
-| --------------------------- | ------------------------------ | ------------------------------------------ |
-| `useMetricAdapter`          | `getMetricAiResponse`          | Single canonical metric envelope           |
-| `useAnomalyAdapter`         | `listAnomalies`                | Open anomalies feed                        |
-| `useRecommendationAdapter`  | `listRecommendations`          | AI recommendations queue                   |
-| `useExplanationAdapter`     | `listExplanations`             | AI advisory answer log                     |
-| `useHealthAdapter`          | `getFinancialHealthScore`      | Composite Financial Health Score           |
-| `useCloseAdapter`           | `getCloseCompletionScore`      | Current close-run completion score         |
+| Adapter                    | Server function           | Purpose                            |
+| -------------------------- | ------------------------- | ---------------------------------- |
+| `useMetricAdapter`         | `getMetricAiResponse`     | Single canonical metric envelope   |
+| `useAnomalyAdapter`        | `listAnomalies`           | Open anomalies feed                |
+| `useRecommendationAdapter` | `listRecommendations`     | AI recommendations queue           |
+| `useExplanationAdapter`    | `listExplanations`        | AI advisory answer log             |
+| `useHealthAdapter`         | `getFinancialHealthScore` | Composite Financial Health Score   |
+| `useCloseAdapter`          | `getCloseCompletionScore` | Current close-run completion score |
 
 When no org context is available (unauthenticated / no membership) the
 adapters return a `demonstrationOnly: true` envelope so the existing APEX

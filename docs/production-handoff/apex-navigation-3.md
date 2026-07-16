@@ -4,13 +4,13 @@ Navigation 3.0 is an **optional overlay**. Operational navigation remains the de
 
 ## Five workspaces
 
-| Workspace | Decision question |
-|-----------|-------------------|
-| Home | What requires my attention today? |
-| Money | Where is the money, where is it going, and what can we safely use? |
-| Growth | What is increasing company value? |
-| People | What are our people costing, earning, producing, and needing? |
-| Company | What does the company need to remain healthy, protected, and scalable? |
+| Workspace | Decision question                                                      |
+| --------- | ---------------------------------------------------------------------- |
+| Home      | What requires my attention today?                                      |
+| Money     | Where is the money, where is it going, and what can we safely use?     |
+| Growth    | What is increasing company value?                                      |
+| People    | What are our people costing, earning, producing, and needing?          |
+| Company   | What does the company need to remain healthy, protected, and scalable? |
 
 ## Route mapping
 

@@ -35,22 +35,51 @@ const VIEWS: Array<{ id: "all" | Recovery["status"]; label: string }> = [
 function RecoveryPage() {
   const [view, setView] = useState<"all" | Recovery["status"]>("all");
   const rows = view === "all" ? RECOVERIES : RECOVERIES.filter((r) => r.status === view);
-  const eligible = RECOVERIES.filter((r) => r.status === "eligible" || r.status === "on_draft").reduce((a, r) => a + r.recoverable, 0);
-  const atRisk = RECOVERIES.filter((r) => r.status === "at_risk").reduce((a, r) => a + r.recoverable, 0);
-  const collected = RECOVERIES.filter((r) => r.status === "collected").reduce((a, r) => a + r.recoverable, 0);
+  const eligible = RECOVERIES.filter(
+    (r) => r.status === "eligible" || r.status === "on_draft",
+  ).reduce((a, r) => a + r.recoverable, 0);
+  const atRisk = RECOVERIES.filter((r) => r.status === "at_risk").reduce(
+    (a, r) => a + r.recoverable,
+    0,
+  );
+  const collected = RECOVERIES.filter((r) => r.status === "collected").reduce(
+    (a, r) => a + r.recoverable,
+    0,
+  );
 
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <StatCard label="Eligible for recovery" value={currency(eligible)} sub="not yet billed" tone="warning" icon={<TrendingUp className="h-4 w-4 text-warning" />} />
-        <StatCard label="At risk" value={currency(atRisk)} sub="contract deadline near" tone="destructive" icon={<AlertTriangle className="h-4 w-4 text-destructive" />} />
-        <StatCard label="Collected YTD" value={currency(collected)} sub="successfully recovered" tone="success" />
+        <StatCard
+          label="Eligible for recovery"
+          value={currency(eligible)}
+          sub="not yet billed"
+          tone="warning"
+          icon={<TrendingUp className="h-4 w-4 text-warning" />}
+        />
+        <StatCard
+          label="At risk"
+          value={currency(atRisk)}
+          sub="contract deadline near"
+          tone="destructive"
+          icon={<AlertTriangle className="h-4 w-4 text-destructive" />}
+        />
+        <StatCard
+          label="Collected YTD"
+          value={currency(collected)}
+          sub="successfully recovered"
+          tone="success"
+        />
       </div>
 
       <Card className="border-warning/30 bg-warning/5 p-3">
         <div className="flex items-start gap-2 text-[12.5px]">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-warning" />
-          <span><strong className="font-semibold">3 alerts</strong> — recoverable expenses not yet billed to ALD, missing markup on Chipotle onsite meal, and expense outside contract scope for Northstar.</span>
+          <span>
+            <strong className="font-semibold">3 alerts</strong> — recoverable expenses not yet
+            billed to ALD, missing markup on Chipotle onsite meal, and expense outside contract
+            scope for Northstar.
+          </span>
         </div>
       </Card>
 
@@ -98,18 +127,30 @@ function RecoveryPage() {
                   <td className="px-3 py-2 text-muted-foreground">{r.engagement}</td>
                   <td className="px-3 py-2">{r.expense}</td>
                   <td className="px-3 py-2 text-muted-foreground">{r.vendor}</td>
-                  <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">{r.date}</td>
+                  <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">
+                    {r.date}
+                  </td>
                   <td className="px-3 py-2 text-right font-tabular">{currency(r.amount)}</td>
-                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{(r.markup * 100).toFixed(0)}%</td>
-                  <td className="px-3 py-2 text-right font-tabular font-semibold">{currency(r.recoverable)}</td>
-                  <td className="px-3 py-2 text-[11.5px] text-muted-foreground">{r.contractRule}</td>
+                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                    {(r.markup * 100).toFixed(0)}%
+                  </td>
+                  <td className="px-3 py-2 text-right font-tabular font-semibold">
+                    {currency(r.recoverable)}
+                  </td>
+                  <td className="px-3 py-2 text-[11.5px] text-muted-foreground">
+                    {r.contractRule}
+                  </td>
                   <td className="px-3 py-2">
-                    <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${TONE[r.status]} whitespace-nowrap capitalize`}>
+                    <span
+                      className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${TONE[r.status]} whitespace-nowrap capitalize`}
+                    >
                       {r.status.replace(/_/g, " ")}
                     </span>
                   </td>
                   <td className="px-3 py-2 text-right">
-                    <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Add to invoice</Button>
+                    <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+                      Add to invoice
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -121,12 +162,33 @@ function RecoveryPage() {
   );
 }
 
-function StatCard({ label, value, sub, tone = "muted", icon }: { label: string; value: string; sub: string; tone?: "muted" | "success" | "warning" | "destructive"; icon?: React.ReactNode }) {
-  const t = tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : tone === "destructive" ? "text-destructive" : "text-foreground";
+function StatCard({
+  label,
+  value,
+  sub,
+  tone = "muted",
+  icon,
+}: {
+  label: string;
+  value: string;
+  sub: string;
+  tone?: "muted" | "success" | "warning" | "destructive";
+  icon?: React.ReactNode;
+}) {
+  const t =
+    tone === "success"
+      ? "text-success"
+      : tone === "warning"
+        ? "text-warning"
+        : tone === "destructive"
+          ? "text-destructive"
+          : "text-foreground";
   return (
     <Card className="border-border/70 p-4">
       <div className="flex items-center justify-between">
-        <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+        <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+          {label}
+        </div>
         {icon}
       </div>
       <div className={`mt-1 font-tabular text-2xl font-bold ${t}`}>{value}</div>

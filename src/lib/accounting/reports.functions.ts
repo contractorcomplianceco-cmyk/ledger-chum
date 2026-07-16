@@ -38,12 +38,14 @@ export const getARAging = createServerFn({ method: "GET" })
 export const getGeneralLedger = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      from: z.string().optional(),
-      to: z.string().optional(),
-      accountId: z.string().uuid().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        from: z.string().optional(),
+        to: z.string().optional(),
+        accountId: z.string().uuid().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase

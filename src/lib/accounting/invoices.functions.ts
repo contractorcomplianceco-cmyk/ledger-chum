@@ -5,12 +5,14 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const listInvoices = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["draft", "sent", "partial", "paid", "void"]).optional(),
-      customerId: z.string().uuid().optional(),
-      limit: z.number().int().min(1).max(200).default(50),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["draft", "sent", "partial", "paid", "void"]).optional(),
+        customerId: z.string().uuid().optional(),
+        limit: z.number().int().min(1).max(200).default(50),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -63,8 +65,7 @@ export const postInvoice = createServerFn({ method: "POST" })
       .eq("type", "asset")
       .ilike("name", "%receivable%")
       .maybeSingle();
-    if (!arAcc)
-      throw new Error("No Accounts Receivable account found in Chart of Accounts");
+    if (!arAcc) throw new Error("No Accounts Receivable account found in Chart of Accounts");
 
     // Create journal
     const { data: je, error: jerr } = await supabase
@@ -91,7 +92,13 @@ export const postInvoice = createServerFn({ method: "POST" })
         memo: "AR",
         line_order: 0,
       },
-      ...(inv.invoice_lines as Array<{ account_id: string | null; amount: number; description: string }>)
+      ...(
+        inv.invoice_lines as Array<{
+          account_id: string | null;
+          amount: number;
+          description: string;
+        }>
+      )
         .filter((l) => l.account_id !== null)
         .map((l, idx) => ({
           journal_id: je.id,

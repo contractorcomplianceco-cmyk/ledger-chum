@@ -7,7 +7,11 @@ export const Route = createFileRoute("/apex/ai-personas/")({
   head: () => ({
     meta: [
       { title: "AI Personas — Project APEX" },
-      { name: "description", content: "One governed AI system, presented through specialized advisors — all advisory, never autonomous." },
+      {
+        name: "description",
+        content:
+          "One governed AI system, presented through specialized advisors — all advisory, never autonomous.",
+      },
     ],
   }),
   component: PersonasIndex,

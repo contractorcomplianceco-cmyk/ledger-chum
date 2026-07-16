@@ -43,20 +43,20 @@ test.
 The registry covers all 33 categories requested, including:
 
 1. Core Accounting · 2. Banking & Cash · 3. Revenue Allocation ·
-4. Invoicing & Receivables · 5. Markup & Micro-Margin ·
-6. Expenses & Reimbursements · 7. Travel, Events & Development ·
-8. Employee Appreciation & Culture · 9. Payroll & Workforce ·
-10. Employee Benefits · 11. Compensation Intelligence · 12. Commission Types ·
-13. Profit Sharing & Ownership Participation · 14. Owner Finance ·
-15. Investors, Strategic Partners & Affiliates ·
-16. Check Writing & Disbursements · 17. Disbursement Classes ·
-18. Legal, Tax & Professional Services · 19. Charity, Nonprofit & Community ·
-20. Giveaways, Contests & Promotions · 21. Multi-Entity Accounting ·
-22. International Staff & Consultants · 23. Procurement, Vendors & Assets ·
-24. Research, Consulting & Innovation · 25. Technology & AI Economics ·
-26. Marketing ROI · 27. Profitability · 28. Forecasting & Digital Twin ·
-29. Financial Intelligence & AI · 30. Financial Relationship & Timeline ·
-31. Automation & Controls · 32. Integrations · 33. Admin & Users.
+2. Invoicing & Receivables · 5. Markup & Micro-Margin ·
+3. Expenses & Reimbursements · 7. Travel, Events & Development ·
+4. Employee Appreciation & Culture · 9. Payroll & Workforce ·
+5. Employee Benefits · 11. Compensation Intelligence · 12. Commission Types ·
+6. Profit Sharing & Ownership Participation · 14. Owner Finance ·
+7. Investors, Strategic Partners & Affiliates ·
+8. Check Writing & Disbursements · 17. Disbursement Classes ·
+9. Legal, Tax & Professional Services · 19. Charity, Nonprofit & Community ·
+10. Giveaways, Contests & Promotions · 21. Multi-Entity Accounting ·
+11. International Staff & Consultants · 23. Procurement, Vendors & Assets ·
+12. Research, Consulting & Innovation · 25. Technology & AI Economics ·
+13. Marketing ROI · 27. Profitability · 28. Forecasting & Digital Twin ·
+14. Financial Intelligence & AI · 30. Financial Relationship & Timeline ·
+15. Automation & Controls · 32. Integrations · 33. Admin & Users.
 
 ## Editing Rules
 

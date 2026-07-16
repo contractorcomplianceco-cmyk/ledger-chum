@@ -17,32 +17,43 @@ const bucketize = (daysOverdue: number) => {
 
 type Bucket = ReturnType<typeof bucketize>;
 const EMPTY_BUCKETS = (): Record<Bucket, number> => ({
-  current: 0, d1_30: 0, d31_60: 0, d61_90: 0, d90_plus: 0,
+  current: 0,
+  d1_30: 0,
+  d31_60: 0,
+  d61_90: 0,
+  d90_plus: 0,
 });
 
 export const getArAging = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      asOf: z.string().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        asOf: z.string().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const asOf = data.asOf ? new Date(data.asOf) : new Date();
     const { data: rows, error } = await context.supabase
       .from("invoices")
-      .select("id, invoice_number, customer_id, due_date, issue_date, total, balance, status, customers(name)")
+      .select(
+        "id, invoice_number, customer_id, due_date, issue_date, total, balance, status, customers(name)",
+      )
       .eq("org_id", data.orgId)
       .in("status", ["sent", "partial"]);
     if (error) throw new Error(error.message);
 
-    const perCustomer = new Map<string, {
-      customerId: string;
-      customerName: string;
-      buckets: Record<Bucket, number>;
-      total: number;
-    }>();
+    const perCustomer = new Map<
+      string,
+      {
+        customerId: string;
+        customerName: string;
+        buckets: Record<Bucket, number>;
+        total: number;
+      }
+    >();
     const totals = EMPTY_BUCKETS();
 
     for (const r of rows ?? []) {
@@ -77,10 +88,12 @@ export const getArAging = createServerFn({ method: "GET" })
 export const getApAging = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      asOf: z.string().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        asOf: z.string().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const asOf = data.asOf ? new Date(data.asOf) : new Date();
@@ -91,12 +104,15 @@ export const getApAging = createServerFn({ method: "GET" })
       .in("status", ["open", "partial"]);
     if (error) throw new Error(error.message);
 
-    const perVendor = new Map<string, {
-      vendorId: string;
-      vendorName: string;
-      buckets: Record<Bucket, number>;
-      total: number;
-    }>();
+    const perVendor = new Map<
+      string,
+      {
+        vendorId: string;
+        vendorName: string;
+        buckets: Record<Bucket, number>;
+        total: number;
+      }
+    >();
     const totals = EMPTY_BUCKETS();
 
     for (const r of rows ?? []) {

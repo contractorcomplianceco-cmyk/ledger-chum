@@ -18,7 +18,11 @@ export const Route = createFileRoute("/apex/financial-dna")({
   head: () => ({
     meta: [
       { title: "Financial DNA — Project APEX" },
-      { name: "description", content: "Trace every dollar from source through allocation, cost, and profit to reserves and distributions." },
+      {
+        name: "description",
+        content:
+          "Trace every dollar from source through allocation, cost, and profit to reserves and distributions.",
+      },
     ],
   }),
   component: DnaPage,
@@ -42,17 +46,25 @@ function DnaNodeCard({ n, onOpen }: { n: DnaNode; onOpen: (n: DnaNode) => void }
       )}
     >
       <div className="flex-1 min-w-0">
-        <div className="text-[10.5px] font-semibold uppercase tracking-wide opacity-80">{n.stage}</div>
+        <div className="text-[10.5px] font-semibold uppercase tracking-wide opacity-80">
+          {n.stage}
+        </div>
         <div className="mt-0.5 truncate text-[13px] font-semibold text-foreground">{n.label}</div>
         <div className="mt-1 flex flex-wrap gap-1.5">
           <ConfidenceChip value={n.confidence} />
           <FreshnessChip label={n.freshness} />
-          <span className="rounded-full bg-background/70 px-2 py-0.5 text-[10px] font-medium">{n.classification}</span>
+          <span className="rounded-full bg-background/70 px-2 py-0.5 text-[10px] font-medium">
+            {n.classification}
+          </span>
         </div>
       </div>
       <div className="text-right">
-        <div className="text-[14px] font-bold text-foreground tabular-nums">{currency(n.amount)}</div>
-        <div className="text-[10.5px] text-muted-foreground">{n.pctOfOrigin.toFixed(1)}% of origin</div>
+        <div className="text-[14px] font-bold text-foreground tabular-nums">
+          {currency(n.amount)}
+        </div>
+        <div className="text-[10.5px] text-muted-foreground">
+          {n.pctOfOrigin.toFixed(1)}% of origin
+        </div>
       </div>
     </button>
   );
@@ -62,10 +74,24 @@ function DnaPage() {
   const [selected, setSelected] = useState<DnaNode | null>(DNA_NODES[6] ?? null);
 
   const stages: DnaNode["stage"][] = [
-    "Client", "Contract", "Service", "Invoice", "Payment",
-    "Pass-Through", "Revenue", "Commission", "Payroll",
-    "Technology", "Marketing", "Overhead", "Direct Cost",
-    "Contribution Profit", "Tax Reserve", "Profit Share", "Retained Earnings", "Owner Distribution",
+    "Client",
+    "Contract",
+    "Service",
+    "Invoice",
+    "Payment",
+    "Pass-Through",
+    "Revenue",
+    "Commission",
+    "Payroll",
+    "Technology",
+    "Marketing",
+    "Overhead",
+    "Direct Cost",
+    "Contribution Profit",
+    "Tax Reserve",
+    "Profit Share",
+    "Retained Earnings",
+    "Owner Distribution",
   ];
 
   return (
@@ -117,7 +143,9 @@ function DnaPage() {
                 {selected.stage}
               </div>
               <div className="text-[15px] font-semibold text-foreground">{selected.label}</div>
-              <div className="mt-1 text-[18px] font-bold tabular-nums text-foreground">{currency(selected.amount)}</div>
+              <div className="mt-1 text-[18px] font-bold tabular-nums text-foreground">
+                {currency(selected.amount)}
+              </div>
               <div className="mt-3">
                 <KVRow k="Classification" v={selected.classification} />
                 <KVRow k="% of origin" v={`${selected.pctOfOrigin.toFixed(2)}%`} />
@@ -129,21 +157,35 @@ function DnaPage() {
               <p className="mt-2 text-[12px] text-muted-foreground">{selected.explanation}</p>
               <div className="mt-3 flex flex-wrap gap-1.5 text-[11px]">
                 {selected.relatedTimeline && (
-                  <Link to="/apex/timeline/$id" params={{ id: selected.relatedTimeline }} className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/timeline/$id"
+                    params={{ id: selected.relatedTimeline }}
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     Open timeline
                   </Link>
                 )}
                 {selected.relatedOpportunity && (
-                  <Link to="/apex/opportunities/$id" params={{ id: selected.relatedOpportunity }} className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/opportunities/$id"
+                    params={{ id: selected.relatedOpportunity }}
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     View opportunity
                   </Link>
                 )}
                 {selected.relatedGraphNode && (
-                  <Link to="/apex/relationship-graph" className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/relationship-graph"
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     Open graph
                   </Link>
                 )}
-                <Link to="/apex/digital-twin" className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                <Link
+                  to="/apex/digital-twin"
+                  className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                >
                   Simulate change
                 </Link>
               </div>

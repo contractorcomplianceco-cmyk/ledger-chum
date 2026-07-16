@@ -62,9 +62,7 @@ export const listFinancialEvents = createServerFn({ method: "GET" })
 
 export const getFinancialEvent = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("financial_events")
@@ -88,14 +86,11 @@ export const approveFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
-      "approve_financial_event",
-      {
-        _org_id: data.orgId,
-        _event_id: data.id,
-        _note: data.note ?? null,
-      },
-    );
+    const { data: res, error } = await (context.supabase.rpc as any)("approve_financial_event", {
+      _org_id: data.orgId,
+      _event_id: data.id,
+      _note: data.note ?? null,
+    });
     if (error) throw new Error(error.message);
     return res as { event_id: string; status: string };
   });
@@ -112,14 +107,11 @@ export const rejectFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
-      "reject_financial_event",
-      {
-        _org_id: data.orgId,
-        _event_id: data.id,
-        _reason: data.reason,
-      },
-    );
+    const { data: res, error } = await (context.supabase.rpc as any)("reject_financial_event", {
+      _org_id: data.orgId,
+      _event_id: data.id,
+      _reason: data.reason,
+    });
     if (error) throw new Error(error.message);
     return res as { event_id: string; status: string };
   });
@@ -176,9 +168,7 @@ export const upsertEventRule = createServerFn({ method: "POST" })
       org_id: data.orgId,
       actor_type: "user",
       actor_id: context.userId,
-      event_type: data.id
-        ? "financial_event_rule.updated"
-        : "financial_event_rule.created",
+      event_type: data.id ? "financial_event_rule.updated" : "financial_event_rule.created",
       action: data.id ? "updated" : "created",
       target_type: "financial_event_rule",
       target_id: row.id,
@@ -190,9 +180,7 @@ export const upsertEventRule = createServerFn({ method: "POST" })
 
 export const deleteEventRule = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
       .from("financial_event_rules")
@@ -218,9 +206,7 @@ export const deleteEventRule = createServerFn({ method: "POST" })
 
 export const materializeFinancialEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     const { data: res, error } = await (context.supabase.rpc as any)(
       "materialize_financial_event",
@@ -241,14 +227,12 @@ export const materializeFinancialEvent = createServerFn({ method: "POST" })
 
 export const retryMaterialization = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
-      "retry_materialization",
-      { _org_id: data.orgId, _event_id: data.id },
-    );
+    const { data: res, error } = await (context.supabase.rpc as any)("retry_materialization", {
+      _org_id: data.orgId,
+      _event_id: data.id,
+    });
     if (error) throw new Error(error.message);
     return res;
   });
@@ -306,9 +290,7 @@ export const listFinancialAccountMappings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from as any)(
-      "financial_account_mappings",
-    )
+    const { data: rows, error } = await (context.supabase.from as any)("financial_account_mappings")
       .select("*")
       .eq("org_id", data.orgId)
       .order("external_type", { ascending: true });
@@ -355,13 +337,9 @@ export const upsertFinancialAccountMapping = createServerFn({ method: "POST" })
 
 export const deleteFinancialAccountMapping = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
-    const { error } = await (context.supabase.from as any)(
-      "financial_account_mappings",
-    )
+    const { error } = await (context.supabase.from as any)("financial_account_mappings")
       .delete()
       .eq("id", data.id)
       .eq("org_id", data.orgId);

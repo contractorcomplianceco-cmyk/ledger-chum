@@ -8,22 +8,36 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listAccountTree } from "@/lib/accounting/accounts.functions";
 import {
-  listBankAccounts, createBankAccount,
-  listBankTransactions, importBankTransactions,
+  listBankAccounts,
+  createBankAccount,
+  listBankTransactions,
+  importBankTransactions,
 } from "@/lib/accounting/banking.functions";
 
 export const Route = createFileRoute("/ledger/banking")({
   head: () => ({
     meta: [
       { title: "Banking — LedgerOS" },
-      { name: "description", content: "Bank accounts and imported transactions from the LedgerOS posting engine." },
+      {
+        name: "description",
+        content: "Bank accounts and imported transactions from the LedgerOS posting engine.",
+      },
       { property: "og:title", content: "Banking — LedgerOS" },
-      { property: "og:description", content: "Manage bank accounts, import CSV transactions, and reconcile." },
+      {
+        property: "og:description",
+        content: "Manage bank accounts, import CSV transactions, and reconcile.",
+      },
     ],
   }),
   component: BankingPage,
@@ -33,7 +47,15 @@ const fmt = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
 /** Parse a simple CSV: expects header row with date,description,amount[,reference,external_id]. */
-function parseCsv(text: string): Array<{ txnDate: string; description: string; amount: number; reference?: string; externalId?: string }> {
+function parseCsv(
+  text: string,
+): Array<{
+  txnDate: string;
+  description: string;
+  amount: number;
+  reference?: string;
+  externalId?: string;
+}> {
   const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
   if (lines.length < 2) return [];
   const header = lines[0].split(",").map((h) => h.trim().toLowerCase());
@@ -43,17 +65,21 @@ function parseCsv(text: string): Array<{ txnDate: string; description: string; a
   const amtCol = idx("amount");
   const refCol = idx("reference");
   const extCol = idx("external_id");
-  if (dCol < 0 || descCol < 0 || amtCol < 0) throw new Error("CSV must have headers: date, description, amount");
-  return lines.slice(1).map((line) => {
-    const cells = line.split(",");
-    return {
-      txnDate: cells[dCol]?.trim() ?? "",
-      description: cells[descCol]?.trim() ?? "",
-      amount: Number(cells[amtCol]?.trim() ?? "0"),
-      reference: refCol >= 0 ? cells[refCol]?.trim() : undefined,
-      externalId: extCol >= 0 ? cells[extCol]?.trim() : undefined,
-    };
-  }).filter((r) => r.txnDate && r.description && !Number.isNaN(r.amount));
+  if (dCol < 0 || descCol < 0 || amtCol < 0)
+    throw new Error("CSV must have headers: date, description, amount");
+  return lines
+    .slice(1)
+    .map((line) => {
+      const cells = line.split(",");
+      return {
+        txnDate: cells[dCol]?.trim() ?? "",
+        description: cells[descCol]?.trim() ?? "",
+        amount: Number(cells[amtCol]?.trim() ?? "0"),
+        reference: refCol >= 0 ? cells[refCol]?.trim() : undefined,
+        externalId: extCol >= 0 ? cells[extCol]?.trim() : undefined,
+      };
+    })
+    .filter((r) => r.txnDate && r.description && !Number.isNaN(r.amount));
 }
 
 function BankingPage() {
@@ -92,16 +118,27 @@ function BankingPage() {
 
   // Create account dialog
   const [openNew, setOpenNew] = useState(false);
-  const [form, setForm] = useState({ name: "", bankName: "", last4: "", glAccountId: "", openingBalance: "0" });
+  const [form, setForm] = useState({
+    name: "",
+    bankName: "",
+    last4: "",
+    glAccountId: "",
+    openingBalance: "0",
+  });
 
   const submitNew = async () => {
     if (!orgId || !form.name || !form.glAccountId) return;
     try {
-      await createFn({ data: {
-        orgId, glAccountId: form.glAccountId, name: form.name,
-        bankName: form.bankName || undefined, last4: form.last4 || undefined,
-        openingBalance: Number(form.openingBalance) || 0,
-      }});
+      await createFn({
+        data: {
+          orgId,
+          glAccountId: form.glAccountId,
+          name: form.name,
+          bankName: form.bankName || undefined,
+          last4: form.last4 || undefined,
+          openingBalance: Number(form.openingBalance) || 0,
+        },
+      });
       toast.success("Bank account created");
       setOpenNew(false);
       setForm({ name: "", bankName: "", last4: "", glAccountId: "", openingBalance: "0" });
@@ -119,7 +156,9 @@ function BankingPage() {
       const text = await file.text();
       const rows = parseCsv(text);
       if (rows.length === 0) throw new Error("No valid rows");
-      const res = await importFn({ data: { orgId, bankAccountId: activeAccountId, sourceSystem: "csv_import", rows } });
+      const res = await importFn({
+        data: { orgId, bankAccountId: activeAccountId, sourceSystem: "csv_import", rows },
+      });
       toast.success(`Imported ${res.imported} of ${res.requested} transactions`);
       qc.invalidateQueries({ queryKey: ["bank.txns", orgId, activeAccountId] });
     } catch (e) {
@@ -137,9 +176,24 @@ function BankingPage() {
         description="Live accounts linked to GL cash accounts. Import CSVs and match to journal lines."
         actions={
           <>
-            <Button variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={!activeAccountId}>Import CSV</Button>
-            <input ref={fileRef} type="file" accept=".csv,text/csv" hidden onChange={(e) => e.target.files?.[0] && onImport(e.target.files[0])} />
-            <Button size="sm" onClick={() => setOpenNew(true)}>New account</Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fileRef.current?.click()}
+              disabled={!activeAccountId}
+            >
+              Import CSV
+            </Button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".csv,text/csv"
+              hidden
+              onChange={(e) => e.target.files?.[0] && onImport(e.target.files[0])}
+            />
+            <Button size="sm" onClick={() => setOpenNew(true)}>
+              New account
+            </Button>
           </>
         }
       />
@@ -156,7 +210,8 @@ function BankingPage() {
                 >
                   <div>{a.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {a.bank_name ?? "—"}{a.account_number_last4 ? ` ····${a.account_number_last4}` : ""}
+                    {a.bank_name ?? "—"}
+                    {a.account_number_last4 ? ` ····${a.account_number_last4}` : ""}
                   </div>
                 </button>
               ))}
@@ -169,7 +224,9 @@ function BankingPage() {
           <Card className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="text-sm font-medium">Recent transactions</div>
-              <Link to="/ledger/banking/reconcile" className="text-sm text-primary hover:underline">Reconcile →</Link>
+              <Link to="/ledger/banking/reconcile" className="text-sm text-primary hover:underline">
+                Reconcile →
+              </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -188,12 +245,20 @@ function BankingPage() {
                       <td className="py-2 pr-3 tabular-nums">{t.txn_date}</td>
                       <td className="py-2 pr-3">{t.description}</td>
                       <td className="py-2 pr-3 text-muted-foreground">{t.reference ?? "—"}</td>
-                      <td className={`py-2 pr-3 text-right tabular-nums ${Number(t.amount) < 0 ? "text-destructive" : ""}`}>{fmt(Number(t.amount))}</td>
+                      <td
+                        className={`py-2 pr-3 text-right tabular-nums ${Number(t.amount) < 0 ? "text-destructive" : ""}`}
+                      >
+                        {fmt(Number(t.amount))}
+                      </td>
                       <td className="py-2 pr-3 capitalize">{t.status}</td>
                     </tr>
                   ))}
                   {(txns.data ?? []).length === 0 && (
-                    <tr><td colSpan={5} className="py-8 text-center text-muted-foreground">No transactions. Import a CSV to get started.</td></tr>
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-muted-foreground">
+                        No transactions. Import a CSV to get started.
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>
@@ -203,28 +268,68 @@ function BankingPage() {
 
         <Dialog open={openNew} onOpenChange={setOpenNew}>
           <DialogContent>
-            <DialogHeader><DialogTitle>New bank account</DialogTitle></DialogHeader>
+            <DialogHeader>
+              <DialogTitle>New bank account</DialogTitle>
+            </DialogHeader>
             <div className="grid gap-3">
-              <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-              <div><Label>Bank name</Label><Input value={form.bankName} onChange={(e) => setForm({ ...form, bankName: e.target.value })} /></div>
-              <div><Label>Last 4</Label><Input maxLength={4} value={form.last4} onChange={(e) => setForm({ ...form, last4: e.target.value })} /></div>
+              <div>
+                <Label>Name</Label>
+                <Input
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Bank name</Label>
+                <Input
+                  value={form.bankName}
+                  onChange={(e) => setForm({ ...form, bankName: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Last 4</Label>
+                <Input
+                  maxLength={4}
+                  value={form.last4}
+                  onChange={(e) => setForm({ ...form, last4: e.target.value })}
+                />
+              </div>
               <div>
                 <Label>Linked GL account (cash asset)</Label>
-                <Select value={form.glAccountId} onValueChange={(v) => setForm({ ...form, glAccountId: v })}>
-                  <SelectTrigger><SelectValue placeholder="Pick a cash account" /></SelectTrigger>
+                <Select
+                  value={form.glAccountId}
+                  onValueChange={(v) => setForm({ ...form, glAccountId: v })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Pick a cash account" />
+                  </SelectTrigger>
                   <SelectContent>
-                    {cashAccounts.map((a) => (
+                    {cashAccounts.map((a) =>
                       a.account_id ? (
-                        <SelectItem key={a.account_id} value={a.account_id}>{a.code} · {a.name}</SelectItem>
-                      ) : null
-                    ))}
+                        <SelectItem key={a.account_id} value={a.account_id}>
+                          {a.code} · {a.name}
+                        </SelectItem>
+                      ) : null,
+                    )}
                   </SelectContent>
                 </Select>
               </div>
-              <div><Label>Opening balance</Label><Input type="number" step="0.01" value={form.openingBalance} onChange={(e) => setForm({ ...form, openingBalance: e.target.value })} /></div>
+              <div>
+                <Label>Opening balance</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={form.openingBalance}
+                  onChange={(e) => setForm({ ...form, openingBalance: e.target.value })}
+                />
+              </div>
               <div className="flex justify-end gap-2 pt-2">
-                <Button variant="outline" onClick={() => setOpenNew(false)}>Cancel</Button>
-                <Button onClick={submitNew} disabled={!form.name || !form.glAccountId}>Create</Button>
+                <Button variant="outline" onClick={() => setOpenNew(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={submitNew} disabled={!form.name || !form.glAccountId}>
+                  Create
+                </Button>
               </div>
             </div>
           </DialogContent>

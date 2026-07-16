@@ -16,7 +16,9 @@ function VendorSpendPage() {
   return (
     <div className="space-y-4">
       <div className="text-[13px] text-muted-foreground">
-        Total tracked spend across <strong className="font-semibold text-foreground">{VENDOR_SPEND.length}</strong> vendors: <strong className="font-semibold text-foreground">{currency(total)}</strong>
+        Total tracked spend across{" "}
+        <strong className="font-semibold text-foreground">{VENDOR_SPEND.length}</strong> vendors:{" "}
+        <strong className="font-semibold text-foreground">{currency(total)}</strong>
       </div>
 
       <Card className="overflow-hidden border-border/70 p-0">
@@ -46,24 +48,43 @@ function VendorSpendPage() {
                   <tr key={v.vendor} className="hover:bg-muted/30">
                     <td className="px-3 py-2">
                       <div className="font-medium">{v.vendor}</div>
-                      {v.subscription && <div className="text-[10.5px] text-muted-foreground">Subscription</div>}
+                      {v.subscription && (
+                        <div className="text-[10.5px] text-muted-foreground">Subscription</div>
+                      )}
                     </td>
                     <td className="px-3 py-2">
                       <span className="inline-flex items-center gap-1.5 text-[12px]">
-                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: CATEGORY_META[v.category].color }} />
+                        <span
+                          className="h-1.5 w-1.5 rounded-full"
+                          style={{ background: CATEGORY_META[v.category].color }}
+                        />
                         {CATEGORY_META[v.category].label}
                       </span>
                     </td>
                     <td className="px-3 py-2 text-muted-foreground">{v.department}</td>
                     <td className="px-3 py-2 text-muted-foreground">{v.owner ?? "—"}</td>
                     <td className="px-3 py-2 text-right font-tabular">{currency(v.current)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(v.prior)}</td>
-                    <td className="px-3 py-2 text-right font-tabular font-semibold">{currency(v.ytd)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(v.budget)}</td>
-                    <td className={cn("px-3 py-2 text-right font-tabular", over ? "text-destructive" : "text-success")}>
-                      {over ? "+" : ""}{variance.toFixed(0)}%
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(v.prior)}
                     </td>
-                    <td className="px-3 py-2 capitalize text-[12px] text-muted-foreground">{v.contract}</td>
+                    <td className="px-3 py-2 text-right font-tabular font-semibold">
+                      {currency(v.ytd)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(v.budget)}
+                    </td>
+                    <td
+                      className={cn(
+                        "px-3 py-2 text-right font-tabular",
+                        over ? "text-destructive" : "text-success",
+                      )}
+                    >
+                      {over ? "+" : ""}
+                      {variance.toFixed(0)}%
+                    </td>
+                    <td className="px-3 py-2 capitalize text-[12px] text-muted-foreground">
+                      {v.contract}
+                    </td>
                     <td className="px-3 py-2 text-right">
                       {v.anomalies > 0 ? (
                         <span className="inline-flex items-center gap-1 text-[11.5px] text-warning">
@@ -74,7 +95,9 @@ function VendorSpendPage() {
                       )}
                     </td>
                     <td className="px-3 py-2 text-right">
-                      <Button size="sm" variant="ghost" className="h-7 text-[11.5px]"><ExternalLink className="h-3 w-3" /></Button>
+                      <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">
+                        <ExternalLink className="h-3 w-3" />
+                      </Button>
                     </td>
                   </tr>
                 );

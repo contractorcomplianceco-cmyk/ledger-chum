@@ -10,12 +10,7 @@
 export type IntelligenceFreshness = "fresh" | "delayed" | "stale" | "unavailable";
 
 export type IntelligenceKind =
-  | "metric"
-  | "anomaly"
-  | "recommendation"
-  | "explanation"
-  | "health"
-  | "close";
+  "metric" | "anomaly" | "recommendation" | "explanation" | "health" | "close";
 
 export interface IntelligenceEvidence {
   label: string;

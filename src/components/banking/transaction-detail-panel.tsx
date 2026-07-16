@@ -47,7 +47,8 @@ export function TransactionDetailPanel({
           </div>
           <h3 className="mt-3 text-sm font-medium">Select a transaction</h3>
           <p className="mt-1 text-xs text-muted-foreground">
-            Pick a row from the list to review details, suggested categorization, and matching candidates.
+            Pick a row from the list to review details, suggested categorization, and matching
+            candidates.
           </p>
         </div>
       </Card>
@@ -57,8 +58,7 @@ export function TransactionDetailPanel({
   const positive = tx.amount > 0;
   const account = BANK_ACCOUNTS.find((a) => a.id === tx.accountId);
 
-  const demoAction = (label: string) =>
-    toast(`${label}`, { description: DEMO_ACTION_MESSAGE });
+  const demoAction = (label: string) => toast(`${label}`, { description: DEMO_ACTION_MESSAGE });
 
   return (
     <Card className="flex h-full flex-col overflow-hidden border-border/60 bg-gradient-surface shadow-elegant">
@@ -70,7 +70,10 @@ export function TransactionDetailPanel({
               <StatusBadge status={tx.status} />
               {tx.reconciled && <StatusBadge status="reconciled" />}
               {tx.possibleDuplicateOf && (
-                <Badge variant="outline" className="gap-1 border-destructive/40 bg-destructive/10 text-destructive">
+                <Badge
+                  variant="outline"
+                  className="gap-1 border-destructive/40 bg-destructive/10 text-destructive"
+                >
                   <AlertTriangle className="h-3 w-3" /> Possible duplicate
                 </Badge>
               )}
@@ -105,10 +108,18 @@ export function TransactionDetailPanel({
                   <div className="font-medium text-destructive">Possible duplicate detected</div>
                   <div className="mt-0.5 text-muted-foreground">{tx.reason}</div>
                   <div className="mt-2 flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => demoAction("Marked as duplicate")}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => demoAction("Marked as duplicate")}
+                    >
                       Mark as duplicate
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={() => demoAction("Kept as separate transaction")}>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => demoAction("Kept as separate transaction")}
+                    >
                       Keep both
                     </Button>
                   </div>
@@ -121,7 +132,10 @@ export function TransactionDetailPanel({
             <section aria-labelledby="ai-suggest">
               <div className="mb-2 flex items-center gap-2">
                 <Sparkles className="h-3.5 w-3.5 text-brand" />
-                <h3 id="ai-suggest" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                <h3
+                  id="ai-suggest"
+                  className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+                >
                   Suggested by LedgerOS
                 </h3>
               </div>
@@ -132,12 +146,16 @@ export function TransactionDetailPanel({
                       <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-info">
                         Match candidate
                       </div>
-                      <div className="mt-0.5 truncate text-sm font-medium">{tx.suggestedMatch.label}</div>
+                      <div className="mt-0.5 truncate text-sm font-medium">
+                        {tx.suggestedMatch.label}
+                      </div>
                       <div className="mt-0.5 text-xs text-muted-foreground">{tx.reason}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
                       {tx.confidence && <ConfidenceIndicator value={tx.confidence} />}
-                      <Button size="sm" onClick={() => demoAction("Match accepted")}>Accept</Button>
+                      <Button size="sm" onClick={() => demoAction("Match accepted")}>
+                        Accept
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -157,7 +175,9 @@ export function TransactionDetailPanel({
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
                       {tx.confidence && <ConfidenceIndicator value={tx.confidence} />}
-                      <Button size="sm" onClick={() => demoAction("Category applied")}>Apply</Button>
+                      <Button size="sm" onClick={() => demoAction("Category applied")}>
+                        Apply
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -166,7 +186,10 @@ export function TransactionDetailPanel({
           )}
 
           <section aria-labelledby="details">
-            <h3 id="details" className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            <h3
+              id="details"
+              className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Details
             </h3>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
@@ -210,7 +233,10 @@ export function TransactionDetailPanel({
           <Separator />
 
           <section aria-labelledby="impact">
-            <h3 id="impact" className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            <h3
+              id="impact"
+              className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Accounting impact preview
             </h3>
             <div className="overflow-hidden rounded-lg border border-border">
@@ -260,7 +286,10 @@ export function TransactionDetailPanel({
           <Separator />
 
           <section aria-labelledby="memo">
-            <h3 id="memo" className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            <h3
+              id="memo"
+              className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Internal memo
             </h3>
             <Textarea
@@ -273,7 +302,10 @@ export function TransactionDetailPanel({
           <section aria-labelledby="audit">
             <div className="mb-2 flex items-center gap-1.5">
               <History className="h-3.5 w-3.5 text-muted-foreground" />
-              <h3 id="audit" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              <h3
+                id="audit"
+                className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+              >
                 Audit timeline
               </h3>
             </div>

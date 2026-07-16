@@ -45,11 +45,15 @@ export function ReconciliationAccountCard({
       <dl className="grid grid-cols-3 gap-3 text-xs">
         <div>
           <dt className="text-muted-foreground">Ledger balance</dt>
-          <dd className="mt-0.5 font-tabular font-semibold">{currencyPrecise(account.ledgerBalance)}</dd>
+          <dd className="mt-0.5 font-tabular font-semibold">
+            {currencyPrecise(account.ledgerBalance)}
+          </dd>
         </div>
         <div>
           <dt className="text-muted-foreground">Bank balance</dt>
-          <dd className="mt-0.5 font-tabular font-semibold">{currencyPrecise(account.bankBalance)}</dd>
+          <dd className="mt-0.5 font-tabular font-semibold">
+            {currencyPrecise(account.bankBalance)}
+          </dd>
         </div>
         <div>
           <dt className="text-muted-foreground">Difference</dt>
@@ -88,7 +92,11 @@ export function ReconciliationAccountCard({
       <div className="flex gap-2">
         <Button className="flex-1" onClick={onStart}>
           <BookOpenCheck className="mr-1.5 h-3.5 w-3.5" />
-          {account.reconciliation === "in_progress" ? "Resume" : account.reconciliation === "reconciled" ? "Review" : "Start reconciliation"}
+          {account.reconciliation === "in_progress"
+            ? "Resume"
+            : account.reconciliation === "reconciled"
+              ? "Review"
+              : "Start reconciliation"}
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
         </Button>
       </div>

@@ -27,7 +27,9 @@ function CustomerDetailPage() {
           <div className="p-8">
             <div className="text-lg font-semibold">Customer not found</div>
             <Button asChild variant="outline" size="sm" className="mt-3">
-              <Link to="/customers"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back</Link>
+              <Link to="/customers">
+                <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back
+              </Link>
             </Button>
           </div>
         </PageBody>
@@ -49,11 +51,17 @@ function CustomerDetailPage() {
         actions={
           <>
             <Button variant="outline" size="sm" className="h-9" asChild>
-              <Link to="/customers"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> All customers</Link>
+              <Link to="/customers">
+                <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> All customers
+              </Link>
             </Button>
-            <Button variant="outline" size="sm" className="h-9"><Send className="mr-1.5 h-3.5 w-3.5" /> Statement</Button>
+            <Button variant="outline" size="sm" className="h-9">
+              <Send className="mr-1.5 h-3.5 w-3.5" /> Statement
+            </Button>
             <Button size="sm" className="h-9" asChild>
-              <Link to="/invoices/new"><Plus className="mr-1.5 h-3.5 w-3.5" /> New invoice</Link>
+              <Link to="/invoices/new">
+                <Plus className="mr-1.5 h-3.5 w-3.5" /> New invoice
+              </Link>
             </Button>
           </>
         }
@@ -64,7 +72,11 @@ function CustomerDetailPage() {
             <div className="grid gap-3 sm:grid-cols-3">
               <StatTile label="Total billed" value={currency(totalBilled)} />
               <StatTile label="Collected" value={currency(totalCollected)} />
-              <StatTile label="Open balance" value={currency(openBalance)} tone={openBalance > 0 ? "warn" : "ok"} />
+              <StatTile
+                label="Open balance"
+                value={currency(openBalance)}
+                tone={openBalance > 0 ? "warn" : "ok"}
+              />
             </div>
 
             <Card className="border border-border/70 bg-surface p-4 shadow-card">
@@ -88,20 +100,34 @@ function CustomerDetailPage() {
                       return (
                         <tr key={inv.id} className="hover:bg-muted/30">
                           <td className="px-3 py-2">
-                            <Link to="/invoices/$invoiceId" params={{ invoiceId: inv.id }} className="font-semibold text-foreground hover:underline">
+                            <Link
+                              to="/invoices/$invoiceId"
+                              params={{ invoiceId: inv.id }}
+                              className="font-semibold text-foreground hover:underline"
+                            >
                               {inv.number}
                             </Link>
                           </td>
                           <td className="px-2 py-2 text-muted-foreground">{inv.issued}</td>
                           <td className="px-2 py-2 text-right font-tabular">{currency(c.total)}</td>
-                          <td className="px-2 py-2 text-right font-tabular font-semibold">{currency(balance)}</td>
-                          <td className="px-2 py-2"><InvoiceStatusBadge status={inv.status} /></td>
-                          <td className="px-2 py-2"><PaymentLikelihoodChip likelihood={inv.likelihood} compact /></td>
+                          <td className="px-2 py-2 text-right font-tabular font-semibold">
+                            {currency(balance)}
+                          </td>
+                          <td className="px-2 py-2">
+                            <InvoiceStatusBadge status={inv.status} />
+                          </td>
+                          <td className="px-2 py-2">
+                            <PaymentLikelihoodChip likelihood={inv.likelihood} compact />
+                          </td>
                         </tr>
                       );
                     })}
                     {invoices.length === 0 && (
-                      <tr><td colSpan={6} className="px-3 py-6 text-center text-muted-foreground">No invoices yet.</td></tr>
+                      <tr>
+                        <td colSpan={6} className="px-3 py-6 text-center text-muted-foreground">
+                          No invoices yet.
+                        </td>
+                      </tr>
                     )}
                   </tbody>
                 </table>
@@ -115,9 +141,13 @@ function CustomerDetailPage() {
                   <div key={bc.email} className="flex items-center justify-between gap-2 py-2">
                     <div>
                       <div className="text-[13px] font-medium text-foreground">{bc.name}</div>
-                      <div className="text-[11.5px] text-muted-foreground">{bc.email} · {bc.role}</div>
+                      <div className="text-[11.5px] text-muted-foreground">
+                        {bc.email} · {bc.role}
+                      </div>
                     </div>
-                    <Button variant="ghost" size="sm"><Copy className="mr-1.5 h-3.5 w-3.5" /> Copy</Button>
+                    <Button variant="ghost" size="sm">
+                      <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -142,12 +172,15 @@ function CustomerDetailPage() {
             <Card className="border border-border/70 bg-surface p-4 shadow-card">
               <div className="text-[13.5px] font-semibold text-foreground">Client portal</div>
               <p className="mt-1 text-[12px] text-muted-foreground">
-                Share a portal link where {customer.name} can view invoices, download PDFs, and pay online.
+                Share a portal link where {customer.name} can view invoices, download PDFs, and pay
+                online.
               </p>
               <div className="mt-2 rounded-md bg-muted/40 p-2 font-mono text-[11px] text-foreground/80">
                 portal.ledgeros.app/{customer.id}
               </div>
-              <Button variant="outline" size="sm" className="mt-2 w-full"><Copy className="mr-1.5 h-3.5 w-3.5" /> Copy portal link</Button>
+              <Button variant="outline" size="sm" className="mt-2 w-full">
+                <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy portal link
+              </Button>
             </Card>
           </aside>
         </div>
@@ -156,11 +189,25 @@ function CustomerDetailPage() {
   );
 }
 
-function StatTile({ label, value, tone = "ok" }: { label: string; value: string; tone?: "ok" | "warn" }) {
+function StatTile({
+  label,
+  value,
+  tone = "ok",
+}: {
+  label: string;
+  value: string;
+  tone?: "ok" | "warn";
+}) {
   return (
     <Card className="border border-border/70 bg-surface p-4 shadow-card">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{label}</div>
-      <div className={`mt-1 font-tabular text-[22px] font-bold ${tone === "warn" ? "text-warning" : "text-foreground"}`}>{value}</div>
+      <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={`mt-1 font-tabular text-[22px] font-bold ${tone === "warn" ? "text-warning" : "text-foreground"}`}
+      >
+        {value}
+      </div>
     </Card>
   );
 }

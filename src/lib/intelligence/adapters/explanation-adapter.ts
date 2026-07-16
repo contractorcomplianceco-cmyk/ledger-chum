@@ -42,8 +42,7 @@ export function useExplanationAdapter(options?: {
     kind: "explanation",
     title: e.question ?? `${e.subject_type}: ${e.subject_key}`,
     summary: e.answer,
-    sourceMetricKey:
-      e.subject_type === "metric" ? e.subject_key : e.supporting_metric_keys?.[0],
+    sourceMetricKey: e.subject_type === "metric" ? e.subject_key : e.supporting_metric_keys?.[0],
     evidence: Array.isArray(e.evidence)
       ? (e.evidence as unknown[]).slice(0, 6).map((v, i) => ({
           label:

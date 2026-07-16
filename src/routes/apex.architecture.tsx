@@ -41,10 +41,22 @@ export const Route = createFileRoute("/apex/architecture")({
       >
         <div className="grid gap-3 md:grid-cols-2">
           {[
-            ["Metric surface", "Current, prior, target, trend, why it changed, contributors, detractors, risk, action, evidence, confidence, freshness."],
-            ["Insight surface", "Direct answer, period, entity, evidence, calculation method, confidence, freshness, assumptions, missing data, action, approval."],
-            ["Recommendation surface", "Estimated impact, effort, horizon, risk, evidence, owner, next step, required approval, status, outcome."],
-            ["Ask LedgerOS surface", "Persona, permitted data, prohibited actions, required evidence, demonstration label, escalation path."],
+            [
+              "Metric surface",
+              "Current, prior, target, trend, why it changed, contributors, detractors, risk, action, evidence, confidence, freshness.",
+            ],
+            [
+              "Insight surface",
+              "Direct answer, period, entity, evidence, calculation method, confidence, freshness, assumptions, missing data, action, approval.",
+            ],
+            [
+              "Recommendation surface",
+              "Estimated impact, effort, horizon, risk, evidence, owner, next step, required approval, status, outcome.",
+            ],
+            [
+              "Ask LedgerOS surface",
+              "Persona, permitted data, prohibited actions, required evidence, demonstration label, escalation path.",
+            ],
           ].map(([t, d]) => (
             <Card key={t} className="border-border/70 p-3">
               <div className="text-[13px] font-semibold">{t}</div>
@@ -60,14 +72,24 @@ export const Route = createFileRoute("/apex/architecture")({
       >
         <div className="grid gap-3 md:grid-cols-2">
           <Card className="border-border/70 bg-background p-4">
-            <div className="text-[12px] font-semibold text-muted-foreground">Operational surface</div>
-            <div className="mt-2 text-[15px] font-semibold">White card, tabular data, high readability</div>
-            <div className="mt-1 text-[12px] text-muted-foreground">Used for day-to-day accounting workflows.</div>
+            <div className="text-[12px] font-semibold text-muted-foreground">
+              Operational surface
+            </div>
+            <div className="mt-2 text-[15px] font-semibold">
+              White card, tabular data, high readability
+            </div>
+            <div className="mt-1 text-[12px] text-muted-foreground">
+              Used for day-to-day accounting workflows.
+            </div>
           </Card>
           <Card className="border-none bg-gradient-to-br from-slate-950 to-indigo-950 p-4 text-white">
             <div className="text-[12px] font-semibold text-white/60">Intelligence surface</div>
-            <div className="mt-2 text-[15px] font-semibold">Dark navy card, controlled glow, executive tone</div>
-            <div className="mt-1 text-[12px] text-white/70">Used selectively for pulses, briefings, and health.</div>
+            <div className="mt-2 text-[15px] font-semibold">
+              Dark navy card, controlled glow, executive tone
+            </div>
+            <div className="mt-1 text-[12px] text-white/70">
+              Used selectively for pulses, briefings, and health.
+            </div>
           </Card>
         </div>
       </ApexSection>
@@ -101,8 +123,8 @@ export const Route = createFileRoute("/apex/architecture")({
               </div>
               <div className="mt-1 text-[12px] text-muted-foreground">{w.decision}</div>
               <div className="mt-3 text-[11px] text-muted-foreground">
-                <span className="font-mono">{w.items.length}</span> curated routes ·
-                landing at <span className="font-mono">{w.landing}</span>
+                <span className="font-mono">{w.items.length}</span> curated routes · landing at{" "}
+                <span className="font-mono">{w.landing}</span>
               </div>
             </Card>
           ))}
@@ -114,13 +136,34 @@ export const Route = createFileRoute("/apex/architecture")({
         description="Sequenced to protect the current build; each stage gates on green typecheck and build."
       >
         <ol className="list-decimal space-y-1 pl-5 text-[12.5px] text-muted-foreground">
-          <li><span className="font-semibold text-foreground">APEX 1</span> — Experience architecture, docs, planning routes, Navigation 3.0 toggle.</li>
-          <li><span className="font-semibold text-foreground">APEX 2</span> — Design-token refinement, Executive shell, Pulse widgets, explainability components.</li>
-          <li><span className="font-semibold text-foreground">APEX 3</span> — Home workspace, Company Health, Executive Briefing, Today's Priorities.</li>
-          <li><span className="font-semibold text-foreground">APEX 4</span> — Money, Growth, People, and Company workspace landings.</li>
-          <li><span className="font-semibold text-foreground">APEX 5</span> — Opportunity Engine, Financial DNA, Timeline, Relationship Graph.</li>
-          <li><span className="font-semibold text-foreground">APEX 6</span> — Digital Twin, AI personas, role-specific variants.</li>
-          <li><span className="font-semibold text-foreground">APEX 7</span> — Responsive, accessibility, handoff docs, regression review.</li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 1</span> — Experience architecture,
+            docs, planning routes, Navigation 3.0 toggle.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 2</span> — Design-token refinement,
+            Executive shell, Pulse widgets, explainability components.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 3</span> — Home workspace, Company
+            Health, Executive Briefing, Today's Priorities.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 4</span> — Money, Growth, People,
+            and Company workspace landings.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 5</span> — Opportunity Engine,
+            Financial DNA, Timeline, Relationship Graph.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 6</span> — Digital Twin, AI
+            personas, role-specific variants.
+          </li>
+          <li>
+            <span className="font-semibold text-foreground">APEX 7</span> — Responsive,
+            accessibility, handoff docs, regression review.
+          </li>
         </ol>
       </ApexSection>
     </ApexPage>

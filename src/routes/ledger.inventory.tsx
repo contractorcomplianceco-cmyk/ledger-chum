@@ -16,7 +16,10 @@ export const Route = createFileRoute("/ledger/inventory")({
   head: () => ({
     meta: [
       { title: "Inventory — LedgerOS" },
-      { name: "description", content: "Inventory items, cost tracking, and consumption movements." },
+      {
+        name: "description",
+        content: "Inventory items, cost tracking, and consumption movements.",
+      },
       { property: "og:title", content: "Inventory — LedgerOS" },
     ],
   }),
@@ -53,7 +56,12 @@ function InventoryPage() {
         ) : (
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <Input placeholder="Search SKU or name" value={search} onChange={(e) => setSearch(e.target.value)} className="max-w-sm" />
+              <Input
+                placeholder="Search SKU or name"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="max-w-sm"
+              />
               <Badge variant="secondary">{items.data?.length ?? 0} items</Badge>
             </div>
 
@@ -76,16 +84,26 @@ function InventoryPage() {
                       <td className="px-3 py-2 font-mono text-[12px]">{it.sku}</td>
                       <td className="px-3 py-2">{it.name}</td>
                       <td className="px-3 py-2 text-muted-foreground">{it.unit_of_measure}</td>
-                      <td className="px-3 py-2 text-right tabular-nums">{Number(it.quantity_on_hand).toLocaleString()}</td>
-                      <td className="px-3 py-2 text-right tabular-nums">${Number(it.current_avg_cost).toFixed(2)}</td>
+                      <td className="px-3 py-2 text-right tabular-nums">
+                        {Number(it.quantity_on_hand).toLocaleString()}
+                      </td>
+                      <td className="px-3 py-2 text-right tabular-nums">
+                        ${Number(it.current_avg_cost).toFixed(2)}
+                      </td>
                       <td className="px-3 py-2 text-muted-foreground">{it.cost_method}</td>
                       <td className="px-3 py-2">
-                        <Badge variant={it.is_active ? "default" : "secondary"}>{it.is_active ? "Active" : "Inactive"}</Badge>
+                        <Badge variant={it.is_active ? "default" : "secondary"}>
+                          {it.is_active ? "Active" : "Inactive"}
+                        </Badge>
                       </td>
                     </tr>
                   ))}
                   {!items.isLoading && (items.data?.length ?? 0) === 0 && (
-                    <tr><td className="px-3 py-6 text-center text-muted-foreground" colSpan={7}>No items yet.</td></tr>
+                    <tr>
+                      <td className="px-3 py-6 text-center text-muted-foreground" colSpan={7}>
+                        No items yet.
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>
@@ -108,16 +126,32 @@ function InventoryPage() {
                   <tbody>
                     {txns.data?.map((t) => (
                       <tr key={t.id} className="border-t border-border">
-                        <td className="px-3 py-2 text-muted-foreground">{new Date(t.occurred_at).toLocaleString()}</td>
-                        <td className="px-3 py-2"><Badge variant="secondary">{t.txn_type}</Badge></td>
-                        <td className="px-3 py-2 text-right tabular-nums">{Number(t.quantity).toLocaleString()}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">${Number(t.unit_cost).toFixed(2)}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">${Number(t.total_cost).toFixed(2)}</td>
-                        <td className="px-3 py-2 text-muted-foreground text-[12px]">{t.reference_type ?? "—"}</td>
+                        <td className="px-3 py-2 text-muted-foreground">
+                          {new Date(t.occurred_at).toLocaleString()}
+                        </td>
+                        <td className="px-3 py-2">
+                          <Badge variant="secondary">{t.txn_type}</Badge>
+                        </td>
+                        <td className="px-3 py-2 text-right tabular-nums">
+                          {Number(t.quantity).toLocaleString()}
+                        </td>
+                        <td className="px-3 py-2 text-right tabular-nums">
+                          ${Number(t.unit_cost).toFixed(2)}
+                        </td>
+                        <td className="px-3 py-2 text-right tabular-nums">
+                          ${Number(t.total_cost).toFixed(2)}
+                        </td>
+                        <td className="px-3 py-2 text-muted-foreground text-[12px]">
+                          {t.reference_type ?? "—"}
+                        </td>
                       </tr>
                     ))}
                     {!txns.isLoading && (txns.data?.length ?? 0) === 0 && (
-                      <tr><td className="px-3 py-6 text-center text-muted-foreground" colSpan={6}>No inventory movements yet.</td></tr>
+                      <tr>
+                        <td className="px-3 py-6 text-center text-muted-foreground" colSpan={6}>
+                          No inventory movements yet.
+                        </td>
+                      </tr>
                     )}
                   </tbody>
                 </table>

@@ -15,21 +15,13 @@ const orgOnly = z.object({ orgId: z.string().uuid() });
 
 // ---------- sources ---------------------------------------------------
 
-const sourceKindEnum = z.enum([
-  "inbound_api",
-  "outbound_api",
-  "webhook",
-  "file_feed",
-  "manual",
-]);
+const sourceKindEnum = z.enum(["inbound_api", "outbound_api", "webhook", "file_feed", "manual"]);
 
 export const listIntegrationSources = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from(
-      "integration_sources",
-    ) as any)
+    const { data: rows, error } = await (context.supabase.from("integration_sources") as any)
       .select(
         "id, source_key, name, kind, active, contact_email, notes, config, created_at, updated_at",
       )
@@ -71,9 +63,7 @@ export const upsertIntegrationSource = createServerFn({ method: "POST" })
       notes: data.notes ?? null,
       config: data.config ?? {},
     };
-    const { data: row, error } = await (context.supabase.from(
-      "integration_sources",
-    ) as any)
+    const { data: row, error } = await (context.supabase.from("integration_sources") as any)
       .upsert(payload, { onConflict: "org_id,source_key" })
       .select()
       .single();
@@ -83,9 +73,7 @@ export const upsertIntegrationSource = createServerFn({ method: "POST" })
       org_id: data.orgId,
       actor_type: "user",
       actor_id: context.userId,
-      event_type: data.id
-        ? "integration_source.updated"
-        : "integration_source.created",
+      event_type: data.id ? "integration_source.updated" : "integration_source.created",
       action: data.id ? "updated" : "created",
       target_type: "integration_source",
       target_id: row.id,
@@ -107,9 +95,7 @@ export const setIntegrationSourceActive = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: row, error } = await (context.supabase.from(
-      "integration_sources",
-    ) as any)
+    const { data: row, error } = await (context.supabase.from("integration_sources") as any)
       .update({ active: data.active })
       .eq("id", data.id)
       .eq("org_id", data.orgId)
@@ -121,9 +107,7 @@ export const setIntegrationSourceActive = createServerFn({ method: "POST" })
       org_id: data.orgId,
       actor_type: "user",
       actor_id: context.userId,
-      event_type: data.active
-        ? "integration_source.activated"
-        : "integration_source.deactivated",
+      event_type: data.active ? "integration_source.activated" : "integration_source.deactivated",
       action: "updated",
       target_type: "integration_source",
       target_id: row.id,
@@ -149,9 +133,7 @@ export const listIntegrationEventMappings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from(
-      "integration_event_mappings",
-    ) as any)
+    const { data: rows, error } = await (context.supabase.from("integration_event_mappings") as any)
       .select(
         "id, source_id, external_event_type, ledger_object, account_purpose, active, description, config, created_at, updated_at",
       )
@@ -189,9 +171,7 @@ export const upsertIntegrationEventMapping = createServerFn({ method: "POST" })
       description: data.description ?? null,
       config: data.config ?? {},
     };
-    const { data: row, error } = await (context.supabase.from(
-      "integration_event_mappings",
-    ) as any)
+    const { data: row, error } = await (context.supabase.from("integration_event_mappings") as any)
       .upsert(payload, { onConflict: "org_id,source_id,external_event_type" })
       .select()
       .single();
@@ -213,13 +193,9 @@ export const upsertIntegrationEventMapping = createServerFn({ method: "POST" })
 
 export const deleteIntegrationEventMapping = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
-    const { error } = await (context.supabase.from(
-      "integration_event_mappings",
-    ) as any)
+    const { error } = await (context.supabase.from("integration_event_mappings") as any)
       .delete()
       .eq("id", data.id)
       .eq("org_id", data.orgId);
@@ -276,9 +252,7 @@ export const listFailedSyncHistory = createServerFn({ method: "GET" })
  */
 export const markSyncRetry = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     const { data: existing, error: readErr } = await context.supabase
       .from("sync_history")
@@ -289,9 +263,7 @@ export const markSyncRetry = createServerFn({ method: "POST" })
     if (readErr) throw new Error(readErr.message);
     if (!existing) throw new Error("sync_history row not found");
 
-    const { data: row, error } = await (context.supabase.from(
-      "sync_history",
-    ) as any)
+    const { data: row, error } = await (context.supabase.from("sync_history") as any)
       .update({
         retry_count: (existing.retry_count ?? 0) + 1,
         last_retry_at: new Date().toISOString(),

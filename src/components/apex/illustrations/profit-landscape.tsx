@@ -62,7 +62,16 @@ export function ProfitLandscape({
         <ellipse cx="0" cy="12" rx="12" ry="3.5" fill={`url(#${coin})`} />
         <ellipse cx="0" cy="7" rx="12" ry="3.5" fill={`url(#${coin})`} />
         <ellipse cx="0" cy="2" rx="12" ry="3.5" fill={`url(#${coin})`} />
-        <ellipse cx="0" cy="2" rx="12" ry="3.5" fill="none" stroke="#b45309" strokeWidth="0.4" opacity="0.4" />
+        <ellipse
+          cx="0"
+          cy="2"
+          rx="12"
+          ry="3.5"
+          fill="none"
+          stroke="#b45309"
+          strokeWidth="0.4"
+          opacity="0.4"
+        />
       </g>
       {/* soft ground */}
       <path d="M0,130 L320,130 L320,140 L0,140 Z" fill="#ede9fe" />

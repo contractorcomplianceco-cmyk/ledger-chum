@@ -31,15 +31,17 @@ export const listAccountTree = createServerFn({ method: "GET" })
 export const createAccount = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      code: z.string().min(1).max(32),
-      name: z.string().min(1).max(200),
-      type: z.enum(["asset", "liability", "equity", "revenue", "expense"]),
-      normalBalance: z.enum(["debit", "credit"]),
-      parentId: z.string().uuid().nullable().optional(),
-      sortOrder: z.number().int().default(0),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        code: z.string().min(1).max(32),
+        name: z.string().min(1).max(200),
+        type: z.enum(["asset", "liability", "equity", "revenue", "expense"]),
+        normalBalance: z.enum(["debit", "credit"]),
+        parentId: z.string().uuid().nullable().optional(),
+        sortOrder: z.number().int().default(0),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { error, data: row } = await context.supabase
@@ -64,19 +66,24 @@ export const createAccount = createServerFn({ method: "POST" })
 export const updateAccount = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid(),
-      name: z.string().min(1).max(200).optional(),
-      code: z.string().min(1).max(32).optional(),
-      parentId: z.string().uuid().nullable().optional(),
-      sortOrder: z.number().int().optional(),
-      isActive: z.boolean().optional(),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid(),
+        name: z.string().min(1).max(200).optional(),
+        code: z.string().min(1).max(32).optional(),
+        parentId: z.string().uuid().nullable().optional(),
+        sortOrder: z.number().int().optional(),
+        isActive: z.boolean().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const patch: {
-      name?: string; code?: string; parent_id?: string | null;
-      sort_order?: number; is_active?: boolean;
+      name?: string;
+      code?: string;
+      parent_id?: string | null;
+      sort_order?: number;
+      is_active?: boolean;
     } = {};
     if (data.name !== undefined) patch.name = data.name;
     if (data.code !== undefined) patch.code = data.code;

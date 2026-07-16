@@ -19,13 +19,16 @@ function HandoffPage() {
     >
       <Card className="border-border/70 p-5">
         <div className="flex items-baseline gap-2">
-          <div className="font-tabular text-[26px] font-bold">{ready} / {HANDOFF_PACKAGE.length}</div>
+          <div className="font-tabular text-[26px] font-bold">
+            {ready} / {HANDOFF_PACKAGE.length}
+          </div>
           <div className="text-[12px] text-muted-foreground">documents ready to hand off.</div>
         </div>
         <p className="mt-2 text-[12px] text-muted-foreground">
-          Ad-hoc backend wiring from this design lab would create duplicate business logic, inconsistent permissions,
-          unsafe automatic posting, conflicting financial formulas, and diverging definitions of revenue, margin, and
-          available cash. Phase 5 exists specifically to prevent that.
+          Ad-hoc backend wiring from this design lab would create duplicate business logic,
+          inconsistent permissions, unsafe automatic posting, conflicting financial formulas, and
+          diverging definitions of revenue, margin, and available cash. Phase 5 exists specifically
+          to prevent that.
         </p>
       </Card>
 
@@ -37,7 +40,10 @@ function HandoffPage() {
           <span>Status</span>
         </div>
         {HANDOFF_PACKAGE.map((d) => (
-          <div key={d.doc} className="grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.4fr)_minmax(0,1.6fr)_auto] items-center gap-2 border-b border-border px-4 py-2.5 text-[12px] last:border-b-0">
+          <div
+            key={d.doc}
+            className="grid grid-cols-[minmax(0,1.6fr)_minmax(0,1.4fr)_minmax(0,1.6fr)_auto] items-center gap-2 border-b border-border px-4 py-2.5 text-[12px] last:border-b-0"
+          >
             <span className="font-medium">{d.doc}</span>
             <span className="text-muted-foreground">{d.owner}</span>
             <span className="text-muted-foreground">{d.format}</span>
@@ -49,7 +55,11 @@ function HandoffPage() {
                   : "border-warning/40 bg-warning/10 text-warning",
               )}
             >
-              {d.ready ? <CheckCircle2 className="h-3 w-3" /> : <CircleDashed className="h-3 w-3" />}
+              {d.ready ? (
+                <CheckCircle2 className="h-3 w-3" />
+              ) : (
+                <CircleDashed className="h-3 w-3" />
+              )}
               {d.ready ? "Ready" : "In progress"}
             </span>
           </div>
@@ -62,7 +72,9 @@ function HandoffPage() {
           <li>No real endpoint is wired from Lovable without an approved API map entry.</li>
           <li>No mutation ships without an audit event and a permission string.</li>
           <li>No screen swaps from mock to live until its lineage disclosures are populated.</li>
-          <li>No automation is promoted from draft-only to auto-post without a Decision Log entry.</li>
+          <li>
+            No automation is promoted from draft-only to auto-post without a Decision Log entry.
+          </li>
         </ul>
       </Card>
     </ImplementationPage>

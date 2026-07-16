@@ -54,14 +54,16 @@ export function TrendChip({
   const negative = delta < 0;
   const good = invertColors ? negative : positive;
   const bad = invertColors ? positive : negative;
-  const tone = good
-    ? "text-success"
-    : bad
-      ? "text-destructive"
-      : "text-muted-foreground";
+  const tone = good ? "text-success" : bad ? "text-destructive" : "text-muted-foreground";
   const Icon = positive ? ArrowUpRight : negative ? ArrowDownRight : Minus;
   return (
-    <span className={cn("inline-flex items-center gap-0.5 text-[11.5px] font-semibold tabular-nums", tone, className)}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-0.5 text-[11.5px] font-semibold tabular-nums",
+        tone,
+        className,
+      )}
+    >
       <Icon className="h-3 w-3" />
       {delta > 0 ? "+" : ""}
       {delta}

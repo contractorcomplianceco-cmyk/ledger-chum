@@ -39,7 +39,8 @@ function SandboxPage() {
   const eventsQ = useQuery({
     queryKey: ["integration-events", orgId, "sandbox"],
     queryFn: () => eventsFn({ data: { orgId: orgId!, limit: 50 } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
   const sandboxEvents = (eventsQ.data ?? []).filter(
     (e) => (e.source ?? "").includes("sandbox") || e.event_type.startsWith("sandbox."),
@@ -48,7 +49,9 @@ function SandboxPage() {
   const [customerName, setCustomerName] = useState("Sandbox Marine Co.");
   const [seeding, setSeeding] = useState(false);
   const [lastResult, setLastResult] = useState<{
-    invoiceNumber: string; workOrderRef: string; total: number;
+    invoiceNumber: string;
+    workOrderRef: string;
+    total: number;
   } | null>(null);
 
   const seed = async () => {
@@ -92,8 +95,8 @@ function SandboxPage() {
             <ShieldAlert className="mt-0.5 h-4 w-4 text-warning" />
             <div className="text-[13px] text-foreground">
               Sandbox data is inserted directly into your org with{" "}
-              <code className="font-mono">SANDBOX-*</code> identifiers so it's clearly labelled.
-              Do not enable this on a production ledger without a dedicated demo period.
+              <code className="font-mono">SANDBOX-*</code> identifiers so it's clearly labelled. Do
+              not enable this on a production ledger without a dedicated demo period.
             </div>
           </div>
         </Card>
@@ -117,8 +120,8 @@ function SandboxPage() {
             </Button>
           </div>
           <div className="mt-3 text-[12px] text-muted-foreground">
-            Creates 1 customer + 1 draft invoice with a labor line (4h @ $125) and 1 material
-            line ($150). Accounts are resolved via <code className="font-mono">resolve_account</code>.
+            Creates 1 customer + 1 draft invoice with a labor line (4h @ $125) and 1 material line
+            ($150). Accounts are resolved via <code className="font-mono">resolve_account</code>.
           </div>
           {!live && (
             <div className="mt-3 text-[12px] font-semibold text-warning">
@@ -129,11 +132,22 @@ function SandboxPage() {
             <div className="mt-3 rounded-md border border-success/30 bg-success/5 p-3 text-[13px]">
               <div className="font-semibold text-success">Seeded successfully</div>
               <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground">
-                <span>Work order <code className="font-mono text-foreground">{lastResult.workOrderRef}</code></span>
+                <span>
+                  Work order{" "}
+                  <code className="font-mono text-foreground">{lastResult.workOrderRef}</code>
+                </span>
                 <span>·</span>
-                <span>Draft invoice <code className="font-mono text-foreground">{lastResult.invoiceNumber}</code></span>
+                <span>
+                  Draft invoice{" "}
+                  <code className="font-mono text-foreground">{lastResult.invoiceNumber}</code>
+                </span>
                 <span>·</span>
-                <span>Total <span className="font-tabular font-semibold text-foreground">{currency(lastResult.total)}</span></span>
+                <span>
+                  Total{" "}
+                  <span className="font-tabular font-semibold text-foreground">
+                    {currency(lastResult.total)}
+                  </span>
+                </span>
               </div>
               <div className="mt-2">
                 <Button size="sm" asChild variant="outline" className="h-8">
@@ -163,15 +177,21 @@ function SandboxPage() {
                   <div>
                     <div className="font-semibold text-foreground">{e.event_type}</div>
                     <div className="text-[11px] text-muted-foreground">
-                      {(e.after as { workOrderRef?: string } | null)?.workOrderRef ?? e.target_id.slice(0, 8)}
+                      {(e.after as { workOrderRef?: string } | null)?.workOrderRef ??
+                        e.target_id.slice(0, 8)}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="h-5 border-transparent bg-warning/10 text-[10px] font-semibold text-warning ring-1 ring-inset ring-warning/20">
+                  <Badge
+                    variant="outline"
+                    className="h-5 border-transparent bg-warning/10 text-[10px] font-semibold text-warning ring-1 ring-inset ring-warning/20"
+                  >
                     SANDBOX
                   </Badge>
-                  <div className="text-[12px] text-muted-foreground">{fmtRelative(e.created_at)}</div>
+                  <div className="text-[12px] text-muted-foreground">
+                    {fmtRelative(e.created_at)}
+                  </div>
                 </div>
               </div>
             ))}

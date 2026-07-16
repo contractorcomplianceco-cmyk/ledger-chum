@@ -3,9 +3,32 @@ import { IntelligencePage } from "@/components/intelligence/intelligence-page";
 import { KpiCard } from "@/components/kpi-card";
 import { Card } from "@/components/ui/card";
 import { currency } from "@/lib/mock/finance";
-import { MARKETING_KPIS, MARKETING_TREND, MARKETING_ALERTS, CAMPAIGNS } from "@/lib/mock/intelligence";
-import { Megaphone, DollarSign, Percent, Timer, TrendingUp, Users2, Target, AlertTriangle } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  MARKETING_KPIS,
+  MARKETING_TREND,
+  MARKETING_ALERTS,
+  CAMPAIGNS,
+} from "@/lib/mock/intelligence";
+import {
+  Megaphone,
+  DollarSign,
+  Percent,
+  Timer,
+  TrendingUp,
+  Users2,
+  Target,
+  AlertTriangle,
+} from "lucide-react";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/intelligence/marketing")({
@@ -27,23 +50,88 @@ function MarketingRoiPage() {
       description="Revenue ROI is not profit. This center reports both — and distinguishes them everywhere."
     >
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <KpiCard label="Marketing spend" value={MARKETING_KPIS.spend} icon={Megaphone} tone="blue" delta={3.4} trend="up" />
-        <KpiCard label="Collected revenue" value={MARKETING_KPIS.collectedRevenue} icon={DollarSign} tone="cyan" delta={5.6} trend="up" />
-        <KpiCard label="Attributed gross profit" value={MARKETING_KPIS.attributedGross} icon={TrendingUp} tone="mint" delta={6.8} trend="up" />
-        <KpiCard label="Attributed contribution profit" value={MARKETING_KPIS.attributedContribution} icon={Target} tone="violet" delta={8.4} trend="up" />
-        <KpiCard label="Cost per acquisition" value={MARKETING_KPIS.cpa} icon={Users2} tone="blue" delta={-1.2} trend="down" />
-        <KpiCard label="Profit ROI (contribution)" value={MARKETING_KPIS.profitRoi} icon={Percent} tone="cyan" delta={8.4} trend="up" format="number" compareLabel="contribution / $" />
-        <KpiCard label="Payback period" value={MARKETING_KPIS.paybackDays} icon={Timer} tone="mint" delta={-4.2} trend="down" format="number" compareLabel="days" />
-        <KpiCard label="Chargeback-adjusted ROI" value={MARKETING_KPIS.profitRoi * 0.98} icon={AlertTriangle} tone="violet" delta={0.4} trend="up" format="number" compareLabel="after chargebacks" />
+        <KpiCard
+          label="Marketing spend"
+          value={MARKETING_KPIS.spend}
+          icon={Megaphone}
+          tone="blue"
+          delta={3.4}
+          trend="up"
+        />
+        <KpiCard
+          label="Collected revenue"
+          value={MARKETING_KPIS.collectedRevenue}
+          icon={DollarSign}
+          tone="cyan"
+          delta={5.6}
+          trend="up"
+        />
+        <KpiCard
+          label="Attributed gross profit"
+          value={MARKETING_KPIS.attributedGross}
+          icon={TrendingUp}
+          tone="mint"
+          delta={6.8}
+          trend="up"
+        />
+        <KpiCard
+          label="Attributed contribution profit"
+          value={MARKETING_KPIS.attributedContribution}
+          icon={Target}
+          tone="violet"
+          delta={8.4}
+          trend="up"
+        />
+        <KpiCard
+          label="Cost per acquisition"
+          value={MARKETING_KPIS.cpa}
+          icon={Users2}
+          tone="blue"
+          delta={-1.2}
+          trend="down"
+        />
+        <KpiCard
+          label="Profit ROI (contribution)"
+          value={MARKETING_KPIS.profitRoi}
+          icon={Percent}
+          tone="cyan"
+          delta={8.4}
+          trend="up"
+          format="number"
+          compareLabel="contribution / $"
+        />
+        <KpiCard
+          label="Payback period"
+          value={MARKETING_KPIS.paybackDays}
+          icon={Timer}
+          tone="mint"
+          delta={-4.2}
+          trend="down"
+          format="number"
+          compareLabel="days"
+        />
+        <KpiCard
+          label="Chargeback-adjusted ROI"
+          value={MARKETING_KPIS.profitRoi * 0.98}
+          icon={AlertTriangle}
+          tone="violet"
+          delta={0.4}
+          trend="up"
+          format="number"
+          compareLabel="after chargebacks"
+        />
       </section>
 
       <section>
         <Card className="rounded-xl border-info/30 bg-info/[0.06] p-3 text-[11.5px] text-info">
           <div className="font-semibold">Revenue ROI vs Profit ROI</div>
           <div className="mt-0.5">
-            Revenue ROI: <span className="font-tabular font-bold">{MARKETING_KPIS.revenueRoi.toFixed(2)}x</span> ·
-            Gross-profit ROI: <span className="font-tabular font-bold">{MARKETING_KPIS.grossRoi.toFixed(2)}x</span> ·
-            Contribution-profit ROI: <span className="font-tabular font-bold">{MARKETING_KPIS.profitRoi.toFixed(2)}x</span>.
+            Revenue ROI:{" "}
+            <span className="font-tabular font-bold">{MARKETING_KPIS.revenueRoi.toFixed(2)}x</span>{" "}
+            · Gross-profit ROI:{" "}
+            <span className="font-tabular font-bold">{MARKETING_KPIS.grossRoi.toFixed(2)}x</span> ·
+            Contribution-profit ROI:{" "}
+            <span className="font-tabular font-bold">{MARKETING_KPIS.profitRoi.toFixed(2)}x</span>.
             LedgerOS uses contribution-profit ROI everywhere marketing performance is reported.
           </div>
         </Card>
@@ -67,12 +155,43 @@ function MarketingRoiPage() {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.4} />
                 <XAxis dataKey="m" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => currency(v)} contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }} />
+                <YAxis
+                  fontSize={11}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(v: number) => currency(v)}
+                  contentStyle={{
+                    background: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: 8,
+                    fontSize: 12,
+                  }}
+                />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
-                <Area type="monotone" dataKey="spend" stroke="#3b82f6" fill="url(#ms)" name="Spend" />
-                <Area type="monotone" dataKey="revenue" stroke="#8b5cf6" fill="none" name="Collected revenue" />
-                <Area type="monotone" dataKey="contribution" stroke="#22d3ee" fill="url(#mc)" name="Contribution profit" />
+                <Area
+                  type="monotone"
+                  dataKey="spend"
+                  stroke="#3b82f6"
+                  fill="url(#ms)"
+                  name="Spend"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#8b5cf6"
+                  fill="none"
+                  name="Collected revenue"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="contribution"
+                  stroke="#22d3ee"
+                  fill="url(#mc)"
+                  name="Contribution profit"
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -94,7 +213,10 @@ function MarketingRoiPage() {
                     </span>
                   </div>
                   <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
-                    <div className="h-full bg-gradient-brand-cool" style={{ width: `${widthPct}%` }} />
+                    <div
+                      className="h-full bg-gradient-brand-cool"
+                      style={{ width: `${widthPct}%` }}
+                    />
                   </div>
                 </div>
               );
@@ -121,7 +243,10 @@ function MarketingRoiPage() {
         <Card className="border-border/70 p-4">
           <div className="flex items-center justify-between">
             <h3 className="text-[13px] font-semibold">Smart marketing alerts</h3>
-            <Link to="/intelligence/campaigns" className="text-[11.5px] text-muted-foreground hover:text-foreground">
+            <Link
+              to="/intelligence/campaigns"
+              className="text-[11.5px] text-muted-foreground hover:text-foreground"
+            >
               Campaigns →
             </Link>
           </div>
@@ -132,7 +257,11 @@ function MarketingRoiPage() {
                   <AlertTriangle
                     className={cn(
                       "h-3.5 w-3.5",
-                      a.severity === "high" ? "text-destructive" : a.severity === "medium" ? "text-warning" : "text-info",
+                      a.severity === "high"
+                        ? "text-destructive"
+                        : a.severity === "medium"
+                          ? "text-warning"
+                          : "text-info",
                     )}
                   />
                   <span className="text-[12.5px] font-semibold">{a.vendor}</span>
@@ -150,25 +279,36 @@ function MarketingRoiPage() {
         <Card className="border-border/70 p-4">
           <h3 className="text-[13px] font-semibold">ROI by campaign</h3>
           <div className="mt-2 space-y-1.5 text-[12px]">
-            {[...CAMPAIGNS].sort((a, b) => b.profitRoi - a.profitRoi).map((c) => (
-              <div key={c.id} className="flex items-center justify-between rounded-md border border-border/70 px-2.5 py-1.5">
-                <div className="min-w-0">
-                  <div className="truncate font-medium">{c.name}</div>
-                  <div className="text-[11px] text-muted-foreground">{c.channel} · {c.platform}</div>
-                </div>
-                <div className="text-right">
-                  <div
-                    className={cn(
-                      "font-tabular font-semibold",
-                      c.profitRoi >= 2 ? "text-success" : c.profitRoi >= 1 ? "text-warning" : "text-destructive",
-                    )}
-                  >
-                    {c.profitRoi.toFixed(2)}x
+            {[...CAMPAIGNS]
+              .sort((a, b) => b.profitRoi - a.profitRoi)
+              .map((c) => (
+                <div
+                  key={c.id}
+                  className="flex items-center justify-between rounded-md border border-border/70 px-2.5 py-1.5"
+                >
+                  <div className="min-w-0">
+                    <div className="truncate font-medium">{c.name}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {c.channel} · {c.platform}
+                    </div>
                   </div>
-                  <div className="text-[10.5px] text-muted-foreground">Profit ROI</div>
+                  <div className="text-right">
+                    <div
+                      className={cn(
+                        "font-tabular font-semibold",
+                        c.profitRoi >= 2
+                          ? "text-success"
+                          : c.profitRoi >= 1
+                            ? "text-warning"
+                            : "text-destructive",
+                      )}
+                    >
+                      {c.profitRoi.toFixed(2)}x
+                    </div>
+                    <div className="text-[10.5px] text-muted-foreground">Profit ROI</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </Card>
       </section>

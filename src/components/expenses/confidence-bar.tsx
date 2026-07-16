@@ -14,7 +14,8 @@ export function ConfidenceBar({
   className?: string;
 }) {
   const pct = Math.round(value * 100);
-  const tone = pct >= 90 ? "bg-success" : pct >= 70 ? "bg-brand" : pct >= 50 ? "bg-warning" : "bg-destructive";
+  const tone =
+    pct >= 90 ? "bg-success" : pct >= 70 ? "bg-brand" : pct >= 50 ? "bg-warning" : "bg-destructive";
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <div

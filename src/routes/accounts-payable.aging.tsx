@@ -12,7 +12,10 @@ export const Route = createFileRoute("/accounts-payable/aging")({
       { title: "AP Aging — LedgerOS" },
       { name: "description", content: "Accounts payable aging buckets by vendor." },
       { property: "og:title", content: "AP Aging — LedgerOS" },
-      { property: "og:description", content: "Overdue payables by vendor and bucket, from posted bills." },
+      {
+        property: "og:description",
+        content: "Overdue payables by vendor and bucket, from posted bills.",
+      },
     ],
   }),
   component: ApAgingPage,
@@ -40,10 +43,7 @@ function ApAgingPage() {
 
   return (
     <AppShell>
-      <PageHeader
-        title="AP Aging"
-        description="Open bill balances bucketed by days past due."
-      />
+      <PageHeader title="AP Aging" description="Open bill balances bucketed by days past due." />
       <PageBody>
         <Card className="p-4">
           {!q.data ? (
@@ -55,7 +55,9 @@ function ApAgingPage() {
                   <tr>
                     <th className="py-2 pr-3">Vendor</th>
                     {BUCKETS.map((b) => (
-                      <th key={b.key} className="py-2 pr-3 text-right">{b.label}</th>
+                      <th key={b.key} className="py-2 pr-3 text-right">
+                        {b.label}
+                      </th>
                     ))}
                     <th className="py-2 pr-3 text-right">Total</th>
                   </tr>
@@ -76,7 +78,10 @@ function ApAgingPage() {
                   ))}
                   {q.data.rows.length === 0 && (
                     <tr>
-                      <td colSpan={BUCKETS.length + 2} className="py-8 text-center text-muted-foreground">
+                      <td
+                        colSpan={BUCKETS.length + 2}
+                        className="py-8 text-center text-muted-foreground"
+                      >
                         No open payables.
                       </td>
                     </tr>

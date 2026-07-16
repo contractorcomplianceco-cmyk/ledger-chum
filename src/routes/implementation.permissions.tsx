@@ -41,16 +41,22 @@ function Permissions() {
               <tr>
                 <th className="px-4 py-2 text-left font-semibold">Route</th>
                 {ROLES.map((r) => (
-                  <th key={r} className="px-3 py-2 text-left font-semibold">{r}</th>
+                  <th key={r} className="px-3 py-2 text-left font-semibold">
+                    {r}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {PERMISSIONS.map((p) => (
                 <tr key={p.route} className="border-t border-border">
-                  <td className="px-4 py-2.5 font-mono text-[11.5px] text-muted-foreground">{p.route}</td>
+                  <td className="px-4 py-2.5 font-mono text-[11.5px] text-muted-foreground">
+                    {p.route}
+                  </td>
                   {ROLES.map((r) => (
-                    <td key={r} className="px-3 py-2.5">{p.matrix[r]}</td>
+                    <td key={r} className="px-3 py-2.5">
+                      {p.matrix[r]}
+                    </td>
                   ))}
                 </tr>
               ))}
@@ -65,8 +71,13 @@ function Permissions() {
           <li>Bank balances masked for Team; visible to Rose, Christin, Accountant.</li>
           <li>Payroll amounts visible only to Rose, Christin, Accountant.</li>
           <li>Carmen may view and export everything but never post value.</li>
-          <li>Integration service accounts may only post signed events — never authenticate interactively.</li>
-          <li>Every deny returns an audit event; every override requires a justification string.</li>
+          <li>
+            Integration service accounts may only post signed events — never authenticate
+            interactively.
+          </li>
+          <li>
+            Every deny returns an audit event; every override requires a justification string.
+          </li>
         </ul>
       </Card>
     </ImplementationPage>

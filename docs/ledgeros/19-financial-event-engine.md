@@ -3,7 +3,7 @@
 The Financial Event Engine is the mandatory boundary between **external
 systems** (ServiceConnect, banking feeds, partner APIs, CSV imports) and
 the **LedgerOS ledger**. External systems never create journal entries
-directly — they emit *events*, which are recorded, validated, mapped,
+directly — they emit _events_, which are recorded, validated, mapped,
 approved, and only then materialized into financial objects using the
 existing posting engine.
 
@@ -36,36 +36,36 @@ Accounting Rules   ← financial_event_rules (auto-approve / require approval)
 
 `public.financial_events` is the append-first bus. Every row carries:
 
-| Field                    | Purpose                                                       |
-|--------------------------|---------------------------------------------------------------|
-| `org_id`                 | Tenant scope (RLS enforced).                                  |
-| `source_id`              | FK to `integration_sources` (nullable for `manual`).          |
-| `source_system`          | Denormalized origin identifier (`serviceconnect`, `csv`, …).  |
-| `external_event_type`    | Origin's event name (`work_order.completed`, …).              |
-| `external_id`            | Stable identifier in the origin system.                       |
-| `idempotency_key`        | Unique per `org_id`; duplicates return the prior result.      |
-| `correlation_id`         | Propagates end-to-end across audit + sync history.            |
-| `ledger_object`          | Target object type resolved via mapping.                      |
-| `status`                 | Lifecycle state (see below).                                  |
-| `payload`                | Verbatim JSON as received.                                    |
-| `mapping_id`             | Mapping used, if any.                                         |
-| `matched_rule_id`        | Rule that decided approval.                                   |
-| `requires_approval`      | Set by rules; defaults to `true`.                             |
-| `materialized_target_*`  | Populated when the event turns into a ledger object.          |
-| `validation_errors`      | Detailed validation output.                                   |
+| Field                   | Purpose                                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| `org_id`                | Tenant scope (RLS enforced).                                 |
+| `source_id`             | FK to `integration_sources` (nullable for `manual`).         |
+| `source_system`         | Denormalized origin identifier (`serviceconnect`, `csv`, …). |
+| `external_event_type`   | Origin's event name (`work_order.completed`, …).             |
+| `external_id`           | Stable identifier in the origin system.                      |
+| `idempotency_key`       | Unique per `org_id`; duplicates return the prior result.     |
+| `correlation_id`        | Propagates end-to-end across audit + sync history.           |
+| `ledger_object`         | Target object type resolved via mapping.                     |
+| `status`                | Lifecycle state (see below).                                 |
+| `payload`               | Verbatim JSON as received.                                   |
+| `mapping_id`            | Mapping used, if any.                                        |
+| `matched_rule_id`       | Rule that decided approval.                                  |
+| `requires_approval`     | Set by rules; defaults to `true`.                            |
+| `materialized_target_*` | Populated when the event turns into a ledger object.         |
+| `validation_errors`     | Detailed validation output.                                  |
 
 ## Lifecycle
 
-| Status              | Meaning                                                                 |
-|---------------------|-------------------------------------------------------------------------|
-| `received`          | Ingested but no mapping yet.                                            |
-| `validated`         | Schema OK; still no mapping.                                            |
-| `mapped`            | Mapping resolved → `ledger_object` known.                               |
-| `pending_approval`  | Mapped and rules demand human review.                                   |
-| `approved`          | Approved; awaits materialization.                                       |
-| `materialized`      | Underlying ledger object was created via posting RPCs.                  |
-| `rejected`          | Terminal — never materialized.                                          |
-| `error`             | Ingestion or materialization failed; retryable via idempotency key.     |
+| Status             | Meaning                                                             |
+| ------------------ | ------------------------------------------------------------------- |
+| `received`         | Ingested but no mapping yet.                                        |
+| `validated`        | Schema OK; still no mapping.                                        |
+| `mapped`           | Mapping resolved → `ledger_object` known.                           |
+| `pending_approval` | Mapped and rules demand human review.                               |
+| `approved`         | Approved; awaits materialization.                                   |
+| `materialized`     | Underlying ledger object was created via posting RPCs.              |
+| `rejected`         | Terminal — never materialized.                                      |
+| `error`            | Ingestion or materialization failed; retryable via idempotency key. |
 
 Only the transitions `pending_approval → approved`, `* → rejected`, and
 `approved → materialized` are user-initiated. Ingestion transitions
@@ -119,7 +119,7 @@ side effects.
 ## Security model
 
 - Public route is protected by ServiceConnect bearer auth (`api_clients`
-  + scopes) and requires an `Idempotency-Key` header.
+  - scopes) and requires an `Idempotency-Key` header.
 - `ingest_financial_event` is `SECURITY DEFINER` so the service-role
   client can insert audit rows without violating RLS.
 - Every UI-side function uses `requireSupabaseAuth` middleware — no

@@ -1,5 +1,12 @@
 import { mockGet, mockMutation } from "../adapters/mock-adapter";
-import { DEMO_MUTATION_MESSAGE, type DemoResult, type ID, type ISODate, type Money, type Paginated } from "../types";
+import {
+  DEMO_MUTATION_MESSAGE,
+  type DemoResult,
+  type ID,
+  type ISODate,
+  type Money,
+  type Paginated,
+} from "../types";
 
 // ─── Domain types ─────────────────────────────────────────────────────────
 
@@ -192,7 +199,9 @@ export interface CommissionsService {
     planId: ID;
   }): Promise<DemoResult<CommissionCalculation>>;
   listAttributions(): Promise<CommissionAttribution[]>;
-  saveAttribution(input: Omit<CommissionAttribution, "id">): Promise<DemoResult<CommissionAttribution>>;
+  saveAttribution(
+    input: Omit<CommissionAttribution, "id">,
+  ): Promise<DemoResult<CommissionAttribution>>;
   listApprovals(): Promise<CommissionApproval[]>;
   approve(id: ID, reason: string): Promise<DemoResult<CommissionApproval>>;
   listPayables(): Promise<CommissionPayable[]>;
@@ -249,7 +258,8 @@ const MOCK_PLANS: CommissionPlan[] = [
     commissionExpenseAccount: "6110 · Referral Commission",
     commissionPayableAccount: "2211 · Referral Payable",
     active: true,
-    calculationPreview: "5% of year-one collected revenue, less pass-through, refunds, and adjustments.",
+    calculationPreview:
+      "5% of year-one collected revenue, less pass-through, refunds, and adjustments.",
   },
   {
     id: "plan_3",
@@ -275,7 +285,8 @@ const MOCK_PLANS: CommissionPlan[] = [
     commissionExpenseAccount: "6120 · Renewal Bonus",
     commissionPayableAccount: "2212 · Bonus Payable",
     active: true,
-    calculationPreview: "3% on collected renewal revenue; 5% on cleared amounts above the $50k threshold.",
+    calculationPreview:
+      "3% on collected renewal revenue; 5% on cleared amounts above the $50k threshold.",
   },
 ];
 
@@ -331,17 +342,60 @@ const MOCK_CALCULATIONS: CommissionCalculation[] = [
 ];
 
 let MOCK_ATTRIBUTIONS: CommissionAttribution[] = [
-  { id: "attr_1", sourceId: "deal_44", sourceType: "deal", contributor: "Jamie R.", role: "closer", splitPercent: 60, approved: true },
-  { id: "attr_2", sourceId: "deal_44", sourceType: "deal", contributor: "Priya K.", role: "account_manager", splitPercent: 40, approved: true },
-  { id: "attr_3", sourceId: "deal_51", sourceType: "deal", contributor: "Devon L.", role: "closer", splitPercent: 50, approved: false, conflict: "Total attribution below 100%" },
+  {
+    id: "attr_1",
+    sourceId: "deal_44",
+    sourceType: "deal",
+    contributor: "Jamie R.",
+    role: "closer",
+    splitPercent: 60,
+    approved: true,
+  },
+  {
+    id: "attr_2",
+    sourceId: "deal_44",
+    sourceType: "deal",
+    contributor: "Priya K.",
+    role: "account_manager",
+    splitPercent: 40,
+    approved: true,
+  },
+  {
+    id: "attr_3",
+    sourceId: "deal_51",
+    sourceType: "deal",
+    contributor: "Devon L.",
+    role: "closer",
+    splitPercent: 50,
+    approved: false,
+    conflict: "Total attribution below 100%",
+  },
 ];
 
 const MOCK_APPROVALS: CommissionApproval[] = [
-  { id: "app_1", calculationId: "calc_1", participant: "Jamie R.", amount: 297, submittedBy: "Christin", submittedAt: "2026-07-10T11:00:00Z", requiredApprover: "Rose", reason: "Standard plan, cleared payment", state: "pending" },
+  {
+    id: "app_1",
+    calculationId: "calc_1",
+    participant: "Jamie R.",
+    amount: 297,
+    submittedBy: "Christin",
+    submittedAt: "2026-07-10T11:00:00Z",
+    requiredApprover: "Rose",
+    reason: "Standard plan, cleared payment",
+    state: "pending",
+  },
 ];
 
 const MOCK_PAYABLES: CommissionPayable[] = [
-  { id: "pay_1", participant: "Priya K.", amount: 356.25, scheduledFor: "2026-07-30", planName: "Renewal Bonus — 3% Tiered", calculationIds: ["calc_2"], state: "scheduled" },
+  {
+    id: "pay_1",
+    participant: "Priya K.",
+    amount: 356.25,
+    scheduledFor: "2026-07-30",
+    planName: "Renewal Bonus — 3% Tiered",
+    calculationIds: ["calc_2"],
+    state: "scheduled",
+  },
 ];
 
 const MOCK_STATEMENTS: CommissionStatement[] = [
@@ -362,7 +416,15 @@ const MOCK_STATEMENTS: CommissionStatement[] = [
 ];
 
 const MOCK_CLAWBACKS: CommissionClawback[] = [
-  { id: "cb_1", calculationId: "calc_3_hist", participant: "Devon L.", reason: "chargeback", amount: 175, detectedAt: "2026-07-08T09:00:00Z", state: "pending" },
+  {
+    id: "cb_1",
+    calculationId: "calc_3_hist",
+    participant: "Devon L.",
+    reason: "chargeback",
+    amount: 175,
+    detectedAt: "2026-07-08T09:00:00Z",
+    state: "pending",
+  },
 ];
 
 export const mockCommissions: CommissionsService = {
@@ -403,7 +465,11 @@ export const mockCommissions: CommissionsService = {
       exceptions: 3,
       attributionConflicts: 1,
     })),
-  listPlans: () => mockGet(() => ({ data: MOCK_PLANS, meta: { total: MOCK_PLANS.length, page: 1, pageSize: 50 } })),
+  listPlans: () =>
+    mockGet(() => ({
+      data: MOCK_PLANS,
+      meta: { total: MOCK_PLANS.length, page: 1, pageSize: 50 },
+    })),
   getPlan: (id) =>
     mockGet(() => {
       const p = MOCK_PLANS.find((x) => x.id === id);
@@ -416,7 +482,10 @@ export const mockCommissions: CommissionsService = {
       DEMO_MUTATION_MESSAGE,
     ),
   listCalculations: () =>
-    mockGet(() => ({ data: MOCK_CALCULATIONS, meta: { total: MOCK_CALCULATIONS.length, page: 1, pageSize: 50 } })),
+    mockGet(() => ({
+      data: MOCK_CALCULATIONS,
+      meta: { total: MOCK_CALCULATIONS.length, page: 1, pageSize: 50 },
+    })),
   getCalculation: (id) =>
     mockGet(() => {
       const c = MOCK_CALCULATIONS.find((x) => x.id === id);
@@ -445,7 +514,14 @@ export const mockCommissions: CommissionsService = {
         commissionableBase: base,
         appliedRate: rate,
         totalPool: pool,
-        splits: [{ participant: plan.eligibleParticipants[0] ?? "—", role: "closer", percent: 100, amount: pool }],
+        splits: [
+          {
+            participant: plan.eligibleParticipants[0] ?? "—",
+            role: "closer",
+            percent: 100,
+            amount: pool,
+          },
+        ],
         holdback,
         netPayable: pool - holdback,
         expectedPayableDate: "2026-08-15",
@@ -474,7 +550,19 @@ export const mockCommissions: CommissionsService = {
   listClawbacks: () => mockGet(() => MOCK_CLAWBACKS),
   listAudit: () =>
     mockGet(() => [
-      { id: "aud_1", type: "commission.calculated", actor: "system", at: "2026-07-10T10:15:00Z", summary: "calc_1 pool $330 pending approval" },
-      { id: "aud_2", type: "commission.approved", actor: "Rose", at: "2026-07-05T14:22:00Z", summary: "calc_2 approved for $356.25" },
+      {
+        id: "aud_1",
+        type: "commission.calculated",
+        actor: "system",
+        at: "2026-07-10T10:15:00Z",
+        summary: "calc_1 pool $330 pending approval",
+      },
+      {
+        id: "aud_2",
+        type: "commission.approved",
+        actor: "Rose",
+        at: "2026-07-05T14:22:00Z",
+        summary: "calc_2 approved for $356.25",
+      },
     ]),
 };

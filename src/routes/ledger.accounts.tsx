@@ -9,15 +9,21 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
-import {
-  listAccountTree, createAccount, updateAccount,
-} from "@/lib/accounting/accounts.functions";
+import { listAccountTree, createAccount, updateAccount } from "@/lib/accounting/accounts.functions";
 import { ChevronRight, Plus, Search, Lock, Circle, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -26,9 +32,16 @@ export const Route = createFileRoute("/ledger/accounts")({
   head: () => ({
     meta: [
       { title: "Chart of Accounts — LedgerOS" },
-      { name: "description", content: "Manage the chart of accounts, hierarchy, and running balances for your ledger." },
+      {
+        name: "description",
+        content: "Manage the chart of accounts, hierarchy, and running balances for your ledger.",
+      },
       { property: "og:title", content: "Chart of Accounts — LedgerOS" },
-      { property: "og:description", content: "Full hierarchy of assets, liabilities, equity, revenue, and expense accounts with live balances." },
+      {
+        property: "og:description",
+        content:
+          "Full hierarchy of assets, liabilities, equity, revenue, and expense accounts with live balances.",
+      },
     ],
   }),
   component: ChartOfAccountsPage,
@@ -83,9 +96,7 @@ function ChartOfAccountsPage() {
   const filtered = useMemo(() => {
     const s = search.trim().toLowerCase();
     if (!s) return rows;
-    return rows.filter(
-      (r) => r.code.toLowerCase().includes(s) || r.name.toLowerCase().includes(s),
-    );
+    return rows.filter((r) => r.code.toLowerCase().includes(s) || r.name.toLowerCase().includes(s));
   }, [rows, search]);
 
   const grouped = useMemo(() => {
@@ -108,9 +119,12 @@ function ChartOfAccountsPage() {
 
   const createMut = useMutation({
     mutationFn: (input: {
-      orgId: string; code: string; name: string;
+      orgId: string;
+      code: string;
+      name: string;
       type: "asset" | "liability" | "equity" | "revenue" | "expense";
-      normalBalance: "debit" | "credit"; sortOrder: number;
+      normalBalance: "debit" | "credit";
+      sortOrder: number;
     }) => createFn({ data: input }),
     onSuccess: () => {
       toast.success("Account created");
@@ -122,7 +136,11 @@ function ChartOfAccountsPage() {
 
   const updateMut = useMutation({
     mutationFn: (input: {
-      id: string; name?: string; code?: string; sortOrder?: number; isActive?: boolean;
+      id: string;
+      name?: string;
+      code?: string;
+      sortOrder?: number;
+      isActive?: boolean;
     }) => updateFn({ data: input }),
     onSuccess: () => {
       toast.success("Account updated");
@@ -143,7 +161,10 @@ function ChartOfAccountsPage() {
           <>
             {orgId && (
               <Button
-                onClick={() => { setEditing(null); setDialogOpen(true); }}
+                onClick={() => {
+                  setEditing(null);
+                  setDialogOpen(true);
+                }}
                 className="gap-2"
               >
                 <Plus className="h-4 w-4" /> New account
@@ -186,9 +207,7 @@ function ChartOfAccountsPage() {
                   <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                     {TYPE_LABEL[t]}
                   </div>
-                  <div className="mt-1 font-mono text-lg tabular-nums">
-                    {fmt(totals[t] ?? 0)}
-                  </div>
+                  <div className="mt-1 font-mono text-lg tabular-nums">{fmt(totals[t] ?? 0)}</div>
                   <div className="mt-0.5 text-[11px] text-muted-foreground">
                     {(grouped.get(t) ?? []).length} accounts
                   </div>
@@ -205,7 +224,9 @@ function ChartOfAccountsPage() {
                     <div className="flex items-center gap-2">
                       <Layers className="h-4 w-4 text-muted-foreground" />
                       <div className="font-semibold">{TYPE_LABEL[type]}</div>
-                      <Badge variant="outline" className="ml-1">{list.length}</Badge>
+                      <Badge variant="outline" className="ml-1">
+                        {list.length}
+                      </Badge>
                     </div>
                     <div className="font-mono text-sm font-semibold tabular-nums">
                       {fmt(totals[type] ?? 0)}
@@ -286,7 +307,10 @@ function ChartOfAccountsPage() {
 
       <AccountDialog
         open={dialogOpen}
-        onOpenChange={(o) => { setDialogOpen(o); if (!o) setEditing(null); }}
+        onOpenChange={(o) => {
+          setDialogOpen(o);
+          if (!o) setEditing(null);
+        }}
         editing={editing}
         onSubmit={(values) => {
           if (editing) {
@@ -315,16 +339,22 @@ function ChartOfAccountsPage() {
 }
 
 function AccountDialog({
-  open, onOpenChange, editing, onSubmit, busy,
+  open,
+  onOpenChange,
+  editing,
+  onSubmit,
+  busy,
 }: {
   open: boolean;
   onOpenChange: (o: boolean) => void;
   editing: AccountRow | null;
   onSubmit: (v: {
-    code: string; name: string;
+    code: string;
+    name: string;
     type: "asset" | "liability" | "equity" | "revenue" | "expense";
     normalBalance: "debit" | "credit";
-    sortOrder: number; isActive: boolean;
+    sortOrder: number;
+    isActive: boolean;
   }) => void;
   busy: boolean;
 }) {
@@ -366,7 +396,11 @@ function AccountDialog({
           </div>
           <div className="col-span-2">
             <Label>Name</Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Accounts Receivable" />
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Accounts Receivable"
+            />
           </div>
           <div className="col-span-1">
             <Label>Type</Label>
@@ -378,10 +412,14 @@ function AccountDialog({
               }}
               disabled={!!editing}
             >
-              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 {TYPE_ORDER.map((t) => (
-                  <SelectItem key={t} value={t}>{TYPE_LABEL[t]}</SelectItem>
+                  <SelectItem key={t} value={t}>
+                    {TYPE_LABEL[t]}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -389,7 +427,9 @@ function AccountDialog({
           <div className="col-span-1">
             <Label>Normal balance</Label>
             <Select value={normalBalance} onValueChange={setNormalBalance} disabled={!!editing}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="debit">Debit</SelectItem>
                 <SelectItem value="credit">Credit</SelectItem>
@@ -416,15 +456,21 @@ function AccountDialog({
           )}
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
           <Button
             disabled={busy || !code || !name}
-            onClick={() => onSubmit({
-              code, name,
-              type: type as "asset" | "liability" | "equity" | "revenue" | "expense",
-              normalBalance: normalBalance as "debit" | "credit",
-              sortOrder, isActive,
-            })}
+            onClick={() =>
+              onSubmit({
+                code,
+                name,
+                type: type as "asset" | "liability" | "equity" | "revenue" | "expense",
+                normalBalance: normalBalance as "debit" | "credit",
+                sortOrder,
+                isActive,
+              })
+            }
           >
             {editing ? "Save" : "Create"}
           </Button>

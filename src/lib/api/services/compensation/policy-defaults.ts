@@ -236,7 +236,8 @@ export function resolveCompensationPolicy(
  * Families that MUST NEVER share a calculation basis — used by the
  * "prevent double-dip on same basis" guard when stacking.
  */
-export const MUTUALLY_EXCLUSIVE_BASIS_GROUPS: ReadonlyArray<ReadonlyArray<CompensationPlanFamily>> = [
-  ["sales_commission", "house_account"],
-  ["draw_recoverable", "draw_nonrecoverable"],
-];
+export const MUTUALLY_EXCLUSIVE_BASIS_GROUPS: ReadonlyArray<ReadonlyArray<CompensationPlanFamily>> =
+  [
+    ["sales_commission", "house_account"],
+    ["draw_recoverable", "draw_nonrecoverable"],
+  ];

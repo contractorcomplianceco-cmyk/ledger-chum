@@ -29,15 +29,15 @@ Both bases are stored on `compensation_calculation_lines` with every deduction l
 
 ## 2. Current Phase 6A files that must change
 
-| File | Change |
-|---|---|
-| `src/lib/api/services/commissions.ts` | Rename service surface to `compensation`; keep `commissions` as a typed re-export for backward links. Split into per-domain sub-services (plans, participants, attribution, calculations, approvals, payables, statements, clawbacks, disputes, software, milestones, retainers, event-stipends, equity, investor-review, audit, simulator). |
-| `src/lib/api/client.ts` | Expose `api.compensation`; keep `api.commissions` as alias reading from `api.compensation`. |
-| `src/lib/api/types.ts` | Add compensation-wide enums (see §4). |
-| `src/lib/api/adapters/express-adapter.ts` | Add typed placeholder routes under `/compensation/*`. |
-| `src/hooks/use-permission.ts` | Extend permission set (see §7). |
-| `.lovable/plan.md` | Reflect Compensation Intelligence scope. |
-| `docs/production-handoff/phase-6-impact-assessment.md` | Cross-link this addendum from §9 (special-pay routing) and §13 disbursement taxonomy. |
+| File                                                   | Change                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/lib/api/services/commissions.ts`                  | Rename service surface to `compensation`; keep `commissions` as a typed re-export for backward links. Split into per-domain sub-services (plans, participants, attribution, calculations, approvals, payables, statements, clawbacks, disputes, software, milestones, retainers, event-stipends, equity, investor-review, audit, simulator). |
+| `src/lib/api/client.ts`                                | Expose `api.compensation`; keep `api.commissions` as alias reading from `api.compensation`.                                                                                                                                                                                                                                                  |
+| `src/lib/api/types.ts`                                 | Add compensation-wide enums (see §4).                                                                                                                                                                                                                                                                                                        |
+| `src/lib/api/adapters/express-adapter.ts`              | Add typed placeholder routes under `/compensation/*`.                                                                                                                                                                                                                                                                                        |
+| `src/hooks/use-permission.ts`                          | Extend permission set (see §7).                                                                                                                                                                                                                                                                                                              |
+| `.lovable/plan.md`                                     | Reflect Compensation Intelligence scope.                                                                                                                                                                                                                                                                                                     |
+| `docs/production-handoff/phase-6-impact-assessment.md` | Cross-link this addendum from §9 (special-pay routing) and §13 disbursement taxonomy.                                                                                                                                                                                                                                                        |
 
 No routes are added yet. The 14-route inventory (§16 of the spec) is queued for 6B after sign-off.
 
@@ -47,41 +47,116 @@ No routes are added yet. The 14-route inventory (§16 of the spec) is queued for
 
 ```ts
 type CompPlanFamily =
-  | 'sales_commission' | 'brand_ambassador_participation' | 'relationship_commission'
-  | 'referral' | 'affiliate' | 'strategic_partner_share' | 'channel_partner_share'
-  | 'software_participation' | 'recurring' | 'residual' | 'renewal' | 'expansion'
-  | 'cross_sell' | 'upsell' | 'event_lead' | 'franchise' | 'enterprise'
-  | 'milestone_bonus' | 'performance_bonus' | 'leadership_bonus' | 'team_bonus'
-  | 'spot_bonus' | 'spiff' | 'contest' | 'customer_success_bonus'
-  | 'collected_revenue_bonus' | 'gross_profit_bonus' | 'contribution_profit_bonus'
-  | 'draw_recoverable' | 'draw_nonrecoverable' | 'tiered' | 'accelerator' | 'decelerator'
-  | 'territory' | 'regional_override' | 'manager_override' | 'house_account'
-  | 'support_pool' | 'profit_sharing' | 'phantom_equity' | 'equity_milestone'
-  | 'investor_milestone_bonus' | 'advisory_fee' | 'event_stipend' | 'retainer';
+  | "sales_commission"
+  | "brand_ambassador_participation"
+  | "relationship_commission"
+  | "referral"
+  | "affiliate"
+  | "strategic_partner_share"
+  | "channel_partner_share"
+  | "software_participation"
+  | "recurring"
+  | "residual"
+  | "renewal"
+  | "expansion"
+  | "cross_sell"
+  | "upsell"
+  | "event_lead"
+  | "franchise"
+  | "enterprise"
+  | "milestone_bonus"
+  | "performance_bonus"
+  | "leadership_bonus"
+  | "team_bonus"
+  | "spot_bonus"
+  | "spiff"
+  | "contest"
+  | "customer_success_bonus"
+  | "collected_revenue_bonus"
+  | "gross_profit_bonus"
+  | "contribution_profit_bonus"
+  | "draw_recoverable"
+  | "draw_nonrecoverable"
+  | "tiered"
+  | "accelerator"
+  | "decelerator"
+  | "territory"
+  | "regional_override"
+  | "manager_override"
+  | "house_account"
+  | "support_pool"
+  | "profit_sharing"
+  | "phantom_equity"
+  | "equity_milestone"
+  | "investor_milestone_bonus"
+  | "advisory_fee"
+  | "event_stipend"
+  | "retainer";
 
 type CompBasis =
-  | 'collected_realized_service_revenue' | 'collected_retained_revenue'
-  | 'net_recurring_subscription_revenue' | 'gross_profit' | 'contribution_profit'
-  | 'fixed_amount' | 'milestone_amount' | 'tiered_amount' | 'team_pool'
-  | 'revenue_share' | 'profit_share' | 'renewal_amount' | 'expansion_amount'
-  | 'subscription_amount' | 'discretionary_amount';
+  | "collected_realized_service_revenue"
+  | "collected_retained_revenue"
+  | "net_recurring_subscription_revenue"
+  | "gross_profit"
+  | "contribution_profit"
+  | "fixed_amount"
+  | "milestone_amount"
+  | "tiered_amount"
+  | "team_pool"
+  | "revenue_share"
+  | "profit_share"
+  | "renewal_amount"
+  | "expansion_amount"
+  | "subscription_amount"
+  | "discretionary_amount";
 
 type AttributionRole =
-  | 'lead_source' | 'relationship_creator' | 'brand_ambassador' | 'referral_source'
-  | 'strategic_partner' | 'sales_representative' | 'discovery_owner' | 'demo_owner'
-  | 'proposal_owner' | 'negotiation_owner' | 'closer' | 'account_manager'
-  | 'expansion_owner' | 'renewal_owner' | 'support_contributor' | 'leadership_override'
-  | 'team_pool' | 'affiliate' | 'channel_partner';
+  | "lead_source"
+  | "relationship_creator"
+  | "brand_ambassador"
+  | "referral_source"
+  | "strategic_partner"
+  | "sales_representative"
+  | "discovery_owner"
+  | "demo_owner"
+  | "proposal_owner"
+  | "negotiation_owner"
+  | "closer"
+  | "account_manager"
+  | "expansion_owner"
+  | "renewal_owner"
+  | "support_contributor"
+  | "leadership_override"
+  | "team_pool"
+  | "affiliate"
+  | "channel_partner";
 
 type CompLifecycle =
-  | 'projected' | 'pending_collection' | 'pending_clearance' | 'eligible'
-  | 'calculated' | 'pending_verification' | 'pending_manager_review'
-  | 'pending_accounting_review' | 'pending_approval' | 'approved' | 'reserved'
-  | 'payroll_ready' | 'ap_ready' | 'payable' | 'scheduled' | 'paid' | 'held'
-  | 'adjusted' | 'reversed' | 'clawback_required' | 'disputed' | 'closed';
+  | "projected"
+  | "pending_collection"
+  | "pending_clearance"
+  | "eligible"
+  | "calculated"
+  | "pending_verification"
+  | "pending_manager_review"
+  | "pending_accounting_review"
+  | "pending_approval"
+  | "approved"
+  | "reserved"
+  | "payroll_ready"
+  | "ap_ready"
+  | "payable"
+  | "scheduled"
+  | "paid"
+  | "held"
+  | "adjusted"
+  | "reversed"
+  | "clawback_required"
+  | "disputed"
+  | "closed";
 
 type EligibilityQualifier =
-  | 'directly_sourced' | 'materially_developed' | 'helps_secure' | 'preexisting_pipeline';
+  "directly_sourced" | "materially_developed" | "helps_secure" | "preexisting_pipeline";
 ```
 
 Plus: `SoftwareParticipationAccount`, `SoftwareParticipationChannel`, `RetainerSchedule`, `RetainerStep`, `EventStipend`, `EquityMilestone` (foundation / $100k / $250k / software / strategic-scale), `InvestorCompensationReview` (with `legal_review_status`), `MilestoneDefinition`, `MilestoneAchievement`, `AttributionEvidence` (CRM ref, email, text, calendar, meeting note, event, file).
@@ -140,14 +215,14 @@ Additional roles from prior addendum still apply: `legal_counsel` (equity + inve
 
 Encoded as a **composite participant** with six stacked, independently-priced plan attachments:
 
-| Slot | Family | Basis | Rate / Amount | Notes |
-|---|---|---|---|---|
-| A | `retainer` | fixed | $3,000 × months 1–3, then $4,500 from month 4 | Stepped schedule; early step-up gated by written-approval flag |
-| B | `brand_ambassador_participation` | `collected_retained_revenue` | 5% first-year | Eligible relationships only; post-termination survival flag per signed terms |
-| C | `milestone_bonus` (×5) | `milestone_amount` | $500 / $1,500 / $2,500 / $2,500@$25k / $5,000@$100k | Independent of B unless plan expressly stacks |
-| D | `software_participation` | `net_recurring_subscription_revenue` | 2.5% direct / 1.0% channel | Survival flag; monthly or quarterly statements per account/channel |
-| E | `investor_milestone_bonus` / `advisory_fee` | fixed / milestone | Counsel-approved only | `legal_review_required=true`, never auto-calculated |
-| F | `equity_milestone` | tracking-only | 5 × 1% tranches | Foundation / $100k RCR / $250k RCR-or-channel / software / strategic-scale; requires legal + tax + written approval; never auto-issues |
+| Slot | Family                                      | Basis                                | Rate / Amount                                       | Notes                                                                                                                                  |
+| ---- | ------------------------------------------- | ------------------------------------ | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| A    | `retainer`                                  | fixed                                | $3,000 × months 1–3, then $4,500 from month 4       | Stepped schedule; early step-up gated by written-approval flag                                                                         |
+| B    | `brand_ambassador_participation`            | `collected_retained_revenue`         | 5% first-year                                       | Eligible relationships only; post-termination survival flag per signed terms                                                           |
+| C    | `milestone_bonus` (×5)                      | `milestone_amount`                   | $500 / $1,500 / $2,500 / $2,500@$25k / $5,000@$100k | Independent of B unless plan expressly stacks                                                                                          |
+| D    | `software_participation`                    | `net_recurring_subscription_revenue` | 2.5% direct / 1.0% channel                          | Survival flag; monthly or quarterly statements per account/channel                                                                     |
+| E    | `investor_milestone_bonus` / `advisory_fee` | fixed / milestone                    | Counsel-approved only                               | `legal_review_required=true`, never auto-calculated                                                                                    |
+| F    | `equity_milestone`                          | tracking-only                        | 5 × 1% tranches                                     | Foundation / $100k RCR / $250k RCR-or-channel / software / strategic-scale; requires legal + tax + written approval; never auto-issues |
 
 Each slot is a distinct row in `compensation_plan_participants` with its own `effective_date`, `expiration_date`, and `survival_policy`.
 
@@ -163,6 +238,7 @@ Configurable **standard sales pool** (default 10% of RCR) with pluggable split r
 - Rose can change pool %, Tara %, remainder allocation, caps, floors, minimum margin, holdback, collection requirement, and payment-clearing lag from the plan editor — no hardcoded rates in code.
 
 Worked example (RCR $20,000, 10% pool, Tara eligible):
+
 - Pool = $2,000. Tara = $1,000 (5% of RCR). Salesperson remainder = $1,000 (5% of RCR).
 - Tara not eligible → salesperson receives full $2,000.
 
@@ -193,18 +269,18 @@ invariant (pass-through inclusion, uncollected inclusion, zero holdback,
 zero chargeback window) additionally require `legal_review_status = 'cleared'`
 plus explicit Owner approval — the backend must reject the plan otherwise.
 
-| # | Question | Approved default | Override path |
-|---|---|---|---|
-| 1 | Attribution split total | Must equal 100% (± tolerance 0.0001) | `attribution.allowLeadershipOverstack = true` permits stacked > 100% with justification + audit event |
-| 2 | Payment-clearing lag | **3 days** global | Per-plan `revenueRecognition.paymentClearingLagDays` |
-| 3 | BA + milestone stacking | **Elect per milestone**; never auto-stack | Per-plan `stacking.brandAmbassadorMilestoneStack = 'auto_stack'` |
-| 4 | Post-termination survival | **12 months** when signed terms silent | Per-plan `postTermination.survivalMonthsDefault`; legal review always required to release |
-| 5 | Software participation basis | **Collected-and-cleared NRSR only** | Per-plan `softwareParticipation.basis = 'billed_nrsr'` (requires legal review — permits pre-collection accrual) |
-| 6 | Chargeback window | **90 days** | Per-plan `riskReserve.chargebackWindowDays` (0 requires legal + Owner) |
-| 7 | Draw offset order | Draws offset at **payable** state | Per-plan `riskReserve.drawOffsetState` |
-| 8 | Holdback release | **Automatic on chargeback-window expiry** | Per-plan `riskReserve.holdbackReleaseTrigger = 'requires_owner_approval'` |
-| 9 | House-account rule | **Suppress** sales commission (0% pool) | Per-plan `salesPool.houseAccountRule = 'reduce'` + `houseAccountReducedPoolPct` |
-| 10 | Event stipend caps | Local **$250/day**, travel **$400/day**, multi-day cap **$2,000** | Per-plan `eventStipend.*` |
+| #   | Question                     | Approved default                                                  | Override path                                                                                                   |
+| --- | ---------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| 1   | Attribution split total      | Must equal 100% (± tolerance 0.0001)                              | `attribution.allowLeadershipOverstack = true` permits stacked > 100% with justification + audit event           |
+| 2   | Payment-clearing lag         | **3 days** global                                                 | Per-plan `revenueRecognition.paymentClearingLagDays`                                                            |
+| 3   | BA + milestone stacking      | **Elect per milestone**; never auto-stack                         | Per-plan `stacking.brandAmbassadorMilestoneStack = 'auto_stack'`                                                |
+| 4   | Post-termination survival    | **12 months** when signed terms silent                            | Per-plan `postTermination.survivalMonthsDefault`; legal review always required to release                       |
+| 5   | Software participation basis | **Collected-and-cleared NRSR only**                               | Per-plan `softwareParticipation.basis = 'billed_nrsr'` (requires legal review — permits pre-collection accrual) |
+| 6   | Chargeback window            | **90 days**                                                       | Per-plan `riskReserve.chargebackWindowDays` (0 requires legal + Owner)                                          |
+| 7   | Draw offset order            | Draws offset at **payable** state                                 | Per-plan `riskReserve.drawOffsetState`                                                                          |
+| 8   | Holdback release             | **Automatic on chargeback-window expiry**                         | Per-plan `riskReserve.holdbackReleaseTrigger = 'requires_owner_approval'`                                       |
+| 9   | House-account rule           | **Suppress** sales commission (0% pool)                           | Per-plan `salesPool.houseAccountRule = 'reduce'` + `houseAccountReducedPoolPct`                                 |
+| 10  | Event stipend caps           | Local **$250/day**, travel **$400/day**, multi-day cap **$2,000** | Per-plan `eventStipend.*`                                                                                       |
 
 **Invariants that survive all overrides (unless legal + Owner override attached):**
 

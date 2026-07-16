@@ -59,9 +59,7 @@ export const listMetrics = createServerFn({ method: "GET" })
 
 export const getMetric = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v))
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("financial_metrics")
@@ -202,8 +200,7 @@ async function calcAccountTypeTotal(
   const { data, error } = await q;
   if (error) throw new Error(error.message);
   const value = (data ?? []).reduce(
-    (s: number, r: any) =>
-      s + sign * (Number(r.debit ?? 0) - Number(r.credit ?? 0)),
+    (s: number, r: any) => s + sign * (Number(r.debit ?? 0) - Number(r.credit ?? 0)),
     0,
   );
   return { value, sourceCount: data?.length ?? 0 };
@@ -232,9 +229,7 @@ async function calcTrueAvailableCash(ctx: { supabase: any }, i: CalcInput) {
   return {
     value: cash - obligations,
     sourceCount: (bank.data?.length ?? 0) + (ap.data?.length ?? 0),
-    assumptions: [
-      "Restricted / reserved allocations not yet subtracted — Phase 5 hook.",
-    ],
+    assumptions: ["Restricted / reserved allocations not yet subtracted — Phase 5 hook."],
   };
 }
 
@@ -245,10 +240,7 @@ async function calcArBalance(ctx: { supabase: any }, i: CalcInput) {
     .eq("org_id", i.orgId)
     .neq("status", "paid");
   if (error) throw new Error(error.message);
-  const value = (data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.balance_due ?? 0),
-    0,
-  );
+  const value = (data ?? []).reduce((s: number, r: any) => s + Number(r.balance_due ?? 0), 0);
   return { value, sourceCount: data?.length ?? 0 };
 }
 
@@ -259,10 +251,7 @@ async function calcApBalance(ctx: { supabase: any }, i: CalcInput) {
     .eq("org_id", i.orgId)
     .neq("status", "paid");
   if (error) throw new Error(error.message);
-  const value = (data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.balance_due ?? 0),
-    0,
-  );
+  const value = (data ?? []).reduce((s: number, r: any) => s + Number(r.balance_due ?? 0), 0);
   return { value, sourceCount: data?.length ?? 0 };
 }
 
@@ -301,7 +290,6 @@ export const calculateMetric = createServerFn({ method: "POST" })
         (roles ?? []).some((r) => r.role === "owner");
       if (!ok) throw new Error("Forbidden: metric requires elevated permission");
     }
-
 
     const input: CalcInput = { orgId: data.orgId, from: data.from, to: data.to };
     let value: number | null = null;
@@ -387,7 +375,9 @@ export const calculateMetric = createServerFn({ method: "POST" })
           ]);
           value = ar.value + cash.value - ap.value;
           sourceCount = ar.sourceCount + cash.sourceCount + ap.sourceCount;
-          assumptions.push("Simplified: cash + AR − AP. Full current-asset/liability rollup pending.");
+          assumptions.push(
+            "Simplified: cash + AR − AP. Full current-asset/liability rollup pending.",
+          );
           confidence = 0.7;
           break;
         }
@@ -444,9 +434,7 @@ export const calculateMetric = createServerFn({ method: "POST" })
 
 export const refreshMetric = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v))
   .handler(async ({ data, context }) => {
     // Scheduler entry point. We simply insert a fresh "delayed" marker so
     // the freshness signal reflects the refresh attempt; the actual
@@ -461,16 +449,13 @@ export const refreshMetric = createServerFn({ method: "POST" })
     return { ok: true, metricId: metric.id };
   });
 
-
 // ------------------------------------------------------------
 // AI-ready contract
 // ------------------------------------------------------------
 
 export const getMetricAiResponse = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ orgId: z.string().uuid(), metricKey: z.string() }).parse(v))
   .handler(async ({ data, context }) => {
     const { data: metric, error } = await context.supabase
       .from("financial_metrics")
@@ -505,8 +490,7 @@ export const getMetricAiResponse = createServerFn({ method: "GET" })
       confidence: {
         score: Number(value?.confidence_score ?? 0),
         rationale:
-          metric.confidence_rule ??
-          "Confidence reflects source freshness and completeness.",
+          metric.confidence_rule ?? "Confidence reflects source freshness and completeness.",
       },
       freshness: value?.freshness_status ?? "unavailable",
       assumptions: value?.assumptions ?? [],

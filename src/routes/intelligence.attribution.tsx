@@ -35,10 +35,22 @@ function AttributionPage() {
           <div className="text-[13px] font-semibold">Allocation targets</div>
           <div className="mt-2 flex flex-wrap gap-1.5 text-[11.5px]">
             {[
-              "Client", "Project", "Service", "Product", "App", "Department",
-              "Campaign", "Strategic initiative", "Shared overhead", "R&D", "Compliance",
+              "Client",
+              "Project",
+              "Service",
+              "Product",
+              "App",
+              "Department",
+              "Campaign",
+              "Strategic initiative",
+              "Shared overhead",
+              "R&D",
+              "Compliance",
             ].map((t) => (
-              <span key={t} className="rounded-md border border-border/70 bg-muted/40 px-2 py-1 text-muted-foreground">
+              <span
+                key={t}
+                className="rounded-md border border-border/70 bg-muted/40 px-2 py-1 text-muted-foreground"
+              >
                 {t}
               </span>
             ))}
@@ -56,11 +68,15 @@ function AttributionPage() {
                   <div className="text-[13px] font-semibold">{e.vendor}</div>
                   <div className="text-[11.5px] text-muted-foreground">
                     {METHOD_LABEL[e.method]} allocation · confidence{" "}
-                    <span className="font-tabular font-semibold text-foreground">{e.confidence}%</span>
+                    <span className="font-tabular font-semibold text-foreground">
+                      {e.confidence}%
+                    </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">Amount</div>
+                  <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    Amount
+                  </div>
                   <div className="font-tabular text-[15px] font-bold">{currency(e.amount)}</div>
                 </div>
               </div>
@@ -78,7 +94,10 @@ function AttributionPage() {
                         <span className="font-tabular font-semibold">{t.pct}%</span>
                       </div>
                       <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-muted">
-                        <div className="h-full bg-gradient-brand-cool" style={{ width: `${t.pct}%` }} />
+                        <div
+                          className="h-full bg-gradient-brand-cool"
+                          style={{ width: `${t.pct}%` }}
+                        />
                       </div>
                     </div>
                   ))
@@ -92,7 +111,12 @@ function AttributionPage() {
                 </div>
                 <div>
                   <div className="text-muted-foreground">Unallocated</div>
-                  <div className={cn("font-tabular font-semibold", e.unallocated > 0 ? "text-destructive" : "text-success")}>
+                  <div
+                    className={cn(
+                      "font-tabular font-semibold",
+                      e.unallocated > 0 ? "text-destructive" : "text-success",
+                    )}
+                  >
                     {currency(e.unallocated)}
                   </div>
                 </div>
@@ -115,7 +139,9 @@ function AttributionPage() {
               )}
 
               <div className="mt-2 flex justify-end">
-                <Button size="sm" variant="outline" className="h-7 text-[11px]">Edit allocation</Button>
+                <Button size="sm" variant="outline" className="h-7 text-[11px]">
+                  Edit allocation
+                </Button>
               </div>
             </Card>
           );

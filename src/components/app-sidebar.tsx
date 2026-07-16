@@ -17,14 +17,7 @@ import { NavModeSwitcher } from "@/components/apex/nav-mode-switcher";
 import { useNavMode } from "@/hooks/use-nav-mode";
 import { useCurrentUser } from "@/hooks/use-permission";
 import { useFavorites, useGroupOpenState, useRecents } from "@/lib/nav-storage";
-import {
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronDown,
-  Star,
-  Clock,
-} from "lucide-react";
+import { ChevronRight, ChevronsLeft, ChevronsRight, ChevronDown, Star, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function hasPermission(held: string[], permission?: string) {
@@ -46,8 +39,7 @@ export function AppSidebar() {
 
   // /apex and all /apex/* routes always render Executive navigation.
   const forceExecutive = pathname === "/apex" || pathname.startsWith("/apex/");
-  const effectiveMode: "operational" | "executive" =
-    forceExecutive ? "executive" : mode;
+  const effectiveMode: "operational" | "executive" = forceExecutive ? "executive" : mode;
   const activeGroups = effectiveMode === "executive" ? APEX_EXECUTIVE_NAV_GROUPS : NAV_GROUPS;
 
   const groupDefaults = useMemo(() => {
@@ -62,10 +54,13 @@ export function AppSidebar() {
 
   // Filter items + whole groups by permission
   const visibleGroups: NavGroup[] = useMemo(() => {
-    return activeGroups.map((group) => ({
-      ...group,
-      items: group.items.filter((i) => !i.hidden && hasPermission(user.permissions, i.permission)),
-    }))
+    return activeGroups
+      .map((group) => ({
+        ...group,
+        items: group.items.filter(
+          (i) => !i.hidden && hasPermission(user.permissions, i.permission),
+        ),
+      }))
       .filter((g) => hasPermission(user.permissions, g.permission))
       .filter((g) => g.items.length > 0);
   }, [user.permissions, activeGroups]);
@@ -104,7 +99,11 @@ export function AppSidebar() {
       <SidebarHeader className="relative z-10 px-2 py-1">
         <div className="flex items-center justify-between gap-2">
           <Link to="/" className="flex min-w-0 items-center">
-            {collapsed ? <LedgerLogo variant="emblem" onDark /> : <LedgerLogo variant="lockup" onDark />}
+            {collapsed ? (
+              <LedgerLogo variant="emblem" onDark />
+            ) : (
+              <LedgerLogo variant="lockup" onDark />
+            )}
           </Link>
           {!collapsed && (
             <button
@@ -188,10 +187,7 @@ export function AppSidebar() {
                   {GroupIcon && <GroupIcon className="h-3 w-3" />}
                   <span className="flex-1 text-left">{group.title}</span>
                   <ChevronDown
-                    className={cn(
-                      "h-3.5 w-3.5 transition-transform",
-                      !isOpen && "-rotate-90",
-                    )}
+                    className={cn("h-3.5 w-3.5 transition-transform", !isOpen && "-rotate-90")}
                   />
                 </button>
               )}
@@ -236,7 +232,9 @@ export function AppSidebar() {
                 </div>
                 <div className="mt-1 flex items-baseline gap-1.5">
                   <div className="text-[20px] font-bold tabular-nums text-white">92</div>
-                  <div className="text-[10.5px] text-sidebar-foreground/60">/ 100 · Stable outlook</div>
+                  <div className="text-[10.5px] text-sidebar-foreground/60">
+                    / 100 · Stable outlook
+                  </div>
                 </div>
                 <svg viewBox="0 0 100 22" className="mt-1 h-5 w-full" aria-hidden>
                   <defs>

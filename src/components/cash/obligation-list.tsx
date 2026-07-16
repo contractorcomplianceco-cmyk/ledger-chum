@@ -32,7 +32,12 @@ export function ObligationList() {
             key={o.id}
             className="group flex items-center gap-2.5 rounded-lg border border-transparent p-2 transition hover:border-border hover:bg-muted/40"
           >
-            <div className={cn("grid h-8 w-8 shrink-0 place-items-center rounded-lg", urgencyTone[o.urgency])}>
+            <div
+              className={cn(
+                "grid h-8 w-8 shrink-0 place-items-center rounded-lg",
+                urgencyTone[o.urgency],
+              )}
+            >
               <CalendarClock className="h-4 w-4" />
             </div>
             <div className="min-w-0 flex-1 leading-tight">

@@ -22,12 +22,12 @@ Operational Event
 
 ## Deliverables
 
-| Surface | Route | Purpose |
-| --- | --- | --- |
-| Pilot Simulation | `/admin/pilot-simulation` | Fictional pilot company profile (org, roles, fiscal periods, chart of accounts, integration source, mappings) and the scripted end-to-end walk-through referenced above. Read-only presentation of the lifecycle. |
-| Production Review Center | `/admin/production-review` | Consolidated view of the five review categories (security, accounting, integration, intelligence, migration) plus overall readiness. Rolls up signals already produced elsewhere. |
-| Accounting Acceptance Tests | `/admin/acceptance-tests` | Scenario catalog covering revenue, payments, expenses, refunds, errors, reconciliation, and the close workflow. Each scenario names the surface that owns it — no shortcut execution here. |
-| Pilot Success Dashboard | `/admin/pilot-success` | Advisory metrics for a pilot in flight: events processed, objects created, journals posted, reports generated, exceptions, audit completeness, intelligence generated. |
+| Surface                     | Route                      | Purpose                                                                                                                                                                                                           |
+| --------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pilot Simulation            | `/admin/pilot-simulation`  | Fictional pilot company profile (org, roles, fiscal periods, chart of accounts, integration source, mappings) and the scripted end-to-end walk-through referenced above. Read-only presentation of the lifecycle. |
+| Production Review Center    | `/admin/production-review` | Consolidated view of the five review categories (security, accounting, integration, intelligence, migration) plus overall readiness. Rolls up signals already produced elsewhere.                                 |
+| Accounting Acceptance Tests | `/admin/acceptance-tests`  | Scenario catalog covering revenue, payments, expenses, refunds, errors, reconciliation, and the close workflow. Each scenario names the surface that owns it — no shortcut execution here.                        |
+| Pilot Success Dashboard     | `/admin/pilot-success`     | Advisory metrics for a pilot in flight: events processed, objects created, journals posted, reports generated, exceptions, audit completeness, intelligence generated.                                            |
 
 ## Invariants preserved
 

@@ -2,11 +2,7 @@
 // Fictional demonstration data only. No real accounts, no live bank connection.
 
 export type ConnectionState =
-  | "csv_import"
-  | "manual_entry"
-  | "future_secure"
-  | "import_review"
-  | "current";
+  "csv_import" | "manual_entry" | "future_secure" | "import_review" | "current";
 
 export type AccountHealth = "healthy" | "attention" | "at_risk";
 
@@ -108,13 +104,7 @@ export const BANK_ACCOUNTS: BankAccount[] = [
   },
 ];
 
-export type TransactionKind =
-  | "deposit"
-  | "withdrawal"
-  | "transfer"
-  | "fee"
-  | "interest"
-  | "refund";
+export type TransactionKind = "deposit" | "withdrawal" | "transfer" | "fee" | "interest" | "refund";
 
 export type TxStatus =
   | "pending_review"
@@ -161,7 +151,11 @@ export const TRANSACTIONS: Tx[] = [
     accountId: "acct-op",
     amount: 128_420.0,
     kind: "deposit",
-    suggestedMatch: { id: "inv-batch-488", label: "Invoice batch #488 (12 invoices)", amount: 128_420.0 },
+    suggestedMatch: {
+      id: "inv-batch-488",
+      label: "Invoice batch #488 (12 invoices)",
+      amount: 128_420.0,
+    },
     confidence: 96,
     reason: "Exact amount + Stripe payout reference within 24h window",
     status: "suggested_match",
@@ -199,7 +193,11 @@ export const TRANSACTIONS: Tx[] = [
     accountId: "acct-pr",
     amount: -212_800.0,
     kind: "withdrawal",
-    suggestedMatch: { id: "je-payroll-2607", label: "Payroll journal 2026-07-09", amount: 212_800.0 },
+    suggestedMatch: {
+      id: "je-payroll-2607",
+      label: "Payroll journal 2026-07-09",
+      amount: 212_800.0,
+    },
     confidence: 99,
     reason: "Amount + date match to posted payroll journal",
     status: "matched",
@@ -218,7 +216,11 @@ export const TRANSACTIONS: Tx[] = [
     accountId: "acct-op",
     amount: 84_500.0,
     kind: "deposit",
-    suggestedMatch: { id: "inv-2264", label: "Invoice #2264 — Northwind Logistics", amount: 84_500.0 },
+    suggestedMatch: {
+      id: "inv-2264",
+      label: "Invoice #2264 — Northwind Logistics",
+      amount: 84_500.0,
+    },
     confidence: 98,
     reason: "Customer + amount exact match",
     status: "matched",
@@ -497,7 +499,9 @@ export const BANKING_ALERTS = [
 export const CATEGORY_GROUPS = [
   {
     label: "Suggested",
-    accounts: [{ code: "6210", name: "Software & Infrastructure", type: "Expense", note: "Recurring match" }],
+    accounts: [
+      { code: "6210", name: "Software & Infrastructure", type: "Expense", note: "Recurring match" },
+    ],
   },
   {
     label: "Recently used",
@@ -544,10 +548,42 @@ export const CATEGORY_GROUPS = [
 ];
 
 export const MATCH_CANDIDATES = [
-  { id: "inv-2264", type: "Invoice payment", label: "Invoice #2264 — Northwind Logistics", date: "2026-07-08", amount: 84_500.0, confidence: 98, diff: 0 },
-  { id: "inv-2241", type: "Invoice payment", label: "Invoice #2241 — Brightside Co", date: "2026-07-02", amount: 22_400.0, confidence: 95, diff: 0 },
-  { id: "bill-882", type: "Bill payment", label: "Bill #882 — CDW Direct", date: "2026-07-06", amount: 4_128.0, confidence: 71, diff: 12.0 },
-  { id: "je-892", type: "Journal entry", label: "JE #892 — Accrued interest reversal", date: "2026-07-05", amount: 412.19, confidence: 82, diff: 0 },
+  {
+    id: "inv-2264",
+    type: "Invoice payment",
+    label: "Invoice #2264 — Northwind Logistics",
+    date: "2026-07-08",
+    amount: 84_500.0,
+    confidence: 98,
+    diff: 0,
+  },
+  {
+    id: "inv-2241",
+    type: "Invoice payment",
+    label: "Invoice #2241 — Brightside Co",
+    date: "2026-07-02",
+    amount: 22_400.0,
+    confidence: 95,
+    diff: 0,
+  },
+  {
+    id: "bill-882",
+    type: "Bill payment",
+    label: "Bill #882 — CDW Direct",
+    date: "2026-07-06",
+    amount: 4_128.0,
+    confidence: 71,
+    diff: 12.0,
+  },
+  {
+    id: "je-892",
+    type: "Journal entry",
+    label: "JE #892 — Accrued interest reversal",
+    date: "2026-07-05",
+    amount: 412.19,
+    confidence: 82,
+    diff: 0,
+  },
 ];
 
 export const RECON_HISTORY = [

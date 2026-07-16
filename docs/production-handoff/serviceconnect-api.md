@@ -16,7 +16,7 @@ for mutations that write to the ledger.
 ## Base URL
 
 - Production: `https://project--<project-id>.lovable.app/api/public/integrations`
-- Preview:    `https://project--<project-id>-dev.lovable.app/api/public/integrations`
+- Preview: `https://project--<project-id>-dev.lovable.app/api/public/integrations`
 
 ## Endpoints
 
@@ -34,6 +34,7 @@ for mutations that write to the ledger.
 ```
 
 Response `201` (created) or `200` (updated):
+
 ```json
 { "id": "uuid", "external_id": "sc_cust_9821", "idempotency_key": "...", "correlation_id": "..." }
 ```
@@ -52,20 +53,37 @@ Requires the customer to already exist (send `POST /customers` first).
   "invoice_number": "INV-2026-00042",
   "memo": "AC coil replacement, 08 Jul 2026",
   "lines": [
-    { "description": "Labor 3h", "quantity": 3, "unit_price": 145.00, "tax_rate": 0, "account_code": "4100" },
-    { "description": "Evaporator coil, part #EC-45", "quantity": 1, "unit_price": 620.00, "tax_rate": 0.0725, "account_code": "4200" }
+    {
+      "description": "Labor 3h",
+      "quantity": 3,
+      "unit_price": 145.0,
+      "tax_rate": 0,
+      "account_code": "4100"
+    },
+    {
+      "description": "Evaporator coil, part #EC-45",
+      "quantity": 1,
+      "unit_price": 620.0,
+      "tax_rate": 0.0725,
+      "account_code": "4200"
+    }
   ]
 }
 ```
 
 Ledger creates a **draft** invoice — an accountant must post it (`postInvoice`)
 before it hits the GL. Response `201`:
+
 ```json
 {
-  "id": "uuid", "invoice_number": "INV-2026-00042",
-  "work_order_ref": "WO-44210", "status": "draft",
-  "total": 1085.95, "balance": 1085.95,
-  "audit_event_id": "uuid", "correlation_id": "uuid"
+  "id": "uuid",
+  "invoice_number": "INV-2026-00042",
+  "work_order_ref": "WO-44210",
+  "status": "draft",
+  "total": 1085.95,
+  "balance": 1085.95,
+  "audit_event_id": "uuid",
+  "correlation_id": "uuid"
 }
 ```
 
@@ -86,21 +104,25 @@ Same shape as `/work-orders/completed` minus `work_order_ref` requirement.
   "reference": "NEFCU-ACH-118822",
   "amount": 1085.95,
   "memo": "Payment on INV-2026-00042",
-  "apply_to": [
-    { "invoice_external_id": "sc_wo_44210", "amount": 1085.95 }
-  ]
+  "apply_to": [{ "invoice_external_id": "sc_wo_44210", "amount": 1085.95 }]
 }
 ```
 
 Response `201`:
+
 ```json
 {
-  "id": "uuid", "amount": 1085.95, "unapplied_amount": 0,
-  "applications": 1, "audit_event_id": "uuid", "correlation_id": "uuid"
+  "id": "uuid",
+  "amount": 1085.95,
+  "unapplied_amount": 0,
+  "applications": 1,
+  "audit_event_id": "uuid",
+  "correlation_id": "uuid"
 }
 ```
 
 Rules:
+
 - `sum(apply_to.amount) ≤ amount`
 - Application amount ≤ invoice balance
 - Invoice status transitions: `sent → partial → paid` automatically
@@ -114,14 +136,21 @@ Rules:
   "item_ref": "EC-45",
   "item_description": "Evaporator coil",
   "quantity": 1,
-  "unit_cost": 380.00,
+  "unit_cost": 380.0,
   "consumed_at": "2026-07-08T14:32:00Z"
 }
 ```
 
 Response `201`:
+
 ```json
-{ "id": "uuid", "work_order_ref": "WO-44210", "total_cost": 380.00, "audit_event_id": "uuid", "correlation_id": "uuid" }
+{
+  "id": "uuid",
+  "work_order_ref": "WO-44210",
+  "total_cost": 380.0,
+  "audit_event_id": "uuid",
+  "correlation_id": "uuid"
+}
 ```
 
 Phase 1 records consumption for reporting only; COGS journal posting is a
@@ -130,12 +159,12 @@ category).
 
 ## Errors
 
-| Status | Meaning |
-| --- | --- |
-| 400 | Missing/invalid JSON or `Idempotency-Key` |
-| 401 | Missing/invalid/inactive Bearer token |
-| 422 | Validation failure or referenced entity missing (customer, invoice) |
-| 500 | Server error — safe to retry with the same `Idempotency-Key` |
+| Status | Meaning                                                             |
+| ------ | ------------------------------------------------------------------- |
+| 400    | Missing/invalid JSON or `Idempotency-Key`                           |
+| 401    | Missing/invalid/inactive Bearer token                               |
+| 422    | Validation failure or referenced entity missing (customer, invoice) |
+| 500    | Server error — safe to retry with the same `Idempotency-Key`        |
 
 Error body: `{ "error": "message" }`. Errors are recorded in `sync_history`
 with `status = 'error'` for diagnostics; retries use a fresh idempotency key

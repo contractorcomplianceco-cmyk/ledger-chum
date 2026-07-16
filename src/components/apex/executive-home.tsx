@@ -71,7 +71,11 @@ import {
 } from "@/lib/mock/apex-home";
 
 const currency0 = (n: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(n);
 
 function demoAction(label: string) {
   toast(label, { description: DEMO_ACTION_MESSAGE });
@@ -89,7 +93,9 @@ function GreetingHeader() {
           Executive Home · Project APEX
         </div>
         <h1 className="flex items-center gap-2 text-[26px] font-bold tracking-tight text-foreground sm:text-[30px]">
-          <span aria-hidden className="text-[28px]">👋</span>
+          <span aria-hidden className="text-[28px]">
+            👋
+          </span>
           <span>
             <span className="bg-gradient-brand-full bg-clip-text text-transparent">
               {APEX_HOME_GREETING.greeting}
@@ -152,7 +158,11 @@ const KPI_VISUAL: Record<
   {
     tint: string;
     accent: string;
-    illustration: (props: { className?: string; decorative?: boolean; reducedMotion?: boolean }) => ReactElement;
+    illustration: (props: {
+      className?: string;
+      decorative?: boolean;
+      reducedMotion?: boolean;
+    }) => ReactElement;
   }
 > = {
   cash: {
@@ -221,10 +231,7 @@ function KpiCard({ kpi }: { kpi: ExecutiveKpi }) {
         </div>
         <Link
           to={kpi.route as "/apex"}
-          className={cn(
-            "inline-flex items-center gap-0.5 text-[11.5px] font-semibold",
-            v.accent,
-          )}
+          className={cn("inline-flex items-center gap-0.5 text-[11.5px] font-semibold", v.accent)}
         >
           Details
           <ArrowUpRight className="h-3 w-3" />
@@ -327,13 +334,20 @@ function CashPulseCard() {
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-3">
           <div className="text-[11.5px] text-muted-foreground">
-            Total cash position <span className="font-semibold text-foreground">{currency0(p.totalCash)}</span> ·
-            30d forecast <span className="font-semibold text-foreground">{currency0(p.forecast30d)}</span>
+            Total cash position{" "}
+            <span className="font-semibold text-foreground">{currency0(p.totalCash)}</span> · 30d
+            forecast{" "}
+            <span className="font-semibold text-foreground">{currency0(p.forecast30d)}</span>
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
             <ConfidenceChip value={p.confidence} />
             <FreshnessChip label={p.freshness} />
-            <Button size="sm" variant="ghost" className="h-7 px-2 text-[11.5px]" onClick={() => setOpen(true)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 px-2 text-[11.5px]"
+              onClick={() => setOpen(true)}
+            >
               Explain <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
             <Button asChild size="sm" variant="secondary" className="h-7 px-2 text-[11.5px]">
@@ -343,11 +357,13 @@ function CashPulseCard() {
         </div>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {["Why is available cash lower?", "What money is restricted?", "What can we safely spend today?"].map(
-            (q) => (
-              <AskChip key={q} q={q} />
-            ),
-          )}
+          {[
+            "Why is available cash lower?",
+            "What money is restricted?",
+            "What can we safely spend today?",
+          ].map((q) => (
+            <AskChip key={q} q={q} />
+          ))}
         </div>
       </div>
 
@@ -374,7 +390,10 @@ function CashPulseCard() {
             { label: "Reserve ledger", ref: "reserve/current" },
             { label: "Scheduled bill run", ref: "billrun/next7" },
           ],
-          assumptions: ["Reserves treated as non-spendable", "Payroll accrual through pay cycle already committed"],
+          assumptions: [
+            "Reserves treated as non-spendable",
+            "Payroll accrual through pay cycle already committed",
+          ],
           action: p.action,
           approval: "Owner or Controller — reallocations over $50K",
         }}
@@ -409,7 +428,9 @@ function ProfitPulseCard() {
         </div>
 
         <div className="mt-2 flex flex-wrap items-baseline gap-3">
-          <div className="text-[24px] font-bold tabular-nums text-foreground">{currency0(p.operating)}</div>
+          <div className="text-[24px] font-bold tabular-nums text-foreground">
+            {currency0(p.operating)}
+          </div>
           <div className="text-[11.5px] text-muted-foreground">Operating · MTD</div>
           <TrendChip delta={p.trendDelta} />
           <div className="ml-auto text-[11.5px] text-muted-foreground">
@@ -471,7 +492,12 @@ function ProfitPulseCard() {
             <FreshnessChip label={p.freshness} />
           </div>
           <div className="flex items-center gap-1.5">
-            <Button size="sm" variant="ghost" className="h-7 px-2 text-[11.5px]" onClick={() => setOpen(true)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 px-2 text-[11.5px]"
+              onClick={() => setOpen(true)}
+            >
               Explain <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
             <Button asChild size="sm" variant="secondary" className="h-7 px-2 text-[11.5px]">
@@ -481,7 +507,11 @@ function ProfitPulseCard() {
         </div>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {["Why did profit change?", "What lowered margin?", "Which clients contributed most?"].map((q) => (
+          {[
+            "Why did profit change?",
+            "What lowered margin?",
+            "Which clients contributed most?",
+          ].map((q) => (
             <AskChip key={q} q={q} />
           ))}
         </div>
@@ -520,8 +550,12 @@ function ProfitPulseCard() {
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border/60 bg-background/70 px-2 py-1">
-      <div className="text-[9.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-0.5 font-mono text-[12px] font-semibold tabular-nums text-foreground">{value}</div>
+      <div className="text-[9.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div className="mt-0.5 font-mono text-[12px] font-semibold tabular-nums text-foreground">
+        {value}
+      </div>
     </div>
   );
 }
@@ -622,12 +656,17 @@ function AIBriefingCard() {
         </div>
         <DemoBadge className="ml-auto" />
       </div>
-      <p className="relative mt-3 text-[12.5px] leading-relaxed text-white/85">{APEX_BRIEFING.greeting}</p>
+      <p className="relative mt-3 text-[12.5px] leading-relaxed text-white/85">
+        {APEX_BRIEFING.greeting}
+      </p>
       <ul className="relative mt-2 space-y-1.5">
         {APEX_BRIEFING.insights.map((i, idx) => {
           const Icon = INSIGHT_ICON[i.icon] ?? Sparkles;
           return (
-            <li key={idx} className="flex items-start gap-2 text-[12px] leading-relaxed text-white/85">
+            <li
+              key={idx}
+              className="flex items-start gap-2 text-[12px] leading-relaxed text-white/85"
+            >
               <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-info" aria-hidden />
               <span>{i.text}</span>
             </li>
@@ -686,7 +725,8 @@ function PriorityList() {
             Today's Priorities
           </div>
           <div className="mt-0.5 text-[12px] text-muted-foreground">
-            {APEX_PRIORITIES.length} items · {APEX_PRIORITIES.filter((p) => p.severity === "High").length} high severity
+            {APEX_PRIORITIES.length} items ·{" "}
+            {APEX_PRIORITIES.filter((p) => p.severity === "High").length} high severity
           </div>
         </div>
         <DemoBadge />
@@ -710,7 +750,12 @@ function PriorityList() {
               aria-label={`Mark ${p.title} complete`}
             />
             <div className="min-w-0 flex-1">
-              <div className={cn("text-[12.5px] font-semibold text-foreground", done[p.id] && "line-through opacity-60")}>
+              <div
+                className={cn(
+                  "text-[12.5px] font-semibold text-foreground",
+                  done[p.id] && "line-through opacity-60",
+                )}
+              >
                 {p.title}
               </div>
               <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] text-muted-foreground">
@@ -807,7 +852,11 @@ function RevenueTrendCard() {
       </div>
       <div className="mt-3 h-40">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 8, right: 4, left: 0, bottom: 0 }} barCategoryGap="24%">
+          <BarChart
+            data={data}
+            margin={{ top: 8, right: 4, left: 0, bottom: 0 }}
+            barCategoryGap="24%"
+          >
             <defs>
               <linearGradient id="rev-bar" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#3b82f6" />
@@ -839,8 +888,8 @@ function RevenueTrendCard() {
         </ResponsiveContainer>
       </div>
       <p className="mt-2 text-[11px] text-muted-foreground">
-        Text summary: Revenue increased steadily from $780K in Aug to $1.46M in Jul, with the current month
-        (highlighted) representing an 18.6% year-over-year lift.
+        Text summary: Revenue increased steadily from $780K in Aug to $1.46M in Jul, with the
+        current month (highlighted) representing an 18.6% year-over-year lift.
       </p>
     </Card>
   );
@@ -859,7 +908,9 @@ function RevenueDriversCard() {
           <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             Top Revenue Drivers
           </div>
-          <div className="mt-0.5 text-[12px] text-muted-foreground">MTD contribution by source.</div>
+          <div className="mt-0.5 text-[12px] text-muted-foreground">
+            MTD contribution by source.
+          </div>
         </div>
         <DemoBadge />
       </div>
@@ -883,8 +934,12 @@ function RevenueDriversCard() {
             </PieChart>
           </ResponsiveContainer>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-            <div className="text-[9.5px] font-semibold uppercase tracking-wide text-muted-foreground">Total</div>
-            <div className="text-[14px] font-bold tabular-nums text-foreground">{currency0(total)}</div>
+            <div className="text-[9.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+              Total
+            </div>
+            <div className="text-[14px] font-bold tabular-nums text-foreground">
+              {currency0(total)}
+            </div>
           </div>
         </div>
         <ul className="space-y-1 text-[11.5px]">
@@ -892,7 +947,9 @@ function RevenueDriversCard() {
             <li key={d.name} className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full" style={{ background: d.color }} />
               <span className="truncate text-muted-foreground">{d.name}</span>
-              <span className="ml-auto font-mono tabular-nums text-foreground">{currency0(d.value)}</span>
+              <span className="ml-auto font-mono tabular-nums text-foreground">
+                {currency0(d.value)}
+              </span>
               <TrendChip delta={d.delta} />
             </li>
           ))}
@@ -902,7 +959,10 @@ function RevenueDriversCard() {
         <p className="text-[11px] text-muted-foreground">
           Renewals and enterprise clients are the largest contributors this month.
         </p>
-        <Link to="/apex/financial-dna" className="text-[11.5px] font-semibold text-info hover:underline">
+        <Link
+          to="/apex/financial-dna"
+          className="text-[11.5px] font-semibold text-info hover:underline"
+        >
           Explain →
         </Link>
       </div>
@@ -940,8 +1000,12 @@ function ExpenseAnomaliesCard() {
                 aria-hidden
               />
               <span className="text-[12.5px] font-semibold text-foreground">{a.vendor}</span>
-              <span className="text-[10.5px] uppercase tracking-wide text-muted-foreground">{a.category}</span>
-              <span className="ml-auto font-mono text-[12px] tabular-nums text-foreground">{a.amount}</span>
+              <span className="text-[10.5px] uppercase tracking-wide text-muted-foreground">
+                {a.category}
+              </span>
+              <span className="ml-auto font-mono text-[12px] tabular-nums text-foreground">
+                {a.amount}
+              </span>
               <span
                 className={cn(
                   "font-mono text-[11px] font-semibold",
@@ -1038,7 +1102,9 @@ function FinancialTimeline() {
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate text-[12.5px] font-semibold text-foreground">{e.title}</div>
+                  <div className="truncate text-[12.5px] font-semibold text-foreground">
+                    {e.title}
+                  </div>
                   <div className="truncate text-[11px] text-muted-foreground">{e.supporting}</div>
                 </div>
               </div>
@@ -1046,7 +1112,9 @@ function FinancialTimeline() {
                 <span className="inline-flex items-center gap-1 text-muted-foreground">
                   <Calendar className="h-3 w-3" /> {e.date}
                 </span>
-                {e.amount && <span className="font-mono font-semibold text-foreground">{e.amount}</span>}
+                {e.amount && (
+                  <span className="font-mono font-semibold text-foreground">{e.amount}</span>
+                )}
               </div>
               <div className="mt-1 flex items-center justify-between">
                 <span
@@ -1073,8 +1141,8 @@ function FinancialTimeline() {
       </div>
 
       <p className="mt-2 text-[11px] text-muted-foreground">
-        Text summary: {APEX_TIMELINE.length} upcoming events across cash, profit, growth, and compliance
-        categories. Selected event shown with violet outline.
+        Text summary: {APEX_TIMELINE.length} upcoming events across cash, profit, growth, and
+        compliance categories. Selected event shown with violet outline.
       </p>
     </Card>
   );
@@ -1138,7 +1206,6 @@ export function ExecutiveHome() {
         <div className="mb-4">
           <DemoNotice message="LedgerOS UI Design Lab · Demonstration Data · No live financial data, AI inference, or approvals." />
         </div>
-
 
         {/* B — KPI row */}
         <KpiRow />

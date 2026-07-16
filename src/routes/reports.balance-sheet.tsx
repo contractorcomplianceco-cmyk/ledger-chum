@@ -13,9 +13,15 @@ export const Route = createFileRoute("/reports/balance-sheet")({
   head: () => ({
     meta: [
       { title: "Balance Sheet — LedgerOS" },
-      { name: "description", content: "Assets, liabilities, and equity as of a date, from posted journal lines." },
+      {
+        name: "description",
+        content: "Assets, liabilities, and equity as of a date, from posted journal lines.",
+      },
       { property: "og:title", content: "Balance Sheet — LedgerOS" },
-      { property: "og:description", content: "Assets = Liabilities + Equity, computed from the posting engine." },
+      {
+        property: "og:description",
+        content: "Assets = Liabilities + Equity, computed from the posting engine.",
+      },
     ],
   }),
   component: BalanceSheetPage,
@@ -24,7 +30,12 @@ export const Route = createFileRoute("/reports/balance-sheet")({
 const fmt = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
-function Column({ title, rows, total, extra }: {
+function Column({
+  title,
+  rows,
+  total,
+  extra,
+}: {
   title: string;
   rows: Array<{ account_id: string; code: string; name: string; amount: number }>;
   total: number;
@@ -32,7 +43,9 @@ function Column({ title, rows, total, extra }: {
 }) {
   return (
     <div>
-      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">{title}</div>
+      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+        {title}
+      </div>
       <table className="w-full text-sm">
         <tbody>
           {rows.map((r) => (
@@ -44,14 +57,18 @@ function Column({ title, rows, total, extra }: {
           ))}
           {extra && (
             <tr className="border-b">
-              <td colSpan={2} className="py-1.5 italic text-muted-foreground">{extra.label}</td>
+              <td colSpan={2} className="py-1.5 italic text-muted-foreground">
+                {extra.label}
+              </td>
               <td className="py-1.5 text-right tabular-nums">{fmt(extra.amount)}</td>
             </tr>
           )}
         </tbody>
         <tfoot>
           <tr className="border-t font-semibold">
-            <td colSpan={2} className="py-2">Total {title}</td>
+            <td colSpan={2} className="py-2">
+              Total {title}
+            </td>
             <td className="py-2 text-right tabular-nums">{fmt(total)}</td>
           </tr>
         </tfoot>
@@ -72,11 +89,18 @@ function BalanceSheetPage() {
 
   return (
     <AppShell>
-      <PageHeader eyebrow="LedgerOS · Reporting" title="Balance Sheet" description="Assets = Liabilities + Equity." />
+      <PageHeader
+        eyebrow="LedgerOS · Reporting"
+        title="Balance Sheet"
+        description="Assets = Liabilities + Equity."
+      />
       <PageBody>
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
-            <div><Label>As of</Label><Input type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} /></div>
+            <div>
+              <Label>As of</Label>
+              <Input type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} />
+            </div>
             {q.data && (
               <div className="ml-auto text-sm">
                 <span className={q.data.balanced ? "text-emerald-600" : "text-destructive"}>
@@ -93,7 +117,11 @@ function BalanceSheetPage() {
             <div className="grid gap-8 md:grid-cols-2">
               <Column title="Assets" rows={q.data.asset} total={q.data.totals.asset} />
               <div className="space-y-6">
-                <Column title="Liabilities" rows={q.data.liability} total={q.data.totals.liability} />
+                <Column
+                  title="Liabilities"
+                  rows={q.data.liability}
+                  total={q.data.totals.liability}
+                />
                 <Column
                   title="Equity"
                   rows={q.data.equity}

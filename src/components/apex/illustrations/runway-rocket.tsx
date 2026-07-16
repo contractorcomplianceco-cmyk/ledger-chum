@@ -49,13 +49,24 @@ export function RunwayRocket({
         </linearGradient>
       </defs>
       {/* progress path */}
-      <path d="M10,150 Q40,130 70,90" stroke={`url(#${path})`} strokeWidth="2" fill="none" strokeDasharray="3 3" />
+      <path
+        d="M10,150 Q40,130 70,90"
+        stroke={`url(#${path})`}
+        strokeWidth="2"
+        fill="none"
+        strokeDasharray="3 3"
+      />
       <g transform="translate(70,80)">
         {/* fins */}
         <polygon points="-18,20 -8,10 -8,32" fill="#8b5cf6" />
         <polygon points="18,20 8,10 8,32" fill="#8b5cf6" />
         {/* body */}
-        <path d="M-10,-38 Q0,-52 10,-38 L10,20 L-10,20 Z" fill={`url(#${body})`} stroke="#94a3b8" strokeWidth="0.6" />
+        <path
+          d="M-10,-38 Q0,-52 10,-38 L10,20 L-10,20 Z"
+          fill={`url(#${body})`}
+          stroke="#94a3b8"
+          strokeWidth="0.6"
+        />
         {/* window */}
         <circle cx="0" cy="-16" r="6" fill={`url(#${window})`} stroke="#ffffff" strokeWidth="1.5" />
         {/* stripe */}
@@ -64,7 +75,12 @@ export function RunwayRocket({
         <g>
           <path d="M-7,20 Q0,44 7,20 Z" fill={`url(#${flame})`}>
             {!reducedMotion && (
-              <animate attributeName="opacity" values="1;0.75;1" dur="0.8s" repeatCount="indefinite" />
+              <animate
+                attributeName="opacity"
+                values="1;0.75;1"
+                dur="0.8s"
+                repeatCount="indefinite"
+              />
             )}
           </path>
           <path d="M-3,20 Q0,32 3,20 Z" fill="#fef08a" />

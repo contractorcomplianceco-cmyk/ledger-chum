@@ -17,7 +17,11 @@ export const Route = createFileRoute("/apex/timeline")({
   head: () => ({
     meta: [
       { title: "Financial Timeline — Project APEX" },
-      { name: "description", content: "Chronological view of every financial event on a subject with evidence and audit links." },
+      {
+        name: "description",
+        content:
+          "Chronological view of every financial event on a subject with evidence and audit links.",
+      },
     ],
   }),
   component: TimelinePage,
@@ -85,19 +89,33 @@ function TimelinePage() {
                 <span className="absolute left-0 top-2 h-3 w-3 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-400 shadow-[0_0_0_3px_rgba(59,130,246,0.18)]" />
                 <Card className="border-border/70 p-3">
                   <div className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
-                    <span>{e.date} · {e.time}</span>
-                    <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium">{e.kind}</span>
-                    <span className={cn(
-                      "rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                      e.status === "posted" && "bg-emerald-500/15 text-emerald-700",
-                      e.status === "review" && "bg-amber-500/15 text-amber-700",
-                      e.status === "draft" && "bg-muted text-muted-foreground",
-                      e.status === "flagged" && "bg-rose-500/15 text-rose-700",
-                    )}>{e.status}</span>
-                    <span className="ml-auto">{e.source} · {e.actor}</span>
+                    <span>
+                      {e.date} · {e.time}
+                    </span>
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium">
+                      {e.kind}
+                    </span>
+                    <span
+                      className={cn(
+                        "rounded-full px-2 py-0.5 text-[10px] font-semibold",
+                        e.status === "posted" && "bg-emerald-500/15 text-emerald-700",
+                        e.status === "review" && "bg-amber-500/15 text-amber-700",
+                        e.status === "draft" && "bg-muted text-muted-foreground",
+                        e.status === "flagged" && "bg-rose-500/15 text-rose-700",
+                      )}
+                    >
+                      {e.status}
+                    </span>
+                    <span className="ml-auto">
+                      {e.source} · {e.actor}
+                    </span>
                   </div>
                   <div className="mt-1 flex items-baseline justify-between gap-2">
-                    <Link to="/apex/timeline/$id" params={{ id: e.id }} className="text-[13px] font-semibold text-foreground hover:text-info">
+                    <Link
+                      to="/apex/timeline/$id"
+                      params={{ id: e.id }}
+                      className="text-[13px] font-semibold text-foreground hover:text-info"
+                    >
                       {e.title}
                     </Link>
                     {typeof e.amount === "number" && (
@@ -108,7 +126,12 @@ function TimelinePage() {
                   {e.relatedIds.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1 text-[10.5px]">
                       {e.relatedIds.map((r) => (
-                        <span key={r} className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground">{r}</span>
+                        <span
+                          key={r}
+                          className="rounded-full bg-muted px-2 py-0.5 text-muted-foreground"
+                        >
+                          {r}
+                        </span>
                       ))}
                     </div>
                   )}
@@ -128,10 +151,26 @@ function TimelinePage() {
           <Card className="border-border/70 p-4">
             <div className="text-[12.5px] font-semibold text-foreground">Cross-experience</div>
             <ul className="mt-2 space-y-1 text-[11.5px]">
-              <li><Link to="/apex/financial-dna" className="text-info hover:underline">View related DNA</Link></li>
-              <li><Link to="/apex/relationship-graph" className="text-info hover:underline">Open Relationship Graph</Link></li>
-              <li><Link to="/apex/opportunities" className="text-info hover:underline">View source opportunities</Link></li>
-              <li><Link to="/apex/digital-twin" className="text-info hover:underline">Simulate change</Link></li>
+              <li>
+                <Link to="/apex/financial-dna" className="text-info hover:underline">
+                  View related DNA
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/relationship-graph" className="text-info hover:underline">
+                  Open Relationship Graph
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/opportunities" className="text-info hover:underline">
+                  View source opportunities
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/digital-twin" className="text-info hover:underline">
+                  Simulate change
+                </Link>
+              </li>
             </ul>
           </Card>
         </aside>

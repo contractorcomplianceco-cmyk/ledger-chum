@@ -13,17 +13,17 @@ import {
   ASK_LEDGEROS_OPPORTUNITIES,
   type OppView,
 } from "@/lib/mock/apex-opportunities";
-import {
-  OpportunityCard,
-  AskLedgerOS,
-  ExperienceStat,
-} from "@/components/apex/experience-kit";
+import { OpportunityCard, AskLedgerOS, ExperienceStat } from "@/components/apex/experience-kit";
 
 export const Route = createFileRoute("/apex/opportunities")({
   head: () => ({
     meta: [
       { title: "Opportunity Engine — Project APEX" },
-      { name: "description", content: "Continuously surfaces revenue, margin, cost, cash, and growth opportunities with evidence, confidence, and approval." },
+      {
+        name: "description",
+        content:
+          "Continuously surfaces revenue, margin, cost, cash, and growth opportunities with evidence, confidence, and approval.",
+      },
     ],
   }),
   component: OpportunitiesPage,
@@ -48,16 +48,38 @@ function OpportunitiesPage() {
     >
       <ApexSection title="Portfolio">
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-          <ExperienceStat label="Total identified" value={currency(OPP_KPI_TOTALS.identified)} tone="info" hint={`${OPPORTUNITIES.length} opportunities`} />
-          <ExperienceStat label="High-confidence" value={currency(OPP_KPI_TOTALS.highConfidence)} tone="success" hint="≥ 80% confidence" />
+          <ExperienceStat
+            label="Total identified"
+            value={currency(OPP_KPI_TOTALS.identified)}
+            tone="info"
+            hint={`${OPPORTUNITIES.length} opportunities`}
+          />
+          <ExperienceStat
+            label="High-confidence"
+            value={currency(OPP_KPI_TOTALS.highConfidence)}
+            tone="success"
+            hint="≥ 80% confidence"
+          />
           <ExperienceStat label="Revenue recovery" value={currency(OPP_KPI_TOTALS.revenue)} />
           <ExperienceStat label="Cost savings" value={currency(OPP_KPI_TOTALS.cost)} />
-          <ExperienceStat label="Cash improvement" value={currency(OPP_KPI_TOTALS.cash)} tone="info" />
+          <ExperienceStat
+            label="Cash improvement"
+            value={currency(OPP_KPI_TOTALS.cash)}
+            tone="info"
+          />
           <ExperienceStat label="Margin lift" value={currency(OPP_KPI_TOTALS.margin)} />
           <ExperienceStat label="Growth" value={currency(OPP_KPI_TOTALS.growth)} />
           <ExperienceStat label="Open" value={String(OPP_KPI_TOTALS.open)} />
-          <ExperienceStat label="Accepted / active" value={String(OPP_KPI_TOTALS.accepted)} tone="success" />
-          <ExperienceStat label="Realized value" value={currency(OPP_KPI_TOTALS.realized)} hint="Post-outcome" />
+          <ExperienceStat
+            label="Accepted / active"
+            value={String(OPP_KPI_TOTALS.accepted)}
+            tone="success"
+          />
+          <ExperienceStat
+            label="Realized value"
+            value={currency(OPP_KPI_TOTALS.realized)}
+            hint="Post-outcome"
+          />
         </div>
       </ApexSection>
 
@@ -105,10 +127,26 @@ function OpportunitiesPage() {
           <Card className="border-border/70 p-4">
             <div className="text-[12.5px] font-semibold text-foreground">Cross-experience</div>
             <ul className="mt-2 space-y-1 text-[11.5px]">
-              <li><Link to="/apex/financial-dna" className="text-info hover:underline">Follow the dollar → Financial DNA</Link></li>
-              <li><Link to="/apex/relationship-graph" className="text-info hover:underline">See related records → Relationship Graph</Link></li>
-              <li><Link to="/apex/timeline" className="text-info hover:underline">Chronology → Financial Timeline</Link></li>
-              <li><Link to="/apex/digital-twin" className="text-info hover:underline">Model impact → Digital Twin</Link></li>
+              <li>
+                <Link to="/apex/financial-dna" className="text-info hover:underline">
+                  Follow the dollar → Financial DNA
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/relationship-graph" className="text-info hover:underline">
+                  See related records → Relationship Graph
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/timeline" className="text-info hover:underline">
+                  Chronology → Financial Timeline
+                </Link>
+              </li>
+              <li>
+                <Link to="/apex/digital-twin" className="text-info hover:underline">
+                  Model impact → Digital Twin
+                </Link>
+              </li>
             </ul>
           </Card>
         </aside>

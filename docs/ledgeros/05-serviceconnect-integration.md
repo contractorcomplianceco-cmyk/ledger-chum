@@ -97,13 +97,13 @@ Wire-level JSON shapes and status codes live in
 
 ## 5. Failure Modes
 
-| Scenario                                       | Behavior |
-| ---------------------------------------------- | -------- |
-| Payment references unknown invoice             | `422 unknown_reference`; SC retries after sending the invoice. |
-| Duplicate WO completion                        | Replayed response; LedgerOS does NOT create a second invoice. |
-| Invoice posted in LedgerOS, then WO reopened   | LedgerOS refuses to void a posted invoice via API; accountant issues a credit memo manually. |
-| Customer deleted in SC                         | LedgerOS soft-marks status=`inactive`; the financial record and history are retained. |
-| SC sends invalid `account_code`                | LedgerOS falls back to the org's default revenue account and flags the line for review. |
+| Scenario                                     | Behavior                                                                                     |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Payment references unknown invoice           | `422 unknown_reference`; SC retries after sending the invoice.                               |
+| Duplicate WO completion                      | Replayed response; LedgerOS does NOT create a second invoice.                                |
+| Invoice posted in LedgerOS, then WO reopened | LedgerOS refuses to void a posted invoice via API; accountant issues a credit memo manually. |
+| Customer deleted in SC                       | LedgerOS soft-marks status=`inactive`; the financial record and history are retained.        |
+| SC sends invalid `account_code`              | LedgerOS falls back to the org's default revenue account and flags the line for review.      |
 
 ## 6. Non-Contract
 

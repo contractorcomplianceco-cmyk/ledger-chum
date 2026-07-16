@@ -36,20 +36,20 @@ General ledger + reports
 
 One row per materialization attempt of a given event.
 
-| Field                  | Purpose                                                       |
-|------------------------|---------------------------------------------------------------|
-| `org_id`               | Tenant scope (RLS enforced).                                  |
-| `event_id`             | FK to `financial_events`.                                     |
-| `materialization_type` | Denormalized `ledger_object` at time of run.                  |
-| `target_object_type`   | `customer`, `invoice`, `payment`, `credit`, ...               |
-| `target_object_id`     | UUID of the created LedgerOS object.                          |
-| `status`               | Lifecycle (see below).                                        |
-| `error_code`           | Machine-readable failure code.                                |
-| `error_message`        | Operator-facing description.                                  |
-| `retry_count`          | Bumped every time a retry fails.                              |
-| `audit_event_id`       | Optional pointer to the audit row.                            |
-| `created_by`           | Operator who triggered the run.                               |
-| `completed_at`         | Set when status transitions to `completed`.                   |
+| Field                  | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `org_id`               | Tenant scope (RLS enforced).                    |
+| `event_id`             | FK to `financial_events`.                       |
+| `materialization_type` | Denormalized `ledger_object` at time of run.    |
+| `target_object_type`   | `customer`, `invoice`, `payment`, `credit`, ... |
+| `target_object_id`     | UUID of the created LedgerOS object.            |
+| `status`               | Lifecycle (see below).                          |
+| `error_code`           | Machine-readable failure code.                  |
+| `error_message`        | Operator-facing description.                    |
+| `retry_count`          | Bumped every time a retry fails.                |
+| `audit_event_id`       | Optional pointer to the audit row.              |
+| `created_by`           | Operator who triggered the run.                 |
+| `completed_at`         | Set when status transitions to `completed`.     |
 
 A partial unique index on `(event_id) WHERE status IN
 ('pending','processing','completed')` guarantees at most one active or
@@ -58,14 +58,14 @@ coexist so history is preserved across retries.
 
 ### Lifecycle
 
-| Status              | Meaning                                                       |
-|---------------------|---------------------------------------------------------------|
-| `pending`           | Reserved (not currently produced — dispatch begins immediately). |
-| `processing`        | Row locked; dispatch in-flight.                               |
-| `completed`         | Target object created / found; event marked `materialized`.   |
-| `failed`            | Uncaught error; retry available.                              |
-| `requires_review`   | Known business exception (missing customer, invalid amount, unsupported ledger_object). |
-| `cancelled`         | Superseded by a retry.                                        |
+| Status            | Meaning                                                                                 |
+| ----------------- | --------------------------------------------------------------------------------------- |
+| `pending`         | Reserved (not currently produced — dispatch begins immediately).                        |
+| `processing`      | Row locked; dispatch in-flight.                                                         |
+| `completed`       | Target object created / found; event marked `materialized`.                             |
+| `failed`          | Uncaught error; retry available.                                                        |
+| `requires_review` | Known business exception (missing customer, invalid amount, unsupported ledger_object). |
+| `cancelled`       | Superseded by a retry.                                                                  |
 
 ### `public.financial_account_mappings`
 
@@ -74,15 +74,15 @@ LedgerOS account references. There are **no hardcoded mappings** — every
 mapping is a row scoped to `(org_id, integration_source_id,
 external_type, external_value)`.
 
-| Field                   | Purpose                                                     |
-|-------------------------|-------------------------------------------------------------|
-| `external_type`         | e.g. `service_category`, `labor_type`, `part`.              |
-| `external_value`        | e.g. `Emergency Service`, `Technician Labor`, `Parts`.      |
-| `ledger_object_type`    | Target ledger object (revenue account, COGS, ...).          |
-| `ledger_account_id`     | FK to `public.accounts`.                                    |
-| `effective_date` / `expiration_date` | Time-scoped mappings.                          |
-| `status`                | `active` / `inactive`.                                      |
-| `approved_by`           | Auditability of who blessed the mapping.                    |
+| Field                                | Purpose                                                |
+| ------------------------------------ | ------------------------------------------------------ |
+| `external_type`                      | e.g. `service_category`, `labor_type`, `part`.         |
+| `external_value`                     | e.g. `Emergency Service`, `Technician Labor`, `Parts`. |
+| `ledger_object_type`                 | Target ledger object (revenue account, COGS, ...).     |
+| `ledger_account_id`                  | FK to `public.accounts`.                               |
+| `effective_date` / `expiration_date` | Time-scoped mappings.                                  |
+| `status`                             | `active` / `inactive`.                                 |
+| `approved_by`                        | Auditability of who blessed the mapping.               |
 
 ## RPC surface
 
@@ -93,7 +93,7 @@ external_type, external_value)`.
   idempotency).
 - Creates the materialization row, dispatches by `ledger_object`, and
   runs an UPSERT on the target table's `(org, external_source,
-  external_id)` unique index so replays cannot duplicate customers,
+external_id)` unique index so replays cannot duplicate customers,
   invoices, or payments.
 - On success: sets `financial_events.status = 'materialized'`, sets
   `materialized_target_type` / `_id`, writes an audit row.
@@ -137,11 +137,11 @@ All failures land in `financial_event_materializations` with:
 
 Known exception codes:
 
-| Code                          | Meaning                                     |
-|-------------------------------|---------------------------------------------|
-| `MISSING_CUSTOMER`            | Event references a customer that doesn't exist yet — create the customer event first, or pass `customer_id` in payload. |
-| `INVALID_AMOUNT`              | Amount is zero or negative.                 |
-| `UNSUPPORTED_LEDGER_OBJECT`   | No dispatch branch for the mapped ledger object. |
+| Code                        | Meaning                                                                                                                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `MISSING_CUSTOMER`          | Event references a customer that doesn't exist yet — create the customer event first, or pass `customer_id` in payload. |
+| `INVALID_AMOUNT`            | Amount is zero or negative.                                                                                             |
+| `UNSUPPORTED_LEDGER_OBJECT` | No dispatch branch for the mapped ledger object.                                                                        |
 
 ## Idempotency and duplication safety
 
@@ -160,14 +160,14 @@ source_id=event_id` for lineage.
 
 ## Security model
 
-| Boundary                                | Enforcement                                     |
-|-----------------------------------------|-------------------------------------------------|
-| External → journal entry                | **Blocked.** External systems can only POST to `/api/public/integrations/events`. |
-| External → materialization              | **Blocked.** The materialization RPC is `SECURITY DEFINER` and requires an authenticated org role. |
-| Non-approved events                     | RPC raises before dispatch.                     |
-| Cross-org access                        | Every query filters `org_id`; RLS re-checks.    |
-| Draft → posted transition               | Still gated by `post_manual_journal`, `record_payment_with_posting`, `post_bill_with_posting`. |
-| Fiscal periods                          | Enforced inside the posting RPCs, not here.     |
+| Boundary                   | Enforcement                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------- |
+| External → journal entry   | **Blocked.** External systems can only POST to `/api/public/integrations/events`.                  |
+| External → materialization | **Blocked.** The materialization RPC is `SECURITY DEFINER` and requires an authenticated org role. |
+| Non-approved events        | RPC raises before dispatch.                                                                        |
+| Cross-org access           | Every query filters `org_id`; RLS re-checks.                                                       |
+| Draft → posted transition  | Still gated by `post_manual_journal`, `record_payment_with_posting`, `post_bill_with_posting`.     |
+| Fiscal periods             | Enforced inside the posting RPCs, not here.                                                        |
 
 ## ServiceConnect pilot flow
 
@@ -199,14 +199,14 @@ first production tenants never see external systems reach into
 
 ## Test scenarios
 
-| Scenario                                          | Expected outcome                                  |
-|---------------------------------------------------|---------------------------------------------------|
-| Approved work_order.completed → invoice           | Draft invoice + lines created; event `materialized`. |
-| Duplicate event replay                            | Idempotent — returns the existing invoice.        |
-| Invoice event with unknown customer               | `requires_review` + `MISSING_CUSTOMER`.           |
-| Rejected event                                    | Never enters materialization RPC.                 |
-| Failed materialization retry                      | Cancels prior row, retries, no duplicates.        |
-| Payment event                                     | Payment (unapplied) created; no journal.          |
-| External POST to journal_entries                  | Denied — no external write path exists.           |
-| Cross-org materialization                         | RPC raises on `has_role` check.                   |
-| Audit lineage                                     | ingest, approval, materialization all share `correlation_id`. |
+| Scenario                                | Expected outcome                                              |
+| --------------------------------------- | ------------------------------------------------------------- |
+| Approved work_order.completed → invoice | Draft invoice + lines created; event `materialized`.          |
+| Duplicate event replay                  | Idempotent — returns the existing invoice.                    |
+| Invoice event with unknown customer     | `requires_review` + `MISSING_CUSTOMER`.                       |
+| Rejected event                          | Never enters materialization RPC.                             |
+| Failed materialization retry            | Cancels prior row, retries, no duplicates.                    |
+| Payment event                           | Payment (unapplied) created; no journal.                      |
+| External POST to journal_entries        | Denied — no external write path exists.                       |
+| Cross-org materialization               | RPC raises on `has_role` check.                               |
+| Audit lineage                           | ingest, approval, materialization all share `correlation_id`. |

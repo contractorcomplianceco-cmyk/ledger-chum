@@ -26,15 +26,15 @@ the Financial Event Bus (M6 / M7).
 
 **Tables**
 
-| Table | Purpose |
-|---|---|
-| `inventory_categories` | Grouping + default COGS / asset account mapping. |
-| `inventory_locations` | Physical / logical stock locations. |
-| `inventory_items` | Item master: SKU, UoM, cost method, current avg cost, on-hand. |
+| Table                    | Purpose                                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| `inventory_categories`   | Grouping + default COGS / asset account mapping.                                             |
+| `inventory_locations`    | Physical / logical stock locations.                                                          |
+| `inventory_items`        | Item master: SKU, UoM, cost method, current avg cost, on-hand.                               |
 | `inventory_transactions` | Immutable movement log: receipts, issues, adjustments, transfers, consumption, revaluations. |
 
 **Cost methods supported** — `average`, `fifo`, `standard`, `specific`.
-Only the *framework* is scoped in M8; automatic cost-layer computation
+Only the _framework_ is scoped in M8; automatic cost-layer computation
 is deferred.
 
 **COGS treatment** — inventory transactions carry an optional
@@ -52,11 +52,11 @@ public API for external work-order consumption) remains untouched.
 
 **Tables**
 
-| Table | Purpose |
-|---|---|
-| `fixed_asset_categories` | Default useful life, depreciation method, and account mapping. |
-| `fixed_assets` | Individual asset records with acquisition, in-service, and disposal dates. |
-| `fixed_asset_depreciation` | Period-level schedule of depreciation amounts. |
+| Table                      | Purpose                                                                    |
+| -------------------------- | -------------------------------------------------------------------------- |
+| `fixed_asset_categories`   | Default useful life, depreciation method, and account mapping.             |
+| `fixed_assets`             | Individual asset records with acquisition, in-service, and disposal dates. |
+| `fixed_asset_depreciation` | Period-level schedule of depreciation amounts.                             |
 
 **Book value** is a stored generated column:
 `book_value = acquisition_cost - accumulated_depreciation`.
@@ -74,12 +74,12 @@ via the existing manual-journal RPC.
 
 **Framework only — no calculation logic.**
 
-| Table | Purpose |
-|---|---|
-| `tax_jurisdictions` | Configurable jurisdictions (country / region / code). |
-| `tax_categories` | `sales`, `use`, `vat`, `gst`, `withholding`, `payroll`, `excise`, `other`. |
-| `tax_rates` | Effective-dated rates keyed by (jurisdiction, category, effective_from). Ties to liability + expense accounts. |
-| `tax_liabilities` | Period-level obligation with `open`, `filed`, `paid`, `void` statuses. |
+| Table               | Purpose                                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `tax_jurisdictions` | Configurable jurisdictions (country / region / code).                                                          |
+| `tax_categories`    | `sales`, `use`, `vat`, `gst`, `withholding`, `payroll`, `excise`, `other`.                                     |
+| `tax_rates`         | Effective-dated rates keyed by (jurisdiction, category, effective_from). Ties to liability + expense accounts. |
+| `tax_liabilities`   | Period-level obligation with `open`, `filed`, `paid`, `void` statuses.                                         |
 
 Rate lookup, invoice-level tax computation, and filing automation are
 explicitly out of scope for M8. Operators record liability amounts;
@@ -89,10 +89,10 @@ LedgerOS stores them and links to journals through the standard engine.
 
 ## 4. Multi-Entity Foundation
 
-| Table | Purpose |
-|---|---|
-| `legal_entities` | Multiple legal entities under a single organization. Optional parent hierarchy, functional currency, and default intercompany AR / AP account mapping. |
-| `intercompany_transactions` | Recorded movements between legal entities with `pending`, `posted`, `settled`, `void` statuses. |
+| Table                       | Purpose                                                                                                                                                |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `legal_entities`            | Multiple legal entities under a single organization. Optional parent hierarchy, functional currency, and default intercompany AR / AP account mapping. |
+| `intercompany_transactions` | Recorded movements between legal entities with `pending`, `posted`, `settled`, `void` statuses.                                                        |
 
 **Due to / from balances** — `getIntercompanyBalances` aggregates posted
 intercompany transactions per (from_entity, to_entity) pair. Full
@@ -108,18 +108,18 @@ relationship.
 
 **Table:** `accounting_insights`
 
-| Field | Purpose |
-|---|---|
-| `persona` | `controller` \| `close_assistant` \| `accountant_assistant`. |
-| `category` | Free-form tag (e.g. `close_readiness`, `unmapped_account`, `variance`). |
-| `title` | Short headline. |
-| `what_happened` | Description of the observation. |
-| `why` | Interpretive narrative. |
-| `evidence` | JSONB array of supporting references (record IDs, metrics, links). |
-| `confidence` | Numeric 0–1 confidence value. |
-| `recommended_action` | Suggested next step for a human. |
-| `advisory_only` | Immutable `TRUE`. Enforced by trigger. |
-| `status` | `open` → `acknowledged` / `dismissed` / `resolved`. |
+| Field                | Purpose                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| `persona`            | `controller` \| `close_assistant` \| `accountant_assistant`.            |
+| `category`           | Free-form tag (e.g. `close_readiness`, `unmapped_account`, `variance`). |
+| `title`              | Short headline.                                                         |
+| `what_happened`      | Description of the observation.                                         |
+| `why`                | Interpretive narrative.                                                 |
+| `evidence`           | JSONB array of supporting references (record IDs, metrics, links).      |
+| `confidence`         | Numeric 0–1 confidence value.                                           |
+| `recommended_action` | Suggested next step for a human.                                        |
+| `advisory_only`      | Immutable `TRUE`. Enforced by trigger.                                  |
+| `status`             | `open` → `acknowledged` / `dismissed` / `resolved`.                     |
 
 **Immutability guard** — `tg_insights_advisory_guard` blocks any
 UPDATE that mutates narrative, evidence, confidence, persona, category,

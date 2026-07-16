@@ -4,9 +4,7 @@
  */
 
 import type { ID, ISODate, ISODateTime, Money } from "../../types";
-import type {
-  CompensationCalculationBasis,
-} from "./domain-types";
+import type { CompensationCalculationBasis } from "./domain-types";
 import type { CompensationPolicyDefaults } from "./policy-defaults";
 import type { DisbursementClass, ReviewStatus } from "./types";
 
@@ -34,7 +32,15 @@ export type CompensationCalculationStatus =
   | "closed";
 
 export interface CalculationSourceRecord {
-  type: "invoice" | "payment" | "subscription" | "event" | "milestone" | "renewal" | "expansion" | "manual";
+  type:
+    | "invoice"
+    | "payment"
+    | "subscription"
+    | "event"
+    | "milestone"
+    | "renewal"
+    | "expansion"
+    | "manual";
   id: ID;
   label: string;
   amount: Money;
@@ -187,7 +193,14 @@ export interface CompensationApproval {
     | "clawback";
   deadline?: ISODate;
   recommendation: string;
-  status: "awaiting" | "approved" | "approved_with_conditions" | "changes_requested" | "held" | "rejected" | "escalated";
+  status:
+    | "awaiting"
+    | "approved"
+    | "approved_with_conditions"
+    | "changes_requested"
+    | "held"
+    | "rejected"
+    | "escalated";
   approver?: string;
   approvedAt?: ISODateTime;
   note?: string;
@@ -210,7 +223,8 @@ export interface CompensationReserve {
   payableWithin7Days: Money;
   payableWithin30Days: Money;
   expectedPayableDate?: ISODate;
-  destination: "payroll" | "ap" | "check" | "ach" | "wire" | "partner" | "owner_distribution" | "manual";
+  destination:
+    "payroll" | "ap" | "check" | "ach" | "wire" | "partner" | "owner_distribution" | "manual";
 }
 
 export type PayableStatus =
@@ -366,12 +380,26 @@ export interface CompensationHoldback {
   chargebackWindowEnd: ISODate;
   riskStatus: "low" | "medium" | "high";
   riskTriggers: string[];
-  releaseMethod: "automatic" | "rose_approval" | "manual" | "partial" | "extended" | "converted_to_clawback" | "reversed";
+  releaseMethod:
+    | "automatic"
+    | "rose_approval"
+    | "manual"
+    | "partial"
+    | "extended"
+    | "converted_to_clawback"
+    | "reversed";
   requiredApproval?: string;
   releaseDate?: ISODate;
   releasedAmount: Money;
   remainingAmount: Money;
-  status: "held" | "eligible_for_release" | "partial_released" | "released" | "extended" | "converted" | "reversed";
+  status:
+    | "held"
+    | "eligible_for_release"
+    | "partial_released"
+    | "released"
+    | "extended"
+    | "converted"
+    | "reversed";
   auditTimeline: Array<{ at: ISODateTime; actor: string; action: string }>;
 }
 

@@ -2,14 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  KeyRound,
-  Zap,
-  RefreshCcw,
-  AlertTriangle,
-  ShieldCheck,
-  Timer,
-} from "lucide-react";
+import { KeyRound, Zap, RefreshCcw, AlertTriangle, ShieldCheck, Timer } from "lucide-react";
 
 /**
  * M11 — Customer-facing Integration Documentation.
@@ -70,25 +63,33 @@ function IntegrationDocs() {
         eyebrow="External integrations"
         title="Integration Documentation"
         description="How external operational systems publish financial events to LedgerOS. External systems never post journal entries directly — every event flows through the Financial Event Bus."
-        actions={<Badge variant="secondary" className="bg-muted text-muted-foreground">v1</Badge>}
+        actions={
+          <Badge variant="secondary" className="bg-muted text-muted-foreground">
+            v1
+          </Badge>
+        }
       />
       <PageBody>
         <Section icon={KeyRound} title="Authentication">
           <p>
-            All requests authenticate with an API client credential issued per environment. Credentials are scoped to a
-            single organization and a fixed set of event types. Signed requests carry an HMAC-SHA256 signature over the
-            raw request body using a shared secret.
+            All requests authenticate with an API client credential issued per environment.
+            Credentials are scoped to a single organization and a fixed set of event types. Signed
+            requests carry an HMAC-SHA256 signature over the raw request body using a shared secret.
           </p>
           <Code>{`Authorization: Bearer <client_token>
 X-LedgerOS-Timestamp: 1739462400
 X-LedgerOS-Signature: sha256=<hex>`}</Code>
-          <p>Signatures are verified with a constant-time compare; the timestamp must be within 300 seconds.</p>
+          <p>
+            Signatures are verified with a constant-time compare; the timestamp must be within 300
+            seconds.
+          </p>
         </Section>
 
         <Section icon={Zap} title="Events">
           <p>
-            Post events to the Financial Event Bus endpoint. Each event is validated against its schema, routed to a
-            rule, and materialized into a financial object. External systems never post journal entries directly.
+            Post events to the Financial Event Bus endpoint. Each event is validated against its
+            schema, routed to a rule, and materialized into a financial object. External systems
+            never post journal entries directly.
           </p>
           <Code>{`POST /api/public/integrations/events
 Content-Type: application/json
@@ -100,21 +101,26 @@ Content-Type: application/json
   "payload": { "...": "..." }
 }`}</Code>
           <p>
-            Supported event types include <code>work_order.completed</code>, <code>invoice.created</code>,
-            <code> payment.received</code>, <code>inventory.consumed</code>, and <code>refund.created</code>.
+            Supported event types include <code>work_order.completed</code>,{" "}
+            <code>invoice.created</code>,<code> payment.received</code>,{" "}
+            <code>inventory.consumed</code>, and <code>refund.created</code>.
           </p>
         </Section>
 
         <Section icon={RefreshCcw} title="Idempotency">
           <p>
-            Every event must include an <code>Idempotency-Key</code> header. The bus deduplicates for 24 hours: a
-            duplicate key returns the original response with <code>X-LedgerOS-Idempotent-Replayed: true</code>.
+            Every event must include an <code>Idempotency-Key</code> header. The bus deduplicates
+            for 24 hours: a duplicate key returns the original response with{" "}
+            <code>X-LedgerOS-Idempotent-Replayed: true</code>.
           </p>
           <Code>{`Idempotency-Key: 6f2e3d90-b0a5-42d7-9e5f-4c9d1e75c001`}</Code>
         </Section>
 
         <Section icon={AlertTriangle} title="Errors">
-          <p>Errors use structured JSON with a stable <code>code</code> and a human <code>message</code>.</p>
+          <p>
+            Errors use structured JSON with a stable <code>code</code> and a human{" "}
+            <code>message</code>.
+          </p>
           <Code>{`HTTP/1.1 422 Unprocessable Entity
 
 {
@@ -123,7 +129,10 @@ Content-Type: application/json
   "correlation_id": "corr_9f21",
   "retryable": false
 }`}</Code>
-          <p>Non-retryable errors are surfaced as exceptions in the accountant workspace for manual resolution.</p>
+          <p>
+            Non-retryable errors are surfaced as exceptions in the accountant workspace for manual
+            resolution.
+          </p>
         </Section>
 
         <Section icon={ShieldCheck} title="Security">
@@ -137,12 +146,14 @@ Content-Type: application/json
 
         <Section icon={Timer} title="Retry behavior">
           <p>
-            Transient failures (<code>5xx</code>, <code>429</code>, network) are retried with exponential backoff and
-            jitter: 30s, 2m, 8m, 30m, 2h — up to 5 attempts. Non-retryable errors (<code>4xx</code> other than 408 /
-            429) are moved to the exception queue immediately.
+            Transient failures (<code>5xx</code>, <code>429</code>, network) are retried with
+            exponential backoff and jitter: 30s, 2m, 8m, 30m, 2h — up to 5 attempts. Non-retryable
+            errors (<code>4xx</code> other than 408 / 429) are moved to the exception queue
+            immediately.
           </p>
           <p>
-            Publishers should honor <code>Retry-After</code> when present and MUST NOT retry with a different
+            Publishers should honor <code>Retry-After</code> when present and MUST NOT retry with a
+            different
             <code> Idempotency-Key</code> for the same logical event.
           </p>
         </Section>

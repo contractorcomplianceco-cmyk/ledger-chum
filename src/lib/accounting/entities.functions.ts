@@ -16,7 +16,10 @@ export const listLegalEntities = createServerFn({ method: "GET" })
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
-      .from("legal_entities").select("*").eq("org_id", data.orgId).order("code");
+      .from("legal_entities")
+      .select("*")
+      .eq("org_id", data.orgId)
+      .order("code");
     if (error) throw new Error(error.message);
     return rows ?? [];
   });
@@ -24,28 +27,40 @@ export const listLegalEntities = createServerFn({ method: "GET" })
 export const upsertLegalEntity = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      code: z.string().min(1).max(64),
-      name: z.string().min(1).max(200),
-      entityType: z.enum([
-        "llc","corporation","partnership","sole_proprietor","nonprofit","branch","division","other",
-      ]).default("llc"),
-      parentEntityId: z.string().uuid().nullable().optional(),
-      country: z.string().max(64).optional(),
-      taxId: z.string().max(64).optional(),
-      functionalCurrency: z.string().min(3).max(3).default("USD"),
-      isConsolidated: z.boolean().default(true),
-      isActive: z.boolean().default(true),
-      intercompanyArAccountId: z.string().uuid().nullable().optional(),
-      intercompanyApAccountId: z.string().uuid().nullable().optional(),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        code: z.string().min(1).max(64),
+        name: z.string().min(1).max(200),
+        entityType: z
+          .enum([
+            "llc",
+            "corporation",
+            "partnership",
+            "sole_proprietor",
+            "nonprofit",
+            "branch",
+            "division",
+            "other",
+          ])
+          .default("llc"),
+        parentEntityId: z.string().uuid().nullable().optional(),
+        country: z.string().max(64).optional(),
+        taxId: z.string().max(64).optional(),
+        functionalCurrency: z.string().min(3).max(3).default("USD"),
+        isConsolidated: z.boolean().default(true),
+        isActive: z.boolean().default(true),
+        intercompanyArAccountId: z.string().uuid().nullable().optional(),
+        intercompanyApAccountId: z.string().uuid().nullable().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
       org_id: data.orgId,
-      code: data.code, name: data.name,
+      code: data.code,
+      name: data.name,
       entity_type: data.entityType,
       parent_entity_id: data.parentEntityId ?? null,
       country: data.country ?? null,
@@ -67,15 +82,18 @@ export const upsertLegalEntity = createServerFn({ method: "POST" })
 export const listIntercompanyTransactions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["pending","posted","settled","void","all"]).default("all"),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["pending", "posted", "settled", "void", "all"]).default("all"),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
-      .from("intercompany_transactions").select("*")
+      .from("intercompany_transactions")
+      .select("*")
       .eq("org_id", data.orgId)
       .order("txn_date", { ascending: false })
       .limit(data.limit);
@@ -88,16 +106,18 @@ export const listIntercompanyTransactions = createServerFn({ method: "GET" })
 export const recordIntercompanyTransaction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      fromEntityId: z.string().uuid(),
-      toEntityId: z.string().uuid(),
-      txnDate: z.string(),
-      amount: z.number(),
-      currency: z.string().min(3).max(3).default("USD"),
-      description: z.string().max(1000).optional(),
-      memo: z.string().max(1000).optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        fromEntityId: z.string().uuid(),
+        toEntityId: z.string().uuid(),
+        txnDate: z.string(),
+        amount: z.number(),
+        currency: z.string().min(3).max(3).default("USD"),
+        description: z.string().max(1000).optional(),
+        memo: z.string().max(1000).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     if (data.fromEntityId === data.toEntityId) {
@@ -116,7 +136,8 @@ export const recordIntercompanyTransaction = createServerFn({ method: "POST" })
         memo: data.memo ?? null,
         status: "pending",
       })
-      .select().single();
+      .select()
+      .single();
     if (error) throw new Error(error.message);
     return row;
   });

@@ -38,8 +38,16 @@ function Summary() {
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard label="Total Features" value={stats.total} sub="All modules combined" />
         <KpiCard label="Built" value={status("built")} sub="Shipped in production" />
-        <KpiCard label="Mock UI Complete" value={status("mock_ui_complete")} sub="Design Lab screen exists" />
-        <KpiCard label="Typed / API Ready" value={status("typed_api_ready") + status("designed")} sub="Contract-ready" />
+        <KpiCard
+          label="Mock UI Complete"
+          value={status("mock_ui_complete")}
+          sub="Design Lab screen exists"
+        />
+        <KpiCard
+          label="Typed / API Ready"
+          value={status("typed_api_ready") + status("designed")}
+          sub="Contract-ready"
+        />
         <KpiCard label="Planned" value={status("planned")} sub="Awaiting design or build" />
         <KpiCard
           label="Blocked"
@@ -52,12 +60,36 @@ function Summary() {
           }
           sub="Blocked by policy, legal, accounting, integration, or backend"
         />
-        <KpiCard label="Requires Backend" value={flag("requires_backend")} sub="Cannot ship without server" />
-        <KpiCard label="Requires Integration" value={flag("requires_integration")} sub="External system dependency" />
-        <KpiCard label="Requires Legal Review" value={flag("requires_legal_review")} sub="Legal sign-off gate" />
-        <KpiCard label="Requires Accountant Review" value={flag("requires_accountant_review")} sub="Christin / Carmen gate" />
-        <KpiCard label="Production Critical" value={flag("production_critical")} sub="Must ship before launch" />
-        <KpiCard label="Sensitive Data" value={flag("sensitive_data")} sub="PII / financial sensitivity" />
+        <KpiCard
+          label="Requires Backend"
+          value={flag("requires_backend")}
+          sub="Cannot ship without server"
+        />
+        <KpiCard
+          label="Requires Integration"
+          value={flag("requires_integration")}
+          sub="External system dependency"
+        />
+        <KpiCard
+          label="Requires Legal Review"
+          value={flag("requires_legal_review")}
+          sub="Legal sign-off gate"
+        />
+        <KpiCard
+          label="Requires Accountant Review"
+          value={flag("requires_accountant_review")}
+          sub="Christin / Carmen gate"
+        />
+        <KpiCard
+          label="Production Critical"
+          value={flag("production_critical")}
+          sub="Must ship before launch"
+        />
+        <KpiCard
+          label="Sensitive Data"
+          value={flag("sensitive_data")}
+          sub="PII / financial sensitivity"
+        />
       </section>
 
       <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -102,13 +134,22 @@ function Summary() {
         <div className="font-semibold text-foreground">How to use the registry</div>
         <ul className="mt-1 list-disc space-y-1 pl-5">
           <li>Every feature has one authoritative record — never duplicate.</li>
-          <li>Status transitions are: Planned → Designed → Typed/API Ready → In Production Build → Ready for Testing → Ready for Parallel Run → Ready for Cutover → Built.</li>
-          <li>Blocked statuses require a documented owner and unblock plan; see Legal & Accounting and Integrations views.</li>
+          <li>
+            Status transitions are: Planned → Designed → Typed/API Ready → In Production Build →
+            Ready for Testing → Ready for Parallel Run → Ready for Cutover → Built.
+          </li>
+          <li>
+            Blocked statuses require a documented owner and unblock plan; see Legal & Accounting and
+            Integrations views.
+          </li>
           <li>No planned feature is added to the live sidebar until it moves to Built.</li>
-          <li>Backend, database, Supabase, or auth changes are out of scope for this planning phase.</li>
+          <li>
+            Backend, database, Supabase, or auth changes are out of scope for this planning phase.
+          </li>
         </ul>
         <div className="mt-2 text-[11.5px]">
-          Total records: <span className="font-mono text-foreground">{FEATURE_REGISTRY.length}</span>
+          Total records:{" "}
+          <span className="font-mono text-foreground">{FEATURE_REGISTRY.length}</span>
         </div>
       </Card>
     </FeatureRegistryPage>

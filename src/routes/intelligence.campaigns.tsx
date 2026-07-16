@@ -54,7 +54,10 @@ function CampaignEconomics() {
                   <td className="px-3 py-2 text-muted-foreground">{c.channel}</td>
                   <td className="px-3 py-2 text-muted-foreground">{c.owner}</td>
                   <td className="px-3 py-2">
-                    <Badge className={cn("h-5 border-0 px-1.5 text-[10.5px]", STATUS_CLS[c.status])} variant="secondary">
+                    <Badge
+                      className={cn("h-5 border-0 px-1.5 text-[10.5px]", STATUS_CLS[c.status])}
+                      variant="secondary"
+                    >
                       {c.status}
                     </Badge>
                   </td>
@@ -63,9 +66,15 @@ function CampaignEconomics() {
                   <td className="px-3 py-2 text-right font-tabular">{c.qualified}</td>
                   <td className="px-3 py-2 text-right font-tabular">{c.deals}</td>
                   <td className="px-3 py-2 text-right font-tabular">{currency(c.revenue)}</td>
-                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.passthrough)}</td>
-                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.commission)}</td>
-                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(c.fulfillment)}</td>
+                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                    {currency(c.passthrough)}
+                  </td>
+                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                    {currency(c.commission)}
+                  </td>
+                  <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                    {currency(c.fulfillment)}
+                  </td>
                   <td
                     className={cn(
                       "px-3 py-2 text-right font-tabular font-semibold",
@@ -77,13 +86,21 @@ function CampaignEconomics() {
                   <td
                     className={cn(
                       "px-3 py-2 text-right font-tabular font-semibold",
-                      c.profitRoi >= 2 ? "text-success" : c.profitRoi >= 1 ? "text-warning" : "text-destructive",
+                      c.profitRoi >= 2
+                        ? "text-success"
+                        : c.profitRoi >= 1
+                          ? "text-warning"
+                          : "text-destructive",
                     )}
                   >
                     {c.profitRoi.toFixed(2)}x
                   </td>
-                  <td className="px-3 py-2 text-right font-tabular">{c.payback > 0 ? `${c.payback}d` : "—"}</td>
-                  <td className="px-3 py-2 text-right font-tabular">{c.chargebackRate.toFixed(1)}%</td>
+                  <td className="px-3 py-2 text-right font-tabular">
+                    {c.payback > 0 ? `${c.payback}d` : "—"}
+                  </td>
+                  <td className="px-3 py-2 text-right font-tabular">
+                    {c.chargebackRate.toFixed(1)}%
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -92,8 +109,8 @@ function CampaignEconomics() {
       </Card>
 
       <p className="text-[11px] italic text-muted-foreground">
-        Chargeback-adjusted profit ROI already applied. Attribution model: last-touch weighted with 30-day window
-        (demonstration values).
+        Chargeback-adjusted profit ROI already applied. Attribution model: last-touch weighted with
+        30-day window (demonstration values).
       </p>
     </IntelligencePage>
   );

@@ -12,7 +12,10 @@ export const Route = createFileRoute("/accounts-receivable/aging")({
       { title: "AR Aging — LedgerOS" },
       { name: "description", content: "Accounts receivable aging buckets by customer." },
       { property: "og:title", content: "AR Aging — LedgerOS" },
-      { property: "og:description", content: "Overdue receivables by customer and bucket, from posted invoices." },
+      {
+        property: "og:description",
+        content: "Overdue receivables by customer and bucket, from posted invoices.",
+      },
     ],
   }),
   component: ArAgingPage,
@@ -40,10 +43,7 @@ function ArAgingPage() {
 
   return (
     <AppShell>
-      <PageHeader
-        title="AR Aging"
-        description="Open invoice balances bucketed by days past due."
-      />
+      <PageHeader title="AR Aging" description="Open invoice balances bucketed by days past due." />
       <PageBody>
         <Card className="p-4">
           {!q.data ? (
@@ -55,7 +55,9 @@ function ArAgingPage() {
                   <tr>
                     <th className="py-2 pr-3">Customer</th>
                     {BUCKETS.map((b) => (
-                      <th key={b.key} className="py-2 pr-3 text-right">{b.label}</th>
+                      <th key={b.key} className="py-2 pr-3 text-right">
+                        {b.label}
+                      </th>
                     ))}
                     <th className="py-2 pr-3 text-right">Total</th>
                   </tr>
@@ -76,7 +78,10 @@ function ArAgingPage() {
                   ))}
                   {q.data.rows.length === 0 && (
                     <tr>
-                      <td colSpan={BUCKETS.length + 2} className="py-8 text-center text-muted-foreground">
+                      <td
+                        colSpan={BUCKETS.length + 2}
+                        className="py-8 text-center text-muted-foreground"
+                      >
                         No open receivables.
                       </td>
                     </tr>

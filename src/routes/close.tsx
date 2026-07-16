@@ -17,23 +17,39 @@ import {
   approvePeriodClose,
   reopenPeriod,
 } from "@/lib/accounting/close.functions";
-import { CheckCircle2, Circle, XCircle, PlayCircle, Lock, Unlock, ClipboardCheck } from "lucide-react";
+import {
+  CheckCircle2,
+  Circle,
+  XCircle,
+  PlayCircle,
+  Lock,
+  Unlock,
+  ClipboardCheck,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/close")({
   head: () => ({
     meta: [
       { title: "Monthly Close — LedgerOS" },
-      { name: "description", content: "Checklist-driven month-end close with approvals and period locking." },
+      {
+        name: "description",
+        content: "Checklist-driven month-end close with approvals and period locking.",
+      },
       { property: "og:title", content: "Monthly Close — LedgerOS" },
-      { property: "og:description", content: "Checklist-driven month-end close with approvals and period locking." },
+      {
+        property: "og:description",
+        content: "Checklist-driven month-end close with approvals and period locking.",
+      },
     ],
   }),
   component: ClosePage,
 });
 
 const fmtDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "—";
+  d
+    ? new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })
+    : "—";
 
 function ClosePage() {
   const orgId = useOrgId();
@@ -111,7 +127,9 @@ function ClosePage() {
   const periods = periodsQ.data ?? [];
   const currentRun = runQ.data;
   const tasks = currentRun?.tasks ?? [];
-  const doneRequired = tasks.filter((t) => t.required && (t.status === "done" || t.status === "skipped")).length;
+  const doneRequired = tasks.filter(
+    (t) => t.required && (t.status === "done" || t.status === "skipped"),
+  ).length;
   const totalRequired = tasks.filter((t) => t.required).length;
   const progressPct = totalRequired > 0 ? Math.round((doneRequired / totalRequired) * 100) : 0;
 
@@ -124,7 +142,9 @@ function ClosePage() {
       />
       <PageBody>
         {!orgId ? (
-          <Card className="p-6 text-sm text-muted-foreground">Sign in to run the close workflow.</Card>
+          <Card className="p-6 text-sm text-muted-foreground">
+            Sign in to run the close workflow.
+          </Card>
         ) : (
           <div className="grid gap-4 lg:grid-cols-[380px_1fr]">
             {/* Periods list */}
@@ -144,9 +164,7 @@ function ClosePage() {
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="text-sm font-semibold">
-                          Period {p.period_number}
-                        </div>
+                        <div className="text-sm font-semibold">Period {p.period_number}</div>
                         <StatusBadge status={p.status} />
                       </div>
                       <div className="text-[11px] text-muted-foreground mt-0.5">
@@ -154,7 +172,14 @@ function ClosePage() {
                       </div>
                       <div className="mt-2 flex items-center gap-2">
                         {!p.close_run && p.status === "open" && (
-                          <Button size="sm" className="h-7 text-[12px]" onClick={(e) => { e.stopPropagation(); start(p.id); }}>
+                          <Button
+                            size="sm"
+                            className="h-7 text-[12px]"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              start(p.id);
+                            }}
+                          >
                             <PlayCircle className="mr-1 h-3 w-3" /> Start close
                           </Button>
                         )}
@@ -168,14 +193,22 @@ function ClosePage() {
                             <Input
                               placeholder="Reason…"
                               value={reopenReason}
-                              onChange={(e) => { e.stopPropagation(); setReopenReason(e.target.value); }}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                setReopenReason(e.target.value);
+                              }}
                               onClick={(e) => e.stopPropagation()}
                               className="h-7 text-[11px] w-24"
                             />
                             <Button
-                              size="sm" variant="ghost" className="h-7 text-[12px]"
+                              size="sm"
+                              variant="ghost"
+                              className="h-7 text-[12px]"
                               disabled={!reopenReason}
-                              onClick={(e) => { e.stopPropagation(); reopen(p.id); }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                reopen(p.id);
+                              }}
                             >
                               <Unlock className="mr-1 h-3 w-3" /> Reopen
                             </Button>
@@ -212,7 +245,8 @@ function ClosePage() {
                         </div>
                         <div className="text-[12px] text-muted-foreground">
                           Started {fmtDate(currentRun.run.started_at)}
-                          {currentRun.run.completed_at && ` · Completed ${fmtDate(currentRun.run.completed_at)}`}
+                          {currentRun.run.completed_at &&
+                            ` · Completed ${fmtDate(currentRun.run.completed_at)}`}
                         </div>
                       </div>
                       <div className="text-right">
@@ -235,14 +269,27 @@ function ClosePage() {
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-medium flex items-center gap-2">
                               {t.title}
-                              {!t.required && <span className="text-[10px] text-muted-foreground uppercase">optional</span>}
-                              <span className="text-[10px] text-muted-foreground uppercase">{t.category}</span>
+                              {!t.required && (
+                                <span className="text-[10px] text-muted-foreground uppercase">
+                                  optional
+                                </span>
+                              )}
+                              <span className="text-[10px] text-muted-foreground uppercase">
+                                {t.category}
+                              </span>
                             </div>
-                            {t.note && <div className="text-[11px] text-muted-foreground mt-0.5">{t.note}</div>}
+                            {t.note && (
+                              <div className="text-[11px] text-muted-foreground mt-0.5">
+                                {t.note}
+                              </div>
+                            )}
                           </div>
                           <div className="flex items-center gap-1">
                             {t.status !== "done" && (
-                              <Button size="sm" variant="ghost" className="h-7 text-[12px]"
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-[12px]"
                                 onClick={() => updateTask(t.id, "done")}
                                 disabled={currentRun.run.status !== "in_progress"}
                               >
@@ -250,7 +297,10 @@ function ClosePage() {
                               </Button>
                             )}
                             {t.status === "done" && (
-                              <Button size="sm" variant="ghost" className="h-7 text-[12px]"
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-[12px]"
                                 onClick={() => updateTask(t.id, "pending")}
                                 disabled={currentRun.run.status !== "in_progress"}
                               >
@@ -258,7 +308,10 @@ function ClosePage() {
                               </Button>
                             )}
                             {!t.required && t.status !== "skipped" && (
-                              <Button size="sm" variant="ghost" className="h-7 text-[12px]"
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-[12px]"
                                 onClick={() => updateTask(t.id, "skipped")}
                                 disabled={currentRun.run.status !== "in_progress"}
                               >

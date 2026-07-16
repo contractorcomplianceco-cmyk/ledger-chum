@@ -20,10 +20,12 @@ export const listFiscalYears = createServerFn({ method: "GET" })
 export const listFiscalPeriods = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      fiscalYearId: z.string().uuid().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        fiscalYearId: z.string().uuid().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -40,13 +42,15 @@ export const listFiscalPeriods = createServerFn({ method: "GET" })
 export const createFiscalYear = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      year: z.number().int().min(1900).max(2200),
-      startDate: z.string(),
-      endDate: z.string(),
-      generateMonthlyPeriods: z.boolean().default(true),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        year: z.number().int().min(1900).max(2200),
+        startDate: z.string(),
+        endDate: z.string(),
+        generateMonthlyPeriods: z.boolean().default(true),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: fy, error } = await context.supabase
@@ -98,10 +102,12 @@ export const createFiscalYear = createServerFn({ method: "POST" })
 export const setPeriodStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      periodId: z.string().uuid(),
-      status: z.enum(["open", "pending_close", "closed", "locked"]),
-    }).parse(v),
+    z
+      .object({
+        periodId: z.string().uuid(),
+        status: z.enum(["open", "pending_close", "closed", "locked"]),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: before } = await context.supabase

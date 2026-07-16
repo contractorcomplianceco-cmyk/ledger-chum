@@ -20,12 +20,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { BankAccountCard } from "@/components/banking/bank-account-card";
 import { BankingAlert } from "@/components/banking/banking-alert";
 import { DemoNotice } from "@/components/banking/demo-notice";
-import {
-  BANK_ACCOUNTS,
-  BANKING_ALERTS,
-  IMPORT_HISTORY,
-  TRANSACTIONS,
-} from "@/lib/mock/banking";
+import { BANK_ACCOUNTS, BANKING_ALERTS, IMPORT_HISTORY, TRANSACTIONS } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
 import {
   Bar,
@@ -74,7 +69,9 @@ function BankingOverview() {
   const pending = BANK_ACCOUNTS.reduce((s, a) => s + a.pendingReview, 0);
   const unmatched = BANK_ACCOUNTS.reduce((s, a) => s + a.unmatched, 0);
   const dueRecon = BANK_ACCOUNTS.filter((a) =>
-    ["not_started", "in_progress", "overdue", "needs_review", "variance"].includes(a.reconciliation),
+    ["not_started", "in_progress", "overdue", "needs_review", "variance"].includes(
+      a.reconciliation,
+    ),
   ).length;
   const importErrors = IMPORT_HISTORY.reduce((s, i) => s + i.errors, 0);
 
@@ -82,12 +79,7 @@ function BankingOverview() {
     name: `${a.nickname}`,
     value: a.bankBalance,
   }));
-  const chartColors = [
-    "var(--chart-1)",
-    "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-  ];
+  const chartColors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
   const statusCounts = TRANSACTIONS.reduce<Record<string, number>>((acc, t) => {
     acc[t.status] = (acc[t.status] ?? 0) + 1;
@@ -99,13 +91,19 @@ function BankingOverview() {
     { label: "Categorized", key: "categorized", count: statusCounts.categorized ?? 0 },
     { label: "Split", key: "split", count: statusCounts.split ?? 0 },
     { label: "Transfer", key: "transfer", count: statusCounts.transfer ?? 0 },
-    { label: "Reconciled", key: "reconciled", count: TRANSACTIONS.filter((t) => t.reconciled).length },
+    {
+      label: "Reconciled",
+      key: "reconciled",
+      count: TRANSACTIONS.filter((t) => t.reconciled).length,
+    },
     { label: "Flagged", key: "flagged", count: statusCounts.flagged ?? 0 },
   ];
 
   const reconHealth = {
     reconciled: BANK_ACCOUNTS.filter((a) => a.reconciliation === "reconciled").length,
-    due: BANK_ACCOUNTS.filter((a) => ["not_started", "in_progress", "needs_review"].includes(a.reconciliation)).length,
+    due: BANK_ACCOUNTS.filter((a) =>
+      ["not_started", "in_progress", "needs_review"].includes(a.reconciliation),
+    ).length,
     overdue: BANK_ACCOUNTS.filter((a) => a.reconciliation === "overdue").length,
     variance: BANK_ACCOUNTS.filter((a) => a.reconciliation === "variance").length,
   };
@@ -180,18 +178,30 @@ function BankingOverview() {
 
         {/* KPI row */}
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-6">
-          <SummaryCell label="Total cash (bank)" value={currencyPrecise(totalBank)} icon={Banknote} tone="brand" />
+          <SummaryCell
+            label="Total cash (bank)"
+            value={currencyPrecise(totalBank)}
+            icon={Banknote}
+            tone="brand"
+          />
           <SummaryCell label="Ledger cash" value={currencyPrecise(totalLedger)} icon={Wallet} />
           <SummaryCell label="Pending transactions" value={pending.toString()} tone="warning" />
           <SummaryCell label="Unmatched" value={unmatched.toString()} tone="warning" />
           <SummaryCell label="Accounts to reconcile" value={dueRecon.toString()} tone="info" />
-          <SummaryCell label="Import errors" value={importErrors.toString()} tone={importErrors > 0 ? "danger" : "neutral"} />
+          <SummaryCell
+            label="Import errors"
+            value={importErrors.toString()}
+            tone={importErrors > 0 ? "danger" : "neutral"}
+          />
         </div>
 
         {/* Account cards */}
         <section aria-labelledby="accounts">
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 id="accounts" className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            <h2
+              id="accounts"
+              className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Connected accounts
             </h2>
             <span className="text-xs text-muted-foreground">
@@ -227,7 +237,13 @@ function BankingOverview() {
                     fontSize={11}
                     tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
                   />
-                  <YAxis type="category" dataKey="name" stroke="var(--muted-foreground)" fontSize={11} width={120} />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    stroke="var(--muted-foreground)"
+                    fontSize={11}
+                    width={120}
+                  />
                   <Tooltip
                     cursor={{ fill: "var(--muted)" }}
                     contentStyle={{
@@ -332,7 +348,8 @@ function BankingOverview() {
                       <tr key={i.id} className="border-t border-border/60">
                         <td className="py-2 pr-3 font-mono text-xs">{i.fileName}</td>
                         <td className="py-2 pr-3 text-xs">
-                          {acct?.nickname} <span className="text-muted-foreground">{acct?.mask}</span>
+                          {acct?.nickname}{" "}
+                          <span className="text-muted-foreground">{acct?.mask}</span>
                         </td>
                         <td className="py-2 pr-3 font-tabular text-xs text-muted-foreground">
                           {i.importedAt}
@@ -369,7 +386,10 @@ function BankingOverview() {
         <section aria-labelledby="alerts">
           <div className="mb-3 flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-warning" />
-            <h2 id="alerts" className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            <h2
+              id="alerts"
+              className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            >
               Banking alerts
             </h2>
           </div>
@@ -443,7 +463,9 @@ function HealthTile({
         : "text-destructive bg-destructive/10 border-destructive/30";
   return (
     <div className={"rounded-xl border p-3 " + cls}>
-      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] opacity-80">{label}</div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] opacity-80">
+        {label}
+      </div>
       <div className="mt-1 font-tabular text-2xl font-semibold">{value}</div>
     </div>
   );

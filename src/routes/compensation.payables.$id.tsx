@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CompensationShell, DemoActionNotice, showDemoToast } from "@/components/compensation/compensation-shell";
+import {
+  CompensationShell,
+  DemoActionNotice,
+  showDemoToast,
+} from "@/components/compensation/compensation-shell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,17 +20,33 @@ export const Route = createFileRoute("/compensation/payables/$id")({
 function PayableDetail() {
   const { id } = Route.useParams();
   const [p, setP] = useState<CompensationPayable | undefined>();
-  useEffect(() => { api.compensationOps.getPayable(id).then(setP); }, [id]);
+  useEffect(() => {
+    api.compensationOps.getPayable(id).then(setP);
+  }, [id]);
 
-  if (!p) return <CompensationShell title="Payable"><Card className="p-6 text-sm text-muted-foreground">Loading…</Card></CompensationShell>;
+  if (!p)
+    return (
+      <CompensationShell title="Payable">
+        <Card className="p-6 text-sm text-muted-foreground">Loading…</Card>
+      </CompensationShell>
+    );
 
   return (
-    <CompensationShell eyebrow="Payable" title={p.participantName} description={`${p.periodStart} → ${p.periodEnd} · ${p.destination.replace(/_/g, " ")}`}
+    <CompensationShell
+      eyebrow="Payable"
+      title={p.participantName}
+      description={`${p.periodStart} → ${p.periodEnd} · ${p.destination.replace(/_/g, " ")}`}
       actions={
         <div className="flex gap-2">
-          <Button size="sm" onClick={() => showDemoToast("Approved payable")}>Approve</Button>
-          <Button size="sm" variant="outline" onClick={() => showDemoToast("Scheduled")}>Schedule</Button>
-          <Button size="sm" variant="ghost" onClick={() => showDemoToast("Marked paid")}>Mark paid</Button>
+          <Button size="sm" onClick={() => showDemoToast("Approved payable")}>
+            Approve
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => showDemoToast("Scheduled")}>
+            Schedule
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => showDemoToast("Marked paid")}>
+            Mark paid
+          </Button>
         </div>
       }
     >
@@ -40,7 +60,10 @@ function PayableDetail() {
         <F label="Holdbacks" value={currency(p.holdbacks)} />
         <F label="Draw offset" value={currency(p.drawOffset)} />
         <F label="Clawback offset" value={currency(p.clawbackOffset)} />
-        <F label="Net payable" value={<span className="text-lg font-bold">{currency(p.netPayable)}</span>} />
+        <F
+          label="Net payable"
+          value={<span className="text-lg font-bold">{currency(p.netPayable)}</span>}
+        />
         <F label="GL expense" value={p.glExpenseAccount} />
         <F label="GL payable" value={p.glPayableAccount} />
       </Card>
@@ -49,7 +72,12 @@ function PayableDetail() {
         <div className="mb-2 text-sm font-semibold">Audit timeline</div>
         <ul className="space-y-1 text-xs">
           {p.auditTimeline.map((e, i) => (
-            <li key={i} className="flex justify-between border-b border-border/40 py-1"><span>{e.action}</span><span className="text-muted-foreground">{e.actor} · {new Date(e.at).toLocaleString()}</span></li>
+            <li key={i} className="flex justify-between border-b border-border/40 py-1">
+              <span>{e.action}</span>
+              <span className="text-muted-foreground">
+                {e.actor} · {new Date(e.at).toLocaleString()}
+              </span>
+            </li>
           ))}
         </ul>
       </Card>
@@ -59,5 +87,10 @@ function PayableDetail() {
 }
 
 function F({ label, value }: { label: string; value: React.ReactNode }) {
-  return <div><div className="text-xs uppercase tracking-wide text-muted-foreground">{label}</div><div className="mt-0.5 font-tabular">{value}</div></div>;
+  return (
+    <div>
+      <div className="text-xs uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="mt-0.5 font-tabular">{value}</div>
+    </div>
+  );
 }

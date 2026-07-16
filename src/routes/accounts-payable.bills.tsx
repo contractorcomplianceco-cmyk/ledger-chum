@@ -10,10 +10,18 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listBills, postBill } from "@/lib/accounting/bills.functions";
@@ -26,9 +34,15 @@ export const Route = createFileRoute("/accounts-payable/bills")({
   head: () => ({
     meta: [
       { title: "Bills — LedgerOS" },
-      { name: "description", content: "Vendor bills with fiscal-period checks, balanced posting, and audit trail." },
+      {
+        name: "description",
+        content: "Vendor bills with fiscal-period checks, balanced posting, and audit trail.",
+      },
       { property: "og:title", content: "Bills — LedgerOS" },
-      { property: "og:description", content: "Post vendor bills and drive the accounts-payable ledger." },
+      {
+        property: "og:description",
+        content: "Post vendor bills and drive the accounts-payable ledger.",
+      },
     ],
   }),
   component: BillsPage,
@@ -115,8 +129,12 @@ function BillsPage() {
     total > 0;
 
   const reset = () => {
-    setVendorId(""); setBillNumber(""); setMemo(""); setTaxStr("0");
-    setIssueDate(today()); setDueDate(addDays(today(), 30));
+    setVendorId("");
+    setBillNumber("");
+    setMemo("");
+    setTaxStr("0");
+    setIssueDate(today());
+    setDueDate(addDays(today(), 30));
     setLines([{ accountId: "", description: "", quantity: "1", unitPrice: "" }]);
   };
 
@@ -143,7 +161,8 @@ function BillsPage() {
     },
     onSuccess: (res) => {
       toast.success(`Bill posted — journal ${res.journal_id.slice(0, 8)}…`);
-      setNewOpen(false); reset();
+      setNewOpen(false);
+      reset();
       qc.invalidateQueries({ queryKey: ["ap.bills"] });
       qc.invalidateQueries({ queryKey: ["ap.vendorBalances"] });
     },
@@ -195,7 +214,11 @@ function BillsPage() {
                   </tr>
                 ))}
                 {billsQ.data && billsQ.data.length === 0 && (
-                  <tr><td colSpan={7} className="py-8 text-center text-muted-foreground">No bills yet.</td></tr>
+                  <tr>
+                    <td colSpan={7} className="py-8 text-center text-muted-foreground">
+                      No bills yet.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
@@ -212,10 +235,14 @@ function BillsPage() {
                 <div>
                   <Label>Vendor</Label>
                   <Select value={vendorId} onValueChange={setVendorId}>
-                    <SelectTrigger><SelectValue placeholder="Select vendor" /></SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select vendor" />
+                    </SelectTrigger>
                     <SelectContent>
                       {(vendorsQ.data ?? []).map((v) => (
-                        <SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>
+                        <SelectItem key={v.id} value={v.id}>
+                          {v.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -226,7 +253,11 @@ function BillsPage() {
                 </div>
                 <div>
                   <Label>Issue date</Label>
-                  <Input type="date" value={issueDate} onChange={(e) => setIssueDate(e.target.value)} />
+                  <Input
+                    type="date"
+                    value={issueDate}
+                    onChange={(e) => setIssueDate(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Label>Due date</Label>
@@ -243,10 +274,14 @@ function BillsPage() {
                         <Select
                           value={l.accountId}
                           onValueChange={(v) => {
-                            const next = [...lines]; next[i] = { ...next[i], accountId: v }; setLines(next);
+                            const next = [...lines];
+                            next[i] = { ...next[i], accountId: v };
+                            setLines(next);
                           }}
                         >
-                          <SelectTrigger><SelectValue placeholder="Expense account" /></SelectTrigger>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Expense account" />
+                          </SelectTrigger>
                           <SelectContent>
                             {expenseAccounts.map((a) => (
                               <SelectItem key={a.account_id!} value={a.account_id!}>
@@ -261,7 +296,9 @@ function BillsPage() {
                           placeholder="Description"
                           value={l.description}
                           onChange={(e) => {
-                            const next = [...lines]; next[i] = { ...next[i], description: e.target.value }; setLines(next);
+                            const next = [...lines];
+                            next[i] = { ...next[i], description: e.target.value };
+                            setLines(next);
                           }}
                         />
                       </div>
@@ -271,7 +308,9 @@ function BillsPage() {
                           placeholder="Qty"
                           value={l.quantity}
                           onChange={(e) => {
-                            const next = [...lines]; next[i] = { ...next[i], quantity: e.target.value }; setLines(next);
+                            const next = [...lines];
+                            next[i] = { ...next[i], quantity: e.target.value };
+                            setLines(next);
                           }}
                         />
                       </div>
@@ -281,7 +320,9 @@ function BillsPage() {
                           placeholder="Unit price"
                           value={l.unitPrice}
                           onChange={(e) => {
-                            const next = [...lines]; next[i] = { ...next[i], unitPrice: e.target.value }; setLines(next);
+                            const next = [...lines];
+                            next[i] = { ...next[i], unitPrice: e.target.value };
+                            setLines(next);
                           }}
                         />
                       </div>
@@ -290,7 +331,8 @@ function BillsPage() {
                       </div>
                       <div className="col-span-1 text-right">
                         <Button
-                          size="icon" variant="ghost"
+                          size="icon"
+                          variant="ghost"
                           disabled={lines.length === 1}
                           onClick={() => setLines(lines.filter((_, j) => j !== i))}
                         >
@@ -301,8 +343,15 @@ function BillsPage() {
                   ))}
                 </div>
                 <Button
-                  size="sm" variant="ghost" className="mt-2"
-                  onClick={() => setLines([...lines, { accountId: "", description: "", quantity: "1", unitPrice: "" }])}
+                  size="sm"
+                  variant="ghost"
+                  className="mt-2"
+                  onClick={() =>
+                    setLines([
+                      ...lines,
+                      { accountId: "", description: "", quantity: "1", unitPrice: "" },
+                    ])
+                  }
                 >
                   <Plus className="mr-1 size-4" /> Add line
                 </Button>
@@ -311,7 +360,11 @@ function BillsPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>Tax</Label>
-                  <Input inputMode="decimal" value={taxStr} onChange={(e) => setTaxStr(e.target.value)} />
+                  <Input
+                    inputMode="decimal"
+                    value={taxStr}
+                    onChange={(e) => setTaxStr(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Label>Memo</Label>
@@ -320,13 +373,21 @@ function BillsPage() {
               </div>
 
               <div className="flex justify-end gap-4 border-t pt-3 text-sm">
-                <div>Subtotal <span className="tabular-nums font-medium ml-2">{fmt(subtotal)}</span></div>
-                <div>Tax <span className="tabular-nums font-medium ml-2">{fmt(tax)}</span></div>
-                <div>Total <span className="tabular-nums font-semibold ml-2">{fmt(total)}</span></div>
+                <div>
+                  Subtotal <span className="tabular-nums font-medium ml-2">{fmt(subtotal)}</span>
+                </div>
+                <div>
+                  Tax <span className="tabular-nums font-medium ml-2">{fmt(tax)}</span>
+                </div>
+                <div>
+                  Total <span className="tabular-nums font-semibold ml-2">{fmt(total)}</span>
+                </div>
               </div>
             </div>
             <DialogFooter>
-              <Button variant="ghost" onClick={() => setNewOpen(false)}>Cancel</Button>
+              <Button variant="ghost" onClick={() => setNewOpen(false)}>
+                Cancel
+              </Button>
               <Button disabled={!canPost || postMut.isPending} onClick={() => postMut.mutate()}>
                 {postMut.isPending ? "Posting…" : "Post bill"}
               </Button>

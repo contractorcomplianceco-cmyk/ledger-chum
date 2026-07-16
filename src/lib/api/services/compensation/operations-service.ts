@@ -45,8 +45,12 @@ export interface CompensationOperationsService {
   // Calculations
   listCalculations(): Promise<Paginated<CompensationCalculation>>;
   getCalculation(id: ID): Promise<CompensationCalculation | undefined>;
-  createCalculation(input: Partial<CompensationCalculation>): Promise<DemoResult<CompensationCalculation>>;
-  previewCalculation(input: Partial<CompensationCalculation>): Promise<DemoResult<CompensationCalculation>>;
+  createCalculation(
+    input: Partial<CompensationCalculation>,
+  ): Promise<DemoResult<CompensationCalculation>>;
+  previewCalculation(
+    input: Partial<CompensationCalculation>,
+  ): Promise<DemoResult<CompensationCalculation>>;
   submitCalculation(id: ID): Promise<DemoResult<{ id: ID }>>;
   verifyCalculation(id: ID, category: string, note?: string): Promise<DemoResult<{ id: ID }>>;
   requestCalculationEvidence(id: ID, note: string): Promise<DemoResult<{ id: ID }>>;
@@ -69,7 +73,9 @@ export interface CompensationOperationsService {
   // Batches
   listPaymentBatches(): Promise<CompensationPaymentBatch[]>;
   getPaymentBatch(id: ID): Promise<CompensationPaymentBatch | undefined>;
-  createPaymentBatch(input: Partial<CompensationPaymentBatch>): Promise<DemoResult<CompensationPaymentBatch>>;
+  createPaymentBatch(
+    input: Partial<CompensationPaymentBatch>,
+  ): Promise<DemoResult<CompensationPaymentBatch>>;
   approvePaymentBatch(id: ID): Promise<DemoResult<{ id: ID }>>;
   markBatchExported(id: ID, ref: string): Promise<DemoResult<{ id: ID }>>;
   reconcilePaymentBatch(id: ID): Promise<DemoResult<{ id: ID }>>;
@@ -83,7 +89,9 @@ export interface CompensationOperationsService {
   extendHoldback(id: ID, days: number, reason: string): Promise<DemoResult<{ id: ID }>>;
   // Adjustments / reversals
   listAdjustments(): Promise<CompensationAdjustment[]>;
-  createAdjustment(input: Partial<CompensationAdjustment>): Promise<DemoResult<CompensationAdjustment>>;
+  createAdjustment(
+    input: Partial<CompensationAdjustment>,
+  ): Promise<DemoResult<CompensationAdjustment>>;
   approveAdjustment(id: ID): Promise<DemoResult<{ id: ID }>>;
   listReversals(): Promise<CompensationReversal[]>;
   createReversal(input: Partial<CompensationReversal>): Promise<DemoResult<CompensationReversal>>;
@@ -91,7 +99,11 @@ export interface CompensationOperationsService {
   listClawbacks(): Promise<CompensationClawback[]>;
   createClawback(input: Partial<CompensationClawback>): Promise<DemoResult<CompensationClawback>>;
   approveClawback(id: ID): Promise<DemoResult<{ id: ID }>>;
-  recordClawbackRecovery(id: ID, amount: number, method: ClawbackRecoveryMethod): Promise<DemoResult<ClawbackRecovery>>;
+  recordClawbackRecovery(
+    id: ID,
+    amount: number,
+    method: ClawbackRecoveryMethod,
+  ): Promise<DemoResult<ClawbackRecovery>>;
   // Disputes
   listDisputes(): Promise<CompensationDispute[]>;
   getDispute(id: ID): Promise<CompensationDispute | undefined>;
@@ -102,7 +114,10 @@ export interface CompensationOperationsService {
   getCompensationReconciliation(): Promise<CompensationReconciliation>;
   resolveReconciliationException(id: ID, note?: string): Promise<DemoResult<{ id: ID }>>;
   // Accounting preview
-  getAccountingImpactPreview(calculationId: ID, action: AccountingImpactPreview["action"]): Promise<AccountingImpactPreview>;
+  getAccountingImpactPreview(
+    calculationId: ID,
+    action: AccountingImpactPreview["action"],
+  ): Promise<AccountingImpactPreview>;
 }
 
 const paginated = <T>(data: T[]): Paginated<T> => ({
@@ -116,9 +131,15 @@ export const compensationOperationsService: CompensationOperationsService = {
   listCalculations: () => mockGet(() => paginated(MOCK_CALCULATIONS)),
   getCalculation: (id) => mockGet(() => MOCK_CALCULATIONS.find((c) => c.id === id)),
   createCalculation: (input) =>
-    mockMutation(() => ({ ...MOCK_CALCULATIONS[0], ...input, id: `calc_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_CALCULATIONS[0], ...input, id: `calc_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   previewCalculation: (input) =>
-    mockMutation(() => ({ ...MOCK_CALCULATIONS[0], ...input, id: `calc_preview_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_CALCULATIONS[0], ...input, id: `calc_preview_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   submitCalculation: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   verifyCalculation: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   requestCalculationEvidence: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
@@ -136,7 +157,10 @@ export const compensationOperationsService: CompensationOperationsService = {
   listPayables: () => mockGet(() => paginated(MOCK_PAYABLES)),
   getPayable: (id) => mockGet(() => MOCK_PAYABLES.find((p) => p.id === id)),
   createPayable: (input) =>
-    mockMutation(() => ({ ...MOCK_PAYABLES[0], ...input, id: `pay_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_PAYABLES[0], ...input, id: `pay_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   approvePayable: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   schedulePayable: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   markPayablePaid: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
@@ -144,7 +168,10 @@ export const compensationOperationsService: CompensationOperationsService = {
   listPaymentBatches: () => mockGet(() => MOCK_BATCHES),
   getPaymentBatch: (id) => mockGet(() => MOCK_BATCHES.find((b) => b.id === id)),
   createPaymentBatch: (input) =>
-    mockMutation(() => ({ ...MOCK_BATCHES[0], ...input, id: `batch_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_BATCHES[0], ...input, id: `batch_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   approvePaymentBatch: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   markBatchExported: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   reconcilePaymentBatch: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
@@ -152,7 +179,10 @@ export const compensationOperationsService: CompensationOperationsService = {
   listStatements: () => mockGet(() => MOCK_STATEMENTS),
   getStatement: (id) => mockGet(() => MOCK_STATEMENTS.find((s) => s.id === id)),
   generateStatement: (participantId) =>
-    mockMutation(() => ({ ...MOCK_STATEMENTS[0], participantId, id: `stmt_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_STATEMENTS[0], participantId, id: `stmt_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
 
   listHoldbacks: () => mockGet(() => MOCK_HOLDBACKS),
   releaseHoldback: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
@@ -160,26 +190,45 @@ export const compensationOperationsService: CompensationOperationsService = {
 
   listAdjustments: () => mockGet(() => MOCK_ADJUSTMENTS),
   createAdjustment: (input) =>
-    mockMutation(() => ({ ...MOCK_ADJUSTMENTS[0], ...input, id: `adj_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_ADJUSTMENTS[0], ...input, id: `adj_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   approveAdjustment: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   listReversals: () => mockGet(() => MOCK_REVERSALS),
   createReversal: (input) =>
-    mockMutation(() => ({ ...MOCK_REVERSALS[0], ...input, id: `rev_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_REVERSALS[0], ...input, id: `rev_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
 
   listClawbacks: () => mockGet(() => MOCK_CLAWBACKS),
   createClawback: (input) =>
-    mockMutation(() => ({ ...MOCK_CLAWBACKS[0], ...input, id: `cb_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_CLAWBACKS[0], ...input, id: `cb_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   approveClawback: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   recordClawbackRecovery: (id, amount, method) =>
     mockMutation(
-      () => stub<ClawbackRecovery>(`rec_new_${Date.now()}`, { clawbackId: id, amount, method, recordedAt: new Date().toISOString(), recordedBy: "Rose Delacroix" }),
+      () =>
+        stub<ClawbackRecovery>(`rec_new_${Date.now()}`, {
+          clawbackId: id,
+          amount,
+          method,
+          recordedAt: new Date().toISOString(),
+          recordedBy: "Rose Delacroix",
+        }),
       DEMO_MUTATION_MESSAGE,
     ),
 
   listDisputes: () => mockGet(() => MOCK_DISPUTES),
   getDispute: (id) => mockGet(() => MOCK_DISPUTES.find((d) => d.id === id)),
   createDispute: (input) =>
-    mockMutation(() => ({ ...MOCK_DISPUTES[0], ...input, id: `disp_new_${Date.now()}` }), DEMO_MUTATION_MESSAGE),
+    mockMutation(
+      () => ({ ...MOCK_DISPUTES[0], ...input, id: `disp_new_${Date.now()}` }),
+      DEMO_MUTATION_MESSAGE,
+    ),
   addDisputeEvidence: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
   resolveDispute: (id) => mockMutation(() => ({ id }), DEMO_MUTATION_MESSAGE),
 

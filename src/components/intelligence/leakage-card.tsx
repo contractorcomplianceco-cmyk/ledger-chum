@@ -17,7 +17,9 @@ export function LeakageCard({ opp }: { opp: LeakageOpportunity }) {
           </div>
           <div className="text-[11.5px] text-muted-foreground">{opp.service}</div>
         </div>
-        <span className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold", meta.className)}>
+        <span
+          className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold", meta.className)}
+        >
           {meta.label}
         </span>
       </div>
@@ -25,11 +27,15 @@ export function LeakageCard({ opp }: { opp: LeakageOpportunity }) {
       <div className="mt-2 grid grid-cols-3 gap-2 text-[11px]">
         <div>
           <div className="text-muted-foreground">Recoverable</div>
-          <div className="font-tabular text-[13px] font-bold text-foreground">{currency(opp.amount)}</div>
+          <div className="font-tabular text-[13px] font-bold text-foreground">
+            {currency(opp.amount)}
+          </div>
         </div>
         <div>
           <div className="text-muted-foreground">Confidence</div>
-          <div className="font-tabular text-[13px] font-bold text-foreground">{opp.confidence}%</div>
+          <div className="font-tabular text-[13px] font-bold text-foreground">
+            {opp.confidence}%
+          </div>
         </div>
         <div>
           <div className="text-muted-foreground">Age</div>

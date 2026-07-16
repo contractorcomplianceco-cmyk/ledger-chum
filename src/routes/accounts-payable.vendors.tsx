@@ -9,10 +9,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listVendors, upsertVendor, getVendorBalances } from "@/lib/accounting/vendors.functions";
@@ -46,8 +54,14 @@ function VendorsPage() {
   const [search, setSearch] = useState("");
   const [editOpen, setEditOpen] = useState(false);
   const [editing, setEditing] = useState<{
-    id?: string; name: string; email: string; phone: string; termsDays: number;
-    defaultExpenseAccountId: string | null; memo: string; status: "active" | "inactive";
+    id?: string;
+    name: string;
+    email: string;
+    phone: string;
+    termsDays: number;
+    defaultExpenseAccountId: string | null;
+    memo: string;
+    status: "active" | "inactive";
   } | null>(null);
 
   const vendorsQ = useQuery({
@@ -105,8 +119,13 @@ function VendorsPage() {
 
   const startNew = () => {
     setEditing({
-      name: "", email: "", phone: "", termsDays: 30,
-      defaultExpenseAccountId: null, memo: "", status: "active",
+      name: "",
+      email: "",
+      phone: "",
+      termsDays: 30,
+      defaultExpenseAccountId: null,
+      memo: "",
+      status: "active",
     });
     setEditOpen(true);
   };
@@ -184,8 +203,11 @@ function VendorsPage() {
                         variant="ghost"
                         onClick={() => {
                           setEditing({
-                            id: v.id, name: v.name, email: v.email ?? "",
-                            phone: v.phone ?? "", termsDays: v.terms_days,
+                            id: v.id,
+                            name: v.name,
+                            email: v.email ?? "",
+                            phone: v.phone ?? "",
+                            termsDays: v.terms_days,
                             defaultExpenseAccountId: v.default_expense_account_id,
                             memo: v.memo ?? "",
                             status: (v.status as "active" | "inactive") ?? "active",
@@ -219,32 +241,49 @@ function VendorsPage() {
               <div className="grid gap-3">
                 <div>
                   <Label>Name</Label>
-                  <Input value={editing.name}
-                    onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
+                  <Input
+                    value={editing.name}
+                    onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label>Email</Label>
-                    <Input value={editing.email}
-                      onChange={(e) => setEditing({ ...editing, email: e.target.value })} />
+                    <Input
+                      value={editing.email}
+                      onChange={(e) => setEditing({ ...editing, email: e.target.value })}
+                    />
                   </div>
                   <div>
                     <Label>Phone</Label>
-                    <Input value={editing.phone}
-                      onChange={(e) => setEditing({ ...editing, phone: e.target.value })} />
+                    <Input
+                      value={editing.phone}
+                      onChange={(e) => setEditing({ ...editing, phone: e.target.value })}
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label>Terms (days)</Label>
-                    <Input type="number" value={editing.termsDays}
-                      onChange={(e) => setEditing({ ...editing, termsDays: Number(e.target.value) || 0 })} />
+                    <Input
+                      type="number"
+                      value={editing.termsDays}
+                      onChange={(e) =>
+                        setEditing({ ...editing, termsDays: Number(e.target.value) || 0 })
+                      }
+                    />
                   </div>
                   <div>
                     <Label>Status</Label>
-                    <Select value={editing.status}
-                      onValueChange={(v) => setEditing({ ...editing, status: v as "active" | "inactive" })}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
+                    <Select
+                      value={editing.status}
+                      onValueChange={(v) =>
+                        setEditing({ ...editing, status: v as "active" | "inactive" })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="active">Active</SelectItem>
                         <SelectItem value="inactive">Inactive</SelectItem>
@@ -257,31 +296,40 @@ function VendorsPage() {
                   <Select
                     value={editing.defaultExpenseAccountId ?? "__none__"}
                     onValueChange={(v) =>
-                      setEditing({ ...editing, defaultExpenseAccountId: v === "__none__" ? null : v })
+                      setEditing({
+                        ...editing,
+                        defaultExpenseAccountId: v === "__none__" ? null : v,
+                      })
                     }
                   >
-                    <SelectTrigger><SelectValue placeholder="(none)" /></SelectTrigger>
+                    <SelectTrigger>
+                      <SelectValue placeholder="(none)" />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="__none__">(none)</SelectItem>
-                      {expenseAccounts.map((a) => (
+                      {expenseAccounts.map((a) =>
                         a.account_id ? (
                           <SelectItem key={a.account_id} value={a.account_id}>
                             {a.code} · {a.name}
                           </SelectItem>
-                        ) : null
-                      ))}
+                        ) : null,
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <Label>Memo</Label>
-                  <Input value={editing.memo}
-                    onChange={(e) => setEditing({ ...editing, memo: e.target.value })} />
+                  <Input
+                    value={editing.memo}
+                    onChange={(e) => setEditing({ ...editing, memo: e.target.value })}
+                  />
                 </div>
               </div>
             )}
             <DialogFooter>
-              <Button variant="ghost" onClick={() => setEditOpen(false)}>Cancel</Button>
+              <Button variant="ghost" onClick={() => setEditOpen(false)}>
+                Cancel
+              </Button>
               <Button
                 disabled={!editing?.name || saveMut.isPending}
                 onClick={() => saveMut.mutate()}

@@ -12,7 +12,12 @@ export function DemoNotice({
 }) {
   if (variant === "inline") {
     return (
-      <div className={cn("inline-flex items-center gap-1.5 text-[11px] text-muted-foreground", className)}>
+      <div
+        className={cn(
+          "inline-flex items-center gap-1.5 text-[11px] text-muted-foreground",
+          className,
+        )}
+      >
         <Info className="h-3 w-3" />
         {message}
       </div>
@@ -32,5 +37,4 @@ export function DemoNotice({
   );
 }
 
-export const DEMO_ACTION_MESSAGE =
-  "UI demonstration only — no accounting record was modified.";
+export const DEMO_ACTION_MESSAGE = "UI demonstration only — no accounting record was modified.";

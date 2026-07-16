@@ -26,12 +26,30 @@ type Entry = {
 const ENTRIES: Entry[] = [
   { name: "CashLandscape", Component: CashLandscape, usage: "Cash KPI card — lower third" },
   { name: "ProfitLandscape", Component: ProfitLandscape, usage: "Profit KPI card — lower third" },
-  { name: "CollectionsLandscape", Component: CollectionsLandscape, usage: "AR / collections cards" },
+  {
+    name: "CollectionsLandscape",
+    Component: CollectionsLandscape,
+    usage: "AR / collections cards",
+  },
   { name: "RunwayRocket", Component: RunwayRocket, usage: "Runway / growth KPI accent" },
   { name: "AIAssistant", Component: AIAssistant, usage: "AI briefing panel / persona chips" },
-  { name: "FinancialHealthVisual", Component: FinancialHealthVisual, usage: "Company Health gauge accent" },
-  { name: "CashPulseBackdrop", Component: CashPulseBackdrop, usage: "Behind Cash Pulse donut", backdrop: true },
-  { name: "ProfitPulseBackdrop", Component: ProfitPulseBackdrop, usage: "Behind Profit Pulse chart", backdrop: true },
+  {
+    name: "FinancialHealthVisual",
+    Component: FinancialHealthVisual,
+    usage: "Company Health gauge accent",
+  },
+  {
+    name: "CashPulseBackdrop",
+    Component: CashPulseBackdrop,
+    usage: "Behind Cash Pulse donut",
+    backdrop: true,
+  },
+  {
+    name: "ProfitPulseBackdrop",
+    Component: ProfitPulseBackdrop,
+    usage: "Behind Profit Pulse chart",
+    backdrop: true,
+  },
 ];
 
 function Row({ entry, reducedMotion }: { entry: Entry; reducedMotion: boolean }) {
@@ -89,7 +107,12 @@ function Row({ entry, reducedMotion }: { entry: Entry; reducedMotion: boolean })
           </div>
           <div className="relative h-16 overflow-hidden rounded-md bg-white">
             <div className="absolute bottom-0 right-0 w-24">
-              <Component reducedMotion={reducedMotion} variant="compact" width="100%" height="60px" />
+              <Component
+                reducedMotion={reducedMotion}
+                variant="compact"
+                width="100%"
+                height="60px"
+              />
             </div>
           </div>
         </div>

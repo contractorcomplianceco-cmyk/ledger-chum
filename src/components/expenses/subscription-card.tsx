@@ -27,7 +27,8 @@ export function SubscriptionCard({ s }: { s: Subscription }) {
             <span className="text-[12px] text-muted-foreground">· {s.product}</span>
           </div>
           <div className="mt-0.5 text-[12px] text-muted-foreground">
-            {s.department}{s.owner ? ` · ${s.owner}` : " · No owner"}
+            {s.department}
+            {s.owner ? ` · ${s.owner}` : " · No owner"}
           </div>
         </div>
         <span
@@ -43,20 +44,33 @@ export function SubscriptionCard({ s }: { s: Subscription }) {
       <div className="mt-3 grid grid-cols-3 gap-2 text-[12px]">
         <div className="rounded-md bg-muted/40 p-2">
           <div className="text-muted-foreground">Cost</div>
-          <div className="font-tabular font-semibold">{currency(s.currentCost)}<span className="text-[10.5px] font-normal text-muted-foreground">/{s.frequency === "annual" ? "yr" : "mo"}</span></div>
+          <div className="font-tabular font-semibold">
+            {currency(s.currentCost)}
+            <span className="text-[10.5px] font-normal text-muted-foreground">
+              /{s.frequency === "annual" ? "yr" : "mo"}
+            </span>
+          </div>
           {priceDelta !== 0 && (
-            <div className={cn("text-[10.5px]", priceDelta > 0 ? "text-destructive" : "text-success")}>
+            <div
+              className={cn("text-[10.5px]", priceDelta > 0 ? "text-destructive" : "text-success")}
+            >
               {priceDelta > 0 ? "↑" : "↓"} {Math.abs(priceDelta).toFixed(0)}% vs prior
             </div>
           )}
         </div>
         <div className="rounded-md bg-muted/40 p-2">
-          <div className="text-muted-foreground flex items-center gap-1"><Users className="h-3 w-3" /> Utilization</div>
-          <div className="font-tabular font-semibold">{s.activeUsers}/{s.seats}</div>
+          <div className="text-muted-foreground flex items-center gap-1">
+            <Users className="h-3 w-3" /> Utilization
+          </div>
+          <div className="font-tabular font-semibold">
+            {s.activeUsers}/{s.seats}
+          </div>
           <div className="text-[10.5px] text-muted-foreground">{utilization}% used</div>
         </div>
         <div className="rounded-md bg-muted/40 p-2">
-          <div className="text-muted-foreground flex items-center gap-1"><Calendar className="h-3 w-3" /> Renews</div>
+          <div className="text-muted-foreground flex items-center gap-1">
+            <Calendar className="h-3 w-3" /> Renews
+          </div>
           <div className="font-tabular font-semibold">{s.renewalDate}</div>
           <div className="text-[10.5px] text-muted-foreground">Cancel by {s.cancelDeadline}</div>
         </div>
@@ -64,14 +78,24 @@ export function SubscriptionCard({ s }: { s: Subscription }) {
 
       <div className="mt-3 flex items-start gap-1.5 rounded-md border border-brand/20 bg-brand/5 p-2 text-[12px]">
         <TrendingUp className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand" />
-        <span><strong className="font-semibold">Recommendation:</strong> {s.recommendation}</span>
+        <span>
+          <strong className="font-semibold">Recommendation:</strong> {s.recommendation}
+        </span>
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-1.5">
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Adjust seats</Button>
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Assign owner</Button>
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Cancel</Button>
-        <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">Details</Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Adjust seats
+        </Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Assign owner
+        </Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Cancel
+        </Button>
+        <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">
+          Details
+        </Button>
       </div>
     </Card>
   );

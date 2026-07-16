@@ -38,9 +38,13 @@ function TreatmentRulesPage() {
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
           <div className="text-[12.5px] text-foreground/80">
-            <span className="font-semibold text-foreground">Draft — pending accountant review.</span>{" "}
-            Final GL mapping and recognition policy should be reviewed by CCA's accountant before production posting.
-            Treatments marked <span className="font-semibold">Needs review</span> below have material accounting-policy implications.
+            <span className="font-semibold text-foreground">
+              Draft — pending accountant review.
+            </span>{" "}
+            Final GL mapping and recognition policy should be reviewed by CCA's accountant before
+            production posting. Treatments marked{" "}
+            <span className="font-semibold">Needs review</span> below have material
+            accounting-policy implications.
           </div>
         </div>
       </Card>
@@ -119,7 +123,9 @@ function Field({ label, value, mono }: { label: string; value: string; mono?: bo
       <div className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>
-      <div className={mono ? "font-mono text-[12px] text-foreground" : "text-[12.5px] text-foreground"}>
+      <div
+        className={mono ? "font-mono text-[12px] text-foreground" : "text-[12.5px] text-foreground"}
+      >
         {value}
       </div>
     </div>

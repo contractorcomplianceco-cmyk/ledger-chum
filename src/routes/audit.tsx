@@ -7,7 +7,10 @@ export const Route = createFileRoute("/audit")({
       { title: "Audit Log — LedgerOS" },
       { name: "description", content: "Immutable audit trail across every financial change" },
       { property: "og:title", content: "Audit Log — LedgerOS" },
-      { property: "og:description", content: "Immutable audit trail across every financial change" },
+      {
+        property: "og:description",
+        content: "Immutable audit trail across every financial change",
+      },
     ],
   }),
   component: () => (

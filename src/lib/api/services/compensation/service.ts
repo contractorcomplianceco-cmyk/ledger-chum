@@ -6,12 +6,7 @@
  */
 
 import { mockGet, mockMutation } from "../../adapters/mock-adapter";
-import {
-  DEMO_MUTATION_MESSAGE,
-  type DemoResult,
-  type ID,
-  type Paginated,
-} from "../../types";
+import { DEMO_MUTATION_MESSAGE, type DemoResult, type ID, type Paginated } from "../../types";
 import {
   MOCK_ATTRIBUTIONS,
   MOCK_CONFLICTS,
@@ -49,8 +44,15 @@ export interface CompensationService {
 
   // Plan versions
   listPlanVersions(planId: ID): Promise<CompensationPlanVersion[]>;
-  createPlanVersion(planId: ID, changeSummary: string): Promise<DemoResult<CompensationPlanVersion>>;
-  comparePlanVersions(planId: ID, a: number, b: number): Promise<{ a: CompensationPlanVersion; b: CompensationPlanVersion } | undefined>;
+  createPlanVersion(
+    planId: ID,
+    changeSummary: string,
+  ): Promise<DemoResult<CompensationPlanVersion>>;
+  comparePlanVersions(
+    planId: ID,
+    a: number,
+    b: number,
+  ): Promise<{ a: CompensationPlanVersion; b: CompensationPlanVersion } | undefined>;
   activatePlanVersion(id: ID): Promise<DemoResult<{ id: ID }>>;
   retirePlanVersion(id: ID): Promise<DemoResult<{ id: ID }>>;
 
@@ -58,21 +60,36 @@ export interface CompensationService {
   listParticipants(): Promise<Paginated<CompensationParticipant>>;
   getParticipant(id: ID): Promise<CompensationParticipant | undefined>;
   listPlanParticipants(planId: ID): Promise<CompensationPlanParticipant[]>;
-  assignParticipantToPlan(input: Omit<CompensationPlanParticipant, "id">): Promise<DemoResult<CompensationPlanParticipant>>;
+  assignParticipantToPlan(
+    input: Omit<CompensationPlanParticipant, "id">,
+  ): Promise<DemoResult<CompensationPlanParticipant>>;
 
   // Attribution
   listAttributions(): Promise<Paginated<CompensationAttribution>>;
   getAttribution(id: ID): Promise<CompensationAttribution | undefined>;
-  createAttribution(input: Omit<CompensationAttribution, "id" | "createdAt" | "updatedAt">): Promise<DemoResult<CompensationAttribution>>;
-  updateAttribution(id: ID, patch: Partial<CompensationAttribution>): Promise<DemoResult<CompensationAttribution>>;
+  createAttribution(
+    input: Omit<CompensationAttribution, "id" | "createdAt" | "updatedAt">,
+  ): Promise<DemoResult<CompensationAttribution>>;
+  updateAttribution(
+    id: ID,
+    patch: Partial<CompensationAttribution>,
+  ): Promise<DemoResult<CompensationAttribution>>;
   validateAttributionSplit(contributions: CompensationContribution[]): Promise<{
-    pools: Array<{ poolId: ID; poolName: string; totalPercent: number; valid: boolean; message?: string }>;
+    pools: Array<{
+      poolId: ID;
+      poolName: string;
+      totalPercent: number;
+      valid: boolean;
+      message?: string;
+    }>;
     valid: boolean;
   }>;
 
   // Evidence
   listEvidence(attributionId?: ID): Promise<AttributionEvidence[]>;
-  addEvidence(input: Omit<AttributionEvidence, "id" | "createdAt">): Promise<DemoResult<AttributionEvidence>>;
+  addEvidence(
+    input: Omit<AttributionEvidence, "id" | "createdAt">,
+  ): Promise<DemoResult<AttributionEvidence>>;
   verifyEvidence(id: ID): Promise<DemoResult<{ id: ID }>>;
 
   // Conflicts
@@ -107,7 +124,11 @@ function validatePools(
       poolName: v.poolName,
       totalPercent: v.total,
       valid,
-      message: valid ? undefined : v.total < 1 ? "Pool is under-attributed" : "Pool is over-attributed",
+      message: valid
+        ? undefined
+        : v.total < 1
+          ? "Pool is under-attributed"
+          : "Pool is over-attributed",
     };
   });
 }
@@ -115,17 +136,19 @@ function validatePools(
 const scenario = (
   key: string,
   label: string,
-  input: Omit<PlanPreviewResponse, "resolvedPolicySnapshot" | "scenarioKey" | "scenarioLabel" | "invariantChecks"> & {
+  input: Omit<
+    PlanPreviewResponse,
+    "resolvedPolicySnapshot" | "scenarioKey" | "scenarioLabel" | "invariantChecks"
+  > & {
     invariantChecks?: PlanPreviewResponse["invariantChecks"];
   },
 ): PlanPreviewResponse => {
-  const invariants: PlanPreviewResponse["invariantChecks"] =
-    input.invariantChecks ?? [
-      { label: "Pass-through excluded from base", passed: true },
-      { label: "Base uses collected & cleared revenue only", passed: true },
-      { label: "No double-dip on same basis", passed: true },
-      { label: "Attribution split totals exactly 100% per pool", passed: true },
-    ];
+  const invariants: PlanPreviewResponse["invariantChecks"] = input.invariantChecks ?? [
+    { label: "Pass-through excluded from base", passed: true },
+    { label: "Base uses collected & cleared revenue only", passed: true },
+    { label: "No double-dip on same basis", passed: true },
+    { label: "Attribution split totals exactly 100% per pool", passed: true },
+  ];
   return {
     scenarioKey: key,
     scenarioLabel: label,
@@ -143,8 +166,20 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Standard Sales Pool (10%)", "Tara — Brand Ambassador (5%)"],
     pools: [{ poolName: "Sales Pool (10%)", poolAmount: 1080 }],
     participants: [
-      { name: "Tara Casella", role: "brand_ambassador", poolName: "Sales Pool (10%)", splitPercent: 0.5, amount: 540 },
-      { name: "Jamie Rivera", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 0.5, amount: 540 },
+      {
+        name: "Tara Casella",
+        role: "brand_ambassador",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 0.5,
+        amount: 540,
+      },
+      {
+        name: "Jamie Rivera",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 0.5,
+        amount: 540,
+      },
     ],
     totalCompensation: 1080,
     marginImpact: -0.1,
@@ -162,7 +197,13 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Standard Sales Pool (10%)"],
     pools: [{ poolName: "Sales Pool (10%)", poolAmount: 750 }],
     participants: [
-      { name: "Jamie Rivera", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 750 },
+      {
+        name: "Jamie Rivera",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 750,
+      },
     ],
     totalCompensation: 750,
     marginImpact: -0.1,
@@ -179,9 +220,27 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Standard Sales Pool (10%)"],
     pools: [{ poolName: "Sales Pool (10%)", poolAmount: 1800 }],
     participants: [
-      { name: "Tara Casella", role: "relationship_creator", poolName: "Sales Pool (10%)", splitPercent: 0.4, amount: 720 },
-      { name: "Jamie Rivera", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 0.4, amount: 720 },
-      { name: "Priya Kapoor", role: "support_contributor", poolName: "Sales Pool (10%)", splitPercent: 0.2, amount: 360 },
+      {
+        name: "Tara Casella",
+        role: "relationship_creator",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 0.4,
+        amount: 720,
+      },
+      {
+        name: "Jamie Rivera",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 0.4,
+        amount: 720,
+      },
+      {
+        name: "Priya Kapoor",
+        role: "support_contributor",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 0.2,
+        amount: 360,
+      },
     ],
     totalCompensation: 1800,
     marginImpact: -0.1,
@@ -201,8 +260,20 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
       { poolName: "Strategic Partner Pool (7%)", poolAmount: 1890 },
     ],
     participants: [
-      { name: "Jamie Rivera", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 2700 },
-      { name: "Reliant Strategic", role: "strategic_partner", poolName: "Strategic Partner Pool (7%)", splitPercent: 1, amount: 1890 },
+      {
+        name: "Jamie Rivera",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 2700,
+      },
+      {
+        name: "Reliant Strategic",
+        role: "strategic_partner",
+        poolName: "Strategic Partner Pool (7%)",
+        splitPercent: 1,
+        amount: 1890,
+      },
     ],
     totalCompensation: 4590,
     marginImpact: -0.17,
@@ -210,7 +281,8 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     requiredApprovals: ["Accounting Lead", "Owner"],
     legalReviewRequired: false,
     accountingReviewRequired: true,
-    narrative: "Sales pool and Strategic Partner pool are separate — each totals 100% independently.",
+    narrative:
+      "Sales pool and Strategic Partner pool are separate — each totals 100% independently.",
   }),
   scenario("affiliate_plus_sales", "Affiliate + salesperson", {
     grossPayment: 6000,
@@ -222,8 +294,20 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
       { poolName: "Affiliate Pool (5%)", poolAmount: 280 },
     ],
     participants: [
-      { name: "Devon Locke", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 560 },
-      { name: "Affiliate: Kestrel Media", role: "affiliate", poolName: "Affiliate Pool (5%)", splitPercent: 1, amount: 280 },
+      {
+        name: "Devon Locke",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 560,
+      },
+      {
+        name: "Affiliate: Kestrel Media",
+        role: "affiliate",
+        poolName: "Affiliate Pool (5%)",
+        splitPercent: 1,
+        amount: 280,
+      },
     ],
     totalCompensation: 840,
     marginImpact: -0.15,
@@ -240,7 +324,13 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Software Participation (3%)"],
     pools: [{ poolName: "Software Participation (3%)", poolAmount: 75 }],
     participants: [
-      { name: "Tara Casella", role: "brand_ambassador", poolName: "Software Participation (3%)", splitPercent: 1, amount: 75 },
+      {
+        name: "Tara Casella",
+        role: "brand_ambassador",
+        poolName: "Software Participation (3%)",
+        splitPercent: 1,
+        amount: 75,
+      },
     ],
     totalCompensation: 75,
     marginImpact: -0.03,
@@ -260,8 +350,20 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
       { poolName: "Milestone Bonus (fixed)", poolAmount: 5000 },
     ],
     participants: [
-      { name: "Jamie Rivera", role: "closer", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 1500 },
-      { name: "Delivery Team Pool", role: "team_pool", poolName: "Milestone Bonus (fixed)", splitPercent: 1, amount: 5000 },
+      {
+        name: "Jamie Rivera",
+        role: "closer",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 1500,
+      },
+      {
+        name: "Delivery Team Pool",
+        role: "team_pool",
+        poolName: "Milestone Bonus (fixed)",
+        splitPercent: 1,
+        amount: 5000,
+      },
     ],
     totalCompensation: 6500,
     marginImpact: -0.43,
@@ -269,11 +371,16 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     requiredApprovals: ["Accounting Lead", "Owner"],
     legalReviewRequired: false,
     accountingReviewRequired: true,
-    narrative: "Milestone bonus stacks with sales — different basis (fixed vs %), different disbursement class (bonus vs commission).",
+    narrative:
+      "Milestone bonus stacks with sales — different basis (fixed vs %), different disbursement class (bonus vs commission).",
     invariantChecks: [
       { label: "Pass-through excluded from base", passed: true },
       { label: "Base uses collected & cleared revenue only", passed: true },
-      { label: "Milestone stack elected per milestone", passed: true, note: "Elected via plan configuration" },
+      {
+        label: "Milestone stack elected per milestone",
+        passed: true,
+        note: "Elected via plan configuration",
+      },
       { label: "No duplicate compensation on the same basis", passed: true },
     ],
   }),
@@ -290,7 +397,8 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     requiredApprovals: [],
     legalReviewRequired: false,
     accountingReviewRequired: false,
-    narrative: "House-account rule suppresses the pool to protect margin. No compensation calculated.",
+    narrative:
+      "House-account rule suppresses the pool to protect margin. No compensation calculated.",
   }),
   scenario("renewal", "Renewal", {
     grossPayment: 9000,
@@ -299,7 +407,13 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Standard Sales Pool (10%) — renewal eligibility"],
     pools: [{ poolName: "Sales Pool (10%)", poolAmount: 810 }],
     participants: [
-      { name: "Jamie Rivera", role: "account_manager", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 810 },
+      {
+        name: "Jamie Rivera",
+        role: "account_manager",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 810,
+      },
     ],
     totalCompensation: 810,
     marginImpact: -0.1,
@@ -316,7 +430,13 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Standard Sales Pool (10%) — expansion eligibility"],
     pools: [{ poolName: "Sales Pool (10%)", poolAmount: 580 }],
     participants: [
-      { name: "Priya Kapoor", role: "expansion_owner", poolName: "Sales Pool (10%)", splitPercent: 1, amount: 580 },
+      {
+        name: "Priya Kapoor",
+        role: "expansion_owner",
+        poolName: "Sales Pool (10%)",
+        splitPercent: 1,
+        amount: 580,
+      },
     ],
     totalCompensation: 580,
     marginImpact: -0.1,
@@ -333,7 +453,13 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     applicablePlans: ["Software Participation (3%) — 12-month survival"],
     pools: [{ poolName: "Software Participation (3%)", poolAmount: 126 }],
     participants: [
-      { name: "Tara Casella (post-term)", role: "brand_ambassador", poolName: "Software Participation (3%)", splitPercent: 1, amount: 126 },
+      {
+        name: "Tara Casella (post-term)",
+        role: "brand_ambassador",
+        poolName: "Software Participation (3%)",
+        splitPercent: 1,
+        amount: 126,
+      },
     ],
     totalCompensation: 126,
     marginImpact: -0.03,
@@ -341,11 +467,16 @@ const PREVIEW_SCENARIOS: PlanPreviewResponse[] = [
     requiredApprovals: ["Accounting Lead", "Owner", "Legal"],
     legalReviewRequired: true,
     accountingReviewRequired: true,
-    narrative: "Participant terminated 4 months ago; within 12-month survival window. Legal review required before disbursement.",
+    narrative:
+      "Participant terminated 4 months ago; within 12-month survival window. Legal review required before disbursement.",
     invariantChecks: [
       { label: "Pass-through excluded from base", passed: true },
       { label: "Base uses collected & cleared revenue only", passed: true },
-      { label: "Post-termination survival window valid", passed: true, note: "8 months remaining of 12" },
+      {
+        label: "Post-termination survival window valid",
+        passed: true,
+        note: "8 months remaining of 12",
+      },
       { label: "Legal review attached", passed: false, note: "Awaiting cleared legal review" },
     ],
   }),
@@ -371,7 +502,8 @@ export const compensationService: CompensationService = {
       return { ...plan, ...patch };
     }, DEMO_MUTATION_MESSAGE),
 
-  listPlanVersions: (planId) => mockGet(() => MOCK_PLAN_VERSIONS.filter((v) => v.planId === planId)),
+  listPlanVersions: (planId) =>
+    mockGet(() => MOCK_PLAN_VERSIONS.filter((v) => v.planId === planId)),
   createPlanVersion: (planId, changeSummary) =>
     mockMutation(() => {
       const versions = MOCK_PLAN_VERSIONS.filter((v) => v.planId === planId);
@@ -414,7 +546,8 @@ export const compensationService: CompensationService = {
       },
     })),
   getParticipant: (id) => mockGet(() => MOCK_PARTICIPANTS.find((p) => p.id === id)),
-  listPlanParticipants: (planId) => mockGet(() => MOCK_PLAN_PARTICIPANTS.filter((p) => p.planId === planId)),
+  listPlanParticipants: (planId) =>
+    mockGet(() => MOCK_PLAN_PARTICIPANTS.filter((p) => p.planId === planId)),
   assignParticipantToPlan: (input) =>
     mockMutation(
       () => ({ ...(input as CompensationPlanParticipant), id: `pp_new_${Date.now()}` }),
@@ -454,7 +587,11 @@ export const compensationService: CompensationService = {
     }),
 
   listEvidence: (attributionId) =>
-    mockGet(() => (attributionId ? MOCK_EVIDENCE.filter((e) => e.attributionId === attributionId) : MOCK_EVIDENCE)),
+    mockGet(() =>
+      attributionId
+        ? MOCK_EVIDENCE.filter((e) => e.attributionId === attributionId)
+        : MOCK_EVIDENCE,
+    ),
   addEvidence: (input) =>
     mockMutation(
       () => ({
@@ -512,19 +649,26 @@ export const compensationService: CompensationService = {
         },
         {
           label: "Legal review",
-          status: plan?.legalReviewRequired && plan.legalReviewStatus !== "cleared" ? "fail" : "pass",
+          status:
+            plan?.legalReviewRequired && plan.legalReviewStatus !== "cleared" ? "fail" : "pass",
           detail: `${plan?.legalReviewStatus ?? "not_required"}`,
         },
         {
           label: "Accounting review",
-          status: plan?.accountingReviewRequired && plan.accountingReviewStatus !== "cleared" ? "warn" : "pass",
+          status:
+            plan?.accountingReviewRequired && plan.accountingReviewStatus !== "cleared"
+              ? "warn"
+              : "pass",
           detail: `${plan?.accountingReviewStatus ?? "not_required"}`,
         },
       ];
       const requiredReviews: EligibilityResult["requiredReviews"] = [];
-      if (plan?.legalReviewRequired && plan.legalReviewStatus !== "cleared") requiredReviews.push("legal");
-      if (plan?.accountingReviewRequired && plan.accountingReviewStatus !== "cleared") requiredReviews.push("accounting");
-      if (plan?.family === "investor_milestone_bonus" || plan?.family === "equity_milestone") requiredReviews.push("owner");
+      if (plan?.legalReviewRequired && plan.legalReviewStatus !== "cleared")
+        requiredReviews.push("legal");
+      if (plan?.accountingReviewRequired && plan.accountingReviewStatus !== "cleared")
+        requiredReviews.push("accounting");
+      if (plan?.family === "investor_milestone_bonus" || plan?.family === "equity_milestone")
+        requiredReviews.push("owner");
 
       let result: EligibilityResultState = "eligible";
       if (checks.some((c) => c.status === "fail")) result = "needs_legal_review";

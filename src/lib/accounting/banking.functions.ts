@@ -16,7 +16,9 @@ export const listBankAccounts = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
       .from("bank_accounts")
-      .select("id, name, bank_name, account_number_last4, currency, opening_balance, opening_balance_date, is_active, gl_account_id, accounts:gl_account_id(code, name)")
+      .select(
+        "id, name, bank_name, account_number_last4, currency, opening_balance, opening_balance_date, is_active, gl_account_id, accounts:gl_account_id(code, name)",
+      )
       .eq("org_id", data.orgId)
       .order("name");
     if (error) throw new Error(error.message);
@@ -26,16 +28,18 @@ export const listBankAccounts = createServerFn({ method: "GET" })
 export const createBankAccount = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      glAccountId: z.string().uuid(),
-      name: z.string().min(1).max(200),
-      bankName: z.string().max(200).optional(),
-      last4: z.string().max(4).optional(),
-      currency: z.string().default("USD"),
-      openingBalance: z.number().default(0),
-      openingBalanceDate: z.string().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        glAccountId: z.string().uuid(),
+        name: z.string().min(1).max(200),
+        bankName: z.string().max(200).optional(),
+        last4: z.string().max(4).optional(),
+        currency: z.string().default("USD"),
+        openingBalance: z.number().default(0),
+        openingBalanceDate: z.string().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
@@ -59,19 +63,23 @@ export const createBankAccount = createServerFn({ method: "POST" })
 export const listBankTransactions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      bankAccountId: z.string().uuid().optional(),
-      status: z.enum(["unmatched", "matched", "ignored", "pending"]).optional(),
-      from: z.string().optional(),
-      to: z.string().optional(),
-      limit: z.number().int().min(1).max(1000).default(500),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        bankAccountId: z.string().uuid().optional(),
+        status: z.enum(["unmatched", "matched", "ignored", "pending"]).optional(),
+        from: z.string().optional(),
+        to: z.string().optional(),
+        limit: z.number().int().min(1).max(1000).default(500),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
       .from("bank_transactions")
-      .select("id, bank_account_id, txn_date, description, reference, amount, status, matched_journal_line_id, external_source, external_id")
+      .select(
+        "id, bank_account_id, txn_date, description, reference, amount, status, matched_journal_line_id, external_source, external_id",
+      )
       .eq("org_id", data.orgId)
       .order("txn_date", { ascending: false })
       .limit(data.limit);
@@ -95,12 +103,14 @@ const importRowSchema = z.object({
 export const importBankTransactions = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      bankAccountId: z.string().uuid(),
-      sourceSystem: z.string().default("csv_import"),
-      rows: z.array(importRowSchema).min(1).max(2000),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        bankAccountId: z.string().uuid(),
+        sourceSystem: z.string().default("csv_import"),
+        rows: z.array(importRowSchema).min(1).max(2000),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = data.rows.map((r) => ({
@@ -129,11 +139,13 @@ export const importBankTransactions = createServerFn({ method: "POST" })
 export const matchBankTransaction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      bankTxnId: z.string().uuid(),
-      journalLineId: z.string().uuid(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        bankTxnId: z.string().uuid(),
+        journalLineId: z.string().uuid(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("match_bank_transaction", {
@@ -147,7 +159,9 @@ export const matchBankTransaction = createServerFn({ method: "POST" })
 
 export const unmatchBankTransaction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) => z.object({ orgId: z.string().uuid(), bankTxnId: z.string().uuid() }).parse(v))
+  .inputValidator((v) =>
+    z.object({ orgId: z.string().uuid(), bankTxnId: z.string().uuid() }).parse(v),
+  )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("unmatch_bank_transaction", {
       _org_id: data.orgId,
@@ -164,7 +178,9 @@ export const unmatchBankTransaction = createServerFn({ method: "POST" })
  */
 export const suggestMatchCandidates = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) => z.object({ orgId: z.string().uuid(), bankTxnId: z.string().uuid() }).parse(v))
+  .inputValidator((v) =>
+    z.object({ orgId: z.string().uuid(), bankTxnId: z.string().uuid() }).parse(v),
+  )
   .handler(async ({ data, context }) => {
     const { data: txn, error: txnErr } = await context.supabase
       .from("bank_transactions")
@@ -173,7 +189,8 @@ export const suggestMatchCandidates = createServerFn({ method: "GET" })
       .eq("org_id", data.orgId)
       .single();
     if (txnErr) throw new Error(txnErr.message);
-    const glAccountId = (txn as { bank_accounts?: { gl_account_id?: string } | null }).bank_accounts?.gl_account_id;
+    const glAccountId = (txn as { bank_accounts?: { gl_account_id?: string } | null }).bank_accounts
+      ?.gl_account_id;
     if (!glAccountId) return [];
 
     const amount = Number(txn.amount);
@@ -189,7 +206,9 @@ export const suggestMatchCandidates = createServerFn({ method: "GET" })
 
     let q = context.supabase
       .from("journal_lines")
-      .select("id, debit, credit, memo, account_id, journal:journal_entries!inner(id, entry_date, memo, status, org_id)")
+      .select(
+        "id, debit, credit, memo, account_id, journal:journal_entries!inner(id, entry_date, memo, status, org_id)",
+      )
       .eq("account_id", glAccountId)
       .eq("journal.org_id", data.orgId)
       .eq("journal.status", "posted")
@@ -219,7 +238,9 @@ export const listReconciliations = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     let q = context.supabase
       .from("bank_reconciliations")
-      .select("id, bank_account_id, statement_start_date, statement_end_date, statement_ending_balance, cleared_balance, status, completed_at")
+      .select(
+        "id, bank_account_id, statement_start_date, statement_end_date, statement_ending_balance, cleared_balance, status, completed_at",
+      )
       .eq("org_id", data.orgId)
       .order("statement_end_date", { ascending: false });
     if (data.bankAccountId) q = q.eq("bank_account_id", data.bankAccountId);
@@ -231,13 +252,15 @@ export const listReconciliations = createServerFn({ method: "GET" })
 export const startReconciliation = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      bankAccountId: z.string().uuid(),
-      startDate: z.string(),
-      endDate: z.string(),
-      statementEndingBalance: z.number(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        bankAccountId: z.string().uuid(),
+        startDate: z.string(),
+        endDate: z.string(),
+        statementEndingBalance: z.number(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
@@ -258,12 +281,14 @@ export const startReconciliation = createServerFn({ method: "POST" })
 export const completeReconciliation = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      reconciliationId: z.string().uuid(),
-      statementEndingBalance: z.number(),
-      clearedBankTxnIds: z.array(z.string().uuid()),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        reconciliationId: z.string().uuid(),
+        statementEndingBalance: z.number(),
+        clearedBankTxnIds: z.array(z.string().uuid()),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("complete_bank_reconciliation", {

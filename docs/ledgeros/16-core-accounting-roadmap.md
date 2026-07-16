@@ -6,14 +6,14 @@
 
 ## Delivery in four milestones
 
-| Milestone | Scope | Status |
-|-----------|-------|--------|
-| **M1 — Ledger core** | Chart of Accounts, General Ledger, Journal Entries + reversals | **✅ Shipped** |
-| **M2 — AR expansion + AP** | Dimensions & source-lineage framework. AR aging + statements. Vendors, bills, bill payments with posting. | **✅ Shipped** |
-| **M3 — Banking + Reports** | Bank accounts, transactions, matching, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | **✅ Shipped** — see [17-banking-and-reports.md](./17-banking-and-reports.md) |
-| **M4 — Close + Settings** | Period-close workflow, accounting settings, control center. | **✅ Shipped** |
-| **M5 — Integration Layer** | Integration sources, event mappings, sync history + retry. | **✅ Shipped** — see [18-integration-layer.md](./18-integration-layer.md) |
-| **M6 — Financial Event Engine** | Event bus, rules engine, approval model. External systems can never post journals directly. | **✅ Shipped** — see [19-financial-event-engine.md](./19-financial-event-engine.md) |
+| Milestone                       | Scope                                                                                                             | Status                                                                              |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **M1 — Ledger core**            | Chart of Accounts, General Ledger, Journal Entries + reversals                                                    | **✅ Shipped**                                                                      |
+| **M2 — AR expansion + AP**      | Dimensions & source-lineage framework. AR aging + statements. Vendors, bills, bill payments with posting.         | **✅ Shipped**                                                                      |
+| **M3 — Banking + Reports**      | Bank accounts, transactions, matching, reconciliation. Trial Balance, P&L, Balance Sheet, Cash Flow, AR/AP Aging. | **✅ Shipped** — see [17-banking-and-reports.md](./17-banking-and-reports.md)       |
+| **M4 — Close + Settings**       | Period-close workflow, accounting settings, control center.                                                       | **✅ Shipped**                                                                      |
+| **M5 — Integration Layer**      | Integration sources, event mappings, sync history + retry.                                                        | **✅ Shipped** — see [18-integration-layer.md](./18-integration-layer.md)           |
+| **M6 — Financial Event Engine** | Event bus, rules engine, approval model. External systems can never post journals directly.                       | **✅ Shipped** — see [19-financial-event-engine.md](./19-financial-event-engine.md) |
 
 Each milestone typechecks cleanly, runs one migration, updates this doc.
 
@@ -28,16 +28,16 @@ so reports can slice results without denormalising into per-report tables.
 All are nullable UUIDs / short codes, indexed individually, and always
 scoped to the same `org_id` as the line's account.
 
-| Dimension    | Purpose                                                        |
-|--------------|----------------------------------------------------------------|
-| `department` | Cost / revenue center inside the org.                          |
-| `location`   | Physical or logical operating site.                            |
-| `project`    | Job, engagement, or capital project.                           |
-| `customer`   | Counterparty on the revenue side.                              |
-| `vendor`     | Counterparty on the expense side.                              |
-| `service`    | Service line delivered.                                        |
-| `product`    | Inventory or SKU consumed / sold.                              |
-| `entity`     | Legal entity within a group (future consolidation).            |
+| Dimension    | Purpose                                             |
+| ------------ | --------------------------------------------------- |
+| `department` | Cost / revenue center inside the org.               |
+| `location`   | Physical or logical operating site.                 |
+| `project`    | Job, engagement, or capital project.                |
+| `customer`   | Counterparty on the revenue side.                   |
+| `vendor`     | Counterparty on the expense side.                   |
+| `service`    | Service line delivered.                             |
+| `product`    | Inventory or SKU consumed / sold.                   |
+| `entity`     | Legal entity within a group (future consolidation). |
 
 Dimensions are **descriptive**, not part of the balance identity — the
 double-entry rule stays enforced at the journal level. Aging, profitability,
@@ -49,13 +49,13 @@ Every financial event carries a consistent lineage envelope so any posted
 row can be traced back to its origin without joining through business
 tables:
 
-- `source_type`    — canonical event name (`invoice`, `bill`, `payment`,
+- `source_type` — canonical event name (`invoice`, `bill`, `payment`,
   `refund`, `inventory_consumption`, `manual`, `reversal`, ...).
-- `source_system`  — originating system (`ledgeros.manual`,
+- `source_system` — originating system (`ledgeros.manual`,
   `serviceconnect`, `csv_import`, external partner name).
-- `external_id`    — stable identifier in the source system.
-- `source_ref`     — human-readable pointer (work order #, bill #, etc.).
-- `ledger_impact`  — jsonb summary of the resulting debits/credits and
+- `external_id` — stable identifier in the source system.
+- `source_ref` — human-readable pointer (work order #, bill #, etc.).
+- `ledger_impact` — jsonb summary of the resulting debits/credits and
   affected accounts, mirrored into `audit_events.after`.
 - `correlation_id` — request/idempotency key propagated end-to-end.
 
@@ -70,10 +70,12 @@ are compatible with the new framework.
 ### Database changes
 
 **`accounts`** — grouping / display metadata
+
 - `is_system boolean` — marks default accounts (cannot be deleted).
 - `sort_order integer` — custom ordering inside a type / parent.
 
 **`journal_entries`** — reversal linkage
+
 - `reversal_of uuid` → original entry a reversal offsets.
 - `reversed_by uuid` → set on the original when a reversal is posted.
 - `description text` — longer narrative beyond the short `memo`.
@@ -88,6 +90,7 @@ Both are `SECURITY DEFINER` and enforce `is_org_member` + `is_period_open`
 internally. Both write an `audit_events` row.
 
 **`post_manual_journal(_org_id, _entry_date, _memo, _description, _lines jsonb)`**
+
 - Inserts a draft entry, adds the supplied lines, then flips status to
   `posted`. The existing `enforce_balanced_journal` trigger provides the
   final guardrail against unbalanced writes.
@@ -95,6 +98,7 @@ internally. Both write an `audit_events` row.
   or a date outside an open fiscal period.
 
 **`reverse_journal(_org_id, _journal_id, _reason)`**
+
 - Creates an offsetting balanced journal dated today, swaps debits/credits
   from the original, links both entries (`reversal_of` / `reversed_by`).
 - Never mutates the original posted entry.
@@ -114,10 +118,10 @@ internally. Both write an `audit_events` row.
 
 ### UI routes
 
-| Route | What it does |
-|-------|--------------|
-| `/ledger/accounts` | Grouped hierarchy of the chart of accounts with per-type totals, drill-down to General Ledger, create / edit dialog. System accounts are marked and non-deletable. |
-| `/ledger/general` | Full posted line detail. Filter by account, date range, source, status, memo search. When an account filter is active, a running balance column is computed on the client. CSV export. |
+| Route              | What it does                                                                                                                                                                                   |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/ledger/accounts` | Grouped hierarchy of the chart of accounts with per-type totals, drill-down to General Ledger, create / edit dialog. System accounts are marked and non-deletable.                             |
+| `/ledger/general`  | Full posted line detail. Filter by account, date range, source, status, memo search. When an account filter is active, a running balance column is computed on the client. CSV export.         |
 | `/ledger/journals` | List posted, draft, void journals. New-journal workspace enforces balance and open period client-side before hitting the RPC. Reversal dialog captures a reason and posts an offsetting entry. |
 
 ### Posting rules — manual journals
@@ -145,17 +149,20 @@ linkages without joining back.
 ### Database changes
 
 **`journal_lines`** — dimension columns (all nullable, indexed)
+
 - `department_id`, `location_id`, `project_id`, `customer_id`, `vendor_id`,
   `service_id`, `product_id`, `entity_id`.
 - Applied to every future posting; older rows stay `NULL`.
 
 **`journal_entries`** — source-lineage columns
+
 - `source_system text` (originating system).
 - `source_ref text` (human-readable pointer).
 - `ledger_impact jsonb` (mirrored summary of debits/credits).
 - `external_id text` (idempotency across integrations).
 
 **AP tables**
+
 - `vendors (org, external_source, external_id, name, email, phone, terms_days, default_expense_account_id, ...)`.
 - `bills (org, vendor_id, bill_number, issue_date, due_date, status, subtotal, tax, total, balance, memo, external_source, external_id, source_system, source_ref)`.
 - `bill_lines (bill_id, account_id, description, quantity, unit_price, amount, dimensions...)`.
@@ -183,13 +190,13 @@ All new tables: `GRANT` → `ENABLE RLS` → policies scoped via `is_org_member`
 
 ### UI routes
 
-| Route | What it does |
-|-------|--------------|
+| Route                        | What it does                                         |
+| ---------------------------- | ---------------------------------------------------- |
 | `/accounts-receivable/aging` | 0/30/60/90+ buckets from posted invoices' `balance`. |
-| `/accounts-payable/vendors` | Vendor master with balances. |
-| `/accounts-payable/bills` | Bill list + create/post workspace. |
-| `/accounts-payable/payments` | Record vendor payment, allocate across bills. |
-| `/accounts-payable/aging` | AP aging buckets. |
+| `/accounts-payable/vendors`  | Vendor master with balances.                         |
+| `/accounts-payable/bills`    | Bill list + create/post workspace.                   |
+| `/accounts-payable/payments` | Record vendor payment, allocate across bills.        |
+| `/accounts-payable/aging`    | AP aging buckets.                                    |
 
 ### Posting rules — bills
 
@@ -208,7 +215,6 @@ Post: DR AP for applied amount, CR Cash for payment amount
 Each application decrements bill.balance and re-derives status
 Payment date must be within an open period
 ```
-
 
 ## M3 — Banking + Reports (planned)
 
@@ -247,13 +253,13 @@ Payment date must be within an open period
 Tables:
 
 - `close_runs (id, org_id, fiscal_period_id, status, started_by/at,
-  completed_by/at, notes)` — one per period-close attempt, unique per
+completed_by/at, notes)` — one per period-close attempt, unique per
   period.
 - `close_tasks (id, org_id, close_run_id, task_key, title, category,
-  required, order_index, status, note, completed_by/at)` — checklist
+required, order_index, status, note, completed_by/at)` — checklist
   items seeded by `seed_default_close_tasks`.
 - `close_approvals (id, org_id, close_run_id, approver_id, decision,
-  note)` — append-only approve/reject decisions.
+note)` — append-only approve/reject decisions.
 
 Default checklist (`bank_recon`, `ar_review`, `ap_review`,
 `unposted_journals`, `trial_balance`, `variance_review`,

@@ -19,17 +19,7 @@ import { ReconciliationHistoryTable } from "@/components/banking/reconciliation-
 import { TxKindIcon } from "@/components/banking/transaction-icons";
 import { BANK_ACCOUNTS, TRANSACTIONS, type BankAccount } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  FileUp,
-  History,
-  Lock,
-  Send,
-  Undo2,
-  X,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileUp, History, Lock, Send, Undo2, X } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -215,11 +205,21 @@ function ReconciliationFlow({ account, onExit }: { account: BankAccount; onExit:
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="ss">Statement start</Label>
-              <Input id="ss" type="date" value={statementStart} onChange={(e) => setStatementStart(e.target.value)} />
+              <Input
+                id="ss"
+                type="date"
+                value={statementStart}
+                onChange={(e) => setStatementStart(e.target.value)}
+              />
             </div>
             <div>
               <Label htmlFor="se">Statement end</Label>
-              <Input id="se" type="date" value={statementEnd} onChange={(e) => setStatementEnd(e.target.value)} />
+              <Input
+                id="se"
+                type="date"
+                value={statementEnd}
+                onChange={(e) => setStatementEnd(e.target.value)}
+              />
             </div>
             <div>
               <Label>Starting balance</Label>
@@ -380,7 +380,8 @@ function ReconciliationFlow({ account, onExit }: { account: BankAccount; onExit:
         <Card className="p-6">
           <h3 className="text-sm font-semibold">Resolve exceptions</h3>
           <p className="mt-1 text-xs text-muted-foreground">
-            Every exception below must be resolved or documented before the reconciliation can complete.
+            Every exception below must be resolved or documented before the reconciliation can
+            complete.
           </p>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {EXCEPTIONS.map((e) => (
@@ -485,7 +486,8 @@ function ReconciliationFlow({ account, onExit }: { account: BankAccount; onExit:
             <span className="text-sm">Awaiting Rose approval — 12 min ago</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Reopening a completed reconciliation requires elevated approval. Audit history remains visible on all outcomes.
+            Reopening a completed reconciliation requires elevated approval. Audit history remains
+            visible on all outcomes.
           </p>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -653,4 +655,3 @@ function ApproverRow({ name, role, required }: { name: string; role: string; req
     </div>
   );
 }
-

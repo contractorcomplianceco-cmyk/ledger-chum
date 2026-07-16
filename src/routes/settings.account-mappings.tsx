@@ -7,13 +7,18 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listAccounts } from "@/lib/accounting/workspace.functions";
 import {
-  listAccountMappings, upsertAccountMapping,
+  listAccountMappings,
+  upsertAccountMapping,
 } from "@/lib/accounting/account-mappings.functions";
 import { DEMO_MAPPINGS, fmtRelative } from "@/lib/mock/accountant-workspace";
 import { CheckCircle2, AlertTriangle, Circle, Pencil } from "lucide-react";
@@ -66,20 +71,20 @@ function AccountMappingsPage() {
   const mappingsQ = useQuery({
     queryKey: ["account-mappings", orgId],
     queryFn: () => listFn({ data: { orgId: orgId! } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
   const accountsQ = useQuery({
     queryKey: ["accounts", orgId],
     queryFn: () => accountsFn({ data: { orgId: orgId! } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
 
   const [editing, setEditing] = useState<Purpose | null>(null);
   const [pendingAccount, setPendingAccount] = useState<string>("");
 
-  const mappingByPurpose = new Map(
-    (mappingsQ.data ?? []).map((m) => [m.purpose as Purpose, m]),
-  );
+  const mappingByPurpose = new Map((mappingsQ.data ?? []).map((m) => [m.purpose as Purpose, m]));
   const accountByIdMap = new Map(
     (accountsQ.data ?? []).map((a) => [a.id, `${a.code} · ${a.name}`]),
   );
@@ -92,7 +97,7 @@ function AccountMappingsPage() {
           label: p.label,
           source: p.source,
           accountId: m?.account_id ?? null,
-          accountLabel: m ? accountByIdMap.get(m.account_id) ?? "—" : null,
+          accountLabel: m ? (accountByIdMap.get(m.account_id) ?? "—") : null,
           updatedAt: m?.updated_at,
           status: (m ? "mapped" : "unmapped") as "mapped" | "review" | "unmapped",
         };
@@ -134,7 +139,11 @@ function AccountMappingsPage() {
         <div className="grid gap-3 sm:grid-cols-3">
           <Tile label="Mapped" value={mapped.toString()} tone="ok" />
           <Tile label="Purposes" value={rows.length.toString()} tone="muted" />
-          <Tile label="Unmapped" value={unmapped.toString()} tone={unmapped > 0 ? "warn" : "muted"} />
+          <Tile
+            label="Unmapped"
+            value={unmapped.toString()}
+            tone={unmapped > 0 ? "warn" : "muted"}
+          />
         </div>
 
         <Card className="overflow-hidden border-border/70 bg-surface shadow-card">
@@ -179,26 +188,40 @@ function AccountMappingsPage() {
                       <span className="italic text-muted-foreground">Not mapped</span>
                     )}
                   </div>
-                  <div><MappingStatus status={m.status} /></div>
+                  <div>
+                    <MappingStatus status={m.status} />
+                  </div>
                   <div className="text-[12px] text-muted-foreground">
                     {m.updatedAt ? fmtRelative(m.updatedAt) : "—"}
                   </div>
                   <div className="text-right">
                     {isEditing ? (
                       <div className="flex justify-end gap-1">
-                        <Button size="sm" variant="ghost" className="h-7 px-2 text-[12px]"
-                          onClick={() => { setEditing(null); setPendingAccount(""); }}>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-7 px-2 text-[12px]"
+                          onClick={() => {
+                            setEditing(null);
+                            setPendingAccount("");
+                          }}
+                        >
                           Cancel
                         </Button>
-                        <Button size="sm" className="h-7 px-2 text-[12px]"
+                        <Button
+                          size="sm"
+                          className="h-7 px-2 text-[12px]"
                           disabled={!pendingAccount}
-                          onClick={() => saveMapping(m.purpose)}>
+                          onClick={() => saveMapping(m.purpose)}
+                        >
                           Save
                         </Button>
                       </div>
                     ) : (
                       <Button
-                        size="sm" variant="ghost" className="h-7 px-2 text-[12px]"
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 px-2 text-[12px]"
                         disabled={!live}
                         onClick={() => {
                           setEditing(m.purpose);
@@ -221,12 +244,21 @@ function AccountMappingsPage() {
             How mappings resolve
           </div>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-[13px] text-muted-foreground">
-            <li>Exact match in <code className="font-mono text-foreground">account_mappings</code> for the org and purpose.</li>
-            <li>Fallback via <code className="font-mono text-foreground">resolve_account</code> RPC (heuristic by account type + name pattern).</li>
-            <li>If no match, the integration event is rejected and surfaces in the integration inbox.</li>
+            <li>
+              Exact match in <code className="font-mono text-foreground">account_mappings</code> for
+              the org and purpose.
+            </li>
+            <li>
+              Fallback via <code className="font-mono text-foreground">resolve_account</code> RPC
+              (heuristic by account type + name pattern).
+            </li>
+            <li>
+              If no match, the integration event is rejected and surfaces in the integration inbox.
+            </li>
           </ol>
           <div className="mt-2 text-[12px] text-muted-foreground">
-            Every mapping change writes an <code className="font-mono">account_mapping.upserted</code> audit event.
+            Every mapping change writes an{" "}
+            <code className="font-mono">account_mapping.upserted</code> audit event.
           </div>
         </Card>
       </PageBody>
@@ -236,26 +268,52 @@ function AccountMappingsPage() {
 
 function MappingStatus({ status }: { status: "mapped" | "review" | "unmapped" }) {
   const map = {
-    mapped: { cls: "bg-success/10 text-success ring-success/20", Icon: CheckCircle2, label: "Mapped" },
-    review: { cls: "bg-warning/15 text-warning ring-warning/25", Icon: AlertTriangle, label: "Review" },
-    unmapped: { cls: "bg-muted text-muted-foreground ring-border", Icon: Circle, label: "Unmapped" },
+    mapped: {
+      cls: "bg-success/10 text-success ring-success/20",
+      Icon: CheckCircle2,
+      label: "Mapped",
+    },
+    review: {
+      cls: "bg-warning/15 text-warning ring-warning/25",
+      Icon: AlertTriangle,
+      label: "Review",
+    },
+    unmapped: {
+      cls: "bg-muted text-muted-foreground ring-border",
+      Icon: Circle,
+      label: "Unmapped",
+    },
   } as const;
   const m = map[status];
   return (
-    <Badge variant="outline" className={cn(
-      "inline-flex h-5 items-center gap-1 border-transparent text-[10px] font-semibold ring-1 ring-inset",
-      m.cls,
-    )}>
+    <Badge
+      variant="outline"
+      className={cn(
+        "inline-flex h-5 items-center gap-1 border-transparent text-[10px] font-semibold ring-1 ring-inset",
+        m.cls,
+      )}
+    >
       <m.Icon className="h-3 w-3" /> {m.label}
     </Badge>
   );
 }
 
-function Tile({ label, value, tone }: { label: string; value: string; tone: "ok" | "warn" | "muted" }) {
-  const cls = tone === "ok" ? "text-success" : tone === "warn" ? "text-warning" : "text-muted-foreground";
+function Tile({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: "ok" | "warn" | "muted";
+}) {
+  const cls =
+    tone === "ok" ? "text-success" : tone === "warn" ? "text-warning" : "text-muted-foreground";
   return (
     <Card className="border-border/70 bg-surface p-4 shadow-card">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{label}</div>
+      <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </div>
       <div className={cn("mt-1 font-tabular text-[26px] font-bold", cls)}>{value}</div>
     </Card>
   );

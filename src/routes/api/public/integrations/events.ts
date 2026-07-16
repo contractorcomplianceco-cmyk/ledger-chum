@@ -33,11 +33,7 @@ export const Route = createFileRoute("/api/public/integrations/events")({
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(
-            request,
-            "/events",
-            "work_orders.completed",
-          );
+          const start = await beginIntegrationCall(request, "/events", "work_orders.completed");
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;

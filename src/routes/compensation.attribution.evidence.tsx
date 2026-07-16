@@ -4,7 +4,14 @@ import { CompensationShell, showDemoToast } from "@/components/compensation/comp
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { AttributionEvidence } from "@/lib/api/services/compensation";
 
@@ -23,7 +30,11 @@ function EvidencePage() {
     <CompensationShell
       title="Evidence library"
       description="CRM, email, calendar, event, meeting, contract, and leadership-confirmation records supporting attribution claims."
-      actions={<Button size="sm" onClick={() => showDemoToast("Uploaded evidence")}>Add evidence</Button>}
+      actions={
+        <Button size="sm" onClick={() => showDemoToast("Uploaded evidence")}>
+          Add evidence
+        </Button>
+      }
     >
       <Card className="overflow-x-auto">
         <Table>
@@ -51,19 +62,37 @@ function EvidencePage() {
                 <TableCell className="text-xs">{e.uploadedBy}</TableCell>
                 <TableCell className="text-xs">{e.opportunityId ?? "—"}</TableCell>
                 <TableCell className="text-xs">{e.participantId ?? "—"}</TableCell>
-                <TableCell><Badge variant="outline">{e.relevance}</Badge></TableCell>
+                <TableCell>
+                  <Badge variant="outline">{e.relevance}</Badge>
+                </TableCell>
                 <TableCell>{(e.confidence * 100).toFixed(0)}%</TableCell>
                 <TableCell>
                   {e.verified ? (
-                    <Badge variant="outline" className="border-success/40 bg-success/10 text-success">Verified</Badge>
+                    <Badge
+                      variant="outline"
+                      className="border-success/40 bg-success/10 text-success"
+                    >
+                      Verified
+                    </Badge>
                   ) : (
                     <Badge variant="outline">Pending</Badge>
                   )}
                 </TableCell>
-                <TableCell className="text-xs max-w-[200px] truncate" title={e.notes}>{e.notes ?? "—"}</TableCell>
+                <TableCell className="text-xs max-w-[200px] truncate" title={e.notes}>
+                  {e.notes ?? "—"}
+                </TableCell>
                 <TableCell className="text-right">
                   {!e.verified && (
-                    <Button size="sm" variant="ghost" onClick={() => { api.compensation.verifyEvidence(e.id); showDemoToast("Verified"); }}>Verify</Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        api.compensation.verifyEvidence(e.id);
+                        showDemoToast("Verified");
+                      }}
+                    >
+                      Verify
+                    </Button>
                   )}
                 </TableCell>
               </TableRow>

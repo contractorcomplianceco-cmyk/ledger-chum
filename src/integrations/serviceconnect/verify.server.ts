@@ -41,7 +41,10 @@ export interface IntegrationContext extends ResolvedClient {
 }
 
 export class IntegrationError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
     super(message);
   }
 }
@@ -72,7 +75,10 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
     .from("api_clients")
     .update({ last_used_at: new Date().toISOString() })
     .eq("id", data.id)
-    .then(() => {}, () => {});
+    .then(
+      () => {},
+      () => {},
+    );
 
   return {
     clientId: data.id,
@@ -80,8 +86,7 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
     clientName: data.name,
     scopes: (data as { scopes?: string[] }).scopes ?? [],
     environment: ((data as { environment?: string }).environment ?? "production") as
-      | "sandbox"
-      | "production",
+      "sandbox" | "production",
   };
 }
 
@@ -101,7 +106,6 @@ export async function beginIntegrationCall(
 > {
   const client = await verifyBearer(request);
   if (requiredScope) requireScope(client, requiredScope);
-
 
   const idempotencyKey = request.headers.get("idempotency-key");
   if (!idempotencyKey) throw new IntegrationError(400, "Missing Idempotency-Key header");

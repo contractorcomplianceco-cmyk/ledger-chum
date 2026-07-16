@@ -19,10 +19,16 @@ function DnaDetail() {
   return (
     <ApexPage
       title={subject?.label ?? "Financial DNA path"}
-      description={subject ? `${subject.type} DNA trace — demonstration data.` : "Path not found in demo dataset."}
+      description={
+        subject
+          ? `${subject.type} DNA trace — demonstration data.`
+          : "Path not found in demo dataset."
+      }
       actions={
         <Link to="/apex/financial-dna">
-          <Button size="sm" variant="outline"><ArrowLeft className="mr-1 h-3 w-3" /> All DNA subjects</Button>
+          <Button size="sm" variant="outline">
+            <ArrowLeft className="mr-1 h-3 w-3" /> All DNA subjects
+          </Button>
         </Link>
       }
     >
@@ -30,9 +36,19 @@ function DnaDetail() {
         <Card className="border-border/70 p-4">
           <ol className="space-y-2 text-[12.5px]">
             {DNA_NODES.map((n) => (
-              <li key={n.id} className="flex items-center justify-between gap-2 border-b border-border/40 pb-2 last:border-0">
-                <span className="text-muted-foreground">{n.stage} · {n.label}</span>
-                <span className="font-semibold text-foreground tabular-nums">{currency(n.amount)} <span className="ml-1 text-[10px] text-muted-foreground">{n.pctOfOrigin.toFixed(1)}%</span></span>
+              <li
+                key={n.id}
+                className="flex items-center justify-between gap-2 border-b border-border/40 pb-2 last:border-0"
+              >
+                <span className="text-muted-foreground">
+                  {n.stage} · {n.label}
+                </span>
+                <span className="font-semibold text-foreground tabular-nums">
+                  {currency(n.amount)}{" "}
+                  <span className="ml-1 text-[10px] text-muted-foreground">
+                    {n.pctOfOrigin.toFixed(1)}%
+                  </span>
+                </span>
               </li>
             ))}
           </ol>
@@ -40,7 +56,12 @@ function DnaDetail() {
       </ApexSection>
 
       <ApexSection title="Cross-experience">
-        <CrossExperienceLinks timelineId="TL-INVOICE-0501" graphNodeId="client:ald" scenarioId="SC-01" opportunityId="OPP-1042" />
+        <CrossExperienceLinks
+          timelineId="TL-INVOICE-0501"
+          graphNodeId="client:ald"
+          scenarioId="SC-01"
+          opportunityId="OPP-1042"
+        />
       </ApexSection>
 
       <AskLedgerOS

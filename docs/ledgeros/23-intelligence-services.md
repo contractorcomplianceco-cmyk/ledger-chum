@@ -32,38 +32,41 @@ architectural rule — direct ledger reads from AI or APEX are forbidden.
 Three tables, all `org_id`-scoped with RLS gated by `is_org_member`.
 
 ### `financial_anomalies`
-| Field | Notes |
-| --- | --- |
-| `metric_key`, `metric_id` | Source metric being flagged |
-| `detector` | `threshold` · `zscore` · `trend` · `ratio` · `custom` |
-| `severity` | `low` · `medium` · `high` · `critical` |
-| `status` | `open` · `acknowledged` · `dismissed` · `resolved` |
-| `observed_value`, `expected_value`, `deviation` | Numerical evidence |
-| `narrative`, `evidence`, `confidence`, `freshness`, `assumptions`, `missing_data` | AI response contract |
-| `recommended_action`, `approval_requirement` | Advisory only |
-| `advisory_only` | Immutable, always `true` from AI |
+
+| Field                                                                             | Notes                                                 |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `metric_key`, `metric_id`                                                         | Source metric being flagged                           |
+| `detector`                                                                        | `threshold` · `zscore` · `trend` · `ratio` · `custom` |
+| `severity`                                                                        | `low` · `medium` · `high` · `critical`                |
+| `status`                                                                          | `open` · `acknowledged` · `dismissed` · `resolved`    |
+| `observed_value`, `expected_value`, `deviation`                                   | Numerical evidence                                    |
+| `narrative`, `evidence`, `confidence`, `freshness`, `assumptions`, `missing_data` | AI response contract                                  |
+| `recommended_action`, `approval_requirement`                                      | Advisory only                                         |
+| `advisory_only`                                                                   | Immutable, always `true` from AI                      |
 
 ### `financial_recommendations`
-| Field | Notes |
-| --- | --- |
-| `category` | `reduce_cost` · `recover_revenue` · `improve_collection` · … |
-| `persona` | `controller` · `close_assistant` · `accountant_assistant` |
-| `state` | `generated` → `needs_review` → `accepted` / `dismissed` / `converted_to_task` / `converted_to_draft` / `approved_for_action` / `completed` / `outcome_measured` |
-| `supporting_metric_keys`, `related_anomaly_id` | Traceability into metrics + anomalies |
-| `confidence`, `estimated_impact`, `impact_value`, `risk`, `time_horizon` | Scoring |
-| `approval_requirement` | Required human approver for any downstream action |
-| `outcome_note`, `outcome_value` | Post-decision measurement |
+
+| Field                                                                    | Notes                                                                                                                                                           |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `category`                                                               | `reduce_cost` · `recover_revenue` · `improve_collection` · …                                                                                                    |
+| `persona`                                                                | `controller` · `close_assistant` · `accountant_assistant`                                                                                                       |
+| `state`                                                                  | `generated` → `needs_review` → `accepted` / `dismissed` / `converted_to_task` / `converted_to_draft` / `approved_for_action` / `completed` / `outcome_measured` |
+| `supporting_metric_keys`, `related_anomaly_id`                           | Traceability into metrics + anomalies                                                                                                                           |
+| `confidence`, `estimated_impact`, `impact_value`, `risk`, `time_horizon` | Scoring                                                                                                                                                         |
+| `approval_requirement`                                                   | Required human approver for any downstream action                                                                                                               |
+| `outcome_note`, `outcome_value`                                          | Post-decision measurement                                                                                                                                       |
 
 ### `intelligence_explanations`
+
 Append-only log of AI answers.
 
-| Field | Notes |
-| --- | --- |
-| `subject_type` | `metric` · `anomaly` · `recommendation` · `question` |
-| `subject_key` | metric key / anomaly id / recommendation id / free-form question hash |
-| `question`, `answer` | Human-readable Q&A |
-| `evidence`, `supporting_metric_keys`, `confidence`, `freshness`, `assumptions`, `missing_data`, `recommended_action`, `approval_requirement` | Full AI response envelope |
-| `advisory_only` | Enforced `true` on INSERT policy |
+| Field                                                                                                                                        | Notes                                                                 |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `subject_type`                                                                                                                               | `metric` · `anomaly` · `recommendation` · `question`                  |
+| `subject_key`                                                                                                                                | metric key / anomaly id / recommendation id / free-form question hash |
+| `question`, `answer`                                                                                                                         | Human-readable Q&A                                                    |
+| `evidence`, `supporting_metric_keys`, `confidence`, `freshness`, `assumptions`, `missing_data`, `recommended_action`, `approval_requirement` | Full AI response envelope                                             |
+| `advisory_only`                                                                                                                              | Enforced `true` on INSERT policy                                      |
 
 ---
 
@@ -71,11 +74,11 @@ Append-only log of AI answers.
 
 Enforced by DB triggers, not application code:
 
-| Table | Trigger | Guarantee |
-| --- | --- | --- |
-| `financial_anomalies` | `tg_anomalies_advisory_guard` | Narrative, evidence, confidence, advisory_only, observed / expected values cannot change. |
-| `financial_recommendations` | `tg_recs_advisory_guard` | Narrative, evidence, confidence, advisory_only, and category cannot change. |
-| `intelligence_explanations` | `tg_expl_immutable` | Any `UPDATE` is rejected — append-only. |
+| Table                       | Trigger                       | Guarantee                                                                                 |
+| --------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------- |
+| `financial_anomalies`       | `tg_anomalies_advisory_guard` | Narrative, evidence, confidence, advisory_only, observed / expected values cannot change. |
+| `financial_recommendations` | `tg_recs_advisory_guard`      | Narrative, evidence, confidence, advisory_only, and category cannot change.               |
+| `intelligence_explanations` | `tg_expl_immutable`           | Any `UPDATE` is rejected — append-only.                                                   |
 
 Client INSERT policies exist only on `intelligence_explanations`
 (and only with `advisory_only = true`). Anomalies and recommendations
@@ -122,17 +125,17 @@ authenticated via `requireSupabaseAuth`.
 
 ## 6. Server API (`src/lib/intelligence/services.functions.ts`)
 
-| Function | Purpose |
-| --- | --- |
-| `listAnomalies` | Read anomalies filtered by status + severity |
-| `updateAnomalyStatus` | Acknowledge / dismiss / resolve |
-| `listRecommendations` | Read recommendations filtered by state + persona |
-| `updateRecommendationState` | Move through review state machine |
-| `listExplanations` | Read append-only AI answers |
-| `recordExplanation` | Append an advisory answer (always `advisory_only = true`) |
-| `getRefreshStatus` | Latest calculation freshness for every active metric |
-| `getFinancialHealthScore` | Weighted composite of 6 canonical metrics (0–100) |
-| `getCloseCompletionScore` | % of close-run tasks completed |
+| Function                    | Purpose                                                    |
+| --------------------------- | ---------------------------------------------------------- |
+| `listAnomalies`             | Read anomalies filtered by status + severity               |
+| `updateAnomalyStatus`       | Acknowledge / dismiss / resolve                            |
+| `listRecommendations`       | Read recommendations filtered by state + persona           |
+| `updateRecommendationState` | Move through review state machine                          |
+| `listExplanations`          | Read append-only AI answers                                |
+| `recordExplanation`         | Append an advisory answer (always `advisory_only = true`)  |
+| `getRefreshStatus`          | Latest calculation freshness for every active metric       |
+| `getFinancialHealthScore`   | Weighted composite of 6 canonical metrics (0–100)          |
+| `getCloseCompletionScore`   | % of close-run tasks completed                             |
 | `getIntelligenceGovernance` | Advertise AI capabilities, response contract, immutability |
 
 Every function is authenticated, `org_id`-scoped, and returns data
@@ -209,7 +212,7 @@ Tabs:
    contract, and DB-trigger immutability guarantees.
 
 Header cards surface **Financial Health**, **Close Completion**, and
-**Metrics Fresh %** — all clearly labelled *advisory only*.
+**Metrics Fresh %** — all clearly labelled _advisory only_.
 
 ---
 

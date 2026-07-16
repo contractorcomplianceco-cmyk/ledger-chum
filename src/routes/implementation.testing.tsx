@@ -31,7 +31,10 @@ function TestingPage() {
           <span>Coverage</span>
         </div>
         {TEST_SUITES.map((t) => (
-          <div key={t.id} className="grid grid-cols-[60px_minmax(0,3fr)_80px_minmax(0,1.6fr)] items-center gap-2 border-b border-border px-4 py-2.5 text-[12px] last:border-b-0">
+          <div
+            key={t.id}
+            className="grid grid-cols-[60px_minmax(0,3fr)_80px_minmax(0,1.6fr)] items-center gap-2 border-b border-border px-4 py-2.5 text-[12px] last:border-b-0"
+          >
             <code className="font-mono text-[11.5px] font-semibold">{t.id}</code>
             <span>{t.name}</span>
             <span className="font-tabular text-muted-foreground">{t.steps}</span>
@@ -43,7 +46,9 @@ function TestingPage() {
       <Card className="border-border/70 p-4 text-[12px]">
         <div className="text-[13px] font-semibold">Universal pass criteria</div>
         <ul className="mt-1 list-disc space-y-1 pl-5 text-muted-foreground">
-          {CRITERIA.map((c) => <li key={c}>{c}</li>)}
+          {CRITERIA.map((c) => (
+            <li key={c}>{c}</li>
+          ))}
         </ul>
       </Card>
     </ImplementationPage>

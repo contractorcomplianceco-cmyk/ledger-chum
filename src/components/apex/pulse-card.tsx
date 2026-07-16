@@ -57,7 +57,9 @@ export function PulseCard({ pulse, className }: { pulse: PulseData; className?: 
           >
             {pulse.title}
           </div>
-          <div className={cn("mt-0.5 text-[12px]", dark ? "text-white/80" : "text-muted-foreground")}>
+          <div
+            className={cn("mt-0.5 text-[12px]", dark ? "text-white/80" : "text-muted-foreground")}
+          >
             {pulse.question}
           </div>
         </div>
@@ -66,24 +68,40 @@ export function PulseCard({ pulse, className }: { pulse: PulseData; className?: 
 
       <div className="flex items-baseline gap-2">
         <div className="text-[22px] font-semibold tabular-nums leading-none">{pulse.headline}</div>
-        <TrendChip delta={pulse.trendDelta} suffix={pulse.trendSuffix ?? "%"} invertColors={pulse.invertTrend} />
+        <TrendChip
+          delta={pulse.trendDelta}
+          suffix={pulse.trendSuffix ?? "%"}
+          invertColors={pulse.invertTrend}
+        />
       </div>
       {pulse.headlineSub && (
-        <div className={cn("-mt-1 text-[11.5px]", dark ? "text-white/60" : "text-muted-foreground")}>
+        <div
+          className={cn("-mt-1 text-[11.5px]", dark ? "text-white/60" : "text-muted-foreground")}
+        >
           {pulse.headlineSub}
         </div>
       )}
 
       <div className="grid gap-2 text-[11.5px]">
         <div>
-          <div className={cn("mb-0.5 text-[10px] font-semibold uppercase tracking-wide", dark ? "text-white/50" : "text-muted-foreground")}>
+          <div
+            className={cn(
+              "mb-0.5 text-[10px] font-semibold uppercase tracking-wide",
+              dark ? "text-white/50" : "text-muted-foreground",
+            )}
+          >
             Drivers
           </div>
           <ul className="space-y-0.5">
             {pulse.drivers.slice(0, 3).map((d) => (
               <li key={d.label} className="flex justify-between gap-2">
                 <span className="truncate">{d.label}</span>
-                <span className={cn("font-mono tabular-nums", d.positive === false ? "text-destructive" : "text-success")}>
+                <span
+                  className={cn(
+                    "font-mono tabular-nums",
+                    d.positive === false ? "text-destructive" : "text-success",
+                  )}
+                >
                   {d.impact}
                 </span>
               </li>
@@ -91,8 +109,15 @@ export function PulseCard({ pulse, className }: { pulse: PulseData; className?: 
           </ul>
         </div>
         {pulse.risk && (
-          <div className={cn("rounded-md border px-2 py-1 text-[11px]", dark ? "border-white/10 bg-white/5" : "border-destructive/20 bg-destructive/5")}>
-            <span className={cn("font-semibold", dark ? "text-white/90" : "text-destructive")}>Risk · </span>
+          <div
+            className={cn(
+              "rounded-md border px-2 py-1 text-[11px]",
+              dark ? "border-white/10 bg-white/5" : "border-destructive/20 bg-destructive/5",
+            )}
+          >
+            <span className={cn("font-semibold", dark ? "text-white/90" : "text-destructive")}>
+              Risk ·{" "}
+            </span>
             <span className={cn(dark ? "text-white/80" : "text-foreground/80")}>{pulse.risk}</span>
           </div>
         )}
@@ -104,10 +129,20 @@ export function PulseCard({ pulse, className }: { pulse: PulseData; className?: 
         )}
       </div>
 
-      <div className={cn("flex items-start gap-2 rounded-lg p-2 text-[11.5px]", dark ? "bg-white/5" : "bg-accent/50")}>
+      <div
+        className={cn(
+          "flex items-start gap-2 rounded-lg p-2 text-[11.5px]",
+          dark ? "bg-white/5" : "bg-accent/50",
+        )}
+      >
         <Sparkles className={cn("mt-0.5 h-3.5 w-3.5 shrink-0", dark ? "text-info" : "text-info")} />
         <div>
-          <div className={cn("text-[9.5px] font-semibold uppercase tracking-[0.14em]", dark ? "text-white/60" : "text-muted-foreground")}>
+          <div
+            className={cn(
+              "text-[9.5px] font-semibold uppercase tracking-[0.14em]",
+              dark ? "text-white/60" : "text-muted-foreground",
+            )}
+          >
             Recommended action
           </div>
           <div className="mt-0.5 leading-snug">{pulse.action}</div>

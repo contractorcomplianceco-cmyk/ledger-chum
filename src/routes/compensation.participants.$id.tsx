@@ -44,20 +44,41 @@ function ParticipantDetailPage() {
       description={`${p.type.replaceAll("_", " ")} · ${p.defaultRole}`}
       actions={
         <>
-          <Badge variant="outline" className={p.active ? "border-success/40 bg-success/10 text-success" : ""}>{p.active ? "Active" : "Inactive"}</Badge>
+          <Badge
+            variant="outline"
+            className={p.active ? "border-success/40 bg-success/10 text-success" : ""}
+          >
+            {p.active ? "Active" : "Inactive"}
+          </Badge>
           <Badge variant="outline">Legal: {p.legalReviewStatus}</Badge>
         </>
       }
     >
       <Tabs defaultValue="overview">
         <TabsList className="flex flex-wrap">
-          {["overview","plans","attribution","calculations","payables","statements","holdbacks","clawbacks","documents","tax_legal","audit"].map((k) => (
-            <TabsTrigger key={k} value={k} className="capitalize">{k.replaceAll("_", " / ")}</TabsTrigger>
+          {[
+            "overview",
+            "plans",
+            "attribution",
+            "calculations",
+            "payables",
+            "statements",
+            "holdbacks",
+            "clawbacks",
+            "documents",
+            "tax_legal",
+            "audit",
+          ].map((k) => (
+            <TabsTrigger key={k} value={k} className="capitalize">
+              {k.replaceAll("_", " / ")}
+            </TabsTrigger>
           ))}
         </TabsList>
         <TabsContent value="overview" className="mt-4 grid gap-4 lg:grid-cols-2">
           <Card className="p-5">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Identity</h3>
+            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Identity
+            </h3>
             <KV label="Name" value={p.name} />
             <KV label="Type" value={p.type} />
             <KV label="Department" value={p.department ?? "—"} />
@@ -70,13 +91,17 @@ function ParticipantDetailPage() {
               <div className="mt-2">
                 <div className="text-xs text-muted-foreground">Restrictions</div>
                 <ul className="ml-4 list-disc text-sm">
-                  {p.restrictions.map((r) => <li key={r}>{r}</li>)}
+                  {p.restrictions.map((r) => (
+                    <li key={r}>{r}</li>
+                  ))}
                 </ul>
               </div>
             )}
           </Card>
           <Card className="p-5">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Balances</h3>
+            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Balances
+            </h3>
             <KV label="Total projected" value={currency(p.totalProjected)} />
             <KV label="Earned" value={currency(p.totalEarned)} />
             <KV label="Approved" value={currency(p.totalApproved)} />
@@ -87,10 +112,21 @@ function ParticipantDetailPage() {
             <KV label="Clawback" value={currency(p.totalClawback)} />
           </Card>
         </TabsContent>
-        {["plans","attribution","calculations","payables","statements","holdbacks","clawbacks","documents","tax_legal","audit"].map((k) => (
+        {[
+          "plans",
+          "attribution",
+          "calculations",
+          "payables",
+          "statements",
+          "holdbacks",
+          "clawbacks",
+          "documents",
+          "tax_legal",
+          "audit",
+        ].map((k) => (
           <TabsContent key={k} value={k} className="mt-4">
             <Card className="p-6 text-sm text-muted-foreground">
-              {k.replaceAll("_"," ")} tab content for {p.name}. Demo data only.
+              {k.replaceAll("_", " ")} tab content for {p.name}. Demo data only.
             </Card>
           </TabsContent>
         ))}

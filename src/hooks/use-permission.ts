@@ -43,7 +43,11 @@ function matches(permission: string, held: string[]): boolean {
   return false;
 }
 
-export function usePermission(permission: string): { allowed: boolean; reason?: string; role: RoleKey } {
+export function usePermission(permission: string): {
+  allowed: boolean;
+  reason?: string;
+  role: RoleKey;
+} {
   const user = useCurrentUser();
   return useMemo(() => {
     const allowed = matches(permission, user.permissions);

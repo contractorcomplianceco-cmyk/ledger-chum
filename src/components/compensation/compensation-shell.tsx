@@ -9,17 +9,37 @@ import { DEMO_MUTATION_MESSAGE } from "@/lib/api/types";
 const SUBNAV: Array<{ to: string; label: string; matchStartsWith?: string }> = [
   { to: "/compensation", label: "Overview" },
   { to: "/compensation/plans", label: "Plans", matchStartsWith: "/compensation/plans" },
-  { to: "/compensation/participants", label: "Participants", matchStartsWith: "/compensation/participants" },
-  { to: "/compensation/attribution", label: "Attribution", matchStartsWith: "/compensation/attribution" },
+  {
+    to: "/compensation/participants",
+    label: "Participants",
+    matchStartsWith: "/compensation/participants",
+  },
+  {
+    to: "/compensation/attribution",
+    label: "Attribution",
+    matchStartsWith: "/compensation/attribution",
+  },
   { to: "/compensation/eligibility", label: "Eligibility" },
   { to: "/compensation/preview", label: "Plan Preview" },
-  { to: "/compensation/calculations", label: "Calculations", matchStartsWith: "/compensation/calculations" },
+  {
+    to: "/compensation/calculations",
+    label: "Calculations",
+    matchStartsWith: "/compensation/calculations",
+  },
   { to: "/compensation/verification", label: "Verification" },
   { to: "/compensation/approvals", label: "Approvals" },
   { to: "/compensation/reserves", label: "Reserves" },
   { to: "/compensation/payables", label: "Payables", matchStartsWith: "/compensation/payables" },
-  { to: "/compensation/payment-batches", label: "Batches", matchStartsWith: "/compensation/payment-batches" },
-  { to: "/compensation/statements", label: "Statements", matchStartsWith: "/compensation/statements" },
+  {
+    to: "/compensation/payment-batches",
+    label: "Batches",
+    matchStartsWith: "/compensation/payment-batches",
+  },
+  {
+    to: "/compensation/statements",
+    label: "Statements",
+    matchStartsWith: "/compensation/statements",
+  },
   { to: "/compensation/holdbacks", label: "Holdbacks" },
   { to: "/compensation/adjustments", label: "Adjustments" },
   { to: "/compensation/clawbacks", label: "Clawbacks" },
@@ -53,7 +73,10 @@ export function CompensationShell({
         description={description}
         actions={
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="border-brand-violet/40 bg-brand-violet/10 text-brand-violet">
+            <Badge
+              variant="outline"
+              className="border-brand-violet/40 bg-brand-violet/10 text-brand-violet"
+            >
               Demo — no real records modified
             </Badge>
             {actions}
@@ -95,8 +118,8 @@ export function showDemoToast(action: string) {
 export function DemoActionNotice({ className }: { className?: string }) {
   return (
     <p className={cn("text-xs text-muted-foreground", className)}>
-      Every action on this screen is demonstration-only — no compensation or accounting record
-      is modified.
+      Every action on this screen is demonstration-only — no compensation or accounting record is
+      modified.
     </p>
   );
 }

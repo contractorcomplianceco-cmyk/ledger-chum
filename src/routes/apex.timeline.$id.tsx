@@ -21,10 +21,16 @@ function TimelineDetail() {
   return (
     <ApexPage
       title={event?.title ?? "Timeline event"}
-      description={event ? `${event.kind} · ${event.date} ${event.time} · ${subject?.label}` : "Event not found."}
+      description={
+        event
+          ? `${event.kind} · ${event.date} ${event.time} · ${subject?.label}`
+          : "Event not found."
+      }
       actions={
         <Link to="/apex/timeline">
-          <Button size="sm" variant="outline"><ArrowLeft className="mr-1 h-3 w-3" /> All timelines</Button>
+          <Button size="sm" variant="outline">
+            <ArrowLeft className="mr-1 h-3 w-3" /> All timelines
+          </Button>
         </Link>
       }
     >
@@ -34,7 +40,10 @@ function TimelineDetail() {
             <Card className="border-border/70 p-4 text-[12.5px]">
               <KVRow k="Kind" v={event.kind} />
               <KVRow k="Status" v={event.status} />
-              <KVRow k="Amount" v={typeof event.amount === "number" ? currency(event.amount) : "—"} />
+              <KVRow
+                k="Amount"
+                v={typeof event.amount === "number" ? currency(event.amount) : "—"}
+              />
               <KVRow k="Source" v={event.source} />
               <KVRow k="Actor" v={event.actor} />
               <KVRow k="Audit" v={event.auditLink} />
@@ -45,7 +54,9 @@ function TimelineDetail() {
             <ApexSection title="Evidence">
               <Card className="border-border/70 p-4">
                 <ul className="list-disc space-y-1 pl-5 text-[12px] text-muted-foreground">
-                  {event.evidence.map((ev) => <li key={ev}>{ev}</li>)}
+                  {event.evidence.map((ev) => (
+                    <li key={ev}>{ev}</li>
+                  ))}
                 </ul>
               </Card>
             </ApexSection>

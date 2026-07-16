@@ -19,9 +19,15 @@ export function ConfidenceIndicator({ value, className }: { value: number; class
       aria-label={`Match confidence: ${value} percent, ${label}`}
     >
       <span className="flex items-center gap-0.5">
-        <span className={cn("h-2 w-0.5 rounded-full", value > 0 ? "bg-current" : "bg-current/30")} />
-        <span className={cn("h-2.5 w-0.5 rounded-full", value >= 40 ? "bg-current" : "bg-current/30")} />
-        <span className={cn("h-3 w-0.5 rounded-full", value >= 80 ? "bg-current" : "bg-current/30")} />
+        <span
+          className={cn("h-2 w-0.5 rounded-full", value > 0 ? "bg-current" : "bg-current/30")}
+        />
+        <span
+          className={cn("h-2.5 w-0.5 rounded-full", value >= 40 ? "bg-current" : "bg-current/30")}
+        />
+        <span
+          className={cn("h-3 w-0.5 rounded-full", value >= 80 ? "bg-current" : "bg-current/30")}
+        />
       </span>
       {value}% · {label}
     </span>

@@ -96,9 +96,18 @@ function CashAvailabilityOverview() {
           </div>
           <div className="mt-4 h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={AVAILABILITY_HISTORY} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
+              <BarChart
+                data={AVAILABILITY_HISTORY}
+                margin={{ top: 8, right: 8, bottom: 0, left: -8 }}
+              >
                 <CartesianGrid stroke="#E5EAF1" strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="m" stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis
+                  dataKey="m"
+                  stroke="#94A3B8"
+                  fontSize={11}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <YAxis
                   stroke="#94A3B8"
                   fontSize={11}
@@ -118,9 +127,21 @@ function CashAvailabilityOverview() {
                   formatter={(v: number) => `${currency(v * 1000)}`}
                 />
                 <Legend wrapperStyle={{ display: "none" }} />
-                <Bar dataKey="available" name="Available" stackId="c" fill="#22c55e" radius={[0, 0, 0, 0]} />
+                <Bar
+                  dataKey="available"
+                  name="Available"
+                  stackId="c"
+                  fill="#22c55e"
+                  radius={[0, 0, 0, 0]}
+                />
                 <Bar dataKey="reserved" name="Reserved" stackId="c" fill="#f59e0b" />
-                <Bar dataKey="restricted" name="Restricted" stackId="c" fill="#ef4444" radius={[6, 6, 0, 0]} />
+                <Bar
+                  dataKey="restricted"
+                  name="Restricted"
+                  stackId="c"
+                  fill="#ef4444"
+                  radius={[6, 6, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

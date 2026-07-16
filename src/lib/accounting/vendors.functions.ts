@@ -10,12 +10,14 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const listVendors = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["active", "inactive"]).optional(),
-      search: z.string().optional(),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["active", "inactive"]).optional(),
+        search: z.string().optional(),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -47,17 +49,19 @@ export const getVendor = createServerFn({ method: "GET" })
 export const upsertVendor = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      name: z.string().min(1),
-      email: z.string().email().optional().or(z.literal("")),
-      phone: z.string().optional(),
-      termsDays: z.number().int().min(0).max(365).default(30),
-      defaultExpenseAccountId: z.string().uuid().nullable().optional(),
-      memo: z.string().optional(),
-      status: z.enum(["active", "inactive"]).default("active"),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        name: z.string().min(1),
+        email: z.string().email().optional().or(z.literal("")),
+        phone: z.string().optional(),
+        termsDays: z.number().int().min(0).max(365).default(30),
+        defaultExpenseAccountId: z.string().uuid().nullable().optional(),
+        memo: z.string().optional(),
+        status: z.enum(["active", "inactive"]).default("active"),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {

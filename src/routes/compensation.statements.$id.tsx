@@ -15,12 +15,23 @@ export const Route = createFileRoute("/compensation/statements/$id")({
 function StatementDetail() {
   const { id } = Route.useParams();
   const [s, setS] = useState<CompensationStatement | undefined>();
-  useEffect(() => { api.compensationOps.getStatement(id).then(setS); }, [id]);
+  useEffect(() => {
+    api.compensationOps.getStatement(id).then(setS);
+  }, [id]);
 
-  if (!s) return <CompensationShell title="Statement"><Card className="p-6 text-sm text-muted-foreground">Loading…</Card></CompensationShell>;
+  if (!s)
+    return (
+      <CompensationShell title="Statement">
+        <Card className="p-6 text-sm text-muted-foreground">Loading…</Card>
+      </CompensationShell>
+    );
 
   return (
-    <CompensationShell eyebrow={`${s.periodType} statement`} title={s.participantName} description={`${s.periodStart} → ${s.periodEnd} · Compensation classes kept strictly separate`}>
+    <CompensationShell
+      eyebrow={`${s.periodType} statement`}
+      title={s.participantName}
+      description={`${s.periodStart} → ${s.periodEnd} · Compensation classes kept strictly separate`}
+    >
       <Card className="p-5 grid gap-3 md:grid-cols-6 text-sm">
         <F k="Beginning" v={s.beginningBalance} />
         <F k="Projected" v={s.projected} />
@@ -41,7 +52,9 @@ function StatementDetail() {
           <div className="mb-2 flex items-center justify-between">
             <div>
               <div className="text-sm font-semibold">{sec.label}</div>
-              <Badge variant="outline" className="mt-1 text-[10px]">{sec.kind.replace(/_/g, " ")}</Badge>
+              <Badge variant="outline" className="mt-1 text-[10px]">
+                {sec.kind.replace(/_/g, " ")}
+              </Badge>
             </div>
             <div className="font-tabular text-lg font-bold">{currency(sec.total)}</div>
           </div>
@@ -52,10 +65,15 @@ function StatementDetail() {
               {sec.lines.map((l) => (
                 <li key={l.id} className="rounded-md border border-border/40 p-3">
                   <div className="flex items-center justify-between">
-                    <div className="font-medium">{l.clientName ?? "—"} · {l.opportunityName ?? ""}</div>
+                    <div className="font-medium">
+                      {l.clientName ?? "—"} · {l.opportunityName ?? ""}
+                    </div>
                     <div className="font-tabular font-semibold">{currency(l.amount)}</div>
                   </div>
-                  <div className="mt-1 text-xs text-muted-foreground">{l.planName} v{l.planVersion} · {l.status.replace(/_/g, " ")} · {l.effectiveDate}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    {l.planName} v{l.planVersion} · {l.status.replace(/_/g, " ")} ·{" "}
+                    {l.effectiveDate}
+                  </div>
                   <div className="mt-1 text-xs">{l.explanation}</div>
                 </li>
               ))}

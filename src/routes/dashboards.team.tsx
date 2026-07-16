@@ -7,7 +7,10 @@ export const Route = createFileRoute("/dashboards/team")({
       { title: "Team Member — LedgerOS" },
       { name: "description", content: "Submit expenses, upload receipts, and track approvals" },
       { property: "og:title", content: "Team Member — LedgerOS" },
-      { property: "og:description", content: "Submit expenses, upload receipts, and track approvals" },
+      {
+        property: "og:description",
+        content: "Submit expenses, upload receipts, and track approvals",
+      },
     ],
   }),
   component: () => (

@@ -24,12 +24,16 @@ const orgOnly = z.object({ orgId: z.string().uuid() });
 export const listInsights = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      persona: z.enum(["controller","close_assistant","accountant_assistant","all"]).default("all"),
-      status: z.enum(["open","acknowledged","dismissed","resolved","all"]).default("open"),
-      limit: z.number().int().min(1).max(200).default(100),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        persona: z
+          .enum(["controller", "close_assistant", "accountant_assistant", "all"])
+          .default("all"),
+        status: z.enum(["open", "acknowledged", "dismissed", "resolved", "all"]).default("open"),
+        limit: z.number().int().min(1).max(200).default(100),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -48,11 +52,13 @@ export const listInsights = createServerFn({ method: "GET" })
 export const updateInsightStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid(),
-      orgId: z.string().uuid(),
-      status: z.enum(["open","acknowledged","dismissed","resolved"]),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid(),
+        orgId: z.string().uuid(),
+        status: z.enum(["open", "acknowledged", "dismissed", "resolved"]),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const patch: {

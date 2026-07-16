@@ -21,7 +21,10 @@ export function FinancialHealthVisual({
   const cy = 72;
   const start = -225;
   const sweep = 270;
-  const toXY = (deg: number) => [cx + r * Math.cos((deg * Math.PI) / 180), cy + r * Math.sin((deg * Math.PI) / 180)];
+  const toXY = (deg: number) => [
+    cx + r * Math.cos((deg * Math.PI) / 180),
+    cy + r * Math.sin((deg * Math.PI) / 180),
+  ];
   const [sx, sy] = toXY(start);
   const [ex, ey] = toXY(start + sweep);
   const bgPath = `M${sx},${sy} A${r},${r} 0 1 1 ${ex},${ey}`;
@@ -65,11 +68,27 @@ export function FinancialHealthVisual({
       {/* gauge track */}
       <path d={bgPath} fill="none" stroke="#e2e8f0" strokeWidth="10" strokeLinecap="round" />
       {/* gauge progress */}
-      <path d={progPath} fill="none" stroke={`url(#${arc})`} strokeWidth="10" strokeLinecap="round" />
+      <path
+        d={progPath}
+        fill="none"
+        stroke={`url(#${arc})`}
+        strokeWidth="10"
+        strokeLinecap="round"
+      />
       {/* shield/check */}
       <g transform="translate(70,72)">
-        <path d="M0,-18 L14,-12 L14,4 Q14,14 0,20 Q-14,14 -14,4 L-14,-12 Z" fill={`url(#${shield})`} />
-        <path d="M-6,0 L-1,5 L7,-4" stroke="#ffffff" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M0,-18 L14,-12 L14,4 Q14,14 0,20 Q-14,14 -14,4 L-14,-12 Z"
+          fill={`url(#${shield})`}
+        />
+        <path
+          d="M-6,0 L-1,5 L7,-4"
+          stroke="#ffffff"
+          strokeWidth="2.5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
     </svg>
   );

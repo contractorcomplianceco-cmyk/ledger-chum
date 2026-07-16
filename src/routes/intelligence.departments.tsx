@@ -25,8 +25,9 @@ function DepartmentProfitPage() {
     >
       <section>
         <Card className="rounded-xl border-info/30 bg-info/[0.06] p-3 text-[11.5px] text-info">
-          Support departments (Fulfillment, Compliance Ops, Systems, Admin, Accounting) do not generate direct revenue —
-          their value is measured through revenue supported, quality, capacity, and risk reduction.
+          Support departments (Fulfillment, Compliance Ops, Systems, Admin, Accounting) do not
+          generate direct revenue — their value is measured through revenue supported, quality,
+          capacity, and risk reduction.
         </Card>
       </section>
 
@@ -39,7 +40,10 @@ function DepartmentProfitPage() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="text-[14px] font-semibold">{d.name}</div>
-                  <Badge className={cn("mt-1 h-5 border-0 px-1.5 text-[10.5px]", meta.cls)} variant="secondary">
+                  <Badge
+                    className={cn("mt-1 h-5 border-0 px-1.5 text-[10.5px]", meta.cls)}
+                    variant="secondary"
+                  >
                     {meta.label}
                   </Badge>
                 </div>
@@ -50,7 +54,11 @@ function DepartmentProfitPage() {
                   <div
                     className={cn(
                       "font-tabular text-[18px] font-bold",
-                      d.contribution < 0 ? "text-destructive" : d.contribution > 0 ? "text-success" : "text-muted-foreground",
+                      d.contribution < 0
+                        ? "text-destructive"
+                        : d.contribution > 0
+                          ? "text-success"
+                          : "text-muted-foreground",
                     )}
                   >
                     {d.kind === "direct" ? currency(d.contribution) : "—"}
@@ -72,7 +80,9 @@ function DepartmentProfitPage() {
               {d.kind === "direct" && (
                 <div className="mt-3 text-[11px] text-muted-foreground">
                   Cost efficiency:{" "}
-                  <span className="font-tabular font-semibold text-foreground">{d.efficiency.toFixed(2)}x</span>{" "}
+                  <span className="font-tabular font-semibold text-foreground">
+                    {d.efficiency.toFixed(2)}x
+                  </span>{" "}
                   revenue per cost dollar
                 </div>
               )}

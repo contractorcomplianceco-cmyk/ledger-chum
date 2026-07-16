@@ -1,4 +1,10 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { ConfidenceChip, DemoBadge, FreshnessChip } from "./chips";
 
 export type ExplainabilityPayload = {
@@ -59,7 +65,10 @@ export function ExplainabilityDrawer({
           <Section label="Supporting evidence">
             <ul className="space-y-1">
               {payload.evidence.map((e) => (
-                <li key={e.ref} className="flex justify-between gap-2 rounded-md border border-border/70 px-2 py-1">
+                <li
+                  key={e.ref}
+                  className="flex justify-between gap-2 rounded-md border border-border/70 px-2 py-1"
+                >
                   <span>{e.label}</span>
                   <code className="font-mono text-[11px] text-muted-foreground">{e.ref}</code>
                 </li>
@@ -94,7 +103,8 @@ export function ExplainabilityDrawer({
           </Section>
 
           <p className="rounded-md border border-warning/40 bg-warning/10 p-2 text-[11.5px] text-warning-foreground">
-            Demonstration insight — advisory only, based on mock financial data. No records were modified.
+            Demonstration insight — advisory only, based on mock financial data. No records were
+            modified.
           </p>
         </div>
       </SheetContent>

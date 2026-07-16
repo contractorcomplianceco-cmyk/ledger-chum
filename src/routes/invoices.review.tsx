@@ -9,18 +9,17 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useOrgId } from "@/hooks/use-current-org";
+import { listInvoices, getInvoice, postInvoice } from "@/lib/accounting/invoices.functions";
+import { DEMO_DRAFT_INVOICES, computeDraftTotals, currency } from "@/lib/mock/accountant-workspace";
 import {
-  listInvoices,
-  getInvoice,
-  postInvoice,
-} from "@/lib/accounting/invoices.functions";
-import {
-  DEMO_DRAFT_INVOICES,
-  computeDraftTotals,
-  currency,
-} from "@/lib/mock/accountant-workspace";
-import {
-  CheckCircle2, XCircle, MessageSquare, ArrowRight, Clock, BookOpen, Package, Wrench,
+  CheckCircle2,
+  XCircle,
+  MessageSquare,
+  ArrowRight,
+  Clock,
+  BookOpen,
+  Package,
+  Wrench,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -36,8 +35,7 @@ export const Route = createFileRoute("/invoices/review")({
       { property: "og:title", content: "Draft Invoice Review — LedgerOS" },
       {
         property: "og:description",
-        content:
-          "Approve draft invoices and post balanced ledger entries in real time.",
+        content: "Approve draft invoices and post balanced ledger entries in real time.",
       },
     ],
   }),
@@ -67,24 +65,30 @@ function DraftReviewPage() {
   const invoicesQ = useQuery({
     queryKey: ["invoices", "draft", orgId, "review"],
     queryFn: () => listFn({ data: { orgId: orgId!, status: "draft", limit: 50 } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
 
-  const drafts: DraftRow[] = live && invoicesQ.data
-    ? invoicesQ.data.map((d) => ({
-        id: d.id,
-        invoiceNumber: d.invoice_number,
-        customer: (d as unknown as { customers?: { name: string } }).customers?.name ?? "—",
-        customerExternalId: null,
-        workOrderRef: d.work_order_ref,
-        total: Number(d.total),
-        live: true,
-      }))
-    : DEMO_DRAFT_INVOICES.map((d) => ({
-        id: d.id, invoiceNumber: d.invoiceNumber, customer: d.customer,
-        customerExternalId: d.customerExternalId, workOrderRef: d.workOrderRef,
-        total: computeDraftTotals(d).total, live: false,
-      }));
+  const drafts: DraftRow[] =
+    live && invoicesQ.data
+      ? invoicesQ.data.map((d) => ({
+          id: d.id,
+          invoiceNumber: d.invoice_number,
+          customer: (d as unknown as { customers?: { name: string } }).customers?.name ?? "—",
+          customerExternalId: null,
+          workOrderRef: d.work_order_ref,
+          total: Number(d.total),
+          live: true,
+        }))
+      : DEMO_DRAFT_INVOICES.map((d) => ({
+          id: d.id,
+          invoiceNumber: d.invoiceNumber,
+          customer: d.customer,
+          customerExternalId: d.customerExternalId,
+          workOrderRef: d.workOrderRef,
+          total: computeDraftTotals(d).total,
+          live: false,
+        }));
 
   const [selectedId, setSelectedId] = useState<string>("");
   const [note, setNote] = useState("");
@@ -113,7 +117,11 @@ function DraftReviewPage() {
   // Live totals derived from invoice_lines.
   const liveInv = detailQ.data;
   const liveLines = (liveInv?.invoice_lines ?? []) as Array<{
-    id: string; description: string; quantity: number; unit_price: number; amount: number;
+    id: string;
+    description: string;
+    quantity: number;
+    unit_price: number;
+    amount: number;
     account_id: string | null;
   }>;
   const liveTotal = liveInv ? Number(liveInv.total) : 0;
@@ -121,8 +129,7 @@ function DraftReviewPage() {
   const liveTax = liveInv ? Number(liveInv.tax) : 0;
   const hasUnmappedLines = liveLines.some((l) => !l.account_id);
 
-  const setLocal = (id: string, s: LocalStatus) =>
-    setStatusMap((prev) => ({ ...prev, [id]: s }));
+  const setLocal = (id: string, s: LocalStatus) => setStatusMap((prev) => ({ ...prev, [id]: s }));
 
   const handlePost = async () => {
     if (!selected) return;
@@ -175,9 +182,7 @@ function DraftReviewPage() {
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Draft queue
               </div>
-              <div className="text-[13px] text-muted-foreground">
-                {draftCount} awaiting review
-              </div>
+              <div className="text-[13px] text-muted-foreground">{draftCount} awaiting review</div>
             </div>
             <div className="divide-y divide-border/60">
               {drafts.map((d) => {
@@ -213,7 +218,10 @@ function DraftReviewPage() {
               {drafts.length === 0 && (
                 <div className="p-6 text-center text-[12px] text-muted-foreground">
                   No drafts. Seed a{" "}
-                  <Link to="/integrations/sandbox" className="underline">sandbox work order</Link>.
+                  <Link to="/integrations/sandbox" className="underline">
+                    sandbox work order
+                  </Link>
+                  .
                 </div>
               )}
             </div>
@@ -235,13 +243,17 @@ function DraftReviewPage() {
                       {selected.customerExternalId && ` · ${selected.customerExternalId}`}
                     </div>
                     <div className="mt-1 text-[11px] text-muted-foreground">
-                      {selected.workOrderRef ? `Source ${selected.workOrderRef}` : "No source reference"}
+                      {selected.workOrderRef
+                        ? `Source ${selected.workOrderRef}`
+                        : "No source reference"}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Total</div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                      Total
+                    </div>
                     <div className="font-tabular text-[24px] font-bold text-foreground">
-                      {currency(selected.live ? liveTotal : demoTotals?.total ?? selected.total)}
+                      {currency(selected.live ? liveTotal : (demoTotals?.total ?? selected.total))}
                     </div>
                   </div>
                 </div>
@@ -270,9 +282,14 @@ function DraftReviewPage() {
                   </div>
                 </Card>
               ) : (
-                demoSelected && demoTotals && (
+                demoSelected &&
+                demoTotals && (
                   <Card className="border-border/70 bg-surface p-0 shadow-card">
-                    <SectionHeader icon={Wrench} title="Labor lines" account="4100 · Labor Revenue" />
+                    <SectionHeader
+                      icon={Wrench}
+                      title="Labor lines"
+                      account="4100 · Labor Revenue"
+                    />
                     <LineTable
                       rows={demoSelected.labor.map((l) => ({
                         description: l.description,
@@ -322,16 +339,16 @@ function DraftReviewPage() {
                   </div>
                   <JournalRow
                     account="Accounts Receivable (resolved)"
-                    debit={selected.live ? liveTotal : demoTotals?.total ?? selected.total}
+                    debit={selected.live ? liveTotal : (demoTotals?.total ?? selected.total)}
                   />
                   <JournalRow
                     account="Revenue accounts (per line)"
-                    credit={selected.live ? liveSubtotal : demoTotals?.subtotal ?? selected.total}
+                    credit={selected.live ? liveSubtotal : (demoTotals?.subtotal ?? selected.total)}
                   />
                   {((selected.live ? liveTax : demoTotals?.tax) ?? 0) > 0 && (
                     <JournalRow
                       account="Sales Tax Payable"
-                      credit={selected.live ? liveTax : demoTotals?.tax ?? 0}
+                      credit={selected.live ? liveTax : (demoTotals?.tax ?? 0)}
                     />
                   )}
                 </div>
@@ -357,16 +374,26 @@ function DraftReviewPage() {
                 />
                 <div className="mt-3 flex flex-wrap items-center justify-end gap-2">
                   <Button
-                    variant="ghost" size="sm"
+                    variant="ghost"
+                    size="sm"
                     disabled={localStatus !== "draft"}
-                    onClick={() => { setLocal(selected.id, "changes_requested"); toast.success("Change request logged"); setNote(""); }}
+                    onClick={() => {
+                      setLocal(selected.id, "changes_requested");
+                      toast.success("Change request logged");
+                      setNote("");
+                    }}
                   >
                     <MessageSquare className="mr-1.5 h-3.5 w-3.5" /> Request changes
                   </Button>
                   <Button
-                    variant="outline" size="sm"
+                    variant="outline"
+                    size="sm"
                     disabled={localStatus !== "draft"}
-                    onClick={() => { setLocal(selected.id, "rejected"); toast.success("Draft rejected · audit event logged"); setNote(""); }}
+                    onClick={() => {
+                      setLocal(selected.id, "rejected");
+                      toast.success("Draft rejected · audit event logged");
+                      setNote("");
+                    }}
                   >
                     <XCircle className="mr-1.5 h-3.5 w-3.5" /> Reject
                   </Button>
@@ -403,12 +430,14 @@ function WorkflowStrip() {
       <div className="flex flex-wrap items-center gap-2 text-[12px]">
         {steps.map((s, i) => (
           <div key={s.label} className="flex items-center gap-2">
-            <div className={cn(
-              "inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-medium ring-1 ring-inset",
-              s.tone === "ok" && "bg-success/10 text-success ring-success/20",
-              s.tone === "warn" && "bg-warning/15 text-warning ring-warning/25",
-              s.tone === "info" && "bg-muted text-muted-foreground ring-border",
-            )}>
+            <div
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-medium ring-1 ring-inset",
+                s.tone === "ok" && "bg-success/10 text-success ring-success/20",
+                s.tone === "warn" && "bg-warning/15 text-warning ring-warning/25",
+                s.tone === "info" && "bg-muted text-muted-foreground ring-border",
+              )}
+            >
               <s.icon className="h-3.5 w-3.5" />
               {s.label}
             </div>
@@ -425,18 +454,30 @@ function LocalStatusBadge({ status }: { status: LocalStatus }) {
     draft: { cls: "bg-warning/15 text-warning ring-warning/25", label: "Draft" },
     posted: { cls: "bg-success/10 text-success ring-success/20", label: "Posted" },
     rejected: { cls: "bg-destructive/10 text-destructive ring-destructive/20", label: "Rejected" },
-    changes_requested: { cls: "bg-blue-500/10 text-blue-600 ring-blue-500/20", label: "Changes requested" },
+    changes_requested: {
+      cls: "bg-blue-500/10 text-blue-600 ring-blue-500/20",
+      label: "Changes requested",
+    },
   };
   const m = map[status];
   return (
-    <Badge variant="outline" className={cn("h-5 border-transparent text-[10px] font-semibold ring-1 ring-inset", m.cls)}>
+    <Badge
+      variant="outline"
+      className={cn("h-5 border-transparent text-[10px] font-semibold ring-1 ring-inset", m.cls)}
+    >
       {m.label}
     </Badge>
   );
 }
 
-function SectionHeader({ icon: Icon, title, account }: {
-  icon: React.ComponentType<{ className?: string }>; title: string; account: string;
+function SectionHeader({
+  icon: Icon,
+  title,
+  account,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  account: string;
 }) {
   return (
     <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-4 py-2">
@@ -448,7 +489,13 @@ function SectionHeader({ icon: Icon, title, account }: {
   );
 }
 
-interface LineRow { description: string; qty: string; unit: string; amount: number; account: string; }
+interface LineRow {
+  description: string;
+  qty: string;
+  unit: string;
+  amount: number;
+  account: string;
+}
 
 function LineTable({ rows }: { rows: LineRow[] }) {
   return (
@@ -461,7 +508,9 @@ function LineTable({ rows }: { rows: LineRow[] }) {
           </div>
           <div className="text-right font-tabular text-muted-foreground">{r.qty}</div>
           <div className="text-right font-tabular text-muted-foreground">{r.unit}</div>
-          <div className="text-right font-tabular font-semibold text-foreground">{currency(r.amount)}</div>
+          <div className="text-right font-tabular font-semibold text-foreground">
+            {currency(r.amount)}
+          </div>
         </div>
       ))}
       {rows.length === 0 && (
@@ -476,20 +525,39 @@ function TotalsGrid({ rows }: { rows: Array<[string, string, boolean?]> }) {
     <div className="ml-auto max-w-xs space-y-1">
       {rows.map(([label, value, bold]) => (
         <div key={label} className="flex justify-between text-[13px]">
-          <span className={cn("text-muted-foreground", bold && "font-semibold text-foreground")}>{label}</span>
-          <span className={cn("font-tabular", bold ? "text-[15px] font-bold text-foreground" : "text-foreground")}>{value}</span>
+          <span className={cn("text-muted-foreground", bold && "font-semibold text-foreground")}>
+            {label}
+          </span>
+          <span
+            className={cn(
+              "font-tabular",
+              bold ? "text-[15px] font-bold text-foreground" : "text-foreground",
+            )}
+          >
+            {value}
+          </span>
         </div>
       ))}
     </div>
   );
 }
 
-function JournalRow({ account, debit, credit }: { account: string; debit?: number; credit?: number }) {
+function JournalRow({
+  account,
+  debit,
+  credit,
+}: {
+  account: string;
+  debit?: number;
+  credit?: number;
+}) {
   return (
     <div className="grid grid-cols-[1fr_120px_120px] gap-3 border-t border-border/60 px-3 py-2 text-[13px] first:border-t-0">
       <div className="text-foreground">{account}</div>
       <div className="text-right font-tabular text-foreground">{debit ? currency(debit) : ""}</div>
-      <div className="text-right font-tabular text-foreground">{credit ? currency(credit) : ""}</div>
+      <div className="text-right font-tabular text-foreground">
+        {credit ? currency(credit) : ""}
+      </div>
     </div>
   );
 }

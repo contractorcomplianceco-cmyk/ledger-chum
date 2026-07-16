@@ -31,10 +31,30 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
     defaultOpen: true,
     items: [
       { title: "Home", to: "/apex", icon: Home, keywords: ["executive", "dashboard"] },
-      { title: "Money", to: "/apex/money", icon: Wallet, keywords: ["cash", "banking", "money", "profit"] },
-      { title: "Growth", to: "/apex/growth", icon: TrendingUp, keywords: ["revenue", "growth", "marketing"] },
-      { title: "People", to: "/apex/people", icon: Users2, keywords: ["compensation", "people", "payroll"] },
-      { title: "Company", to: "/apex/company", icon: Building2, keywords: ["health", "company", "governance"] },
+      {
+        title: "Money",
+        to: "/apex/money",
+        icon: Wallet,
+        keywords: ["cash", "banking", "money", "profit"],
+      },
+      {
+        title: "Growth",
+        to: "/apex/growth",
+        icon: TrendingUp,
+        keywords: ["revenue", "growth", "marketing"],
+      },
+      {
+        title: "People",
+        to: "/apex/people",
+        icon: Users2,
+        keywords: ["compensation", "people", "payroll"],
+      },
+      {
+        title: "Company",
+        to: "/apex/company",
+        icon: Building2,
+        keywords: ["health", "company", "governance"],
+      },
     ],
   },
   {
@@ -43,7 +63,12 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
     icon: Sparkles,
     defaultOpen: true,
     items: [
-      { title: "Ask LedgerOS", to: "/apex/briefing", icon: Sparkles, keywords: ["ask", "ai", "briefing"] },
+      {
+        title: "Ask LedgerOS",
+        to: "/apex/briefing",
+        icon: Sparkles,
+        keywords: ["ask", "ai", "briefing"],
+      },
       { title: "Opportunity Engine", to: "/apex/opportunities", icon: Target },
       { title: "Company Health", to: "/apex/company-health", icon: Gauge },
       { title: "Financial DNA", to: "/apex/financial-dna", icon: Dna },
@@ -58,8 +83,18 @@ export const APEX_EXECUTIVE_NAV_GROUPS: NavGroup[] = [
     icon: Users2,
     defaultOpen: true,
     items: [
-      { title: "Role Workspaces", to: "/apex/workspaces", icon: Users2, keywords: ["role", "workspace"] },
-      { title: "AI Personas", to: "/apex/ai-personas", icon: Bot, keywords: ["persona", "advisor", "ai"] },
+      {
+        title: "Role Workspaces",
+        to: "/apex/workspaces",
+        icon: Users2,
+        keywords: ["role", "workspace"],
+      },
+      {
+        title: "AI Personas",
+        to: "/apex/ai-personas",
+        icon: Bot,
+        keywords: ["persona", "advisor", "ai"],
+      },
     ],
   },
   {

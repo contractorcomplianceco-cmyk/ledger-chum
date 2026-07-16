@@ -1,10 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CompensationShell, DemoActionNotice, showDemoToast } from "@/components/compensation/compensation-shell";
+import {
+  CompensationShell,
+  DemoActionNotice,
+  showDemoToast,
+} from "@/components/compensation/compensation-shell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { CompensationReconciliation } from "@/lib/api/services/compensation";
 import { currency } from "@/lib/mock/finance";
@@ -16,9 +27,16 @@ export const Route = createFileRoute("/compensation/reconciliation")({
 
 function Reconciliation() {
   const [r, setR] = useState<CompensationReconciliation | undefined>();
-  useEffect(() => { api.compensationOps.getCompensationReconciliation().then(setR); }, []);
+  useEffect(() => {
+    api.compensationOps.getCompensationReconciliation().then(setR);
+  }, []);
 
-  if (!r) return <CompensationShell title="Reconciliation"><Card className="p-6 text-sm text-muted-foreground">Loading…</Card></CompensationShell>;
+  if (!r)
+    return (
+      <CompensationShell title="Reconciliation">
+        <Card className="p-6 text-sm text-muted-foreground">Loading…</Card>
+      </CompensationShell>
+    );
 
   const rows: Array<[string, number]> = [
     ["Calculated", r.calculated],
@@ -33,7 +51,10 @@ function Reconciliation() {
   ];
 
   return (
-    <CompensationShell title="Compensation Reconciliation" description={`Period ${r.periodStart} → ${r.periodEnd}. Reconciles calculation → approval → reserve → payable → export → paid → cleared → ledger → statement.`}>
+    <CompensationShell
+      title="Compensation Reconciliation"
+      description={`Period ${r.periodStart} → ${r.periodEnd}. Reconciles calculation → approval → reserve → payable → export → paid → cleared → ledger → statement.`}
+    >
       <Card className="p-5">
         <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
           {rows.map(([k, v]) => (
@@ -50,8 +71,13 @@ function Reconciliation() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Type</TableHead><TableHead>Participant</TableHead><TableHead className="text-right">Amount</TableHead>
-              <TableHead>Description</TableHead><TableHead>Suggested resolution</TableHead><TableHead>Status</TableHead><TableHead />
+              <TableHead>Type</TableHead>
+              <TableHead>Participant</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Suggested resolution</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -62,8 +88,20 @@ function Reconciliation() {
                 <TableCell className="text-right font-tabular">{currency(e.amount)}</TableCell>
                 <TableCell className="text-xs">{e.description}</TableCell>
                 <TableCell className="text-xs">{e.suggestedResolution}</TableCell>
-                <TableCell><Badge variant="outline" className="text-[10px]">{e.status.replace(/_/g, " ")}</Badge></TableCell>
-                <TableCell className="text-right"><Button size="sm" variant="ghost" onClick={() => showDemoToast("Exception resolved")}>Resolve</Button></TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-[10px]">
+                    {e.status.replace(/_/g, " ")}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => showDemoToast("Exception resolved")}
+                  >
+                    Resolve
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

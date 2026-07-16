@@ -8,16 +8,16 @@ standalone accounting engine.
 
 ## Scope shipped
 
-| Area | What lands |
-|------|------------|
-| Banking foundation | `bank_accounts`, `bank_transactions` |
-| Matching framework | `match_bank_transaction`, `unmatch_bank_transaction` RPCs + candidate suggester |
-| Reconciliation | `bank_reconciliations` + `reconciliation_lines`, `complete_bank_reconciliation` RPC |
-| Trial Balance | Date-ranged, balanced check |
-| Profit & Loss | Revenue − Expense = Net Income |
-| Balance Sheet | Asset = Liability + Equity (incl. retained earnings) |
-| Cash Flow | Indirect operating cash flow with working-capital deltas |
-| AR / AP Aging | Continues to feed from posted balances; new `v_ap_aging` view |
+| Area               | What lands                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------- |
+| Banking foundation | `bank_accounts`, `bank_transactions`                                                |
+| Matching framework | `match_bank_transaction`, `unmatch_bank_transaction` RPCs + candidate suggester     |
+| Reconciliation     | `bank_reconciliations` + `reconciliation_lines`, `complete_bank_reconciliation` RPC |
+| Trial Balance      | Date-ranged, balanced check                                                         |
+| Profit & Loss      | Revenue − Expense = Net Income                                                      |
+| Balance Sheet      | Asset = Liability + Equity (incl. retained earnings)                                |
+| Cash Flow          | Indirect operating cash flow with working-capital deltas                            |
+| AR / AP Aging      | Continues to feed from posted balances; new `v_ap_aging` view                       |
 
 ## Foundational invariants (still enforced)
 
@@ -87,7 +87,8 @@ operating = net_income
 ```
 
 Investing / financing sections arrive with M4 (they need the bank_transfer
-+ equity contribution surfaces).
+
+- equity contribution surfaces).
 
 ## Account mapping expectations
 

@@ -3,15 +3,51 @@ import { ApexPage, ApexSection } from "@/components/apex/apex-page";
 import { Card } from "@/components/ui/card";
 
 const PERSONAS: Array<{ name: string; purpose: string; roles: string }> = [
-  { name: "LedgerOS CFO", purpose: "Strategic financial guidance for owner/executive decisions.", roles: "Owner, Sales Leadership" },
-  { name: "LedgerOS Controller", purpose: "Close-readiness, exceptions, verification, and reconciliation.", roles: "Accounting Lead, Systems Reviewer" },
-  { name: "LedgerOS Revenue Architect", purpose: "Attribution, pricing, and revenue recognition guidance.", roles: "Sales Leadership, Owner" },
-  { name: "LedgerOS Growth Advisor", purpose: "Marketing, expansion, and customer profitability guidance.", roles: "Owner, Marketing" },
-  { name: "LedgerOS Cash Advisor", purpose: "True available cash, obligations, restricted vs available.", roles: "Owner, Accounting Lead" },
-  { name: "LedgerOS Operations Advisor", purpose: "Exceptions, action plans, collections, and vendor issues.", roles: "Operations" },
-  { name: "LedgerOS Tax Opportunity Advisor", purpose: "Potential tax exposures and opportunities for professional review.", roles: "Owner, Accounting Advisor" },
-  { name: "LedgerOS Risk Advisor", purpose: "Compliance, governance, integration health, and data quality.", roles: "Systems Reviewer, Owner" },
-  { name: "LedgerOS Executive Advisor", purpose: "Cross-cutting executive summary and next-best-action guidance.", roles: "Owner" },
+  {
+    name: "LedgerOS CFO",
+    purpose: "Strategic financial guidance for owner/executive decisions.",
+    roles: "Owner, Sales Leadership",
+  },
+  {
+    name: "LedgerOS Controller",
+    purpose: "Close-readiness, exceptions, verification, and reconciliation.",
+    roles: "Accounting Lead, Systems Reviewer",
+  },
+  {
+    name: "LedgerOS Revenue Architect",
+    purpose: "Attribution, pricing, and revenue recognition guidance.",
+    roles: "Sales Leadership, Owner",
+  },
+  {
+    name: "LedgerOS Growth Advisor",
+    purpose: "Marketing, expansion, and customer profitability guidance.",
+    roles: "Owner, Marketing",
+  },
+  {
+    name: "LedgerOS Cash Advisor",
+    purpose: "True available cash, obligations, restricted vs available.",
+    roles: "Owner, Accounting Lead",
+  },
+  {
+    name: "LedgerOS Operations Advisor",
+    purpose: "Exceptions, action plans, collections, and vendor issues.",
+    roles: "Operations",
+  },
+  {
+    name: "LedgerOS Tax Opportunity Advisor",
+    purpose: "Potential tax exposures and opportunities for professional review.",
+    roles: "Owner, Accounting Advisor",
+  },
+  {
+    name: "LedgerOS Risk Advisor",
+    purpose: "Compliance, governance, integration health, and data quality.",
+    roles: "Systems Reviewer, Owner",
+  },
+  {
+    name: "LedgerOS Executive Advisor",
+    purpose: "Cross-cutting executive summary and next-best-action guidance.",
+    roles: "Owner",
+  },
 ];
 
 export const Route = createFileRoute("/apex/personas")({

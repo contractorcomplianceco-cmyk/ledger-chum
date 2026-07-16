@@ -7,7 +7,10 @@ export const Route = createFileRoute("/dashboards/reviewer")({
       { title: "Systems Reviewer — LedgerOS" },
       { name: "description", content: "Controls, audit trail, and locked-period integrity checks" },
       { property: "og:title", content: "Systems Reviewer — LedgerOS" },
-      { property: "og:description", content: "Controls, audit trail, and locked-period integrity checks" },
+      {
+        property: "og:description",
+        content: "Controls, audit trail, and locked-period integrity checks",
+      },
     ],
   }),
   component: () => (

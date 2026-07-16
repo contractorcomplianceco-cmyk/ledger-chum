@@ -17,9 +17,18 @@ const SEVERITY_META = {
 } as const;
 
 const ACTIONS = [
-  "Review", "Approve as Normal", "Request Documentation", "Reclassify",
-  "Create Policy", "Reduce Seats", "Cancel", "Renegotiate", "Freeze Spend",
-  "Escalate to Rose", "Escalate to Christin", "Monitor for 30 Days",
+  "Review",
+  "Approve as Normal",
+  "Request Documentation",
+  "Reclassify",
+  "Create Policy",
+  "Reduce Seats",
+  "Cancel",
+  "Renegotiate",
+  "Freeze Spend",
+  "Escalate to Rose",
+  "Escalate to Christin",
+  "Monitor for 30 Days",
 ];
 
 export const Route = createFileRoute("/intelligence/overhead-anomalies")({
@@ -35,16 +44,35 @@ function OverheadAnomalies() {
       description="Explainable detection across expense trends, subscriptions, vendors, and structural risk."
     >
       <section className="grid gap-3 sm:grid-cols-3 xl:grid-cols-5">
-        <SummaryCell label="Open anomalies" value={String(OVERHEAD_ANOMALIES.filter((a) => a.status === "open").length)} />
-        <SummaryCell label="Critical" value={String(OVERHEAD_ANOMALIES.filter((a) => a.severity === "critical").length)} tone="destructive" />
-        <SummaryCell label="High" value={String(OVERHEAD_ANOMALIES.filter((a) => a.severity === "high").length)} tone="warning" />
-        <SummaryCell label="Cash impact" value={currency(totalImpact)} tone={totalImpact < 0 ? "destructive" : "default"} />
+        <SummaryCell
+          label="Open anomalies"
+          value={String(OVERHEAD_ANOMALIES.filter((a) => a.status === "open").length)}
+        />
+        <SummaryCell
+          label="Critical"
+          value={String(OVERHEAD_ANOMALIES.filter((a) => a.severity === "critical").length)}
+          tone="destructive"
+        />
+        <SummaryCell
+          label="High"
+          value={String(OVERHEAD_ANOMALIES.filter((a) => a.severity === "high").length)}
+          tone="warning"
+        />
+        <SummaryCell
+          label="Cash impact"
+          value={currency(totalImpact)}
+          tone={totalImpact < 0 ? "destructive" : "default"}
+        />
         <SummaryCell label="Recoverable / mo" value={currency(469)} tone="success" />
       </section>
 
       <section className="mb-2 flex flex-wrap items-center gap-1.5">
         {ACTIONS.map((a) => (
-          <Badge key={a} variant="outline" className="border-border/70 text-[11px] font-medium text-muted-foreground">
+          <Badge
+            key={a}
+            variant="outline"
+            className="border-border/70 text-[11px] font-medium text-muted-foreground"
+          >
             {a}
           </Badge>
         ))}
@@ -63,7 +91,12 @@ function OverheadAnomalies() {
                     ) : (
                       <AlertTriangle className="h-3.5 w-3.5 text-warning" />
                     )}
-                    <span className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold uppercase", sev.cls)}>
+                    <span
+                      className={cn(
+                        "rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold uppercase",
+                        sev.cls,
+                      )}
+                    >
                       {sev.label}
                     </span>
                     <span className="rounded-md bg-muted px-1.5 py-0.5 text-[10.5px] font-semibold text-muted-foreground">
@@ -115,10 +148,16 @@ function OverheadAnomalies() {
               />
 
               <div className="mt-2 flex items-center justify-between">
-                <span className="text-[10.5px] italic text-muted-foreground">Demonstration only.</span>
+                <span className="text-[10.5px] italic text-muted-foreground">
+                  Demonstration only.
+                </span>
                 <div className="flex gap-1.5">
-                  <Button size="sm" variant="outline" className="h-7 text-[11px]">Review</Button>
-                  <Button size="sm" variant="outline" className="h-7 text-[11px]">Approve as normal</Button>
+                  <Button size="sm" variant="outline" className="h-7 text-[11px]">
+                    Review
+                  </Button>
+                  <Button size="sm" variant="outline" className="h-7 text-[11px]">
+                    Approve as normal
+                  </Button>
                 </div>
               </div>
             </Card>
@@ -129,7 +168,15 @@ function OverheadAnomalies() {
   );
 }
 
-function SummaryCell({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "warning" | "destructive" | "success" }) {
+function SummaryCell({
+  label,
+  value,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  tone?: "default" | "warning" | "destructive" | "success";
+}) {
   const toneCls =
     tone === "warning"
       ? "text-warning"
@@ -140,7 +187,9 @@ function SummaryCell({ label, value, tone = "default" }: { label: string; value:
           : "text-foreground";
   return (
     <Card className="border-border/70 p-3">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className={cn("mt-1 font-tabular text-[20px] font-bold", toneCls)}>{value}</div>
     </Card>
   );

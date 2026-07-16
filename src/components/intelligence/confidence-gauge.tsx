@@ -28,7 +28,14 @@ export function ConfidenceGauge({
       aria-label={`${label}: ${clamped} out of 100`}
     >
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} stroke="hsl(var(--muted))" strokeWidth={10} fill="none" />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          stroke="hsl(var(--muted))"
+          strokeWidth={10}
+          fill="none"
+        />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -43,7 +50,9 @@ export function ConfidenceGauge({
       </svg>
       <div className="absolute inset-0 grid place-items-center text-center">
         <div>
-          <div className={cn("font-tabular text-3xl font-bold leading-none", tone.cls)}>{clamped}</div>
+          <div className={cn("font-tabular text-3xl font-bold leading-none", tone.cls)}>
+            {clamped}
+          </div>
           <div className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             of 100
           </div>

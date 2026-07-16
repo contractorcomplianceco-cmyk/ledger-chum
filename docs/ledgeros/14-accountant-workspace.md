@@ -15,12 +15,12 @@ The goal is a client demo where a completed ServiceConnect job visibly becomes a
 
 ## Screens
 
-| Route | Screen | Backing data |
-| --- | --- | --- |
-| `/dashboards/accounting` | Financial Dashboard | Work orders (24h), draft invoices, posted invoices, payments, inventory consumption, sync exceptions, connected systems |
-| `/integrations` | Integration Inbox — Activity + Health | `audit_events`, `sync_history`, per-integration counters |
-| `/invoices/review` | Draft Invoice Review | Draft `invoices` sourced from ServiceConnect, mapped line accounts, journal preview |
-| `/settings/account-mappings` | Account Mapping UI | `account_mappings` (per-org, per-purpose) |
+| Route                        | Screen                                | Backing data                                                                                                            |
+| ---------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `/dashboards/accounting`     | Financial Dashboard                   | Work orders (24h), draft invoices, posted invoices, payments, inventory consumption, sync exceptions, connected systems |
+| `/integrations`              | Integration Inbox — Activity + Health | `audit_events`, `sync_history`, per-integration counters                                                                |
+| `/invoices/review`           | Draft Invoice Review                  | Draft `invoices` sourced from ServiceConnect, mapped line accounts, journal preview                                     |
+| `/settings/account-mappings` | Account Mapping UI                    | `account_mappings` (per-org, per-purpose)                                                                               |
 
 ## Workflow
 
@@ -53,22 +53,22 @@ The **draft review screen** enforces the accounting invariants visually:
 
 ## Actions available on a draft
 
-| Action | Effect (production) | Guardrails |
-| --- | --- | --- |
-| Post invoice | Calls `postInvoice` server fn → creates balanced journal, sets invoice `status = 'sent'`, writes `invoice.posted` audit event | Balanced-journal trigger, open fiscal period, mapped accounts required |
-| Reject | Sets local status to `rejected`, writes `invoice.rejected` audit event, no ledger effect | Draft-only |
-| Request changes | Records reviewer note, emits event for ServiceConnect to reopen the WO | Draft-only |
+| Action          | Effect (production)                                                                                                           | Guardrails                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Post invoice    | Calls `postInvoice` server fn → creates balanced journal, sets invoice `status = 'sent'`, writes `invoice.posted` audit event | Balanced-journal trigger, open fiscal period, mapped accounts required |
+| Reject          | Sets local status to `rejected`, writes `invoice.rejected` audit event, no ledger effect                                      | Draft-only                                                             |
+| Request changes | Records reviewer note, emits event for ServiceConnect to reopen the WO                                                        | Draft-only                                                             |
 
 Accounting posting rules are **never** bypassed by this UI. It is a thin layer over the Phase 2 posting engine — every mutation goes through the same server functions and RPCs that the integration endpoints use.
 
 ## Permissions (target for Phase 3 wire-up)
 
-| Role | View dashboard | Review drafts | Post invoice | Edit mappings | View sync errors |
-| --- | --- | --- | --- | --- | --- |
-| `owner` | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `accountant` | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `reviewer` | ✓ | ✓ | Only own org | — | ✓ |
-| `member` | Limited | — | — | — | — |
+| Role         | View dashboard | Review drafts | Post invoice | Edit mappings | View sync errors |
+| ------------ | -------------- | ------------- | ------------ | ------------- | ---------------- |
+| `owner`      | ✓              | ✓             | ✓            | ✓             | ✓                |
+| `accountant` | ✓              | ✓             | ✓            | ✓             | ✓                |
+| `reviewer`   | ✓              | ✓             | Only own org | —             | ✓                |
+| `member`     | Limited        | —             | —            | —             | —                |
 
 Enforcement lives in the existing `has_role(user, org, role)` SQL function and RLS policies from Phase 1. The UI only hides destructive controls when the role check fails; it does not gate posting.
 

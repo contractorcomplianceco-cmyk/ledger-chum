@@ -1,5 +1,13 @@
 import type { ReactNode } from "react";
-import { ArrowUpRight, ArrowDownRight, Minus, ShieldCheck, Sparkles, AlertTriangle, Target } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  Minus,
+  ShieldCheck,
+  Sparkles,
+  AlertTriangle,
+  Target,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +15,16 @@ import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { DemoNotice, DEMO_ACTION_MESSAGE } from "@/components/banking/demo-notice";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import type { RoleWorkspace, RoleMetric, RolePriority, RoleRisk, RoleOpportunity, RoleRecommendation, RoleAdvisor, RoleQuickAction } from "@/lib/mock/apex-role-workspaces";
+import type {
+  RoleWorkspace,
+  RoleMetric,
+  RolePriority,
+  RoleRisk,
+  RoleOpportunity,
+  RoleRecommendation,
+  RoleAdvisor,
+  RoleQuickAction,
+} from "@/lib/mock/apex-role-workspaces";
 
 function demo(label: string) {
   toast(label, { description: DEMO_ACTION_MESSAGE });
@@ -19,9 +36,20 @@ function ToneIcon({ tone }: { tone?: "up" | "down" | "flat" }) {
   return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
 }
 
-export function DecisionQuestion({ question, theme }: { question: string; theme: RoleWorkspace["theme"] }) {
+export function DecisionQuestion({
+  question,
+  theme,
+}: {
+  question: string;
+  theme: RoleWorkspace["theme"];
+}) {
   return (
-    <div className={cn("rounded-2xl border border-white/10 bg-gradient-to-r p-4 text-white", theme.soft)}>
+    <div
+      className={cn(
+        "rounded-2xl border border-white/10 bg-gradient-to-r p-4 text-white",
+        theme.soft,
+      )}
+    >
       <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
         Primary decision question
       </div>
@@ -32,21 +60,32 @@ export function DecisionQuestion({ question, theme }: { question: string; theme:
 
 export function RoleWorkspaceHeader({ ws }: { ws: RoleWorkspace }) {
   return (
-    <div className={cn("relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br p-6 text-white", ws.theme.soft)}>
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br p-6 text-white",
+        ws.theme.soft,
+      )}
+    >
       <div
         aria-hidden
-        className={cn("pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-40 blur-3xl bg-gradient-to-br", ws.theme.gradient)}
+        className={cn(
+          "pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-40 blur-3xl bg-gradient-to-br",
+          ws.theme.gradient,
+        )}
       />
       <div className="relative">
         <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
           Role Workspace · Demonstration
         </div>
-        <h1 className="mt-1 text-[26px] font-semibold leading-tight">
-          {ws.title}
-        </h1>
+        <h1 className="mt-1 text-[26px] font-semibold leading-tight">{ws.title}</h1>
         <p className="mt-1 max-w-2xl text-[13px] text-white/80">{ws.subtitle}</p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <div className={cn("rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[12px]", ws.theme.accent)}>
+          <div
+            className={cn(
+              "rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[12px]",
+              ws.theme.accent,
+            )}
+          >
             Health {ws.healthScore.value} · {ws.healthScore.label}
           </div>
           <div className="text-[11.5px] text-white/60">Signed in as {ws.name}</div>
@@ -56,7 +95,13 @@ export function RoleWorkspaceHeader({ ws }: { ws: RoleWorkspace }) {
   );
 }
 
-export function RoleMetricGrid({ metrics, sensitiveVisible }: { metrics: RoleMetric[]; sensitiveVisible: boolean }) {
+export function RoleMetricGrid({
+  metrics,
+  sensitiveVisible,
+}: {
+  metrics: RoleMetric[];
+  sensitiveVisible: boolean;
+}) {
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {metrics.map((m) => {
@@ -66,7 +111,9 @@ export function RoleMetricGrid({ metrics, sensitiveVisible }: { metrics: RoleMet
             <div className="flex items-center justify-between text-[11.5px] text-muted-foreground">
               <span>{m.label}</span>
               {m.sensitive && (
-                <Badge variant="outline" className="text-[10px]">Sensitive</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  Sensitive
+                </Badge>
               )}
             </div>
             <div className="mt-1 text-[20px] font-semibold text-foreground">
@@ -136,7 +183,9 @@ export function RoleRiskPanel({ risks }: { risks: RoleRisk[] }) {
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-amber-500" />
             <span className="text-[13px] font-semibold">{r.title}</span>
-            <Badge variant="outline" className="ml-auto text-[10px]">{r.category}</Badge>
+            <Badge variant="outline" className="ml-auto text-[10px]">
+              {r.category}
+            </Badge>
             <Badge
               variant="outline"
               className={cn(
@@ -164,7 +213,9 @@ export function RoleOpportunityPanel({ opportunities }: { opportunities: RoleOpp
           <div className="flex items-center gap-2">
             <Target className="h-4 w-4 text-emerald-500" />
             <span className="text-[13px] font-semibold">{o.title}</span>
-            <Badge variant="outline" className="ml-auto text-[10px]">{o.category}</Badge>
+            <Badge variant="outline" className="ml-auto text-[10px]">
+              {o.category}
+            </Badge>
             <span className="text-[12px] font-semibold text-emerald-600">{o.potential}</span>
           </div>
           <div className="mt-1 text-[12px] text-muted-foreground">{o.detail}</div>
@@ -185,8 +236,12 @@ export function RoleRecommendationList({ items }: { items: RoleRecommendation[] 
               <div className="text-[13px] font-semibold">{r.title}</div>
               <div className="mt-1 text-[12px] text-muted-foreground">{r.rationale}</div>
               <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
-                <Badge variant="outline" className="text-[10px]">Impact: {r.impact}</Badge>
-                <Badge variant="outline" className="text-[10px]">Confidence {Math.round(r.confidence * 100)}%</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  Impact: {r.impact}
+                </Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  Confidence {Math.round(r.confidence * 100)}%
+                </Badge>
                 <Badge variant="outline" className="text-[10px]">
                   <ShieldCheck className="mr-1 h-3 w-3" />
                   {r.approval}
@@ -209,7 +264,9 @@ export function RoleAdvisorCard({ advisor }: { advisor: RoleAdvisor }) {
       <div className="flex items-center gap-2 text-[12px] font-semibold text-foreground">
         <Sparkles className="h-4 w-4 text-violet-500" />
         {advisor.persona}
-        <Badge variant="outline" className="ml-auto text-[10px]">Advisory only</Badge>
+        <Badge variant="outline" className="ml-auto text-[10px]">
+          Advisory only
+        </Badge>
       </div>
       <div className="mt-2 text-[12.5px] italic text-muted-foreground">"{advisor.question}"</div>
       <div className="mt-2 text-[13px] text-foreground">{advisor.summary}</div>
@@ -221,7 +278,8 @@ export function RoleAdvisorCard({ advisor }: { advisor: RoleAdvisor }) {
         ))}
       </div>
       <div className="mt-3 text-[10.5px] text-muted-foreground">
-        Every response carries: answer · evidence · confidence · freshness · assumptions · missing data · impact · recommended action · required approval.
+        Every response carries: answer · evidence · confidence · freshness · assumptions · missing
+        data · impact · recommended action · required approval.
       </div>
     </Card>
   );
@@ -243,22 +301,33 @@ export function PermissionPreview({ ws }: { ws: RoleWorkspace }) {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <Card className="border-border/70 p-3">
-        <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald-600">Visible modules</div>
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald-600">
+          Visible modules
+        </div>
         <ul className="mt-2 space-y-1 text-[12px] text-foreground">
-          {ws.visibleModules.map((m) => <li key={m}>• {m}</li>)}
+          {ws.visibleModules.map((m) => (
+            <li key={m}>• {m}</li>
+          ))}
         </ul>
       </Card>
       <Card className="border-border/70 p-3">
-        <div className="text-[11px] font-semibold uppercase tracking-wide text-rose-600">Hidden modules</div>
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-rose-600">
+          Hidden modules
+        </div>
         {ws.hiddenModules.length ? (
           <ul className="mt-2 space-y-1 text-[12px] text-muted-foreground">
-            {ws.hiddenModules.map((m) => <li key={m}>• {m}</li>)}
+            {ws.hiddenModules.map((m) => (
+              <li key={m}>• {m}</li>
+            ))}
           </ul>
         ) : (
-          <div className="mt-2 text-[12px] text-muted-foreground">No restrictions — full companywide access.</div>
+          <div className="mt-2 text-[12px] text-muted-foreground">
+            No restrictions — full companywide access.
+          </div>
         )}
         <div className="mt-3 text-[11px] text-muted-foreground">
-          Sensitive-data access: <span className={ws.sensitiveVisible ? "text-emerald-600" : "text-rose-600"}>
+          Sensitive-data access:{" "}
+          <span className={ws.sensitiveVisible ? "text-emerald-600" : "text-rose-600"}>
             {ws.sensitiveVisible ? "Permitted" : "Masked"}
           </span>
         </div>
@@ -267,7 +336,15 @@ export function PermissionPreview({ ws }: { ws: RoleWorkspace }) {
   );
 }
 
-export function RoleSection({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
+export function RoleSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
   return (
     <section className="space-y-3">
       <div>
@@ -304,7 +381,10 @@ export function RoleWorkspaceShell({ ws }: { ws: RoleWorkspace }) {
           </RoleSection>
 
           {ws.recommendations.length > 0 && (
-            <RoleSection title="What should I do — Recommendations" description="AI advisory only. Approval always required.">
+            <RoleSection
+              title="What should I do — Recommendations"
+              description="AI advisory only. Approval always required."
+            >
               <RoleRecommendationList items={ws.recommendations} />
             </RoleSection>
           )}
@@ -330,7 +410,10 @@ export function RoleWorkspaceShell({ ws }: { ws: RoleWorkspace }) {
             <RoleQuickActions actions={ws.quickActions} />
           </RoleSection>
 
-          <RoleSection title="Permission preview" description="What this role sees and what is intentionally hidden.">
+          <RoleSection
+            title="Permission preview"
+            description="What this role sees and what is intentionally hidden."
+          >
             <PermissionPreview ws={ws} />
           </RoleSection>
         </div>

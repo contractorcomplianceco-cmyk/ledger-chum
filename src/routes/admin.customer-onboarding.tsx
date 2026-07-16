@@ -63,9 +63,21 @@ const STAGES: Stage[] = [
     icon: Building2,
     summary: "Create the pilot org, invite core users, set roles and tenant isolation.",
     tasks: [
-      { id: "org.create", title: "Create organization", description: "Create the pilot tenant with legal entity, base currency, and fiscal year." },
-      { id: "org.roles", title: "Invite users and assign roles", description: "Owner, accountant, reviewer, and integration operator roles." },
-      { id: "org.brand", title: "Complete organization profile", description: "Legal name, tax IDs, address, and contact — required for invoice output." },
+      {
+        id: "org.create",
+        title: "Create organization",
+        description: "Create the pilot tenant with legal entity, base currency, and fiscal year.",
+      },
+      {
+        id: "org.roles",
+        title: "Invite users and assign roles",
+        description: "Owner, accountant, reviewer, and integration operator roles.",
+      },
+      {
+        id: "org.brand",
+        title: "Complete organization profile",
+        description: "Legal name, tax IDs, address, and contact — required for invoice output.",
+      },
     ],
   },
   {
@@ -74,10 +86,26 @@ const STAGES: Stage[] = [
     icon: BookOpen,
     summary: "Chart of accounts, fiscal periods, opening balances, and mapping registry.",
     tasks: [
-      { id: "acc.coa", title: "Import Chart of Accounts", description: "Load canonical account codes via /admin/migration and validate." },
-      { id: "acc.periods", title: "Configure fiscal periods", description: "Fiscal year and monthly period cadence, open first period." },
-      { id: "acc.balances", title: "Post opening balances", description: "Balanced opening journal entry through the accounting engine." },
-      { id: "acc.mappings", title: "Confirm account mappings", description: "Purpose-based mappings (AR, cash, revenue, COGS, inventory, refunds)." },
+      {
+        id: "acc.coa",
+        title: "Import Chart of Accounts",
+        description: "Load canonical account codes via /admin/migration and validate.",
+      },
+      {
+        id: "acc.periods",
+        title: "Configure fiscal periods",
+        description: "Fiscal year and monthly period cadence, open first period.",
+      },
+      {
+        id: "acc.balances",
+        title: "Post opening balances",
+        description: "Balanced opening journal entry through the accounting engine.",
+      },
+      {
+        id: "acc.mappings",
+        title: "Confirm account mappings",
+        description: "Purpose-based mappings (AR, cash, revenue, COGS, inventory, refunds).",
+      },
     ],
   },
   {
@@ -86,9 +114,21 @@ const STAGES: Stage[] = [
     icon: Plug,
     summary: "Register the ServiceConnect client and validate the Financial Event Bus contract.",
     tasks: [
-      { id: "int.client", title: "Provision API client", description: "Issue ServiceConnect API client credentials and scopes." },
-      { id: "int.mapping", title: "External ID mapping", description: "Map ServiceConnect customer / vendor / item IDs to LedgerOS entities." },
-      { id: "int.events", title: "Verify event ingestion", description: "Send a work_order.completed event and confirm it lands in the Event Bus." },
+      {
+        id: "int.client",
+        title: "Provision API client",
+        description: "Issue ServiceConnect API client credentials and scopes.",
+      },
+      {
+        id: "int.mapping",
+        title: "External ID mapping",
+        description: "Map ServiceConnect customer / vendor / item IDs to LedgerOS entities.",
+      },
+      {
+        id: "int.events",
+        title: "Verify event ingestion",
+        description: "Send a work_order.completed event and confirm it lands in the Event Bus.",
+      },
     ],
   },
   {
@@ -97,9 +137,22 @@ const STAGES: Stage[] = [
     icon: FlaskConical,
     summary: "Run the pilot validation harness end-to-end before activation.",
     tasks: [
-      { id: "test.harness", title: "Run Integration Test Center", description: "Exercise auth, idempotency, ingestion, mapping, materialization, and error recovery." },
-      { id: "test.lifecycle", title: "Full lifecycle rehearsal", description: "WO → event → materialization → posting → report → metric → APEX insight." },
-      { id: "test.close", title: "Trial close", description: "Run a mock period close with the AI Controller advisory review." },
+      {
+        id: "test.harness",
+        title: "Run Integration Test Center",
+        description:
+          "Exercise auth, idempotency, ingestion, mapping, materialization, and error recovery.",
+      },
+      {
+        id: "test.lifecycle",
+        title: "Full lifecycle rehearsal",
+        description: "WO → event → materialization → posting → report → metric → APEX insight.",
+      },
+      {
+        id: "test.close",
+        title: "Trial close",
+        description: "Run a mock period close with the AI Controller advisory review.",
+      },
     ],
   },
   {
@@ -108,9 +161,21 @@ const STAGES: Stage[] = [
     icon: Rocket,
     summary: "Cutover authorization and pilot activation.",
     tasks: [
-      { id: "go.readiness", title: "Production Readiness green", description: "All categories on /admin/readiness marked ready." },
-      { id: "go.approver", title: "Cutover approver sign-off", description: "Accounting lead and integration lead sign the go/no-go." },
-      { id: "go.activate", title: "Activate ServiceConnect pilot", description: "Flip environment to production and enable live event ingestion." },
+      {
+        id: "go.readiness",
+        title: "Production Readiness green",
+        description: "All categories on /admin/readiness marked ready.",
+      },
+      {
+        id: "go.approver",
+        title: "Cutover approver sign-off",
+        description: "Accounting lead and integration lead sign the go/no-go.",
+      },
+      {
+        id: "go.activate",
+        title: "Activate ServiceConnect pilot",
+        description: "Flip environment to production and enable live event ingestion.",
+      },
     ],
   },
 ];
@@ -183,7 +248,12 @@ function CustomerOnboarding() {
                         <Circle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                       )}
                       <div className="min-w-0">
-                        <div className={cn("text-sm font-medium", isDone && "text-muted-foreground line-through")}>
+                        <div
+                          className={cn(
+                            "text-sm font-medium",
+                            isDone && "text-muted-foreground line-through",
+                          )}
+                        >
                           {task.title}
                         </div>
                         <div className="text-xs text-muted-foreground">{task.description}</div>
@@ -202,11 +272,21 @@ function CustomerOnboarding() {
             <div className="text-sm font-semibold">Reference surfaces</div>
           </div>
           <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            <li>Data migration staging: <code>/admin/migration</code></li>
-            <li>Integration Test Center: <code>/admin/integration-testing</code></li>
-            <li>Production Readiness: <code>/admin/readiness</code></li>
-            <li>Financial Event Bus: <code>/admin/financial-events</code></li>
-            <li>Runbook: <code>docs/ledgeros/26-serviceconnect-pilot-runbook.md</code></li>
+            <li>
+              Data migration staging: <code>/admin/migration</code>
+            </li>
+            <li>
+              Integration Test Center: <code>/admin/integration-testing</code>
+            </li>
+            <li>
+              Production Readiness: <code>/admin/readiness</code>
+            </li>
+            <li>
+              Financial Event Bus: <code>/admin/financial-events</code>
+            </li>
+            <li>
+              Runbook: <code>docs/ledgeros/26-serviceconnect-pilot-runbook.md</code>
+            </li>
           </ul>
         </Card>
       </PageBody>

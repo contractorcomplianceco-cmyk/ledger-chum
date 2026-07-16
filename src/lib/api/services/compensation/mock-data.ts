@@ -66,8 +66,7 @@ export const MOCK_PLANS: CompensationPlan[] = [
     name: "Tara — Brand Ambassador / Relationship (5%)",
     description: "Tara's stacked relationship-creator slot on eligible first-year CCA revenue.",
     family: "brand_ambassador_participation",
-    disbursementClass:
-      DEFAULT_FAMILY_DISBURSEMENT_CLASS.brand_ambassador_participation,
+    disbursementClass: DEFAULT_FAMILY_DISBURSEMENT_CLASS.brand_ambassador_participation,
     basis: "collected_and_cleared_nrsr",
     defaultRate: 0.05,
     formulaText: "5% × (eligible first-year collected NRSR) — carved from standard 10% pool",
@@ -109,7 +108,8 @@ export const MOCK_PLANS: CompensationPlan[] = [
   {
     id: "cp_software",
     name: "Software Participation — Recurring NRSR",
-    description: "Monthly participation on collected-and-cleared NRSR for covered software accounts.",
+    description:
+      "Monthly participation on collected-and-cleared NRSR for covered software accounts.",
     family: "software_participation",
     disbursementClass: DEFAULT_FAMILY_DISBURSEMENT_CLASS.software_participation,
     basis: "collected_and_cleared_nrsr",
@@ -241,7 +241,8 @@ export const MOCK_PLANS: CompensationPlan[] = [
   {
     id: "cp_investor_review",
     name: "Investor Milestone — Pending Legal Review",
-    description: "Investor-linked milestone comp. Requires legal + Owner approval before activation.",
+    description:
+      "Investor-linked milestone comp. Requires legal + Owner approval before activation.",
     family: "investor_milestone_bonus",
     disbursementClass: DEFAULT_FAMILY_DISBURSEMENT_CLASS.investor_milestone_bonus,
     basis: "milestone_amount",
@@ -577,13 +578,70 @@ export const MOCK_PARTICIPANTS: CompensationParticipant[] = [
 ];
 
 export const MOCK_PLAN_PARTICIPANTS: CompensationPlanParticipant[] = [
-  { id: "pp_1", planId: "cp_std_sales", participantId: "pt_jamie", participantName: "Jamie Rivera", role: "closer", effectiveFrom: "2026-01-01", active: true },
-  { id: "pp_2", planId: "cp_std_sales", participantId: "pt_priya", participantName: "Priya Kapoor", role: "closer", effectiveFrom: "2026-01-01", active: true },
-  { id: "pp_3", planId: "cp_std_sales", participantId: "pt_devon", participantName: "Devon Locke", role: "closer", effectiveFrom: "2026-01-01", active: true },
-  { id: "pp_4", planId: "cp_tara_relationship", participantId: "pt_tara", participantName: "Tara Casella", role: "brand_ambassador", effectiveFrom: "2026-01-01", overridePercent: 0.05, active: true },
-  { id: "pp_5", planId: "cp_software", participantId: "pt_jamie", participantName: "Jamie Rivera", role: "account_manager", effectiveFrom: "2026-01-01", active: true },
-  { id: "pp_6", planId: "cp_referral", participantId: "pt_northstar", participantName: "NorthStar Advisors", role: "referral_source", effectiveFrom: "2026-01-01", active: true },
-  { id: "pp_7", planId: "cp_referral", participantId: "pt_reliant", participantName: "Reliant Strategic", role: "strategic_partner", effectiveFrom: "2026-01-01", active: true },
+  {
+    id: "pp_1",
+    planId: "cp_std_sales",
+    participantId: "pt_jamie",
+    participantName: "Jamie Rivera",
+    role: "closer",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
+  {
+    id: "pp_2",
+    planId: "cp_std_sales",
+    participantId: "pt_priya",
+    participantName: "Priya Kapoor",
+    role: "closer",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
+  {
+    id: "pp_3",
+    planId: "cp_std_sales",
+    participantId: "pt_devon",
+    participantName: "Devon Locke",
+    role: "closer",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
+  {
+    id: "pp_4",
+    planId: "cp_tara_relationship",
+    participantId: "pt_tara",
+    participantName: "Tara Casella",
+    role: "brand_ambassador",
+    effectiveFrom: "2026-01-01",
+    overridePercent: 0.05,
+    active: true,
+  },
+  {
+    id: "pp_5",
+    planId: "cp_software",
+    participantId: "pt_jamie",
+    participantName: "Jamie Rivera",
+    role: "account_manager",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
+  {
+    id: "pp_6",
+    planId: "cp_referral",
+    participantId: "pt_northstar",
+    participantName: "NorthStar Advisors",
+    role: "referral_source",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
+  {
+    id: "pp_7",
+    planId: "cp_referral",
+    participantId: "pt_reliant",
+    participantName: "Reliant Strategic",
+    role: "strategic_partner",
+    effectiveFrom: "2026-01-01",
+    active: true,
+  },
 ];
 
 export const MOCK_ATTRIBUTIONS: CompensationAttribution[] = [
@@ -624,7 +682,9 @@ export const MOCK_ATTRIBUTIONS: CompensationAttribution[] = [
         effectiveDate: "2026-05-01",
       },
     ],
-    totalPools: [{ poolId: "pool_ax_sales", poolName: "Sales Pool (10%)", totalPercent: 1, valid: true }],
+    totalPools: [
+      { poolId: "pool_ax_sales", poolName: "Sales Pool (10%)", totalPercent: 1, valid: true },
+    ],
     overallStatus: "verified",
     createdAt: now,
     updatedAt: now,
@@ -697,7 +757,12 @@ export const MOCK_ATTRIBUTIONS: CompensationAttribution[] = [
       },
     ],
     totalPools: [
-      { poolId: "pool_vi_soft", poolName: "Software Participation (3%)", totalPercent: 1, valid: true },
+      {
+        poolId: "pool_vi_soft",
+        poolName: "Software Participation (3%)",
+        totalPercent: 1,
+        valid: true,
+      },
     ],
     overallStatus: "verified",
     createdAt: now,
@@ -741,7 +806,9 @@ export const MOCK_ATTRIBUTIONS: CompensationAttribution[] = [
         conflictId: "conf_lark",
       },
     ],
-    totalPools: [{ poolId: "pool_la_sales", poolName: "Sales Pool (10%)", totalPercent: 1, valid: true }],
+    totalPools: [
+      { poolId: "pool_la_sales", poolName: "Sales Pool (10%)", totalPercent: 1, valid: true },
+    ],
     overallStatus: "conflict",
     createdAt: now,
     updatedAt: now,
@@ -841,12 +908,21 @@ export const MOCK_CONFLICTS: AttributionConflict[] = [
     evidenceCount: 1,
     financialImpact: 8500,
     affectedPlans: ["Tara — Brand Ambassador (5%)", "Standard Sales Pool (10%)"],
-    suggestedResolution: "Route to Rose for material-development determination; require signed leadership confirmation.",
+    suggestedResolution:
+      "Route to Rose for material-development determination; require signed leadership confirmation.",
     requiredApprover: "Owner (Rose)",
     status: "leadership_review",
     timeline: [
-      { at: "2026-06-15T10:00:00Z", actor: "System", action: "Conflict detected — preexisting pipeline" },
-      { at: "2026-06-15T14:00:00Z", actor: "Rose Delacroix", action: "Routed to leadership review" },
+      {
+        at: "2026-06-15T10:00:00Z",
+        actor: "System",
+        action: "Conflict detected — preexisting pipeline",
+      },
+      {
+        at: "2026-06-15T14:00:00Z",
+        actor: "Rose Delacroix",
+        action: "Routed to leadership review",
+      },
     ],
   },
   {
@@ -862,9 +938,7 @@ export const MOCK_CONFLICTS: AttributionConflict[] = [
     suggestedResolution: "Add relationship-creator contribution or increase Priya's split to 100%.",
     requiredApprover: "Accounting Lead",
     status: "accounting_review",
-    timeline: [
-      { at: "2026-06-01T09:30:00Z", actor: "System", action: "Split validation failed" },
-    ],
+    timeline: [{ at: "2026-06-01T09:30:00Z", actor: "System", action: "Split validation failed" }],
   },
 ];
 

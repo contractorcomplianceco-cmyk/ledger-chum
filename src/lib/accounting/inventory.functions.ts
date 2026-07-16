@@ -30,15 +30,17 @@ export const listInventoryCategories = createServerFn({ method: "GET" })
 export const upsertInventoryCategory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      name: z.string().min(1).max(200),
-      parentId: z.string().uuid().nullable().optional(),
-      cogsAccountId: z.string().uuid().nullable().optional(),
-      assetAccountId: z.string().uuid().nullable().optional(),
-      isActive: z.boolean().default(true),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        name: z.string().min(1).max(200),
+        parentId: z.string().uuid().nullable().optional(),
+        cogsAccountId: z.string().uuid().nullable().optional(),
+        assetAccountId: z.string().uuid().nullable().optional(),
+        isActive: z.boolean().default(true),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -50,7 +52,12 @@ export const upsertInventoryCategory = createServerFn({ method: "POST" })
       is_active: data.isActive,
     };
     const q = data.id
-      ? context.supabase.from("inventory_categories").update(payload).eq("id", data.id).select().single()
+      ? context.supabase
+          .from("inventory_categories")
+          .update(payload)
+          .eq("id", data.id)
+          .select()
+          .single()
       : context.supabase.from("inventory_categories").insert(payload).select().single();
     const { data: row, error } = await q;
     if (error) throw new Error(error.message);
@@ -75,14 +82,16 @@ export const listInventoryLocations = createServerFn({ method: "GET" })
 export const upsertInventoryLocation = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      code: z.string().min(1).max(32),
-      name: z.string().min(1).max(200),
-      address: z.string().max(500).optional(),
-      isActive: z.boolean().default(true),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        code: z.string().min(1).max(32),
+        name: z.string().min(1).max(200),
+        address: z.string().max(500).optional(),
+        isActive: z.boolean().default(true),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -93,7 +102,12 @@ export const upsertInventoryLocation = createServerFn({ method: "POST" })
       is_active: data.isActive,
     };
     const q = data.id
-      ? context.supabase.from("inventory_locations").update(payload).eq("id", data.id).select().single()
+      ? context.supabase
+          .from("inventory_locations")
+          .update(payload)
+          .eq("id", data.id)
+          .select()
+          .single()
       : context.supabase.from("inventory_locations").insert(payload).select().single();
     const { data: row, error } = await q;
     if (error) throw new Error(error.message);
@@ -105,11 +119,13 @@ export const upsertInventoryLocation = createServerFn({ method: "POST" })
 export const listInventoryItems = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      search: z.string().optional(),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        search: z.string().optional(),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -127,21 +143,23 @@ export const listInventoryItems = createServerFn({ method: "GET" })
 export const upsertInventoryItem = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      id: z.string().uuid().optional(),
-      orgId: z.string().uuid(),
-      sku: z.string().min(1).max(64),
-      name: z.string().min(1).max(200),
-      description: z.string().max(1000).optional(),
-      categoryId: z.string().uuid().nullable().optional(),
-      unitOfMeasure: z.string().min(1).max(32).default("each"),
-      costMethod: z.enum(["average", "fifo", "standard", "specific"]).default("average"),
-      standardCost: z.number().nullable().optional(),
-      isTracked: z.boolean().default(true),
-      isActive: z.boolean().default(true),
-      cogsAccountId: z.string().uuid().nullable().optional(),
-      assetAccountId: z.string().uuid().nullable().optional(),
-    }).parse(v),
+    z
+      .object({
+        id: z.string().uuid().optional(),
+        orgId: z.string().uuid(),
+        sku: z.string().min(1).max(64),
+        name: z.string().min(1).max(200),
+        description: z.string().max(1000).optional(),
+        categoryId: z.string().uuid().nullable().optional(),
+        unitOfMeasure: z.string().min(1).max(32).default("each"),
+        costMethod: z.enum(["average", "fifo", "standard", "specific"]).default("average"),
+        standardCost: z.number().nullable().optional(),
+        isTracked: z.boolean().default(true),
+        isActive: z.boolean().default(true),
+        cogsAccountId: z.string().uuid().nullable().optional(),
+        assetAccountId: z.string().uuid().nullable().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -171,11 +189,13 @@ export const upsertInventoryItem = createServerFn({ method: "POST" })
 export const listInventoryTransactions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      itemId: z.string().uuid().optional(),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        itemId: z.string().uuid().optional(),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -193,20 +213,28 @@ export const listInventoryTransactions = createServerFn({ method: "GET" })
 export const recordInventoryTransaction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      itemId: z.string().uuid(),
-      locationId: z.string().uuid().nullable().optional(),
-      txnType: z.enum([
-        "receipt", "issue", "adjustment", "transfer_in", "transfer_out", "consumption", "revaluation",
-      ]),
-      quantity: z.number(),
-      unitCost: z.number().default(0),
-      referenceType: z.string().max(64).optional(),
-      referenceId: z.string().uuid().optional(),
-      memo: z.string().max(1000).optional(),
-      occurredAt: z.string().datetime().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        itemId: z.string().uuid(),
+        locationId: z.string().uuid().nullable().optional(),
+        txnType: z.enum([
+          "receipt",
+          "issue",
+          "adjustment",
+          "transfer_in",
+          "transfer_out",
+          "consumption",
+          "revaluation",
+        ]),
+        quantity: z.number(),
+        unitCost: z.number().default(0),
+        referenceType: z.string().max(64).optional(),
+        referenceId: z.string().uuid().optional(),
+        memo: z.string().max(1000).optional(),
+        occurredAt: z.string().datetime().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const totalCost = Math.round(data.quantity * data.unitCost * 10000) / 10000;

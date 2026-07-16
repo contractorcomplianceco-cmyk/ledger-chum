@@ -17,22 +17,22 @@ Financial Integration Layer.
 
 ## 2. System Boundaries
 
-| Concern                          | Owner              |
-| -------------------------------- | ------------------ |
-| Customers (operational profile)  | Operational system |
-| Locations, work orders, dispatch | Operational system |
-| Technicians, labor capture       | Operational system |
-| Materials issued, service history| Operational system |
-| Operational approvals            | Operational system |
-| Organizations (tenants)          | LedgerOS           |
-| Fiscal periods, close controls   | LedgerOS           |
-| Chart of accounts, GL, journals  | LedgerOS           |
-| AR (invoices, payments, credits) | LedgerOS           |
-| AP (vendors, bills, payments)    | LedgerOS           |
-| Banking + reconciliation         | LedgerOS           |
-| Financial reporting              | LedgerOS           |
-| Tax reporting framework          | LedgerOS           |
-| Profitability, intelligence      | LedgerOS (APEX)    |
+| Concern                           | Owner              |
+| --------------------------------- | ------------------ |
+| Customers (operational profile)   | Operational system |
+| Locations, work orders, dispatch  | Operational system |
+| Technicians, labor capture        | Operational system |
+| Materials issued, service history | Operational system |
+| Operational approvals             | Operational system |
+| Organizations (tenants)           | LedgerOS           |
+| Fiscal periods, close controls    | LedgerOS           |
+| Chart of accounts, GL, journals   | LedgerOS           |
+| AR (invoices, payments, credits)  | LedgerOS           |
+| AP (vendors, bills, payments)     | LedgerOS           |
+| Banking + reconciliation          | LedgerOS           |
+| Financial reporting               | LedgerOS           |
+| Tax reporting framework           | LedgerOS           |
+| Profitability, intelligence       | LedgerOS (APEX)    |
 
 Responsibilities never reverse. LedgerOS does not schedule work; operational
 systems do not post journals.

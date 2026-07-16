@@ -3,7 +3,11 @@ import { IntelligencePage } from "@/components/intelligence/intelligence-page";
 import { Card } from "@/components/ui/card";
 import { MarginIndicator } from "@/components/intelligence/margin-indicator";
 import { currency } from "@/lib/mock/finance";
-import { CLIENT_PROFITABILITY, SERVICE_PROFITABILITY, DEPARTMENT_PROFITABILITY } from "@/lib/mock/intelligence";
+import {
+  CLIENT_PROFITABILITY,
+  SERVICE_PROFITABILITY,
+  DEPARTMENT_PROFITABILITY,
+} from "@/lib/mock/intelligence";
 import { PieChart as PieIcon, Users2, Wrench, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/intelligence/profitability")({
@@ -25,16 +29,26 @@ function ProfitabilityHome() {
         <Card className="rounded-xl border-info/30 bg-info/[0.06] p-4 text-[12.5px] text-info">
           <div className="font-semibold">Contribution profit formula</div>
           <div className="mt-1 font-mono text-[11.5px] leading-relaxed">
-            Collected revenue − Pass-through − Commissions − Direct fulfillment labor − Direct vendor costs − Technology allocation − Marketing acquisition − Refunds − Chargebacks = Contribution profit
+            Collected revenue − Pass-through − Commissions − Direct fulfillment labor − Direct
+            vendor costs − Technology allocation − Marketing acquisition − Refunds − Chargebacks =
+            Contribution profit
           </div>
         </Card>
       </section>
 
       <section className="grid gap-4 xl:grid-cols-4">
         <MetricCard label="Total collected revenue" value={currency(totalRevenue)} />
-        <MetricCard label="Total contribution profit" value={currency(totalContribution)} tone="success" />
+        <MetricCard
+          label="Total contribution profit"
+          value={currency(totalContribution)}
+          tone="success"
+        />
         <MetricCard label="Average contribution margin" value={`${avgMargin.toFixed(1)}%`} />
-        <MetricCard label="Unprofitable clients" value={String(CLIENT_PROFITABILITY.filter((c) => c.contribution < 0).length)} tone="destructive" />
+        <MetricCard
+          label="Unprofitable clients"
+          value={String(CLIENT_PROFITABILITY.filter((c) => c.contribution < 0).length)}
+          tone="destructive"
+        />
       </section>
 
       <section className="grid gap-4 xl:grid-cols-3">
@@ -78,10 +92,24 @@ function ProfitabilityHome() {
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5 text-[11.5px]">
             {[
-              "Client", "Service", "Department", "Employee", "Salesperson", "State",
-              "Product", "App", "Campaign", "Lead source", "Project", "Subscription plan", "Qualifier placement",
+              "Client",
+              "Service",
+              "Department",
+              "Employee",
+              "Salesperson",
+              "State",
+              "Product",
+              "App",
+              "Campaign",
+              "Lead source",
+              "Project",
+              "Subscription plan",
+              "Qualifier placement",
             ].map((d) => (
-              <span key={d} className="rounded-md border border-border/70 bg-muted/40 px-2 py-1 text-muted-foreground">
+              <span
+                key={d}
+                className="rounded-md border border-border/70 bg-muted/40 px-2 py-1 text-muted-foreground"
+              >
                 {d}
               </span>
             ))}
@@ -92,12 +120,26 @@ function ProfitabilityHome() {
   );
 }
 
-function MetricCard({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "success" | "destructive" }) {
+function MetricCard({
+  label,
+  value,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  tone?: "default" | "success" | "destructive";
+}) {
   const toneCls =
-    tone === "success" ? "text-success" : tone === "destructive" ? "text-destructive" : "text-foreground";
+    tone === "success"
+      ? "text-success"
+      : tone === "destructive"
+        ? "text-destructive"
+        : "text-foreground";
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className={`mt-1 font-tabular text-[22px] font-bold ${toneCls}`}>{value}</div>
     </Card>
   );
@@ -121,7 +163,10 @@ function DimensionCard({
           <Icon className="h-4 w-4 text-info" />
           <h3 className="text-[13px] font-semibold">{title}</h3>
         </div>
-        <Link to={to as "/intelligence"} className="text-[11.5px] text-muted-foreground hover:text-foreground">
+        <Link
+          to={to as "/intelligence"}
+          className="text-[11.5px] text-muted-foreground hover:text-foreground"
+        >
           Open →
         </Link>
       </div>

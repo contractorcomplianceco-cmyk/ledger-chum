@@ -53,7 +53,13 @@ export function CashLandscape({
       </g>
       {/* water */}
       <path d="M0,95 Q80,88 160,95 T320,95 L320,140 L0,140 Z" fill={`url(#${water})`} />
-      <path d="M0,105 Q80,98 160,105 T320,105" stroke="#7dd3fc" strokeWidth="1" fill="none" opacity="0.6" />
+      <path
+        d="M0,105 Q80,98 160,105 T320,105"
+        stroke="#7dd3fc"
+        strokeWidth="1"
+        fill="none"
+        opacity="0.6"
+      />
       {/* sailboat */}
       <g transform="translate(150,70)">
         <polygon points="10,0 10,28 -8,28" fill="#ffffff" />
@@ -64,7 +70,15 @@ export function CashLandscape({
       {/* coins */}
       <g>
         <circle cx="30" cy="118" r="7" fill={`url(#${coin})`} />
-        <circle cx="30" cy="118" r="7" fill="none" stroke="#b45309" strokeWidth="0.5" opacity="0.4" />
+        <circle
+          cx="30"
+          cy="118"
+          r="7"
+          fill="none"
+          stroke="#b45309"
+          strokeWidth="0.5"
+          opacity="0.4"
+        />
         <circle cx="290" cy="122" r="6" fill={`url(#${coin})`} />
         <circle cx="270" cy="115" r="4" fill={`url(#${coin})`} opacity="0.8" />
       </g>

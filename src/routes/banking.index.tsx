@@ -179,7 +179,7 @@ function BankingOverview() {
         <DemoNotice />
 
         {/* KPI row */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 xl:grid-cols-3 2xl:grid-cols-6">
           <SummaryCell label="Total cash (bank)" value={currencyPrecise(totalBank)} icon={Banknote} tone="brand" />
           <SummaryCell label="Ledger cash" value={currencyPrecise(totalLedger)} icon={Wallet} />
           <SummaryCell label="Pending transactions" value={pending.toString()} tone="warning" />
@@ -412,14 +412,14 @@ function SummaryCell({
             ? "text-destructive"
             : "text-foreground";
   return (
-    <Card className="p-3">
-      <div className="flex items-center justify-between">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+    <Card className="min-w-0 p-3">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2">
+        <div className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
           {label}
         </div>
-        {Icon && <Icon className={"h-3.5 w-3.5 " + toneClass} />}
+        {Icon && <Icon className={"h-3.5 w-3.5 shrink-0 " + toneClass} />}
       </div>
-      <div className={"mt-1 font-tabular text-xl font-semibold tracking-tight " + toneClass}>
+      <div className={"mt-1 min-w-0 truncate font-tabular text-lg font-semibold sm:text-xl " + toneClass}>
         {value}
       </div>
     </Card>

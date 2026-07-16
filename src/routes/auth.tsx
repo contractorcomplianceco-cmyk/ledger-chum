@@ -62,6 +62,42 @@ function AuthPage() {
     }
   }
 
+  async function handleDemo() {
+    setBusy(true);
+    try {
+      const demoEmail = "demo@ledgeros.example";
+      const demoPassword = "demo-ledgeros-2026";
+      // Try signing in first; if the account doesn't exist yet, create it.
+      const signIn = await supabase.auth.signInWithPassword({
+        email: demoEmail,
+        password: demoPassword,
+      });
+      if (signIn.error) {
+        const signUp = await supabase.auth.signUp({
+          email: demoEmail,
+          password: demoPassword,
+          options: { emailRedirectTo: window.location.origin },
+        });
+        if (signUp.error) throw signUp.error;
+        const { data: sess } = await supabase.auth.getSession();
+        if (!sess.session) {
+          const retry = await supabase.auth.signInWithPassword({
+            email: demoEmail,
+            password: demoPassword,
+          });
+          if (retry.error) throw retry.error;
+        }
+      }
+      await seedSampleWorkspace();
+      toast.success("Welcome to the LedgerOS demo");
+      navigate({ to: "/ledger/general" });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Couldn't start the demo");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md p-8">
@@ -104,6 +140,25 @@ function AuthPage() {
             {busy ? "Please wait…" : mode === "signup" ? "Sign up & explore" : "Sign in"}
           </Button>
         </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-2 text-muted-foreground">or</span>
+          </div>
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={handleDemo}
+          disabled={busy}
+        >
+          {busy ? "Loading demo…" : "View demo — no account needed"}
+        </Button>
 
         <div className="mt-6 text-center text-sm">
           {mode === "signup" ? (

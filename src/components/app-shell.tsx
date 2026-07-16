@@ -50,7 +50,7 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        "grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 px-6 pb-4 pt-6 sm:px-8",
+        "flex flex-col gap-4 px-6 pb-4 pt-6 sm:px-8 xl:grid xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end",
         className,
       )}
     >
@@ -67,7 +67,11 @@ export function PageHeader({
           <p className="mt-1 max-w-2xl text-[14px] text-muted-foreground">{description}</p>
         )}
       </div>
-      {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+      {actions && (
+        <div className="flex flex-wrap items-center gap-2 xl:shrink-0 xl:flex-nowrap">
+          {actions}
+        </div>
+      )}
     </div>
   );
 }

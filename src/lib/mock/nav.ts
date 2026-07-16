@@ -111,6 +111,7 @@ export const NAV_GROUPS: NavGroup[] = [
     icon: BookOpen,
     defaultOpen: true,
     items: [
+      { title: "Accounting Center", to: "/accounting-center", icon: BookOpenCheck, badge: "New", badgeTone: "violet", keywords: ["accountant", "workspace", "approvals", "drafts", "exceptions", "close", "reconciliation"] },
       { title: "Journal Entries", to: "/ledger/journals", icon: NotebookPen },
       { title: "Chart of Accounts", to: "/ledger/accounts", icon: BookOpen },
       { title: "General Ledger", to: "/ledger/general", icon: BookOpenCheck },
@@ -265,6 +266,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Observability", to: "/admin/observability", icon: Activity, keywords: ["telemetry", "health", "retry", "queue", "errors"] },
       { title: "Data Migration", to: "/admin/migration", icon: Database, keywords: ["migration", "import", "cutover", "coa", "opening balances"] },
       { title: "Production Readiness", to: "/admin/readiness", icon: Gauge, keywords: ["readiness", "cutover", "go/no-go", "pilot"] },
+      { title: "Customer Onboarding", to: "/admin/customer-onboarding", icon: Rocket, badge: "New", badgeTone: "violet", keywords: ["pilot", "activation", "implementation", "onboarding"] },
+      { title: "Integration Docs", to: "/docs/integrations", icon: BookOpen, keywords: ["docs", "integration", "api", "events", "webhook"] },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
       { title: "Production Readiness (legacy)", to: "/readiness/production", icon: ShieldCheck },
       { title: "Master Feature Registry", to: "/feature-registry", icon: ClipboardList, badge: "Planning", badgeTone: "violet", permission: "implementation.view" },

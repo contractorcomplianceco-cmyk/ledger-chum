@@ -24,6 +24,7 @@ import { Route as CashAvailabilityRouteImport } from './routes/cash-availability
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AutomationCenterRouteImport } from './routes/automation-center'
 import { Route as AuditRouteImport } from './routes/audit'
+import { Route as AccountingCenterRouteImport } from './routes/accounting-center'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
@@ -113,6 +114,7 @@ import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.inte
 import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
 import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
 import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
+import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
 import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
@@ -174,6 +176,7 @@ import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligen
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
 import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
+import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
 import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
@@ -293,6 +296,11 @@ const AutomationCenterRoute = AutomationCenterRouteImport.update({
 const AuditRoute = AuditRouteImport.update({
   id: '/audit',
   path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountingCenterRoute = AccountingCenterRouteImport.update({
+  id: '/accounting-center',
+  path: '/accounting-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -752,6 +760,11 @@ const EstimatesNewRoute = EstimatesNewRouteImport.update({
   path: '/new',
   getParentRoute: () => EstimatesRoute,
 } as any)
+const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
+  id: '/docs/integrations',
+  path: '/docs/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
   id: '/dashboards/team',
   path: '/dashboards/team',
@@ -1064,6 +1077,11 @@ const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
   path: '/admin/financial-events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
+  id: '/admin/customer-onboarding',
+  path: '/admin/customer-onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
   id: '/accounts-receivable/aging',
   path: '/accounts-receivable/aging',
@@ -1319,6 +1337,7 @@ const ApiPublicIntegrationsWorkOrdersCompletedRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1339,6 +1358,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1400,6 +1420,7 @@ export interface FileRoutesByFullPath {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1531,6 +1552,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1548,6 +1570,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1609,6 +1632,7 @@ export interface FileRoutesByTo {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1741,6 +1765,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
@@ -1761,6 +1786,7 @@ export interface FileRoutesById {
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
+  '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
@@ -1822,6 +1848,7 @@ export interface FileRoutesById {
   '/dashboards/accounting': typeof DashboardsAccountingRoute
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
+  '/docs/integrations': typeof DocsIntegrationsRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1955,6 +1982,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -1975,6 +2003,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2036,6 +2065,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2167,6 +2197,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -2184,6 +2215,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2245,6 +2277,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2376,6 +2409,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/accounting-center'
     | '/audit'
     | '/automation-center'
     | '/bills'
@@ -2396,6 +2430,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/payments'
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
+    | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
     | '/admin/integrations'
@@ -2457,6 +2492,7 @@ export interface FileRouteTypes {
     | '/dashboards/accounting'
     | '/dashboards/reviewer'
     | '/dashboards/team'
+    | '/docs/integrations'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2589,6 +2625,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountingCenterRoute: typeof AccountingCenterRoute
   AuditRoute: typeof AuditRoute
   AutomationCenterRoute: typeof AutomationCenterRoute
   BillsRoute: typeof BillsRoute
@@ -2609,6 +2646,7 @@ export interface RootRouteChildren {
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
+  AdminCustomerOnboardingRoute: typeof AdminCustomerOnboardingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
@@ -2666,6 +2704,7 @@ export interface RootRouteChildren {
   DashboardsAccountingRoute: typeof DashboardsAccountingRoute
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
+  DocsIntegrationsRoute: typeof DocsIntegrationsRoute
   FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
@@ -2866,6 +2905,13 @@ declare module '@tanstack/react-router' {
       path: '/audit'
       fullPath: '/audit'
       preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounting-center': {
+      id: '/accounting-center'
+      path: '/accounting-center'
+      fullPath: '/accounting-center'
+      preLoaderRoute: typeof AccountingCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -3491,6 +3537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EstimatesNewRouteImport
       parentRoute: typeof EstimatesRoute
     }
+    '/docs/integrations': {
+      id: '/docs/integrations'
+      path: '/docs/integrations'
+      fullPath: '/docs/integrations'
+      preLoaderRoute: typeof DocsIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboards/team': {
       id: '/dashboards/team'
       path: '/dashboards/team'
@@ -3916,6 +3969,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/financial-events'
       fullPath: '/admin/financial-events'
       preLoaderRoute: typeof AdminFinancialEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/customer-onboarding': {
+      id: '/admin/customer-onboarding'
+      path: '/admin/customer-onboarding'
+      fullPath: '/admin/customer-onboarding'
+      preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accounts-receivable/aging': {
@@ -4475,6 +4535,7 @@ const CompensationPlansIdRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountingCenterRoute: AccountingCenterRoute,
   AuditRoute: AuditRoute,
   AutomationCenterRoute: AutomationCenterRoute,
   BillsRoute: BillsRoute,
@@ -4495,6 +4556,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
+  AdminCustomerOnboardingRoute: AdminCustomerOnboardingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
@@ -4552,6 +4614,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsAccountingRoute: DashboardsAccountingRoute,
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
+  DocsIntegrationsRoute: DocsIntegrationsRoute,
   FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,

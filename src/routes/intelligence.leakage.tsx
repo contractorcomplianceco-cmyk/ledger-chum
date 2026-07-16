@@ -8,7 +8,16 @@ import { currency } from "@/lib/mock/finance";
 import { LEAKAGE_OPPS, LEAKAGE_STATUS_META, type LeakageStatus } from "@/lib/mock/intelligence";
 import { cn } from "@/lib/utils";
 
-const FILTERS: (LeakageStatus | "all")[] = ["all", "new", "verified", "invoice_draft", "invoiced", "collected", "dismissed", "not_recoverable"];
+const FILTERS: (LeakageStatus | "all")[] = [
+  "all",
+  "new",
+  "verified",
+  "invoice_draft",
+  "invoiced",
+  "collected",
+  "dismissed",
+  "not_recoverable",
+];
 
 export const Route = createFileRoute("/intelligence/leakage")({
   head: () => ({ meta: [{ title: "Revenue Leakage — LedgerOS" }] }),
@@ -18,8 +27,12 @@ export const Route = createFileRoute("/intelligence/leakage")({
 function LeakagePage() {
   const [filter, setFilter] = useState<LeakageStatus | "all">("all");
   const opps = filter === "all" ? LEAKAGE_OPPS : LEAKAGE_OPPS.filter((o) => o.status === filter);
-  const totalRecoverable = LEAKAGE_OPPS.filter((o) => o.status !== "dismissed" && o.status !== "not_recoverable").reduce((s, o) => s + o.amount, 0);
-  const verifiedCount = LEAKAGE_OPPS.filter((o) => o.status === "verified" || o.status === "invoice_draft").length;
+  const totalRecoverable = LEAKAGE_OPPS.filter(
+    (o) => o.status !== "dismissed" && o.status !== "not_recoverable",
+  ).reduce((s, o) => s + o.amount, 0);
+  const verifiedCount = LEAKAGE_OPPS.filter(
+    (o) => o.status === "verified" || o.status === "invoice_draft",
+  ).length;
 
   return (
     <IntelligencePage
@@ -56,14 +69,28 @@ function LeakagePage() {
   );
 }
 
-function MetricCard({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "success" | "warning" }) {
+function MetricCard({
+  label,
+  value,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  tone?: "default" | "success" | "warning";
+}) {
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div
         className={cn(
           "mt-1 font-tabular text-[22px] font-bold",
-          tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-foreground",
+          tone === "success"
+            ? "text-success"
+            : tone === "warning"
+              ? "text-warning"
+              : "text-foreground",
         )}
       >
         {value}

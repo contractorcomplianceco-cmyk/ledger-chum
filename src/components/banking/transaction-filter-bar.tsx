@@ -132,7 +132,9 @@ export function TransactionFilterBar({
                   variant="outline"
                   className={
                     "h-4 border-transparent px-1 font-tabular text-[10px] " +
-                    (active ? "bg-brand-foreground/20 text-brand-foreground" : "bg-muted text-muted-foreground")
+                    (active
+                      ? "bg-brand-foreground/20 text-brand-foreground"
+                      : "bg-muted text-muted-foreground")
                   }
                 >
                   {v.count}

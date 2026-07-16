@@ -45,10 +45,7 @@ export function CommandPalette({
   );
 
   const recentItems = useMemo(
-    () =>
-      recents
-        .map((to) => permitted.find((i) => i.to === to))
-        .filter(Boolean) as NavItem[],
+    () => recents.map((to) => permitted.find((i) => i.to === to)).filter(Boolean) as NavItem[],
     [recents, permitted],
   );
 
@@ -129,7 +126,9 @@ export function CommandPalette({
                       className="ml-2 rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
                       aria-label={fav ? "Remove favorite" : "Add favorite"}
                     >
-                      <Star className={fav ? "h-3.5 w-3.5 fill-current text-amber-500" : "h-3.5 w-3.5"} />
+                      <Star
+                        className={fav ? "h-3.5 w-3.5 fill-current text-amber-500" : "h-3.5 w-3.5"}
+                      />
                     </button>
                   </CommandItem>
                 );

@@ -37,15 +37,15 @@ All live in `src/lib/accounting/workspace.functions.ts` and go through
 `requireSupabaseAuth` — the org id passed in is authorised by RLS via
 `org_members` / `has_role`.
 
-| Function | Purpose |
-| --- | --- |
-| `getCurrentOrg` | Returns the caller's primary org membership. |
-| `listAccounts` | Chart of accounts for the mapping selector. |
-| `listIntegrationEvents` | `audit_events` feed (Integration Inbox). |
-| `listSyncHistory` | `sync_history` rows (per-request idempotency). |
-| `getDashboardMetrics` | 24h rollups: drafts, posted, payments, consumption, refunds. |
-| `testIntegrationConnection` | Ping: verifies auth + mapping coverage + fiscal period. |
-| `seedSandboxWorkOrder` | Creates a demo customer + draft invoice with `SANDBOX-*` marks. |
+| Function                    | Purpose                                                         |
+| --------------------------- | --------------------------------------------------------------- |
+| `getCurrentOrg`             | Returns the caller's primary org membership.                    |
+| `listAccounts`              | Chart of accounts for the mapping selector.                     |
+| `listIntegrationEvents`     | `audit_events` feed (Integration Inbox).                        |
+| `listSyncHistory`           | `sync_history` rows (per-request idempotency).                  |
+| `getDashboardMetrics`       | 24h rollups: drafts, posted, payments, consumption, refunds.    |
+| `testIntegrationConnection` | Ping: verifies auth + mapping coverage + fiscal period.         |
+| `seedSandboxWorkOrder`      | Creates a demo customer + draft invoice with `SANDBOX-*` marks. |
 
 The Phase 2 functions already live and are now called from the UI:
 `listInvoices`, `getInvoice`, `postInvoice`, `listAccountMappings`,
@@ -113,7 +113,7 @@ The Phase 2 functions already live and are now called from the UI:
 Read/write CRUD around `api_clients` for the ServiceConnect integration:
 
 - **Endpoint / auth details**: shows the base URL (`origin +
-  /api/public/integrations`), required `Authorization: Bearer` header,
+/api/public/integrations`), required `Authorization: Bearer` header,
   required `Idempotency-Key` header.
 - **Test connection**: calls `testIntegrationConnection` — reports
   latency, mapped-purpose count, active-client count, current fiscal

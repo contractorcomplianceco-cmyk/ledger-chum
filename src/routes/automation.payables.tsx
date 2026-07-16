@@ -22,7 +22,10 @@ function PayablesPage() {
 
   const total = PAYABLES.reduce((s, p) => s + p.amount, 0);
   const cashHit = PAYABLES.reduce((s, p) => s + p.cashImpact, 0);
-  const restricted = PAYABLES.filter((p) => p.priority === "restricted").reduce((s, p) => s + p.amount, 0);
+  const restricted = PAYABLES.filter((p) => p.priority === "restricted").reduce(
+    (s, p) => s + p.amount,
+    0,
+  );
 
   return (
     <AutomationPage
@@ -43,7 +46,12 @@ function PayablesPage() {
             <section key={g.key}>
               <div className="mb-2 flex items-center gap-2">
                 <h3 className="text-[13px] font-semibold">{g.label}</h3>
-                <span className={cn("rounded-full border px-2 py-0.5 text-[10.5px] font-semibold", PRIORITY_META[g.key].tone)}>
+                <span
+                  className={cn(
+                    "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold",
+                    PRIORITY_META[g.key].tone,
+                  )}
+                >
                   {PRIORITY_META[g.key].label}
                 </span>
               </div>
@@ -57,22 +65,46 @@ function PayablesPage() {
                   <span>Action</span>
                 </div>
                 {rows.map((p) => (
-                  <div key={p.id} className="grid grid-cols-[1.5fr_1fr_auto_1fr_auto_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0">
+                  <div
+                    key={p.id}
+                    className="grid grid-cols-[1.5fr_1fr_auto_1fr_auto_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0"
+                  >
                     <div className="min-w-0">
                       <div className="truncate font-medium">{p.vendor}</div>
                       <div className="text-[11px] text-muted-foreground">
                         {p.bill}
-                        {p.discount && <> · <span className="text-success">{p.discount} discount</span></>}
-                        {p.penalty && <> · <span className="text-destructive">{p.penalty}</span></>}
+                        {p.discount && (
+                          <>
+                            {" "}
+                            · <span className="text-success">{p.discount} discount</span>
+                          </>
+                        )}
+                        {p.penalty && (
+                          <>
+                            {" "}
+                            · <span className="text-destructive">{p.penalty}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                     <span className="text-[11.5px] text-muted-foreground">{p.category}</span>
                     <span className="text-[11.5px] text-muted-foreground">{p.due}</span>
                     <span className="font-tabular text-right">{currency(p.amount)}</span>
-                    <span className={cn("font-tabular text-right text-[11.5px]", p.cashImpact === 0 ? "text-muted-foreground" : "text-destructive")}>{currency(p.cashImpact)}</span>
+                    <span
+                      className={cn(
+                        "font-tabular text-right text-[11.5px]",
+                        p.cashImpact === 0 ? "text-muted-foreground" : "text-destructive",
+                      )}
+                    >
+                      {currency(p.cashImpact)}
+                    </span>
                     <div className="flex gap-1">
-                      <Button size="sm" variant="outline" className="h-7">Pay</Button>
-                      <Button size="sm" variant="outline" className="h-7">Delay</Button>
+                      <Button size="sm" variant="outline" className="h-7">
+                        Pay
+                      </Button>
+                      <Button size="sm" variant="outline" className="h-7">
+                        Delay
+                      </Button>
                     </div>
                   </div>
                 ))}
@@ -85,11 +117,29 @@ function PayablesPage() {
   );
 }
 
-function Kpi({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "success" | "destructive" }) {
+function Kpi({
+  label,
+  value,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  tone?: "default" | "success" | "destructive";
+}) {
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className={cn("mt-1 font-tabular text-[22px] font-bold", tone === "success" && "text-success", tone === "destructive" && "text-destructive")}>{value}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn(
+          "mt-1 font-tabular text-[22px] font-bold",
+          tone === "success" && "text-success",
+          tone === "destructive" && "text-destructive",
+        )}
+      >
+        {value}
+      </div>
     </Card>
   );
 }

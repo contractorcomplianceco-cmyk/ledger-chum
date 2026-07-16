@@ -89,7 +89,11 @@ export const OPPORTUNITIES: Opportunity[] = [
     timeToValue: "3 days",
     urgency: "High",
     risk: "Low",
-    evidence: ["82 hrs logged in Harvest", "Milestone marked complete", "Contract §3.2 billing terms"],
+    evidence: [
+      "82 hrs logged in Harvest",
+      "Milestone marked complete",
+      "Contract §3.2 billing terms",
+    ],
     sources: ["Harvest", "Zoho CRM", "Google Drive"],
     owner: "K. Chen",
     approver: "Rose Alvarez",
@@ -213,7 +217,11 @@ export const OPPORTUNITIES: Opportunity[] = [
     timeToValue: "10 days",
     urgency: "High",
     risk: "Low",
-    evidence: ["INV-2025-0311 61 days overdue", "3 prior invoices paid on time", "No dispute logged"],
+    evidence: [
+      "INV-2025-0311 61 days overdue",
+      "3 prior invoices paid on time",
+      "No dispute logged",
+    ],
     sources: ["Zoho Books", "Stripe"],
     owner: "K. Chen",
     approver: "Rose Alvarez",
@@ -250,7 +258,8 @@ export const OPPORTUNITIES: Opportunity[] = [
     id: "OPP-1049",
     title: "Commission plan overweighting one-time deals",
     category: "Commission Plan Improvement",
-    description: "Current plan pays same rate on one-time vs. recurring. Modeled shift to 3:1 recurring lifts LTV margin.",
+    description:
+      "Current plan pays same rate on one-time vs. recurring. Modeled shift to 3:1 recurring lifts LTV margin.",
     entity: "LedgerOS LLC",
     subject: "GTM Team",
     financialImpact: 68000,
@@ -387,23 +396,53 @@ export function filterOpps(view: OppView): Opportunity[] {
     case "Quick Wins":
       return OPPORTUNITIES.filter((o) => o.effort === "Low" && o.confidence >= 80);
     case "Revenue Recovery":
-      return OPPORTUNITIES.filter((o) => o.impactType === "Revenue" || o.category === "Unbilled Work" || o.category === "Missed Invoice" || o.category === "Missed Markup");
+      return OPPORTUNITIES.filter(
+        (o) =>
+          o.impactType === "Revenue" ||
+          o.category === "Unbilled Work" ||
+          o.category === "Missed Invoice" ||
+          o.category === "Missed Markup",
+      );
     case "Cost Savings":
       return OPPORTUNITIES.filter((o) => o.impactType === "Cost");
     case "Growth":
-      return OPPORTUNITIES.filter((o) => o.impactType === "Growth" || o.category.includes("Expansion") || o.category === "Upsell Opportunity" || o.category === "Cross-Sell Opportunity" || o.category === "Renewal Opportunity");
+      return OPPORTUNITIES.filter(
+        (o) =>
+          o.impactType === "Growth" ||
+          o.category.includes("Expansion") ||
+          o.category === "Upsell Opportunity" ||
+          o.category === "Cross-Sell Opportunity" ||
+          o.category === "Renewal Opportunity",
+      );
     case "Cash":
       return OPPORTUNITIES.filter((o) => o.impactType === "Cash");
     case "Billing":
-      return OPPORTUNITIES.filter((o) => ["Unbilled Work", "Missed Invoice", "Missed Markup", "Underpriced Service", "Better Billing Structure"].includes(o.category));
+      return OPPORTUNITIES.filter((o) =>
+        [
+          "Unbilled Work",
+          "Missed Invoice",
+          "Missed Markup",
+          "Underpriced Service",
+          "Better Billing Structure",
+        ].includes(o.category),
+      );
     case "Technology":
-      return OPPORTUNITIES.filter((o) => ["Duplicate Subscription", "Unused Software Seat", "Technology Consolidation"].includes(o.category));
+      return OPPORTUNITIES.filter((o) =>
+        ["Duplicate Subscription", "Unused Software Seat", "Technology Consolidation"].includes(
+          o.category,
+        ),
+      );
     case "Tax Review":
       return OPPORTUNITIES.filter((o) => o.category === "Tax Review Opportunity");
     case "Owner/Entity":
-      return OPPORTUNITIES.filter((o) => o.category === "Owner Transaction Review" || o.category === "Intercompany Correction");
+      return OPPORTUNITIES.filter(
+        (o) =>
+          o.category === "Owner Transaction Review" || o.category === "Intercompany Correction",
+      );
     case "Completed":
-      return OPPORTUNITIES.filter((o) => o.status === "Completed" || o.status === "Outcome Measured");
+      return OPPORTUNITIES.filter(
+        (o) => o.status === "Completed" || o.status === "Outcome Measured",
+      );
     case "Dismissed":
       return OPPORTUNITIES.filter((o) => o.status === "Dismissed");
   }
@@ -411,14 +450,36 @@ export function filterOpps(view: OppView): Opportunity[] {
 
 export const OPP_KPI_TOTALS = {
   identified: OPPORTUNITIES.reduce((s, o) => s + o.financialImpact, 0),
-  highConfidence: OPPORTUNITIES.filter((o) => o.confidence >= 80).reduce((s, o) => s + o.financialImpact, 0),
-  revenue: OPPORTUNITIES.filter((o) => o.impactType === "Revenue").reduce((s, o) => s + o.financialImpact, 0),
-  cost: OPPORTUNITIES.filter((o) => o.impactType === "Cost").reduce((s, o) => s + o.financialImpact, 0),
-  margin: OPPORTUNITIES.filter((o) => o.impactType === "Margin").reduce((s, o) => s + o.financialImpact, 0),
-  cash: OPPORTUNITIES.filter((o) => o.impactType === "Cash").reduce((s, o) => s + o.financialImpact, 0),
-  growth: OPPORTUNITIES.filter((o) => o.impactType === "Growth").reduce((s, o) => s + o.financialImpact, 0),
-  open: OPPORTUNITIES.filter((o) => !["Completed", "Outcome Measured", "Dismissed"].includes(o.status)).length,
-  accepted: OPPORTUNITIES.filter((o) => o.status === "Accepted" || o.status === "Approved" || o.status === "In Progress").length,
+  highConfidence: OPPORTUNITIES.filter((o) => o.confidence >= 80).reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  revenue: OPPORTUNITIES.filter((o) => o.impactType === "Revenue").reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  cost: OPPORTUNITIES.filter((o) => o.impactType === "Cost").reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  margin: OPPORTUNITIES.filter((o) => o.impactType === "Margin").reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  cash: OPPORTUNITIES.filter((o) => o.impactType === "Cash").reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  growth: OPPORTUNITIES.filter((o) => o.impactType === "Growth").reduce(
+    (s, o) => s + o.financialImpact,
+    0,
+  ),
+  open: OPPORTUNITIES.filter(
+    (o) => !["Completed", "Outcome Measured", "Dismissed"].includes(o.status),
+  ).length,
+  accepted: OPPORTUNITIES.filter(
+    (o) => o.status === "Accepted" || o.status === "Approved" || o.status === "In Progress",
+  ).length,
   realized: OPPORTUNITIES.reduce((s, o) => s + (o.actualRealized ?? 0), 0),
 };
 

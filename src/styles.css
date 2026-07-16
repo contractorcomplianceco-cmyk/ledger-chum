@@ -121,7 +121,7 @@
   /* LedgerOS accents */
   --navy: oklch(0.19 0.05 264);
   --navy-foreground: oklch(0.985 0.004 250);
-  --brand: oklch(0.58 0.2 258);        /* electric blue */
+  --brand: oklch(0.58 0.2 258); /* electric blue */
   --brand-foreground: oklch(0.985 0.004 250);
   --brand-cyan: oklch(0.75 0.15 210);
   --brand-violet: oklch(0.6 0.22 295);
@@ -138,8 +138,10 @@
   --gradient-glow: radial-gradient(circle at 30% 20%, oklch(0.58 0.2 258 / 0.25), transparent 60%);
   --gradient-surface: linear-gradient(180deg, oklch(1 0 0), oklch(0.985 0.004 250));
 
-  --shadow-elegant: 0 1px 2px oklch(0.19 0.04 260 / 0.04), 0 8px 24px -12px oklch(0.19 0.04 260 / 0.12);
-  --shadow-lifted: 0 2px 4px oklch(0.19 0.04 260 / 0.06), 0 16px 40px -16px oklch(0.19 0.04 260 / 0.18);
+  --shadow-elegant:
+    0 1px 2px oklch(0.19 0.04 260 / 0.04), 0 8px 24px -12px oklch(0.19 0.04 260 / 0.12);
+  --shadow-lifted:
+    0 2px 4px oklch(0.19 0.04 260 / 0.06), 0 16px 40px -16px oklch(0.19 0.04 260 / 0.18);
   --shadow-glow: 0 0 0 1px oklch(0.58 0.2 258 / 0.2), 0 8px 32px -8px oklch(0.58 0.2 258 / 0.35);
 
   /* Sidebar — deep navy */
@@ -216,7 +218,13 @@
 
 /* LedgerOS brand ramp — literal hex from reference, for gradients and finance accents */
 :root {
-  --gradient-brand-full: linear-gradient(135deg, #2563eb 0%, #3b82f6 30%, #06b6d4 58%, #8b5cf6 100%);
+  --gradient-brand-full: linear-gradient(
+    135deg,
+    #2563eb 0%,
+    #3b82f6 30%,
+    #06b6d4 58%,
+    #8b5cf6 100%
+  );
   --gradient-sidebar-active: linear-gradient(90deg, #3b5bff 0%, #5a3ff0 100%);
   --gradient-sidebar-panel: linear-gradient(180deg, #0a1a33 0%, #050d1f 100%);
   --gradient-brand-cool: linear-gradient(135deg, #3b82f6, #22d3ee);
@@ -233,13 +241,13 @@
   --gradient-briefing: linear-gradient(160deg, #0b1a36 0%, #0a1226 60%, #060d1f 100%);
 
   /* APEX pulse tint backdrops (very light, for card wash) */
-  --tint-cash: linear-gradient(180deg, rgba(34,211,238,0.10), rgba(34,211,238,0.02));
-  --tint-profit: linear-gradient(180deg, rgba(139,92,246,0.10), rgba(139,92,246,0.02));
-  --tint-growth: linear-gradient(180deg, rgba(37,99,235,0.09), rgba(52,211,153,0.02));
-  --tint-attention: linear-gradient(180deg, rgba(249,115,22,0.10), rgba(244,63,94,0.02));
+  --tint-cash: linear-gradient(180deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.02));
+  --tint-profit: linear-gradient(180deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.02));
+  --tint-growth: linear-gradient(180deg, rgba(37, 99, 235, 0.09), rgba(52, 211, 153, 0.02));
+  --tint-attention: linear-gradient(180deg, rgba(249, 115, 22, 0.1), rgba(244, 63, 94, 0.02));
 
   --shadow-card: 0 4px 18px rgba(15, 23, 42, 0.06);
-  --shadow-card-hover: 0 8px 26px rgba(15, 23, 42, 0.10);
+  --shadow-card-hover: 0 8px 26px rgba(15, 23, 42, 0.1);
   --shadow-side-active: 0 8px 24px -8px rgba(59, 91, 255, 0.55);
 }
 

@@ -8,11 +8,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import {
-  getOrganizationSettings, upsertOrganizationSettings,
+  getOrganizationSettings,
+  upsertOrganizationSettings,
 } from "@/lib/accounting/settings.functions";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
@@ -21,9 +26,16 @@ export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
       { title: "Settings — LedgerOS" },
-      { name: "description", content: "Organization accounting settings, fiscal calendar, integrations, and account mappings." },
+      {
+        name: "description",
+        content:
+          "Organization accounting settings, fiscal calendar, integrations, and account mappings.",
+      },
       { property: "og:title", content: "Settings — LedgerOS" },
-      { property: "og:description", content: "Configure the accounting engine for your organization." },
+      {
+        property: "og:description",
+        content: "Configure the accounting engine for your organization.",
+      },
     ],
   }),
   component: SettingsPage,
@@ -92,8 +104,16 @@ function SettingsPage() {
         ) : (
           <div className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-3">
-              <SettingsLink to="/settings/account-mappings" label="Account Mappings" hint="Route integrations to ledger accounts" />
-              <SettingsLink to="/controls" label="Control Center" hint="Close status, exceptions, aging" />
+              <SettingsLink
+                to="/settings/account-mappings"
+                label="Account Mappings"
+                hint="Route integrations to ledger accounts"
+              />
+              <SettingsLink
+                to="/controls"
+                label="Control Center"
+                hint="Close status, exceptions, aging"
+              />
               <SettingsLink to="/close" label="Monthly Close" hint="Checklist and period locking" />
             </div>
 
@@ -104,9 +124,15 @@ function SettingsPage() {
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Accounting basis">
-                    <Select value={form.accountingBasis}
-                      onValueChange={(v) => setForm({ ...form, accountingBasis: v as "cash" | "accrual" })}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
+                    <Select
+                      value={form.accountingBasis}
+                      onValueChange={(v) =>
+                        setForm({ ...form, accountingBasis: v as "cash" | "accrual" })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="accrual">Accrual</SelectItem>
                         <SelectItem value="cash">Cash</SelectItem>
@@ -114,17 +140,30 @@ function SettingsPage() {
                     </Select>
                   </Field>
                   <Field label="Default currency">
-                    <Input value={form.defaultCurrency}
-                      onChange={(e) => setForm({ ...form, defaultCurrency: e.target.value.toUpperCase().slice(0, 3) })} />
+                    <Input
+                      value={form.defaultCurrency}
+                      onChange={(e) =>
+                        setForm({
+                          ...form,
+                          defaultCurrency: e.target.value.toUpperCase().slice(0, 3),
+                        })
+                      }
+                    />
                   </Field>
                   <Field label="Timezone">
-                    <Input value={form.timezone}
-                      onChange={(e) => setForm({ ...form, timezone: e.target.value })} />
+                    <Input
+                      value={form.timezone}
+                      onChange={(e) => setForm({ ...form, timezone: e.target.value })}
+                    />
                   </Field>
                   <Field label="Fiscal calendar">
-                    <Select value={form.fiscalCalendar}
-                      onValueChange={(v) => setForm({ ...form, fiscalCalendar: v })}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
+                    <Select
+                      value={form.fiscalCalendar}
+                      onValueChange={(v) => setForm({ ...form, fiscalCalendar: v })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="gregorian_monthly">Gregorian · Monthly</SelectItem>
                         <SelectItem value="gregorian_quarterly">Gregorian · Quarterly</SelectItem>
@@ -141,16 +180,33 @@ function SettingsPage() {
                 </div>
                 <div className="grid gap-4 sm:grid-cols-3">
                   <Field label="Soft close (days after period end)">
-                    <Input type="number" min={0} max={31} value={form.softCloseDays}
-                      onChange={(e) => setForm({ ...form, softCloseDays: Number(e.target.value) })} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={31}
+                      value={form.softCloseDays}
+                      onChange={(e) => setForm({ ...form, softCloseDays: Number(e.target.value) })}
+                    />
                   </Field>
                   <Field label="Hard close (days after period end)">
-                    <Input type="number" min={0} max={60} value={form.hardCloseDays}
-                      onChange={(e) => setForm({ ...form, hardCloseDays: Number(e.target.value) })} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={60}
+                      value={form.hardCloseDays}
+                      onChange={(e) => setForm({ ...form, hardCloseDays: Number(e.target.value) })}
+                    />
                   </Field>
                   <Field label="Audit retention (months)">
-                    <Input type="number" min={12} max={240} value={form.auditRetentionMonths}
-                      onChange={(e) => setForm({ ...form, auditRetentionMonths: Number(e.target.value) })} />
+                    <Input
+                      type="number"
+                      min={12}
+                      max={240}
+                      value={form.auditRetentionMonths}
+                      onChange={(e) =>
+                        setForm({ ...form, auditRetentionMonths: Number(e.target.value) })
+                      }
+                    />
                   </Field>
                 </div>
               </div>

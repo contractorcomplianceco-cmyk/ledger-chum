@@ -85,7 +85,15 @@ export function FeatureTable({ features }: { features: FeatureRecord[] }) {
   );
 }
 
-export function KpiCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
+export function KpiCard({
+  label,
+  value,
+  sub,
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+}) {
   return (
     <Card className="border-border/70 p-4">
       <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">

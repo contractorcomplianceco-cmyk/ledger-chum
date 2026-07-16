@@ -7,10 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useOrgId } from "@/hooks/use-current-org";
-import {
-  getDashboardMetrics,
-  listIntegrationEvents,
-} from "@/lib/accounting/workspace.functions";
+import { getDashboardMetrics, listIntegrationEvents } from "@/lib/accounting/workspace.functions";
 import { listInvoices } from "@/lib/accounting/invoices.functions";
 import {
   DEMO_EVENTS,
@@ -75,22 +72,24 @@ function AccountingDashboard() {
   const metrics = useQuery({
     queryKey: ["dashboard-metrics", orgId],
     queryFn: () => metricsFn({ data: { orgId: orgId! } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
   const drafts = useQuery({
     queryKey: ["invoices", "draft", orgId],
     queryFn: () => draftsFn({ data: { orgId: orgId!, status: "draft", limit: 20 } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
   const events = useQuery({
     queryKey: ["integration-events", orgId, 50],
     queryFn: () => eventsFn({ data: { orgId: orgId!, limit: 50 } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
 
   // Fallback to Phase 3 demo values if not signed in / not wired.
-  const demoDraftValue = DEMO_DRAFT_INVOICES.reduce(
-    (s, d) => s + computeDraftTotals(d).total, 0);
+  const demoDraftValue = DEMO_DRAFT_INVOICES.reduce((s, d) => s + computeDraftTotals(d).total, 0);
   const demoInv = DEMO_EVENTS.filter((e) => e.event === "inventory.consumed");
   const demoPayments = DEMO_EVENTS.filter((e) => e.event === "payment.received");
 
@@ -99,17 +98,17 @@ function AccountingDashboard() {
   const wo24 = live
     ? (events.data ?? []).filter((e) => e.event_type.includes("work_order")).length
     : DEMO_EVENTS.filter((e) => e.event === "work_order.completed").length;
-  const posted24 = metrics.data?.postedCount ??
-    DEMO_EVENTS.filter((e) => e.event === "invoice.posted").length;
+  const posted24 =
+    metrics.data?.postedCount ?? DEMO_EVENTS.filter((e) => e.event === "invoice.posted").length;
   const paymentsCount = metrics.data?.paymentsCount ?? demoPayments.length;
-  const paymentsTotal = metrics.data?.paymentsTotal ??
-    demoPayments.reduce((s, e) => s + e.amount, 0);
+  const paymentsTotal =
+    metrics.data?.paymentsTotal ?? demoPayments.reduce((s, e) => s + e.amount, 0);
   const invCount = metrics.data?.consumptionCount ?? demoInv.length;
-  const invTotal = metrics.data?.consumptionValue ??
-    demoInv.reduce((s, e) => s + e.amount, 0);
-  const refundsCount = metrics.data?.refundsCount ??
-    DEMO_EVENTS.filter((e) => e.event === "refund.created").length;
-  const refundsTotal = metrics.data?.refundsTotal ??
+  const invTotal = metrics.data?.consumptionValue ?? demoInv.reduce((s, e) => s + e.amount, 0);
+  const refundsCount =
+    metrics.data?.refundsCount ?? DEMO_EVENTS.filter((e) => e.event === "refund.created").length;
+  const refundsTotal =
+    metrics.data?.refundsTotal ??
     DEMO_EVENTS.filter((e) => e.event === "refund.created").reduce((s, e) => s + e.amount, 0);
 
   const draftList = useMemo(() => {
@@ -126,8 +125,12 @@ function AccountingDashboard() {
     return DEMO_DRAFT_INVOICES.map((d) => {
       const t = computeDraftTotals(d);
       return {
-        id: d.id, invoiceNumber: d.invoiceNumber, customer: d.customer,
-        workOrderRef: d.workOrderRef, total: t.total, margin: t.grossMargin,
+        id: d.id,
+        invoiceNumber: d.invoiceNumber,
+        customer: d.customer,
+        workOrderRef: d.workOrderRef,
+        total: t.total,
+        margin: t.grossMargin,
       };
     });
   }, [live, drafts.data]);
@@ -144,8 +147,11 @@ function AccountingDashboard() {
           timestamp: e.created_at,
         }))
     : DEMO_EVENTS.filter((e) => e.status === "failed" || e.status === "retrying").map((e) => ({
-        id: e.id, label: EVENT_LABEL[e.event] + " · " + e.externalId,
-        customer: e.customer, syncResult: e.syncResult, timestamp: e.timestamp,
+        id: e.id,
+        label: EVENT_LABEL[e.event] + " · " + e.externalId,
+        customer: e.customer,
+        syncResult: e.syncResult,
+        timestamp: e.timestamp,
       }));
 
   return (
@@ -180,10 +186,33 @@ function AccountingDashboard() {
       />
       <PageBody>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiTile icon={FileText} label="Work orders (24h)" value={wo24.toString()} sub="Synced from ServiceConnect" />
-          <KpiTile icon={Clock} label="Draft invoices" value={draftCount.toString()} sub={`${currency(draftValue)} pending review`} tone="warn" />
-          <KpiTile icon={CheckCircle2} label="Posted invoices (24h)" value={posted24.toString()} sub="AR journal entries created" tone="ok" />
-          <KpiTile icon={Wallet} label="Payments received (24h)" value={paymentsCount.toString()} sub={`${currency(paymentsTotal)} cash in`} tone="ok" />
+          <KpiTile
+            icon={FileText}
+            label="Work orders (24h)"
+            value={wo24.toString()}
+            sub="Synced from ServiceConnect"
+          />
+          <KpiTile
+            icon={Clock}
+            label="Draft invoices"
+            value={draftCount.toString()}
+            sub={`${currency(draftValue)} pending review`}
+            tone="warn"
+          />
+          <KpiTile
+            icon={CheckCircle2}
+            label="Posted invoices (24h)"
+            value={posted24.toString()}
+            sub="AR journal entries created"
+            tone="ok"
+          />
+          <KpiTile
+            icon={Wallet}
+            label="Payments received (24h)"
+            value={paymentsCount.toString()}
+            sub={`${currency(paymentsTotal)} cash in`}
+            tone="ok"
+          />
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
@@ -249,9 +278,24 @@ function AccountingDashboard() {
               Ledger activity (24h)
             </div>
             <div className="mt-3 space-y-3">
-              <ActivityRow icon={Package} label="Inventory consumed" sub={`${invCount} events`} value={currency(invTotal)} />
-              <ActivityRow icon={Wallet} label="Payments cleared" sub={`${paymentsCount} events`} value={currency(paymentsTotal)} />
-              <ActivityRow icon={Undo2} label="Refunds" sub={`${refundsCount} events`} value={currency(refundsTotal)} />
+              <ActivityRow
+                icon={Package}
+                label="Inventory consumed"
+                sub={`${invCount} events`}
+                value={currency(invTotal)}
+              />
+              <ActivityRow
+                icon={Wallet}
+                label="Payments cleared"
+                sub={`${paymentsCount} events`}
+                value={currency(paymentsTotal)}
+              />
+              <ActivityRow
+                icon={Undo2}
+                label="Refunds"
+                sub={`${refundsCount} events`}
+                value={currency(refundsTotal)}
+              />
             </div>
           </Card>
         </div>
@@ -272,7 +316,10 @@ function AccountingDashboard() {
           </div>
           <div className="mt-3 space-y-2">
             {failed.map((e) => (
-              <div key={e.id} className="flex items-start justify-between rounded-md border border-border/60 bg-background p-3">
+              <div
+                key={e.id}
+                className="flex items-start justify-between rounded-md border border-border/60 bg-background p-3"
+              >
                 <div className="min-w-0 flex items-start gap-2">
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
                   <div>
@@ -311,8 +358,18 @@ function AccountingDashboard() {
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-2 text-center">
                   <Stat mini label="OK" value={s.successCount24h.toString()} tone="ok" />
-                  <Stat mini label="Failed" value={s.failedCount24h.toString()} tone={s.failedCount24h > 0 ? "warn" : "muted"} />
-                  <Stat mini label="Pending" value={s.pendingCount.toString()} tone={s.pendingCount > 0 ? "warn" : "muted"} />
+                  <Stat
+                    mini
+                    label="Failed"
+                    value={s.failedCount24h.toString()}
+                    tone={s.failedCount24h > 0 ? "warn" : "muted"}
+                  />
+                  <Stat
+                    mini
+                    label="Pending"
+                    value={s.pendingCount.toString()}
+                    tone={s.pendingCount > 0 ? "warn" : "muted"}
+                  />
                 </div>
                 <div className="mt-2 text-[11px] text-muted-foreground">
                   Last sync {fmtRelative(s.lastSync)}
@@ -337,16 +394,20 @@ function AccountingDashboard() {
 void AUDIT_EVENT_KIND;
 
 function KpiTile({
-  icon: Icon, label, value, sub, tone = "muted",
+  icon: Icon,
+  label,
+  value,
+  sub,
+  tone = "muted",
 }: {
   icon: React.ComponentType<{ className?: string }>;
-  label: string; value: string; sub: string;
+  label: string;
+  value: string;
+  sub: string;
   tone?: "muted" | "ok" | "warn";
 }) {
   const toneClass =
-    tone === "ok" ? "text-success"
-    : tone === "warn" ? "text-warning"
-    : "text-muted-foreground";
+    tone === "ok" ? "text-success" : tone === "warn" ? "text-warning" : "text-muted-foreground";
   return (
     <Card className="border-border/70 bg-surface p-4 shadow-card">
       <div className="flex items-center justify-between">
@@ -362,10 +423,15 @@ function KpiTile({
 }
 
 function ActivityRow({
-  icon: Icon, label, sub, value,
+  icon: Icon,
+  label,
+  sub,
+  value,
 }: {
   icon: React.ComponentType<{ className?: string }>;
-  label: string; sub: string; value: string;
+  label: string;
+  sub: string;
+  value: string;
 }) {
   return (
     <div className="flex items-center justify-between">
@@ -393,13 +459,24 @@ function StatusDot({ status }: { status: "healthy" | "degraded" | "failed" }) {
   );
 }
 
-function Stat({ label, value, tone, mini }: {
-  label: string; value: string; tone: "ok" | "warn" | "muted"; mini?: boolean;
+function Stat({
+  label,
+  value,
+  tone,
+  mini,
+}: {
+  label: string;
+  value: string;
+  tone: "ok" | "warn" | "muted";
+  mini?: boolean;
 }) {
-  const cls = tone === "ok" ? "text-success" : tone === "warn" ? "text-warning" : "text-muted-foreground";
+  const cls =
+    tone === "ok" ? "text-success" : tone === "warn" ? "text-warning" : "text-muted-foreground";
   return (
     <div>
-      <div className={`font-tabular ${mini ? "text-[14px]" : "text-[18px]"} font-bold ${cls}`}>{value}</div>
+      <div className={`font-tabular ${mini ? "text-[14px]" : "text-[18px]"} font-bold ${cls}`}>
+        {value}
+      </div>
       <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
     </div>
   );

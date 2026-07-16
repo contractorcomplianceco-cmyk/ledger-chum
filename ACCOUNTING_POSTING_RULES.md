@@ -20,31 +20,33 @@ All ledger writes are balanced double-entry, immutable once posted, and correlat
 
 Journal entry (`source_type = 'invoice'`):
 
-| Side  | Account                     | Amount     |
-| ----- | --------------------------- | ---------- |
-| Debit | Accounts Receivable         | `total`    |
-| Credit| Per-line revenue accounts   | `line.amount` |
+| Side   | Account                   | Amount        |
+| ------ | ------------------------- | ------------- |
+| Debit  | Accounts Receivable       | `total`       |
+| Credit | Per-line revenue accounts | `line.amount` |
 
 ## 3. Payment Posting
 
 **Trigger:** `POST /api/public/integrations/payments` → SQL function `record_payment_with_posting`. Atomic: creates payment, applications, updates invoice balances/status, creates a posted journal, writes audit.
 
 **Account mapping** (`payment_account_mappings`):
+
 - Lookup key: `(org_id, method)`; falls back to `(org_id, 'default')`; then to the first asset account matching `%bank%` or `%cash%`.
 - Examples the customer configures:
-  - `ach`         → `1010 Bank Operating`
-  - `check`       → `1010 Bank Operating`
+  - `ach` → `1010 Bank Operating`
+  - `check` → `1010 Bank Operating`
   - `credit_card` → `1020 Merchant Clearing`
-  - `default`     → `1010 Bank Operating`
+  - `default` → `1010 Bank Operating`
 
 Journal entry (`source_type = 'payment'`), for the **full payment amount**:
 
-| Side  | Account            | Amount   |
-| ----- | ------------------ | -------- |
-| Debit | Cash / Bank / Clearing (via mapping) | `amount` |
-| Credit| Accounts Receivable                  | `amount` |
+| Side   | Account                              | Amount   |
+| ------ | ------------------------------------ | -------- |
+| Debit  | Cash / Bank / Clearing (via mapping) | `amount` |
+| Credit | Accounts Receivable                  | `amount` |
 
 **Application handling:**
+
 - The journal always debits Cash and credits AR for the full received amount. Unapplied cash is tracked on `payments.unapplied_amount` and remains a credit balance in the customer's AR sub-ledger until later applied.
 - Invoice `balance` and `status` are updated per application:
   - `balance = 0` → `paid`
@@ -54,6 +56,7 @@ Journal entry (`source_type = 'payment'`), for the **full payment amount**:
 - Underpayment / partial: works the same; the invoice moves to `partial`.
 
 **Duplicate protection:**
+
 - Unique `(org_id, external_source, external_id)` on `payments` — a repeated push with the same external id fails with `23505` and the route returns HTTP 409.
 - Unique active `(org_id, source_type, source_id)` on `journal_entries` — even if the payment row could be re-created, a second posted journal against the same payment is impossible.
 - `Idempotency-Key` on the integration route short-circuits before any DB write, replaying the original response.
@@ -64,10 +67,10 @@ Journal entry (`source_type = 'payment'`), for the **full payment amount**:
 
 Journal entry (`source_type = 'refund'`), full refund amount:
 
-| Side  | Account            | Amount   |
-| ----- | ------------------ | -------- |
-| Debit | Accounts Receivable | `amount` |
-| Credit| Cash / Bank / Clearing (same mapping as payments) | `amount` |
+| Side   | Account                                           | Amount   |
+| ------ | ------------------------------------------------- | -------- |
+| Debit  | Accounts Receivable                               | `amount` |
+| Credit | Cash / Bank / Clearing (same mapping as payments) | `amount` |
 
 This re-establishes the AR obligation and reduces cash. If the original invoice was marked `paid`, downstream logic (Phase 3) may reopen it or create a customer credit — this function only records the money movement.
 
@@ -75,10 +78,10 @@ This re-establishes the AR obligation and reduces cash. If the original invoice 
 
 Phase 3. Not implemented. Planned shape:
 
-| Side  | Account            | Amount   |
-| ----- | ------------------ | -------- |
-| Debit | Revenue / Contra-revenue | `amount` |
-| Credit| Accounts Receivable      | `amount` |
+| Side   | Account                  | Amount   |
+| ------ | ------------------------ | -------- |
+| Debit  | Revenue / Contra-revenue | `amount` |
+| Credit | Accounts Receivable      | `amount` |
 
 ## 6. Reversals
 
@@ -87,17 +90,17 @@ Phase 3. Not implemented. Planned shape:
 
 ## 7. Failure Modes and Return Codes
 
-| Cause                                                | HTTP |
-| ---------------------------------------------------- | ---- |
-| Missing / invalid bearer                             | 401  |
-| Missing Idempotency-Key                              | 400  |
-| Duplicate payment external id                        | 409  |
-| Duplicate Idempotency-Key                            | 200 (replayed) |
-| Customer / invoice not found                         | 422  |
-| `apply_to` sum > payment amount                      | 422  |
-| Payment date outside open period                     | 422  |
-| No AR / no cash mapping                              | 422  |
-| Journal fails balance check                          | 500 (should be unreachable — helper always balances) |
+| Cause                            | HTTP                                                 |
+| -------------------------------- | ---------------------------------------------------- |
+| Missing / invalid bearer         | 401                                                  |
+| Missing Idempotency-Key          | 400                                                  |
+| Duplicate payment external id    | 409                                                  |
+| Duplicate Idempotency-Key        | 200 (replayed)                                       |
+| Customer / invoice not found     | 422                                                  |
+| `apply_to` sum > payment amount  | 422                                                  |
+| Payment date outside open period | 422                                                  |
+| No AR / no cash mapping          | 422                                                  |
+| Journal fails balance check      | 500 (should be unreachable — helper always balances) |
 
 ## 8. Tests (verified in Phase 2A)
 

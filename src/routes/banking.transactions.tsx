@@ -52,14 +52,21 @@ function TransactionReview() {
       if (status !== "all" && tx.status !== status) return false;
       if (
         search &&
-        !`${tx.merchant} ${tx.bankDescription} ${tx.bankRef}`.toLowerCase().includes(search.toLowerCase())
+        !`${tx.merchant} ${tx.bankDescription} ${tx.bankRef}`
+          .toLowerCase()
+          .includes(search.toLowerCase())
       )
         return false;
       switch (view) {
         case "needs_review":
           return tx.status === "pending_review";
         case "unmatched":
-          return !tx.suggestedMatch && tx.status !== "matched" && tx.status !== "reconciled" && tx.status !== "transfer";
+          return (
+            !tx.suggestedMatch &&
+            tx.status !== "matched" &&
+            tx.status !== "reconciled" &&
+            tx.status !== "transfer"
+          );
         case "missing_receipt":
           return tx.receipt === "missing";
         case "large":
@@ -80,7 +87,10 @@ function TransactionReview() {
 
   const selected: Tx | undefined = filtered.find((t) => t.id === selectedId) ?? filtered[0];
   const activeFilters =
-    (search ? 1 : 0) + (view !== "all" ? 1 : 0) + (account !== "all" ? 1 : 0) + (status !== "all" ? 1 : 0);
+    (search ? 1 : 0) +
+    (view !== "all" ? 1 : 0) +
+    (account !== "all" ? 1 : 0) +
+    (status !== "all" ? 1 : 0);
 
   const clearFilters = () => {
     setSearch("");
@@ -115,7 +125,8 @@ function TransactionReview() {
               <Download className="mr-1.5 h-3.5 w-3.5" /> Export
             </Button>
             <Button size="sm" className="h-9" disabled={bulk.size === 0}>
-              <Wand2 className="mr-1.5 h-3.5 w-3.5" /> Bulk actions {bulk.size > 0 && `(${bulk.size})`}
+              <Wand2 className="mr-1.5 h-3.5 w-3.5" /> Bulk actions{" "}
+              {bulk.size > 0 && `(${bulk.size})`}
             </Button>
           </>
         }

@@ -19,11 +19,19 @@ function MigrationPage() {
       <Card className="border-border/70 p-0">
         <ol className="divide-y divide-border">
           {MIGRATION_STAGES.map((s, i) => {
-            const Icon = s.state === "done" ? CheckCircle2 : s.state === "in_progress" ? Clock : Circle;
+            const Icon =
+              s.state === "done" ? CheckCircle2 : s.state === "in_progress" ? Clock : Circle;
             const tone =
-              s.state === "done" ? "text-success" : s.state === "in_progress" ? "text-warning" : "text-muted-foreground";
+              s.state === "done"
+                ? "text-success"
+                : s.state === "in_progress"
+                  ? "text-warning"
+                  : "text-muted-foreground";
             return (
-              <li key={s.stage} className="grid grid-cols-[36px_minmax(0,1fr)_120px] items-start gap-3 px-4 py-3">
+              <li
+                key={s.stage}
+                className="grid grid-cols-[36px_minmax(0,1fr)_120px] items-start gap-3 px-4 py-3"
+              >
                 <div className="flex items-center gap-2 text-[11px] font-semibold text-muted-foreground">
                   <span className="font-mono">{String(i + 1).padStart(2, "0")}</span>
                   <Icon className={cn("h-4 w-4", tone)} />
@@ -52,7 +60,11 @@ function MigrationPage() {
 
       <Card className="border-border/70 p-4 text-[12px] text-muted-foreground">
         <div className="font-semibold text-foreground">Rollback plan</div>
-        <p className="mt-1">Zoho Books stays read-writable until stage 9. At any point through stage 8, rollback = disable LedgerOS mutations, keep read-only reporting, resume Zoho Books as system of record. No data is deleted; all journal proposals remain in draft.</p>
+        <p className="mt-1">
+          Zoho Books stays read-writable until stage 9. At any point through stage 8, rollback =
+          disable LedgerOS mutations, keep read-only reporting, resume Zoho Books as system of
+          record. No data is deleted; all journal proposals remain in draft.
+        </p>
       </Card>
     </ImplementationPage>
   );

@@ -26,7 +26,8 @@ function AnomalyReviewPage() {
       <Card className="border-border/70 p-4">
         <h3 className="text-[13px] font-semibold">Expense intelligence · anomaly review</h3>
         <p className="mt-1 text-[12px] text-muted-foreground">
-          Every alert explains why it fired, its financial impact, and a recommended action. Confidence and evidence are always shown.
+          Every alert explains why it fired, its financial impact, and a recommended action.
+          Confidence and evidence are always shown.
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {SEV.map((s) => (
@@ -42,7 +43,9 @@ function AnomalyReviewPage() {
             >
               {s.label}
               <span className="ml-1.5 rounded-full bg-black/10 px-1 text-[10px]">
-                {s.id === "all" ? ANOMALIES.length : ANOMALIES.filter((a) => a.severity === s.id).length}
+                {s.id === "all"
+                  ? ANOMALIES.length
+                  : ANOMALIES.filter((a) => a.severity === s.id).length}
               </span>
             </button>
           ))}
@@ -50,7 +53,9 @@ function AnomalyReviewPage() {
       </Card>
 
       <div className="grid gap-3 xl:grid-cols-2">
-        {rows.map((a) => <AnomalyCard key={a.id} a={a} />)}
+        {rows.map((a) => (
+          <AnomalyCard key={a.id} a={a} />
+        ))}
         {rows.length === 0 && (
           <div className="col-span-full rounded-lg border border-dashed border-border p-10 text-center text-[13px] text-muted-foreground">
             No anomalies at this severity.

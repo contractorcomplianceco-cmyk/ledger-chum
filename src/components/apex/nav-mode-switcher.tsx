@@ -14,11 +14,23 @@ export function NavModeSwitcher({ compact = false }: { compact?: boolean }) {
       <button
         type="button"
         onClick={() => set(mode === "executive" ? "operational" : "executive")}
-        aria-label={mode === "executive" ? "Switch to operational navigation" : "Switch to executive navigation"}
-        title={mode === "executive" ? "Executive mode — click to switch to Operational" : "Operational mode — click to switch to Executive"}
+        aria-label={
+          mode === "executive"
+            ? "Switch to operational navigation"
+            : "Switch to executive navigation"
+        }
+        title={
+          mode === "executive"
+            ? "Executive mode — click to switch to Operational"
+            : "Operational mode — click to switch to Executive"
+        }
         className="grid h-8 w-8 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-sidebar-foreground/80 transition hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
       >
-        {effective === "executive" ? <Sparkles className="h-4 w-4" /> : <Compass className="h-4 w-4" />}
+        {effective === "executive" ? (
+          <Sparkles className="h-4 w-4" />
+        ) : (
+          <Compass className="h-4 w-4" />
+        )}
       </button>
     );
   }

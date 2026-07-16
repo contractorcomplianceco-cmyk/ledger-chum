@@ -9,12 +9,12 @@ audience-boundary map.
 
 ## 1. Audience Model
 
-| Audience             | Transport                       | Auth                                | Notes |
-| -------------------- | ------------------------------- | ----------------------------------- | ----- |
-| LedgerOS UI (users)  | TanStack server functions       | Supabase session (bearer attacher)  | RLS applies as the user. |
-| Operational systems  | HTTPS `/api/public/integrations/*` | Bearer against `api_clients`     | Idempotent, audited. |
-| Automations & cron   | HTTPS `/api/public/*`           | Shared secret or Bearer             | Signature verified per handler. |
-| Reporting readers (future) | HTTPS `/api/public/reports/*` | Bearer (read-only api_client) | Rate-limited. |
+| Audience                   | Transport                          | Auth                               | Notes                           |
+| -------------------------- | ---------------------------------- | ---------------------------------- | ------------------------------- |
+| LedgerOS UI (users)        | TanStack server functions          | Supabase session (bearer attacher) | RLS applies as the user.        |
+| Operational systems        | HTTPS `/api/public/integrations/*` | Bearer against `api_clients`       | Idempotent, audited.            |
+| Automations & cron         | HTTPS `/api/public/*`              | Shared secret or Bearer            | Signature verified per handler. |
+| Reporting readers (future) | HTTPS `/api/public/reports/*`      | Bearer (read-only api_client)      | Rate-limited.                   |
 
 External callers NEVER call server functions directly; server functions are
 TanStack RPC and not a stable HTTP contract.
@@ -25,19 +25,19 @@ All under `/api/public/integrations/`. Shared headers:
 `Authorization: Bearer <token>`, `Idempotency-Key: <uuid>`,
 `Content-Type: application/json`.
 
-| Method | Path                     | Purpose                          | Status |
-| ------ | ------------------------ | -------------------------------- | ------ |
-| POST   | `/customers`             | Upsert customer                  | Live   |
-| POST   | `/work-orders/completed` | Supervisor-approved WO → draft invoice | Live |
-| POST   | `/invoices`              | Direct invoice push              | Live   |
-| POST   | `/payments`              | Record payment + optional apply  | Live   |
-| POST   | `/inventory-consumption` | Parts/materials consumed         | Live (reporting only in Phase 1) |
-| GET    | `/sync-status`           | Look up prior response by key    | Planned Phase 1 |
-| POST   | `/vendors`               | Upsert vendor                    | Planned Phase 4 |
-| POST   | `/bills`                 | Push a vendor bill               | Planned Phase 4 |
-| POST   | `/vendor-payments`       | Record a vendor payment          | Planned Phase 4 |
-| POST   | `/bank-transactions`     | Push a bank transaction          | Planned Phase 5 |
-| GET    | `/invoices/:external_id` | Read invoice status              | Planned Phase 3 |
+| Method | Path                     | Purpose                                | Status                           |
+| ------ | ------------------------ | -------------------------------------- | -------------------------------- |
+| POST   | `/customers`             | Upsert customer                        | Live                             |
+| POST   | `/work-orders/completed` | Supervisor-approved WO → draft invoice | Live                             |
+| POST   | `/invoices`              | Direct invoice push                    | Live                             |
+| POST   | `/payments`              | Record payment + optional apply        | Live                             |
+| POST   | `/inventory-consumption` | Parts/materials consumed               | Live (reporting only in Phase 1) |
+| GET    | `/sync-status`           | Look up prior response by key          | Planned Phase 1                  |
+| POST   | `/vendors`               | Upsert vendor                          | Planned Phase 4                  |
+| POST   | `/bills`                 | Push a vendor bill                     | Planned Phase 4                  |
+| POST   | `/vendor-payments`       | Record a vendor payment                | Planned Phase 4                  |
+| POST   | `/bank-transactions`     | Push a bank transaction                | Planned Phase 5                  |
+| GET    | `/invoices/:external_id` | Read invoice status                    | Planned Phase 3                  |
 
 ## 3. Internal Server Functions (UI)
 
@@ -113,7 +113,7 @@ Grouped by domain. All authenticated via `requireSupabaseAuth`.
     "external_id": "...",
     "idempotency_key": "...",
     "correlation_id": "...",
-    "audit_event_id": "..."   // when a mutation was recorded
+    "audit_event_id": "..." // when a mutation was recorded
   }
   ```
 - Errors return `{ "error": "message", "correlation_id": "..." }` with the

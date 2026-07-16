@@ -9,12 +9,7 @@ import { cn } from "@/lib/utils";
 import { currency } from "@/lib/mock/finance";
 import { toast } from "sonner";
 import { DEMO_ACTION_MESSAGE } from "@/components/banking/demo-notice";
-import type {
-  Opportunity,
-  OppEffort,
-  OppStatus,
-  OppImpact,
-} from "@/lib/mock/apex-opportunities";
+import type { Opportunity, OppEffort, OppStatus, OppImpact } from "@/lib/mock/apex-opportunities";
 
 function demo(label: string) {
   toast(label, { description: DEMO_ACTION_MESSAGE });
@@ -52,7 +47,12 @@ const STATUS_TONE: Partial<Record<OppStatus, string>> = {
 
 export function OpportunityImpactBadge({ impact }: { impact: OppImpact }) {
   return (
-    <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide", IMPACT_TONE[impact])}>
+    <span
+      className={cn(
+        "rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide",
+        IMPACT_TONE[impact],
+      )}
+    >
       {impact}
     </span>
   );
@@ -60,7 +60,9 @@ export function OpportunityImpactBadge({ impact }: { impact: OppImpact }) {
 
 export function OpportunityEffortBadge({ effort }: { effort: OppEffort }) {
   return (
-    <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", EFFORT_TONE[effort])}>
+    <span
+      className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", EFFORT_TONE[effort])}
+    >
       {effort} effort
     </span>
   );
@@ -68,7 +70,12 @@ export function OpportunityEffortBadge({ effort }: { effort: OppEffort }) {
 
 export function OpportunityStatusBadge({ status }: { status: OppStatus }) {
   return (
-    <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STATUS_TONE[status] ?? "bg-muted text-foreground")}>
+    <span
+      className={cn(
+        "rounded-full px-2 py-0.5 text-[10.5px] font-semibold",
+        STATUS_TONE[status] ?? "bg-muted text-foreground",
+      )}
+    >
       {status}
     </span>
   );
@@ -94,7 +101,9 @@ export function OpportunityCard({ o }: { o: Opportunity }) {
           <div className="text-[11.5px] text-muted-foreground">{o.subject}</div>
         </div>
         <div className="text-right">
-          <div className="text-[16px] font-bold text-foreground tabular-nums">{currency(o.financialImpact)}</div>
+          <div className="text-[16px] font-bold text-foreground tabular-nums">
+            {currency(o.financialImpact)}
+          </div>
           <OpportunityImpactBadge impact={o.impactType} />
         </div>
       </div>
@@ -117,12 +126,24 @@ export function OpportunityCard({ o }: { o: Opportunity }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-        <span className="text-muted-foreground">Approver: <strong className="text-foreground">{o.approver}</strong></span>
+        <span className="text-muted-foreground">
+          Approver: <strong className="text-foreground">{o.approver}</strong>
+        </span>
         <span className="ml-auto flex gap-1.5">
-          <Button size="sm" variant="outline" className="h-7 px-2 text-[11px]" onClick={() => demo("Opportunity accepted")}>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-[11px]"
+            onClick={() => demo("Opportunity accepted")}
+          >
             Accept
           </Button>
-          <Button size="sm" variant="outline" className="h-7 px-2 text-[11px]" onClick={() => demo("Converted to task")}>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-[11px]"
+            onClick={() => demo("Converted to task")}
+          >
             Convert
           </Button>
           <Link to="/apex/opportunities/$id" params={{ id: o.id }}>
@@ -138,7 +159,13 @@ export function OpportunityCard({ o }: { o: Opportunity }) {
 
 /* ============ Ask LedgerOS ============ */
 
-export function AskLedgerOS({ title = "Ask LedgerOS", prompts }: { title?: string; prompts: string[] }) {
+export function AskLedgerOS({
+  title = "Ask LedgerOS",
+  prompts,
+}: {
+  title?: string;
+  prompts: string[];
+}) {
   return (
     <Card className="border-border/70 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 p-4 dark:from-indigo-950/30 dark:via-slate-950 dark:to-cyan-950/20">
       <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-foreground">
@@ -158,8 +185,8 @@ export function AskLedgerOS({ title = "Ask LedgerOS", prompts }: { title?: strin
         ))}
       </div>
       <p className="mt-3 text-[10.5px] text-muted-foreground">
-        AI outputs include evidence, confidence, freshness, assumptions, and required approval.
-        AI cannot post entries or move money.
+        AI outputs include evidence, confidence, freshness, assumptions, and required approval. AI
+        cannot post entries or move money.
       </p>
     </Card>
   );
@@ -181,11 +208,27 @@ export function CrossExperienceLinks({
   scenarioId?: string;
 }) {
   const links: Array<{ to: string; label: string; params?: Record<string, string> }> = [];
-  if (opportunityId) links.push({ to: "/apex/opportunities/$id", label: "View Opportunity", params: { id: opportunityId } });
-  if (dnaId) links.push({ to: "/apex/financial-dna/$id", label: "View Financial DNA", params: { id: dnaId } });
-  if (timelineId) links.push({ to: "/apex/timeline/$id", label: "View Timeline", params: { id: timelineId } });
+  if (opportunityId)
+    links.push({
+      to: "/apex/opportunities/$id",
+      label: "View Opportunity",
+      params: { id: opportunityId },
+    });
+  if (dnaId)
+    links.push({
+      to: "/apex/financial-dna/$id",
+      label: "View Financial DNA",
+      params: { id: dnaId },
+    });
+  if (timelineId)
+    links.push({ to: "/apex/timeline/$id", label: "View Timeline", params: { id: timelineId } });
   if (graphNodeId) links.push({ to: "/apex/relationship-graph", label: "Open Relationship Graph" });
-  if (scenarioId) links.push({ to: "/apex/digital-twin/scenarios/$id", label: "Run Digital Twin Scenario", params: { id: scenarioId } });
+  if (scenarioId)
+    links.push({
+      to: "/apex/digital-twin/scenarios/$id",
+      label: "Run Digital Twin Scenario",
+      params: { id: scenarioId },
+    });
   links.push({ to: "/apex/digital-twin", label: "Digital Twin" });
 
   if (links.length === 0) return null;
@@ -228,7 +271,9 @@ export function ExperienceStat({
           : "text-foreground";
   return (
     <Card className="border-border/70 bg-surface p-3">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className={cn("mt-1 text-[18px] font-bold tabular-nums", toneCls)}>{value}</div>
       {hint && <div className="text-[10.5px] text-muted-foreground">{hint}</div>}
     </Card>

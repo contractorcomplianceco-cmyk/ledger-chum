@@ -100,7 +100,11 @@ function ProductionReviewPage() {
     const accounting: ReadyState =
       materialized > 0 ? "ready" : eventRows.length > 0 ? "in_progress" : "not_ready";
     const integration: ReadyState =
-      errors === 0 && syncRows.length > 0 ? "ready" : syncRows.length > 0 ? "in_progress" : "not_ready";
+      errors === 0 && syncRows.length > 0
+        ? "ready"
+        : syncRows.length > 0
+          ? "in_progress"
+          : "not_ready";
     const intelligence: ReadyState =
       metrics.length >= 10 ? "ready" : metrics.length > 0 ? "in_progress" : "not_ready";
     const migration: ReadyState = "not_ready";

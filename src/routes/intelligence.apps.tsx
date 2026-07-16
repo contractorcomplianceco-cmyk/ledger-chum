@@ -25,7 +25,12 @@ function AppsProfitability() {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-[14px] font-semibold text-foreground">{a.name}</div>
-                  <span className={cn("mt-1 inline-flex rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold", meta.className)}>
+                  <span
+                    className={cn(
+                      "mt-1 inline-flex rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold",
+                      meta.className,
+                    )}
+                  >
                     {meta.label}
                   </span>
                 </div>
@@ -34,7 +39,10 @@ function AppsProfitability() {
 
               <div className="mt-3 grid grid-cols-2 gap-2 text-[11.5px]">
                 <Cell label="Dev cost" value={currency(a.devCost)} />
-                <Cell label="Monthly run cost" value={currency(a.monthly + a.hosting + a.aiUsage + a.laborSupport)} />
+                <Cell
+                  label="Monthly run cost"
+                  value={currency(a.monthly + a.hosting + a.aiUsage + a.laborSupport)}
+                />
                 <Cell label="Direct revenue" value={currency(a.directRevenue)} />
                 <Cell label="Revenue influenced" value={currency(a.revenueInfluenced)} />
                 <Cell label="Active users" value={`${a.activeUsers}/${a.users}`} />

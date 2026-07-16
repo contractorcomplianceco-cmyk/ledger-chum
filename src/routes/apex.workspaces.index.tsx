@@ -9,7 +9,11 @@ export const Route = createFileRoute("/apex/workspaces/")({
   head: () => ({
     meta: [
       { title: "Role Workspaces — Project APEX" },
-      { name: "description", content: "Purpose-built operating environments per role — Owner, Accounting, Sales, Operations, Systems, Team." },
+      {
+        name: "description",
+        content:
+          "Purpose-built operating environments per role — Owner, Accounting, Sales, Operations, Systems, Team.",
+      },
     ],
   }),
   component: WorkspacesIndex,
@@ -41,7 +45,13 @@ function WorkspacesIndex() {
                     <div className="mt-1 text-[16px] font-semibold">{ws.title}</div>
                     <div className="mt-2 text-[12px] text-white/80">{ws.subtitle}</div>
                     <div className="mt-3 flex items-center gap-2">
-                      <Badge variant="outline" className={cn("border-white/30 bg-white/10 text-[10px] text-white", ws.theme.accent)}>
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "border-white/30 bg-white/10 text-[10px] text-white",
+                          ws.theme.accent,
+                        )}
+                      >
                         Health {ws.healthScore.value}
                       </Badge>
                       <span className="text-[11px] text-white/70">{ws.healthScore.label}</span>
@@ -53,7 +63,8 @@ function WorkspacesIndex() {
                     </div>
                     <div className="text-[12.5px] text-foreground">{ws.decisionQuestion}</div>
                     <div className="text-[11px] text-muted-foreground">
-                      Sensitive data: <span className={ws.sensitiveVisible ? "text-emerald-600" : "text-rose-600"}>
+                      Sensitive data:{" "}
+                      <span className={ws.sensitiveVisible ? "text-emerald-600" : "text-rose-600"}>
                         {ws.sensitiveVisible ? "permitted" : "masked"}
                       </span>
                     </div>

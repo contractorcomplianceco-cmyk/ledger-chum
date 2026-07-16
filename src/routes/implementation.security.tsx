@@ -26,11 +26,24 @@ function SecurityPage() {
       <Card className="border-border/70 p-4 text-[12px]">
         <div className="text-[13px] font-semibold">Non-negotiables</div>
         <ul className="mt-1 list-disc space-y-1 pl-5 text-muted-foreground">
-          <li>Cash transfers between accounts are always human-initiated. No automation may move funds.</li>
-          <li>Subscription cancellations require a human confirmation — LedgerOS surfaces the action but never executes.</li>
-          <li>Any journal posted by a rule must include the rule id, rule version, and the approver.</li>
-          <li>All sensitive exports (payroll, bank data) require MFA re-auth within the last 5 minutes.</li>
-          <li>Automation may not disable another automation. Rule changes go through the Decision Log.</li>
+          <li>
+            Cash transfers between accounts are always human-initiated. No automation may move
+            funds.
+          </li>
+          <li>
+            Subscription cancellations require a human confirmation — LedgerOS surfaces the action
+            but never executes.
+          </li>
+          <li>
+            Any journal posted by a rule must include the rule id, rule version, and the approver.
+          </li>
+          <li>
+            All sensitive exports (payroll, bank data) require MFA re-auth within the last 5
+            minutes.
+          </li>
+          <li>
+            Automation may not disable another automation. Rule changes go through the Decision Log.
+          </li>
         </ul>
       </Card>
     </ImplementationPage>

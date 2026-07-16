@@ -39,9 +39,15 @@ export function CustomerSummaryCard({ customer }: { customer: Customer }) {
       </div>
 
       <div className="mt-3 space-y-1.5 text-[12px] text-muted-foreground">
-        <div className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" /> {customer.email}</div>
-        <div className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> {customer.phone}</div>
-        <div className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {customer.address}</div>
+        <div className="flex items-center gap-1.5">
+          <Mail className="h-3.5 w-3.5" /> {customer.email}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Phone className="h-3.5 w-3.5" /> {customer.phone}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <MapPin className="h-3.5 w-3.5" /> {customer.address}
+        </div>
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-2 border-t border-border/60 pt-3">
@@ -56,7 +62,9 @@ export function CustomerSummaryCard({ customer }: { customer: Customer }) {
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+        {label}
+      </div>
       <div className="mt-0.5 font-tabular text-[14px] font-bold text-foreground">{value}</div>
     </div>
   );

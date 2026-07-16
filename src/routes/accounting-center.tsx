@@ -206,9 +206,18 @@ function AccountingCenter() {
         <Card className="p-5">
           <div className="mb-2 text-sm font-semibold">Architectural guardrails</div>
           <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            <li>All posting happens through the accounting engine. This workspace never writes journal entries directly.</li>
-            <li>AI outputs here are advisory-only and always carry evidence, confidence, and freshness.</li>
-            <li>External systems reach the ledger only via the Financial Event Bus and materialization.</li>
+            <li>
+              All posting happens through the accounting engine. This workspace never writes journal
+              entries directly.
+            </li>
+            <li>
+              AI outputs here are advisory-only and always carry evidence, confidence, and
+              freshness.
+            </li>
+            <li>
+              External systems reach the ledger only via the Financial Event Bus and
+              materialization.
+            </li>
           </ul>
         </Card>
       </PageBody>

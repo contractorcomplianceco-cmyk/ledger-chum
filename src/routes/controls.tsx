@@ -5,10 +5,7 @@ import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useOrgId } from "@/hooks/use-current-org";
-import {
-  listControlExceptions,
-  getControlSummary,
-} from "@/lib/accounting/controls.functions";
+import { listControlExceptions, getControlSummary } from "@/lib/accounting/controls.functions";
 import { AlertTriangle, Activity, ClipboardCheck, FileWarning } from "lucide-react";
 
 export const Route = createFileRoute("/controls")({
@@ -21,7 +18,10 @@ export const Route = createFileRoute("/controls")({
           "Close status, exceptions, reconciliation health, posting issues, and aging review in one workspace.",
       },
       { property: "og:title", content: "Accounting Control Center — LedgerOS" },
-      { property: "og:description", content: "Real-time accounting exceptions and close readiness." },
+      {
+        property: "og:description",
+        content: "Real-time accounting exceptions and close readiness.",
+      },
     ],
   }),
   component: ControlsPage,
@@ -35,7 +35,9 @@ const CATEGORY_LABEL: Record<string, string> = {
 };
 
 const fmtDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "—";
+  d
+    ? new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })
+    : "—";
 
 function ControlsPage() {
   const orgId = useOrgId();
@@ -62,14 +64,20 @@ function ControlsPage() {
       />
       <PageBody>
         {!orgId ? (
-          <Card className="p-6 text-sm text-muted-foreground">Sign in to view the Control Center.</Card>
+          <Card className="p-6 text-sm text-muted-foreground">
+            Sign in to view the Control Center.
+          </Card>
         ) : (
           <div className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <KpiTile
                 icon={ClipboardCheck}
                 label="Current period"
-                value={summaryQ.data?.currentPeriod ? `#${summaryQ.data.currentPeriod.period_number}` : "—"}
+                value={
+                  summaryQ.data?.currentPeriod
+                    ? `#${summaryQ.data.currentPeriod.period_number}`
+                    : "—"
+                }
                 sub={summaryQ.data?.currentPeriod?.status ?? "no active period"}
               />
               <KpiTile
@@ -106,7 +114,9 @@ function ControlsPage() {
                     </div>
                   ))}
                   {(!summaryQ.data || Object.keys(summaryQ.data.byCategory).length === 0) && (
-                    <div className="text-sm text-muted-foreground">No exceptions — books are clean.</div>
+                    <div className="text-sm text-muted-foreground">
+                      No exceptions — books are clean.
+                    </div>
                   )}
                 </div>
               </Card>
@@ -122,7 +132,8 @@ function ControlsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{e.message}</div>
                         <div className="text-[11px] text-muted-foreground">
-                          {CATEGORY_LABEL[e.category ?? ""] ?? e.category} · {fmtDate(e.occurred_on)}
+                          {CATEGORY_LABEL[e.category ?? ""] ?? e.category} ·{" "}
+                          {fmtDate(e.occurred_on)}
                         </div>
                       </div>
                     </div>
@@ -164,9 +175,17 @@ function ControlsPage() {
 }
 
 function KpiTile({
-  icon: Icon, label, value, sub, tone,
+  icon: Icon,
+  label,
+  value,
+  sub,
+  tone,
 }: {
-  icon: typeof AlertTriangle; label: string; value: string; sub?: string; tone?: "ok" | "warn";
+  icon: typeof AlertTriangle;
+  label: string;
+  value: string;
+  sub?: string;
+  tone?: "ok" | "warn";
 }) {
   const cls = tone === "warn" ? "text-amber-600" : "text-foreground";
   return (
@@ -185,7 +204,7 @@ function SeverityDot({ severity }: { severity: string }) {
     severity === "critical"
       ? "bg-destructive"
       : severity === "warning"
-      ? "bg-amber-500"
-      : "bg-muted-foreground";
+        ? "bg-amber-500"
+        : "bg-muted-foreground";
   return <div className={`h-2 w-2 rounded-full mt-1.5 ${cls}`} />;
 }

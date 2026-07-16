@@ -50,13 +50,27 @@ export function TransactionTable({
           <thead className="bg-muted/50 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             <tr>
               <th scope="col" className="w-8 px-3 py-2.5"></th>
-              <th scope="col" className="px-2 py-2.5 text-left">Date</th>
-              <th scope="col" className="px-2 py-2.5 text-left">Description</th>
-              <th scope="col" className="px-2 py-2.5 text-left">Account</th>
-              <th scope="col" className="px-2 py-2.5 text-left">Category / match</th>
-              <th scope="col" className="px-2 py-2.5 text-right">Amount</th>
-              <th scope="col" className="px-2 py-2.5 text-left">Confidence</th>
-              <th scope="col" className="px-2 py-2.5 text-left">Status</th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Date
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Description
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Account
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Category / match
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-right">
+                Amount
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Confidence
+              </th>
+              <th scope="col" className="px-2 py-2.5 text-left">
+                Status
+              </th>
               <th scope="col" className="w-10 px-2 py-2.5"></th>
               <th scope="col" className="w-8 px-2 py-2.5"></th>
             </tr>
@@ -91,7 +105,10 @@ export function TransactionTable({
                         <div className="flex items-center gap-1.5">
                           <span className="truncate font-medium">{tx.merchant}</span>
                           {tx.possibleDuplicateOf && (
-                            <AlertTriangle className="h-3 w-3 shrink-0 text-destructive" aria-label="Possible duplicate" />
+                            <AlertTriangle
+                              className="h-3 w-3 shrink-0 text-destructive"
+                              aria-label="Possible duplicate"
+                            />
                           )}
                         </div>
                         <div className="truncate font-mono text-[10px] text-muted-foreground">
@@ -129,16 +146,26 @@ export function TransactionTable({
                     </span>
                   </td>
                   <td className="px-2 py-2.5">
-                    {tx.confidence ? <ConfidenceIndicator value={tx.confidence} /> : <span className="text-muted-foreground">—</span>}
+                    {tx.confidence ? (
+                      <ConfidenceIndicator value={tx.confidence} />
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
                   </td>
                   <td className="px-2 py-2.5">
                     <StatusBadge status={tx.status} />
                   </td>
                   <td className="px-2 py-2.5">
                     {tx.receipt === "attached" ? (
-                      <Paperclip className="h-3.5 w-3.5 text-success" aria-label="Receipt attached" />
+                      <Paperclip
+                        className="h-3.5 w-3.5 text-success"
+                        aria-label="Receipt attached"
+                      />
                     ) : tx.receipt === "missing" ? (
-                      <CircleAlert className="h-3.5 w-3.5 text-warning" aria-label="Missing receipt" />
+                      <CircleAlert
+                        className="h-3.5 w-3.5 text-warning"
+                        aria-label="Missing receipt"
+                      />
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}
@@ -146,7 +173,12 @@ export function TransactionTable({
                   <td className="px-2 py-2.5" onClick={(e) => e.stopPropagation()}>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Row actions">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7"
+                          aria-label="Row actions"
+                        >
                           <MoreVertical className="h-3.5 w-3.5" />
                         </Button>
                       </DropdownMenuTrigger>

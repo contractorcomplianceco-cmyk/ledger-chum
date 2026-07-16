@@ -53,9 +53,7 @@ export function BankAccountCard({ account }: { account: BankAccount }) {
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="truncate text-sm font-semibold tracking-tight">
-                {account.nickname}
-              </h3>
+              <h3 className="truncate text-sm font-semibold tracking-tight">{account.nickname}</h3>
               <span className="font-mono text-[11px] text-muted-foreground">{account.mask}</span>
             </div>
             <div className="mt-0.5 truncate text-[11px] text-muted-foreground">

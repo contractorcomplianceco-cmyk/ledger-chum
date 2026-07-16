@@ -27,11 +27,7 @@ export const Route = createFileRoute("/api/public/integrations/refunds")({
         let ctx: IntegrationContext | null = null;
         let body: unknown = null;
         try {
-          const start = await beginIntegrationCall(
-            request,
-            "/refunds",
-            "refunds.create",
-          );
+          const start = await beginIntegrationCall(request, "/refunds", "refunds.create");
           if (start.status === "duplicate") return integrationResponse(start.response);
           ctx = start.ctx;
           body = start.body;
@@ -50,10 +46,7 @@ export const Route = createFileRoute("/api/public/integrations/refunds")({
             .maybeSingle();
           if (perr) throw new IntegrationError(500, perr.message);
           if (!payment)
-            throw new IntegrationError(
-              422,
-              `Payment ${p.payment_external_id} not found`,
-            );
+            throw new IntegrationError(422, `Payment ${p.payment_external_id} not found`);
 
           const { data: rpc, error: rpcErr } = await supabaseAdmin.rpc(
             "record_refund_with_posting" as never,

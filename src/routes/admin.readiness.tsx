@@ -100,9 +100,17 @@ function ReadinessDashboard() {
       materialized > 0 ? "ready" : eventRows.length > 0 ? "in_progress" : "not_ready";
     const security: ReadyState = "in_progress"; // requires manual sign-off
     const integration: ReadyState =
-      errors === 0 && syncRows.length > 0 ? "ready" : syncRows.length > 0 ? "in_progress" : "not_ready";
+      errors === 0 && syncRows.length > 0
+        ? "ready"
+        : syncRows.length > 0
+          ? "in_progress"
+          : "not_ready";
     const intelligence: ReadyState =
-      metrics.length > 0 && recs.length >= 0 ? (metrics.length >= 10 ? "ready" : "in_progress") : "not_ready";
+      metrics.length > 0 && recs.length >= 0
+        ? metrics.length >= 10
+          ? "ready"
+          : "in_progress"
+        : "not_ready";
     const migration: ReadyState = "not_ready";
 
     return [
@@ -182,7 +190,9 @@ function ReadinessDashboard() {
         <Card className="border-border/60 p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">Overall</div>
+              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Overall
+              </div>
               <div className="mt-1 flex items-center gap-2">
                 <overallTone.icon className="h-5 w-5" />
                 <span className="text-2xl font-semibold">{overallTone.label}</span>

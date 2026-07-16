@@ -2,15 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Building2,
-  Users2,
-  CalendarClock,
-  BookOpen,
-  Plug,
-  Split,
-  ArrowRight,
-} from "lucide-react";
+import { Building2, Users2, CalendarClock, BookOpen, Plug, Split, ArrowRight } from "lucide-react";
 
 /**
  * M12 — First Pilot Simulation.
@@ -81,17 +73,49 @@ const PILOT = {
 };
 
 const LIFECYCLE = [
-  { stage: "Operational Event", detail: "ServiceConnect emits work_order.completed for Job #WO-1042." },
-  { stage: "Financial Event Bus", detail: "POST /api/public/integrations/events — recorded on financial_events with idempotency + correlation." },
-  { stage: "Validation", detail: "Payload schema + tenant + source authenticated. Duplicates short-circuit." },
-  { stage: "Mapping", detail: "integration_event_mappings resolves work_order.completed → invoice draft." },
-  { stage: "Approval", detail: "Rules or a human accountant approve the event. AI is advisory only." },
-  { stage: "Materialization", detail: "materialize_financial_event creates the invoice via existing engine." },
-  { stage: "Financial Object", detail: "Invoice draft appears in the invoice workspace, awaiting standard controls." },
-  { stage: "Accounting Engine", detail: "Posting creates balanced journal lines. Trial balance ties." },
+  {
+    stage: "Operational Event",
+    detail: "ServiceConnect emits work_order.completed for Job #WO-1042.",
+  },
+  {
+    stage: "Financial Event Bus",
+    detail:
+      "POST /api/public/integrations/events — recorded on financial_events with idempotency + correlation.",
+  },
+  {
+    stage: "Validation",
+    detail: "Payload schema + tenant + source authenticated. Duplicates short-circuit.",
+  },
+  {
+    stage: "Mapping",
+    detail: "integration_event_mappings resolves work_order.completed → invoice draft.",
+  },
+  {
+    stage: "Approval",
+    detail: "Rules or a human accountant approve the event. AI is advisory only.",
+  },
+  {
+    stage: "Materialization",
+    detail: "materialize_financial_event creates the invoice via existing engine.",
+  },
+  {
+    stage: "Financial Object",
+    detail: "Invoice draft appears in the invoice workspace, awaiting standard controls.",
+  },
+  {
+    stage: "Accounting Engine",
+    detail: "Posting creates balanced journal lines. Trial balance ties.",
+  },
   { stage: "Reports", detail: "P&L, Balance Sheet, and AR aging reflect the new activity." },
-  { stage: "Metrics", detail: "Canonical metric values refresh with lineage + confidence + freshness." },
-  { stage: "APEX Insight", detail: "Executive experience surfaces the change through intelligence adapters — no direct ledger access." },
+  {
+    stage: "Metrics",
+    detail: "Canonical metric values refresh with lineage + confidence + freshness.",
+  },
+  {
+    stage: "APEX Insight",
+    detail:
+      "Executive experience surfaces the change through intelligence adapters — no direct ledger access.",
+  },
 ];
 
 function PilotSimulationPage() {
@@ -106,7 +130,9 @@ function PilotSimulationPage() {
         <Card className="border-border/60 p-5">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">Pilot organization</div>
+              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Pilot organization
+              </div>
               <div className="mt-1 flex items-center gap-2 text-xl font-semibold">
                 <Building2 className="h-5 w-5 text-brand" />
                 {PILOT.org.name}
@@ -114,9 +140,12 @@ function PilotSimulationPage() {
               <p className="text-sm text-muted-foreground">{PILOT.org.legalName}</p>
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[13px] text-muted-foreground">
-              <div>Base currency</div><div className="text-foreground">{PILOT.org.baseCurrency}</div>
-              <div>Fiscal year start</div><div className="text-foreground">{PILOT.org.fiscalYearStart}</div>
-              <div>Country</div><div className="text-foreground">{PILOT.org.country}</div>
+              <div>Base currency</div>
+              <div className="text-foreground">{PILOT.org.baseCurrency}</div>
+              <div>Fiscal year start</div>
+              <div className="text-foreground">{PILOT.org.fiscalYearStart}</div>
+              <div>Country</div>
+              <div className="text-foreground">{PILOT.org.country}</div>
             </div>
           </div>
         </Card>
@@ -159,7 +188,10 @@ function PilotSimulationPage() {
             </div>
             <div className="mt-3 divide-y divide-border/60 text-[13px]">
               {PILOT.coa.map((a) => (
-                <div key={a.code} className="grid grid-cols-[64px_1fr_auto] items-center gap-2 py-1.5">
+                <div
+                  key={a.code}
+                  className="grid grid-cols-[64px_1fr_auto] items-center gap-2 py-1.5"
+                >
                   <code className="text-muted-foreground">{a.code}</code>
                   <span>{a.name}</span>
                   <Badge variant="outline">{a.type}</Badge>
@@ -180,7 +212,11 @@ function PilotSimulationPage() {
               <div className="text-muted-foreground">Endpoint</div>
               <code className="text-foreground">{PILOT.integration.endpoint}</code>
               <div className="text-muted-foreground">Status</div>
-              <div><Badge className="bg-emerald-500/10 text-emerald-500">{PILOT.integration.status}</Badge></div>
+              <div>
+                <Badge className="bg-emerald-500/10 text-emerald-500">
+                  {PILOT.integration.status}
+                </Badge>
+              </div>
             </div>
             <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
               <Split className="h-4 w-4 text-brand" /> Event mappings
@@ -202,11 +238,15 @@ function PilotSimulationPage() {
         <Card className="border-border/60 p-5">
           <div className="text-sm font-semibold">End-to-end lifecycle</div>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            No shortcut is permitted at any stage. External systems only interact via the Financial Event Bus.
+            No shortcut is permitted at any stage. External systems only interact via the Financial
+            Event Bus.
           </p>
           <ol className="mt-4 space-y-2 text-[13px]">
             {LIFECYCLE.map((s, i) => (
-              <li key={s.stage} className="flex gap-3 rounded-md border border-border/60 bg-muted/10 p-3">
+              <li
+                key={s.stage}
+                className="flex gap-3 rounded-md border border-border/60 bg-muted/10 p-3"
+              >
                 <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/15 text-[11px] font-semibold text-brand">
                   {i + 1}
                 </div>
@@ -222,7 +262,10 @@ function PilotSimulationPage() {
         <Card className="border-border/60 bg-muted/20 p-5">
           <div className="text-sm font-medium">Invariants</div>
           <ul className="mt-2 space-y-1 text-[13px] text-muted-foreground">
-            <li>• The pilot profile above is presentation data — activation happens through Customer Onboarding.</li>
+            <li>
+              • The pilot profile above is presentation data — activation happens through Customer
+              Onboarding.
+            </li>
             <li>• No direct external → journal path.</li>
             <li>• Materialization is the only writer to financial objects.</li>
             <li>• AI is advisory-only.</li>

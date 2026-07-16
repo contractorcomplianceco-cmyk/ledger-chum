@@ -13,7 +13,19 @@ export const Route = createFileRoute("/automation/budget-controls")({
   component: BudgetsPage,
 });
 
-const SCOPES: (BudgetScope | "all")[] = ["all", "department", "vendor", "category", "campaign", "product", "app", "employee", "project", "client", "initiative"];
+const SCOPES: (BudgetScope | "all")[] = [
+  "all",
+  "department",
+  "vendor",
+  "category",
+  "campaign",
+  "product",
+  "app",
+  "employee",
+  "project",
+  "client",
+  "initiative",
+];
 
 function BudgetsPage() {
   const [scope, setScope] = useState<BudgetScope | "all">("all");
@@ -23,7 +35,11 @@ function BudgetsPage() {
     <AutomationPage
       title="Budget Control System"
       description="Track approved, committed, spent, forecast, and remaining across every dimension. Approvals for exceptions flow to the Approval Center."
-      actions={<Button size="sm" className="h-9"><Plus className="mr-1.5 h-3.5 w-3.5" /> New budget</Button>}
+      actions={
+        <Button size="sm" className="h-9">
+          <Plus className="mr-1.5 h-3.5 w-3.5" /> New budget
+        </Button>
+      }
     >
       <div className="flex flex-wrap items-center gap-1.5">
         {SCOPES.map((s) => (
@@ -32,7 +48,9 @@ function BudgetsPage() {
             onClick={() => setScope(s)}
             className={cn(
               "rounded-full border px-2.5 py-1 text-[11.5px] font-medium capitalize transition",
-              scope === s ? "border-transparent bg-gradient-brand-cool text-white" : "border-border bg-surface text-foreground/80",
+              scope === s
+                ? "border-transparent bg-gradient-brand-cool text-white"
+                : "border-border bg-surface text-foreground/80",
             )}
           >
             {s}
@@ -55,19 +73,41 @@ function BudgetsPage() {
           const spentPct = Math.min(100, (b.spent / b.approved) * 100);
           const meta = BUDGET_STATUS_META[b.status];
           return (
-            <div key={b.id} className="grid grid-cols-[1.5fr_auto_1fr_1fr_1fr_1fr_1fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0">
+            <div
+              key={b.id}
+              className="grid grid-cols-[1.5fr_auto_1fr_1fr_1fr_1fr_1fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0"
+            >
               <div>
                 <div className="font-medium">{b.name}</div>
                 <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-muted">
-                  <div className={cn("h-full", b.status === "exceeded" ? "bg-destructive" : b.status === "at_risk" ? "bg-warning" : "bg-brand")} style={{ width: `${spentPct}%` }} />
+                  <div
+                    className={cn(
+                      "h-full",
+                      b.status === "exceeded"
+                        ? "bg-destructive"
+                        : b.status === "at_risk"
+                          ? "bg-warning"
+                          : "bg-brand",
+                    )}
+                    style={{ width: `${spentPct}%` }}
+                  />
                 </div>
               </div>
-              <span className="text-[11px] uppercase tracking-wide text-muted-foreground">{b.scope}</span>
+              <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                {b.scope}
+              </span>
               <span className="font-tabular">{currency(b.approved)}</span>
               <span className="font-tabular text-muted-foreground">{currency(b.committed)}</span>
               <span className="font-tabular">{currency(b.spent)}</span>
               <span className="font-tabular text-muted-foreground">{currency(b.forecast)}</span>
-              <span className={cn("font-tabular", b.remaining < 0 ? "text-destructive" : "text-foreground")}>{currency(b.remaining)}</span>
+              <span
+                className={cn(
+                  "font-tabular",
+                  b.remaining < 0 ? "text-destructive" : "text-foreground",
+                )}
+              >
+                {currency(b.remaining)}
+              </span>
               <span className={cn("text-[11.5px] font-semibold", meta.tone)}>{meta.label}</span>
             </div>
           );

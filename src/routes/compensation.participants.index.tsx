@@ -4,7 +4,14 @@ import { CompensationShell } from "@/components/compensation/compensation-shell"
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { CompensationParticipant } from "@/lib/api/services/compensation";
 import { currency } from "@/lib/mock/finance";
@@ -15,8 +22,20 @@ export const Route = createFileRoute("/compensation/participants/")({
 });
 
 const TYPES = [
-  "employee","brand_ambassador","salesperson","referral_partner","affiliate","strategic_partner",
-  "channel_partner","consultant","contractor","investor","team_pool","external_entity","owner","profit_share_participant",
+  "employee",
+  "brand_ambassador",
+  "salesperson",
+  "referral_partner",
+  "affiliate",
+  "strategic_partner",
+  "channel_partner",
+  "consultant",
+  "contractor",
+  "investor",
+  "team_pool",
+  "external_entity",
+  "owner",
+  "profit_share_participant",
 ];
 
 function ParticipantsPage() {
@@ -42,11 +61,24 @@ function ParticipantsPage() {
     >
       <Card className="p-3">
         <div className="flex flex-wrap items-center gap-2">
-          <select value={type} onChange={(e) => setType(e.target.value)} className="h-9 rounded-md border border-input bg-background px-2 text-sm">
+          <select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+          >
             <option value="all">All types</option>
-            {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+            {TYPES.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
           </select>
-          <Input placeholder="Search participants…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-xs" />
+          <Input
+            placeholder="Search participants…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            className="max-w-xs"
+          />
         </div>
       </Card>
 
@@ -73,9 +105,17 @@ function ParticipantsPage() {
             {filtered.map((r) => (
               <TableRow key={r.id}>
                 <TableCell className="font-medium">
-                  <Link to="/compensation/participants/$id" params={{ id: r.id }} className="hover:underline">{r.name}</Link>
+                  <Link
+                    to="/compensation/participants/$id"
+                    params={{ id: r.id }}
+                    className="hover:underline"
+                  >
+                    {r.name}
+                  </Link>
                 </TableCell>
-                <TableCell><Badge variant="outline">{r.type.replaceAll("_", " ")}</Badge></TableCell>
+                <TableCell>
+                  <Badge variant="outline">{r.type.replaceAll("_", " ")}</Badge>
+                </TableCell>
                 <TableCell className="text-xs">{r.department ?? "—"}</TableCell>
                 <TableCell className="text-xs">{r.defaultRole}</TableCell>
                 <TableCell>{r.activePlans}</TableCell>
@@ -87,7 +127,14 @@ function ParticipantsPage() {
                 <TableCell className="text-xs">{r.taxDocumentStatus}</TableCell>
                 <TableCell className="text-xs">{r.legalReviewStatus}</TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={r.active ? "border-success/40 bg-success/10 text-success" : "border-border bg-muted"}>
+                  <Badge
+                    variant="outline"
+                    className={
+                      r.active
+                        ? "border-success/40 bg-success/10 text-success"
+                        : "border-border bg-muted"
+                    }
+                  >
                     {r.active ? "Active" : "Inactive"}
                   </Badge>
                 </TableCell>

@@ -16,7 +16,10 @@ export function ReconciliationStepHeader({
   onStepClick?: (n: number) => void;
 }) {
   return (
-    <ol className="flex w-full items-center gap-2 overflow-x-auto py-2" aria-label="Reconciliation steps">
+    <ol
+      className="flex w-full items-center gap-2 overflow-x-auto py-2"
+      aria-label="Reconciliation steps"
+    >
       {steps.map((s, i) => {
         const state = s.id < current ? "done" : s.id === current ? "active" : "todo";
         const clickable = onStepClick && s.id <= current;
@@ -30,7 +33,8 @@ export function ReconciliationStepHeader({
               className={cn(
                 "flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 state === "active" && "border-brand bg-brand text-brand-foreground shadow-glow",
-                state === "done" && "border-success/40 bg-success/10 text-success hover:bg-success/15",
+                state === "done" &&
+                  "border-success/40 bg-success/10 text-success hover:bg-success/15",
                 state === "todo" && "border-border bg-card text-muted-foreground",
               )}
             >
@@ -47,7 +51,9 @@ export function ReconciliationStepHeader({
               <span className="whitespace-nowrap font-medium">{s.label}</span>
             </button>
             {i < steps.length - 1 && (
-              <span className={cn("h-px w-6 shrink-0", s.id < current ? "bg-success/40" : "bg-border")} />
+              <span
+                className={cn("h-px w-6 shrink-0", s.id < current ? "bg-success/40" : "bg-border")}
+              />
             )}
           </li>
         );

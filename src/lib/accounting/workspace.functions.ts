@@ -32,8 +32,12 @@ export const getCurrentOrg = createServerFn({ method: "GET" })
     return {
       orgId: member.org_id,
       org: member.organizations as unknown as {
-        id: string; name: string; slug: string;
-        currency: string; timezone: string; status: string;
+        id: string;
+        name: string;
+        slug: string;
+        currency: string;
+        timezone: string;
+        status: string;
       },
     };
   });
@@ -57,15 +61,19 @@ export const listAccounts = createServerFn({ method: "GET" })
 export const listIntegrationEvents = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
       .from("audit_events")
-      .select("id, event_type, action, actor_type, source, target_type, target_id, after, correlation_id, created_at")
+      .select(
+        "id, event_type, action, actor_type, source, target_type, target_id, after, correlation_id, created_at",
+      )
       .eq("org_id", data.orgId)
       .order("created_at", { ascending: false })
       .limit(data.limit);
@@ -77,10 +85,12 @@ export const listIntegrationEvents = createServerFn({ method: "GET" })
 export const listSyncHistory = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      limit: z.number().int().min(1).max(500).default(200),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        limit: z.number().int().min(1).max(500).default(200),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
@@ -127,32 +137,42 @@ export const getDashboardMetrics = createServerFn({ method: "GET" })
         .select("amount")
         .eq("org_id", data.orgId)
         .gte("created_at", since),
-      context.supabase
-        .from("api_clients")
-        .select("id, active, provider")
-        .eq("org_id", data.orgId),
+      context.supabase.from("api_clients").select("id, active, provider").eq("org_id", data.orgId),
     ]);
 
     const draftCount = drafts.count ?? drafts.data?.length ?? 0;
-    const draftValue = (drafts.data ?? []).reduce((s, r: { total: number }) => s + Number(r.total ?? 0), 0);
+    const draftValue = (drafts.data ?? []).reduce(
+      (s, r: { total: number }) => s + Number(r.total ?? 0),
+      0,
+    );
     const postedCount = posted24.count ?? 0;
     const paymentsCount = payments24.data?.length ?? 0;
     const paymentsTotal = (payments24.data ?? []).reduce(
-      (s, r: { amount: number }) => s + Number(r.amount ?? 0), 0);
+      (s, r: { amount: number }) => s + Number(r.amount ?? 0),
+      0,
+    );
     const consumptionCount = invConsumed24.data?.length ?? 0;
     const consumptionValue = (invConsumed24.data ?? []).reduce(
       (s, r: { quantity: number; unit_cost: number }) =>
-        s + Number(r.quantity ?? 0) * Number(r.unit_cost ?? 0), 0);
+        s + Number(r.quantity ?? 0) * Number(r.unit_cost ?? 0),
+      0,
+    );
     const refundsCount = refunds24.data?.length ?? 0;
     const refundsTotal = (refunds24.data ?? []).reduce(
-      (s, r: { amount: number }) => s + Number(r.amount ?? 0), 0);
+      (s, r: { amount: number }) => s + Number(r.amount ?? 0),
+      0,
+    );
 
     return {
-      draftCount, draftValue,
+      draftCount,
+      draftValue,
       postedCount,
-      paymentsCount, paymentsTotal,
-      consumptionCount, consumptionValue,
-      refundsCount, refundsTotal,
+      paymentsCount,
+      paymentsTotal,
+      consumptionCount,
+      consumptionValue,
+      refundsCount,
+      refundsTotal,
       apiClientsActive: (apiClients.data ?? []).filter((c) => c.active).length,
       apiClientsTotal: apiClients.data?.length ?? 0,
     };
@@ -169,11 +189,20 @@ export const testIntegrationConnection = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const startedAt = Date.now();
     const [org, clients, mappings, period] = await Promise.all([
-      context.supabase.from("organizations").select("id, name, status").eq("id", data.orgId).maybeSingle(),
-      context.supabase.from("api_clients").select("id, name, provider, environment, active, scopes")
-        .eq("org_id", data.orgId).eq("active", true),
+      context.supabase
+        .from("organizations")
+        .select("id, name, status")
+        .eq("id", data.orgId)
+        .maybeSingle(),
+      context.supabase
+        .from("api_clients")
+        .select("id, name, provider, environment, active, scopes")
+        .eq("org_id", data.orgId)
+        .eq("active", true),
       context.supabase.from("account_mappings").select("purpose").eq("org_id", data.orgId),
-      context.supabase.from("fiscal_periods").select("id, status, start_date, end_date")
+      context.supabase
+        .from("fiscal_periods")
+        .select("id, status, start_date, end_date")
         .eq("org_id", data.orgId)
         .lte("start_date", new Date().toISOString().slice(0, 10))
         .gte("end_date", new Date().toISOString().slice(0, 10))
@@ -198,10 +227,12 @@ export const testIntegrationConnection = createServerFn({ method: "GET" })
 export const seedSandboxWorkOrder = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      customerName: z.string().min(1).default("Sandbox Marine Co."),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        customerName: z.string().min(1).default("Sandbox Marine Co."),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
@@ -246,7 +277,10 @@ export const seedSandboxWorkOrder = createServerFn({ method: "POST" })
         invoice_number: invoiceNumber,
         issue_date: new Date().toISOString().slice(0, 10),
         status: "draft",
-        subtotal, tax: 0, total, balance: total,
+        subtotal,
+        tax: 0,
+        total,
+        balance: total,
         external_id: workOrderRef,
         external_source: "sandbox",
         work_order_ref: workOrderRef,
@@ -258,14 +292,23 @@ export const seedSandboxWorkOrder = createServerFn({ method: "POST" })
 
     const { error: lErr } = await supabase.from("invoice_lines").insert([
       {
-        invoice_id: inv.id, line_order: 0,
+        invoice_id: inv.id,
+        line_order: 0,
         description: "Technician Labor (4h @ $125)",
-        quantity: 4, unit_price: 125, amount: laborAmt, tax_rate: 0,
+        quantity: 4,
+        unit_price: 125,
+        amount: laborAmt,
+        tax_rate: 0,
         account_id: laborAcc,
       },
       {
-        invoice_id: inv.id, line_order: 1,
-        description: "Valve", quantity: 1, unit_price: 150, amount: materialAmt, tax_rate: 0,
+        invoice_id: inv.id,
+        line_order: 1,
+        description: "Valve",
+        quantity: 1,
+        unit_price: 150,
+        amount: materialAmt,
+        tax_rate: 0,
         account_id: materialAcc,
       },
     ]);

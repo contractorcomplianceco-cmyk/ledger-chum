@@ -64,7 +64,9 @@ export function AutomationPage({
           aria-label="Automation sections"
         >
           {AUTOMATION_TABS.map((t) => {
-            const active = t.exact ? pathname === t.to : pathname === t.to || pathname.startsWith(t.to + "/");
+            const active = t.exact
+              ? pathname === t.to
+              : pathname === t.to || pathname.startsWith(t.to + "/");
             return (
               <Link
                 key={t.to}

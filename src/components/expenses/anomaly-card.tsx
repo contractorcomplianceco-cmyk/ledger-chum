@@ -20,7 +20,12 @@ export function AnomalyCard({ a }: { a: Anomaly }) {
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-warning" />
             <span className="font-semibold">{a.vendor}</span>
-            <span className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide", SEV[a.severity].className)}>
+            <span
+              className={cn(
+                "rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide",
+                SEV[a.severity].className,
+              )}
+            >
               {SEV[a.severity].label}
             </span>
           </div>
@@ -30,21 +35,36 @@ export function AnomalyCard({ a }: { a: Anomaly }) {
             <span>Actual {currency(a.actual)}</span>
             <span>Δ {a.variance}%</span>
             <span>Impact {currency(a.impact)}</span>
-            <span>{a.department}{a.owner ? ` · ${a.owner}` : ""}</span>
+            <span>
+              {a.department}
+              {a.owner ? ` · ${a.owner}` : ""}
+            </span>
             <span>Confidence {Math.round(a.confidence * 100)}%</span>
           </div>
           <div className="mt-2 flex items-start gap-1.5 rounded-md border border-brand/20 bg-brand/5 p-2 text-[12px] text-foreground/85">
             <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand" />
-            <span><strong className="font-semibold">Suggested:</strong> {a.suggested}</span>
+            <span>
+              <strong className="font-semibold">Suggested:</strong> {a.suggested}
+            </span>
           </div>
         </div>
       </div>
       <div className="mt-3 flex flex-wrap items-center gap-1.5">
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Approve as Normal</Button>
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Request Docs</Button>
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Reclassify</Button>
-        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Create Rule</Button>
-        <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">Dismiss</Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Approve as Normal
+        </Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Request Docs
+        </Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Reclassify
+        </Button>
+        <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+          Create Rule
+        </Button>
+        <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">
+          Dismiss
+        </Button>
       </div>
     </Card>
   );

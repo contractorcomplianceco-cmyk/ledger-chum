@@ -4,7 +4,14 @@ import { CompensationShell, showDemoToast } from "@/components/compensation/comp
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { CompensationPlanParticipant } from "@/lib/api/services/compensation";
 
@@ -26,7 +33,9 @@ function PlanParticipantsPage() {
       title="Plan participants"
       description="Participants assigned to this plan. Individual overrides are per-assignment; the resolved policy still governs invariants."
       actions={
-        <Button size="sm" onClick={() => showDemoToast("Assign participant")}>Assign participant</Button>
+        <Button size="sm" onClick={() => showDemoToast("Assign participant")}>
+          Assign participant
+        </Button>
       }
     >
       <Card className="overflow-x-auto">
@@ -46,7 +55,11 @@ function PlanParticipantsPage() {
             {rows.map((r) => (
               <TableRow key={r.id}>
                 <TableCell className="font-medium">
-                  <Link to="/compensation/participants/$id" params={{ id: r.participantId }} className="hover:underline">
+                  <Link
+                    to="/compensation/participants/$id"
+                    params={{ id: r.participantId }}
+                    className="hover:underline"
+                  >
                     {r.participantName}
                   </Link>
                 </TableCell>
@@ -55,15 +68,26 @@ function PlanParticipantsPage() {
                   {r.effectiveFrom}
                   {r.effectiveTo ? ` → ${r.effectiveTo}` : ""}
                 </TableCell>
-                <TableCell>{r.overridePercent ? `${(r.overridePercent * 100).toFixed(1)}%` : "—"}</TableCell>
+                <TableCell>
+                  {r.overridePercent ? `${(r.overridePercent * 100).toFixed(1)}%` : "—"}
+                </TableCell>
                 <TableCell>{r.overrideFixed ?? "—"}</TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={r.active ? "border-success/40 bg-success/10 text-success" : ""}>
+                  <Badge
+                    variant="outline"
+                    className={r.active ? "border-success/40 bg-success/10 text-success" : ""}
+                  >
                     {r.active ? "Active" : "Inactive"}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button size="sm" variant="ghost" onClick={() => showDemoToast("Edit assignment")}>Edit</Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => showDemoToast("Edit assignment")}
+                  >
+                    Edit
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

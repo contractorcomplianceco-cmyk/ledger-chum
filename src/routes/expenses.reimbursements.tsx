@@ -32,7 +32,9 @@ const TONE: Record<Reimbursement["status"], string> = {
 function ReimbursementsPage() {
   const [view, setView] = useState<"all" | Reimbursement["status"]>("all");
   const rows = view === "all" ? REIMBURSEMENTS : REIMBURSEMENTS.filter((r) => r.status === view);
-  const outstanding = REIMBURSEMENTS.filter((r) => r.status !== "paid" && r.status !== "rejected").reduce((a, r) => a + r.amount, 0);
+  const outstanding = REIMBURSEMENTS.filter(
+    (r) => r.status !== "paid" && r.status !== "rejected",
+  ).reduce((a, r) => a + r.amount, 0);
   const total = REIMBURSEMENTS.reduce((a, r) => a + r.amount, 0);
   const paid = REIMBURSEMENTS.filter((r) => r.status === "paid").reduce((a, r) => a + r.amount, 0);
 
@@ -83,18 +85,30 @@ function ReimbursementsPage() {
               <tr key={r.id} className="hover:bg-muted/30">
                 <td className="px-3 py-2 font-medium">{r.employee}</td>
                 <td className="px-3 py-2 text-muted-foreground">{r.report}</td>
-                <td className="px-3 py-2 text-right font-tabular font-semibold">{currency(r.amount)}</td>
-                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">{r.approvedDate ?? "—"}</td>
+                <td className="px-3 py-2 text-right font-tabular font-semibold">
+                  {currency(r.amount)}
+                </td>
+                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">
+                  {r.approvedDate ?? "—"}
+                </td>
                 <td className="px-3 py-2 text-muted-foreground">{r.paymentMethod}</td>
-                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">{r.scheduledDate ?? "—"}</td>
-                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">{r.paidDate ?? "—"}</td>
+                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">
+                  {r.scheduledDate ?? "—"}
+                </td>
+                <td className="px-3 py-2 font-tabular text-[12px] text-muted-foreground">
+                  {r.paidDate ?? "—"}
+                </td>
                 <td className="px-3 py-2">
-                  <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${TONE[r.status]} capitalize whitespace-nowrap`}>
+                  <span
+                    className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${TONE[r.status]} capitalize whitespace-nowrap`}
+                  >
                     {r.status.replace(/_/g, " ")}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-right">
-                  <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Details</Button>
+                  <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+                    Details
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -105,11 +119,22 @@ function ReimbursementsPage() {
   );
 }
 
-function StatCard({ label, value, tone = "muted" }: { label: string; value: string; tone?: "muted" | "success" | "warning" }) {
-  const t = tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-foreground";
+function StatCard({
+  label,
+  value,
+  tone = "muted",
+}: {
+  label: string;
+  value: string;
+  tone?: "muted" | "success" | "warning";
+}) {
+  const t =
+    tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-foreground";
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className={`mt-1 font-tabular text-2xl font-bold ${t}`}>{value}</div>
     </Card>
   );

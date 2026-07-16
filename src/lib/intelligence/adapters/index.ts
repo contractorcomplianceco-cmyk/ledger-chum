@@ -48,9 +48,7 @@ export function filterByAudience(
           i.kind === "close" ||
           i.kind === "anomaly" ||
           (i.kind === "recommendation" &&
-            ["controller", "close_assistant", "accountant_assistant"].includes(
-              i.category ?? "",
-            )) ||
+            ["controller", "close_assistant", "accountant_assistant"].includes(i.category ?? "")) ||
           i.category === "close" ||
           i.category === "ar" ||
           i.category === "ap",
@@ -61,7 +59,8 @@ export function filterByAudience(
       );
     case "systems":
       return items.filter(
-        (i) => i.category === "operations" || i.category === "technology" || i.freshness !== "fresh",
+        (i) =>
+          i.category === "operations" || i.category === "technology" || i.freshness !== "fresh",
       );
     case "team":
       return items.filter((i) => i.kind !== "health" && i.kind !== "close");

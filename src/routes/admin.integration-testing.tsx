@@ -41,8 +41,7 @@ export const Route = createFileRoute("/admin/integration-testing")({
       { title: "Integration Test Center — LedgerOS" },
       {
         name: "description",
-        content:
-          "ServiceConnect pilot simulator and end-to-end integration validation harness.",
+        content: "ServiceConnect pilot simulator and end-to-end integration validation harness.",
       },
       { property: "og:title", content: "Integration Test Center — LedgerOS" },
     ],
@@ -69,9 +68,17 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Verifies Bearer token acceptance, scope enforcement, and tenant isolation on /api/public/integrations/*.",
     checks: [
-      { id: "auth.valid", label: "Valid token accepted", hint: "POST /events with a valid Bearer returns 202." },
+      {
+        id: "auth.valid",
+        label: "Valid token accepted",
+        hint: "POST /events with a valid Bearer returns 202.",
+      },
       { id: "auth.invalid", label: "Invalid token rejected", hint: "Bearer 'nope' returns 401." },
-      { id: "auth.missing", label: "Missing header rejected", hint: "No Authorization header returns 401." },
+      {
+        id: "auth.missing",
+        label: "Missing header rejected",
+        hint: "No Authorization header returns 401.",
+      },
     ],
   },
   {
@@ -81,8 +88,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Duplicate Idempotency-Key returns the stored response verbatim; no ledger side effect on the second call.",
     checks: [
-      { id: "idem.first", label: "First call accepted", hint: "Records a sync_history row with status = accepted." },
-      { id: "idem.second", label: "Duplicate returns cached response", hint: "Second call returns the first response body byte-for-byte." },
+      {
+        id: "idem.first",
+        label: "First call accepted",
+        hint: "Records a sync_history row with status = accepted.",
+      },
+      {
+        id: "idem.second",
+        label: "Duplicate returns cached response",
+        hint: "Second call returns the first response body byte-for-byte.",
+      },
     ],
   },
   {
@@ -92,8 +107,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Confirms POST /events writes to financial_events and sync_history for downstream approval.",
     checks: [
-      { id: "ingest.event", label: "Event lands on financial_events", hint: "Row created with status = received." },
-      { id: "ingest.sync", label: "sync_history row captured", hint: "Endpoint '/events' recorded." },
+      {
+        id: "ingest.event",
+        label: "Event lands on financial_events",
+        hint: "Row created with status = received.",
+      },
+      {
+        id: "ingest.sync",
+        label: "sync_history row captured",
+        hint: "Endpoint '/events' recorded.",
+      },
     ],
   },
   {
@@ -103,8 +126,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "integration_event_mappings resolves the external event type to a LedgerOS financial object.",
     checks: [
-      { id: "map.hit", label: "Known event maps to ledger object", hint: "work_order.completed → invoice." },
-      { id: "map.miss", label: "Unknown event flagged", hint: "Missing mapping surfaces as an actionable exception." },
+      {
+        id: "map.hit",
+        label: "Known event maps to ledger object",
+        hint: "work_order.completed → invoice.",
+      },
+      {
+        id: "map.miss",
+        label: "Unknown event flagged",
+        hint: "Missing mapping surfaces as an actionable exception.",
+      },
     ],
   },
   {
@@ -114,8 +145,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Approved event produces a financial_object_materializations row and downstream journal entries via materialize_financial_event.",
     checks: [
-      { id: "mat.approve", label: "Event approved", hint: "Operator approves through the Financial Event Bus." },
-      { id: "mat.post", label: "Materialization posts", hint: "Journal entries created; audit lineage recorded." },
+      {
+        id: "mat.approve",
+        label: "Event approved",
+        hint: "Operator approves through the Financial Event Bus.",
+      },
+      {
+        id: "mat.post",
+        label: "Materialization posts",
+        hint: "Journal entries created; audit lineage recorded.",
+      },
     ],
   },
   {
@@ -125,8 +164,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Journal is balanced, GL updates, trial balance ties. No auto-posting; controls remain in effect.",
     checks: [
-      { id: "acc.balanced", label: "Debits = credits", hint: "Journal entry passes the balanced-entry constraint." },
-      { id: "acc.gl", label: "GL rollup matches", hint: "Trial balance reconciles across the affected accounts." },
+      {
+        id: "acc.balanced",
+        label: "Debits = credits",
+        hint: "Journal entry passes the balanced-entry constraint.",
+      },
+      {
+        id: "acc.gl",
+        label: "GL rollup matches",
+        hint: "Trial balance reconciles across the affected accounts.",
+      },
     ],
   },
   {
@@ -136,8 +183,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Canonical metrics refresh with lineage, freshness, and confidence — the trusted intelligence foundation stays live.",
     checks: [
-      { id: "rep.metric", label: "Affected metric recomputes", hint: "financial_metric_values updated within SLA." },
-      { id: "rep.lineage", label: "Lineage recorded", hint: "financial_metric_lineage links back to the event." },
+      {
+        id: "rep.metric",
+        label: "Affected metric recomputes",
+        hint: "financial_metric_values updated within SLA.",
+      },
+      {
+        id: "rep.lineage",
+        label: "Lineage recorded",
+        hint: "financial_metric_lineage links back to the event.",
+      },
     ],
   },
   {
@@ -147,8 +202,16 @@ const CATEGORIES: TestCategory[] = [
     description:
       "Failed calls appear in the retry queue; operator retry increments retry_count and emits an audit event. LedgerOS never re-runs business rules on its own.",
     checks: [
-      { id: "err.captured", label: "Error captured on sync_history", hint: "status = 'error' with the provider error body." },
-      { id: "err.retry", label: "Operator retry logged", hint: "retry_count increments; audit event 'sync_history.retry_requested'." },
+      {
+        id: "err.captured",
+        label: "Error captured on sync_history",
+        hint: "status = 'error' with the provider error body.",
+      },
+      {
+        id: "err.retry",
+        label: "Operator retry logged",
+        hint: "retry_count increments; audit event 'sync_history.retry_requested'.",
+      },
     ],
   },
 ];
@@ -161,9 +224,7 @@ const DEFAULT_PAYLOAD = JSON.stringify(
       work_order_ref: "WO-SIM-001",
       customer_external_id: "sim_cust_001",
       issue_date: new Date().toISOString().slice(0, 10),
-      lines: [
-        { description: "Labor 2h", quantity: 2, unit_price: 145, account_code: "4100" },
-      ],
+      lines: [{ description: "Labor 2h", quantity: 2, unit_price: 145, account_code: "4100" }],
     },
   },
   null,
@@ -226,14 +287,23 @@ function IntegrationTestCenter() {
   }
 
   async function runAuthValid(): Promise<void> {
-    if (!token) { toast.error("Provide a Bearer token first."); return; }
+    if (!token) {
+      toast.error("Provide a Bearer token first.");
+      return;
+    }
     mark("auth.valid", "running");
-    const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
+    const r = await fireEvent({
+      Authorization: `Bearer ${token}`,
+      "Idempotency-Key": idempotencyKey,
+    });
     mark("auth.valid", r.status === 202 || r.status === 200 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runAuthInvalid() {
     mark("auth.invalid", "running");
-    const r = await fireEvent({ Authorization: "Bearer definitely-not-a-real-key", "Idempotency-Key": crypto.randomUUID() });
+    const r = await fireEvent({
+      Authorization: "Bearer definitely-not-a-real-key",
+      "Idempotency-Key": crypto.randomUUID(),
+    });
     mark("auth.invalid", r.status === 401 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runAuthMissing() {
@@ -242,16 +312,32 @@ function IntegrationTestCenter() {
     mark("auth.missing", r.status === 401 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runIdemFirst() {
-    if (!token) { toast.error("Provide a Bearer token first."); return; }
+    if (!token) {
+      toast.error("Provide a Bearer token first.");
+      return;
+    }
     mark("idem.first", "running");
-    const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
+    const r = await fireEvent({
+      Authorization: `Bearer ${token}`,
+      "Idempotency-Key": idempotencyKey,
+    });
     mark("idem.first", r.status < 300 ? "pass" : "fail", `HTTP ${r.status}`);
   }
   async function runIdemSecond() {
-    if (!token) { toast.error("Provide a Bearer token first."); return; }
+    if (!token) {
+      toast.error("Provide a Bearer token first.");
+      return;
+    }
     mark("idem.second", "running");
-    const r = await fireEvent({ Authorization: `Bearer ${token}`, "Idempotency-Key": idempotencyKey });
-    mark("idem.second", r.status < 300 ? "pass" : "fail", `HTTP ${r.status} — should mirror first response`);
+    const r = await fireEvent({
+      Authorization: `Bearer ${token}`,
+      "Idempotency-Key": idempotencyKey,
+    });
+    mark(
+      "idem.second",
+      r.status < 300 ? "pass" : "fail",
+      `HTTP ${r.status} — should mirror first response`,
+    );
     toast.info("Compare the response body to the previous run to confirm idempotency.");
   }
 
@@ -297,10 +383,7 @@ function IntegrationTestCenter() {
               <Label className="text-xs">Idempotency-Key</Label>
               <div className="flex gap-2">
                 <Input value={idempotencyKey} onChange={(e) => setIdempotencyKey(e.target.value)} />
-                <Button
-                  variant="outline"
-                  onClick={() => setIdempotencyKey(crypto.randomUUID())}
-                >
+                <Button variant="outline" onClick={() => setIdempotencyKey(crypto.randomUUID())}>
                   New
                 </Button>
               </div>
@@ -325,7 +408,11 @@ function IntegrationTestCenter() {
         <div className="grid gap-4 sm:grid-cols-3">
           <SummaryTile label="sync_history rows" value={totals.total} tone="brand" />
           <SummaryTile label="Accepted" value={totals.accepted} tone="ok" />
-          <SummaryTile label="Errors" value={totals.errors} tone={totals.errors ? "bad" : "muted"} />
+          <SummaryTile
+            label="Errors"
+            value={totals.errors}
+            tone={totals.errors ? "bad" : "muted"}
+          />
         </div>
 
         <Tabs defaultValue="auth">
@@ -360,7 +447,9 @@ function IntegrationTestCenter() {
                           <div className="text-sm font-medium">{check.label}</div>
                           <div className="text-[12px] text-muted-foreground">{check.hint}</div>
                           {st.detail && (
-                            <div className="mt-1 text-[11px] text-muted-foreground">{st.detail}</div>
+                            <div className="mt-1 text-[11px] text-muted-foreground">
+                              {st.detail}
+                            </div>
                           )}
                         </div>
                         <div className="flex items-center gap-2">
@@ -375,7 +464,12 @@ function IntegrationTestCenter() {
                               Run
                             </Button>
                           ) : (
-                            <Button size="sm" variant="outline" disabled title="Verified via the Financial Event Bus / accountant workspace">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled
+                              title="Verified via the Financial Event Bus / accountant workspace"
+                            >
                               Manual
                             </Button>
                           )}
@@ -410,7 +504,9 @@ function IntegrationTestCenter() {
                 <tbody>
                   {(eventsQ.data as Array<Record<string, unknown>>).slice(0, 25).map((row) => (
                     <tr key={String(row.id)} className="border-t border-border/40">
-                      <td className="px-3 py-2 font-mono">{String(row.external_event_type ?? "—")}</td>
+                      <td className="px-3 py-2 font-mono">
+                        {String(row.external_event_type ?? "—")}
+                      </td>
                       <td className="px-3 py-2">{String(row.status ?? "—")}</td>
                       <td className="px-3 py-2">{String(row.source_system ?? "—")}</td>
                       <td className="px-3 py-2 text-muted-foreground">

@@ -14,9 +14,16 @@ export const Route = createFileRoute("/compensation/calculations/$id/preview")({
 function CalcPreview() {
   const { id } = Route.useParams();
   const [calc, setCalc] = useState<CompensationCalculation | undefined>();
-  useEffect(() => { api.compensationOps.getCalculation(id).then(setCalc); }, [id]);
+  useEffect(() => {
+    api.compensationOps.getCalculation(id).then(setCalc);
+  }, [id]);
 
-  if (!calc) return <CompensationShell title="Preview"><Card className="p-6 text-sm text-muted-foreground">Loading…</Card></CompensationShell>;
+  if (!calc)
+    return (
+      <CompensationShell title="Preview">
+        <Card className="p-6 text-sm text-muted-foreground">Loading…</Card>
+      </CompensationShell>
+    );
 
   return (
     <CompensationShell
@@ -46,9 +53,13 @@ function CalcPreview() {
             </ul>
           </div>
           <div className="rounded-lg border border-border/60 p-3">
-            <div className="text-xs uppercase tracking-wide text-muted-foreground">Approvals required</div>
+            <div className="text-xs uppercase tracking-wide text-muted-foreground">
+              Approvals required
+            </div>
             <ul className="mt-2 space-y-1 text-xs">
-              {calc.approvalRoute.map((a) => <li key={a}>· {a}</li>)}
+              {calc.approvalRoute.map((a) => (
+                <li key={a}>· {a}</li>
+              ))}
             </ul>
           </div>
         </div>

@@ -13,9 +13,15 @@ export const Route = createFileRoute("/reports/trial-balance")({
   head: () => ({
     meta: [
       { title: "Trial Balance — LedgerOS" },
-      { name: "description", content: "Debits and credits per account for a date range, from posted journal lines." },
+      {
+        name: "description",
+        content: "Debits and credits per account for a date range, from posted journal lines.",
+      },
       { property: "og:title", content: "Trial Balance — LedgerOS" },
-      { property: "og:description", content: "Balanced double-entry check across the chart of accounts." },
+      {
+        property: "og:description",
+        content: "Balanced double-entry check across the chart of accounts.",
+      },
     ],
   }),
   component: TrialBalancePage,
@@ -38,7 +44,11 @@ function TrialBalancePage() {
 
   return (
     <AppShell>
-      <PageHeader eyebrow="LedgerOS · Reporting" title="Trial Balance" description="Sum of debits and credits per account. Must balance." />
+      <PageHeader
+        eyebrow="LedgerOS · Reporting"
+        title="Trial Balance"
+        description="Sum of debits and credits per account. Must balance."
+      />
       <PageBody>
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
@@ -84,19 +94,33 @@ function TrialBalancePage() {
                       <td className="py-2 pr-3 text-muted-foreground capitalize">{r.type}</td>
                       <td className="py-2 pr-3 text-right tabular-nums">{fmt(r.debit)}</td>
                       <td className="py-2 pr-3 text-right tabular-nums">{fmt(r.credit)}</td>
-                      <td className="py-2 pr-3 text-right tabular-nums font-medium">{fmt(r.balance)}</td>
+                      <td className="py-2 pr-3 text-right tabular-nums font-medium">
+                        {fmt(r.balance)}
+                      </td>
                     </tr>
                   ))}
                   {q.data.rows.length === 0 && (
-                    <tr><td colSpan={6} className="py-8 text-center text-muted-foreground">No posted activity in range.</td></tr>
+                    <tr>
+                      <td colSpan={6} className="py-8 text-center text-muted-foreground">
+                        No posted activity in range.
+                      </td>
+                    </tr>
                   )}
                 </tbody>
                 <tfoot>
                   <tr className="border-t font-semibold">
-                    <td colSpan={3} className="py-2 pr-3">Totals</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.credit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit - q.data.totals.credit)}</td>
+                    <td colSpan={3} className="py-2 pr-3">
+                      Totals
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {fmt(q.data.totals.debit)}
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {fmt(q.data.totals.credit)}
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {fmt(q.data.totals.debit - q.data.totals.credit)}
+                    </td>
                   </tr>
                 </tfoot>
               </table>

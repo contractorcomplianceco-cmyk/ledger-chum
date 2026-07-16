@@ -10,13 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId, useCurrentOrg } from "@/hooks/use-current-org";
 import {
-  listApiClients, issueApiClient, rotateApiClient, revokeApiClient,
+  listApiClients,
+  issueApiClient,
+  rotateApiClient,
+  revokeApiClient,
 } from "@/lib/admin/api-clients.functions";
 import { testIntegrationConnection } from "@/lib/accounting/workspace.functions";
 import { toast } from "sonner";
-import {
-  Copy, CheckCircle2, XCircle, RefreshCw, Plug, Beaker, ShieldAlert,
-} from "lucide-react";
+import { Copy, CheckCircle2, XCircle, RefreshCw, Plug, Beaker, ShieldAlert } from "lucide-react";
 
 export const Route = createFileRoute("/settings/serviceconnect")({
   head: () => ({
@@ -48,15 +49,20 @@ function ServiceConnectSettings() {
   const clientsQ = useQuery({
     queryKey: ["api-clients", orgId],
     queryFn: () => listFn({ data: { orgId: orgId! } }),
-    enabled: live, retry: false,
+    enabled: live,
+    retry: false,
   });
 
   const [name, setName] = useState("ServiceConnect (sandbox)");
   const [issuing, setIssuing] = useState(false);
   const [newToken, setNewToken] = useState<string | null>(null);
   const [testResult, setTestResult] = useState<{
-    ok: boolean; latencyMs?: number; err?: string;
-    mapped?: number; clients?: number; period?: string;
+    ok: boolean;
+    latencyMs?: number;
+    err?: string;
+    mapped?: number;
+    clients?: number;
+    period?: string;
   } | null>(null);
   const [testing, setTesting] = useState(false);
 
@@ -144,8 +150,8 @@ function ServiceConnectSettings() {
             <div className="flex items-start gap-2">
               <ShieldAlert className="mt-0.5 h-4 w-4 text-warning" />
               <div className="text-[13px] text-foreground">
-                Sign in and connect an organization to manage real API clients. This
-                screen shows demo content while unauthenticated.
+                Sign in and connect an organization to manage real API clients. This screen shows
+                demo content while unauthenticated.
               </div>
             </div>
           </Card>
@@ -156,8 +162,17 @@ function ServiceConnectSettings() {
             Connection details
           </div>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
-            <Field label="LedgerOS endpoint" value={`${endpointBase}/api/public/integrations`} mono />
-            <Field label="Organization" value={orgData?.org?.name ?? "—"} sub={orgId ?? "not authenticated"} mono />
+            <Field
+              label="LedgerOS endpoint"
+              value={`${endpointBase}/api/public/integrations`}
+              mono
+            />
+            <Field
+              label="Organization"
+              value={orgData?.org?.name ?? "—"}
+              sub={orgId ?? "not authenticated"}
+              mono
+            />
             <Field label="Auth header" value="Authorization: Bearer <api_client_key>" mono />
             <Field label="Idempotency" value="Idempotency-Key: <uuid> (required)" mono />
           </div>
@@ -174,7 +189,11 @@ function ServiceConnectSettings() {
               </div>
             </div>
             <Button size="sm" onClick={handleTest} disabled={!live || testing} className="h-9">
-              {testing ? <RefreshCw className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Plug className="mr-1.5 h-3.5 w-3.5" />}
+              {testing ? (
+                <RefreshCw className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Plug className="mr-1.5 h-3.5 w-3.5" />
+              )}
               {testing ? "Testing…" : "Test connection"}
             </Button>
           </div>
@@ -185,8 +204,8 @@ function ServiceConnectSettings() {
                   <CheckCircle2 className="h-4 w-4" />
                   <span className="font-semibold">Connection healthy</span>
                   <span className="text-muted-foreground">
-                    · {testResult.latencyMs}ms · {testResult.clients} active client(s)
-                    · {testResult.mapped} mapping(s) · fiscal period: {testResult.period}
+                    · {testResult.latencyMs}ms · {testResult.clients} active client(s) ·{" "}
+                    {testResult.mapped} mapping(s) · fiscal period: {testResult.period}
                   </span>
                 </div>
               ) : (
@@ -212,7 +231,11 @@ function ServiceConnectSettings() {
             <div className="flex items-end gap-2">
               <div>
                 <Label className="text-[11px] text-muted-foreground">Client name</Label>
-                <Input value={name} onChange={(e) => setName(e.target.value)} className="h-9 w-64 text-[13px]" />
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="h-9 w-64 text-[13px]"
+                />
               </div>
               <Button size="sm" onClick={handleIssue} disabled={!live || issuing} className="h-9">
                 {issuing ? "Issuing…" : "Issue"}
@@ -228,10 +251,14 @@ function ServiceConnectSettings() {
                 <code className="flex-1 truncate rounded bg-background px-2 py-1 font-mono text-[12px]">
                   {newToken}
                 </code>
-                <Button size="sm" variant="outline" onClick={() => {
-                  navigator.clipboard.writeText(newToken);
-                  toast.success("Token copied");
-                }}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    navigator.clipboard.writeText(newToken);
+                    toast.success("Token copied");
+                  }}
+                >
                   <Copy className="mr-1 h-3.5 w-3.5" /> Copy
                 </Button>
               </div>
@@ -255,12 +282,13 @@ function ServiceConnectSettings() {
           </div>
           <div className="divide-y divide-border/60">
             {(clientsQ.data ?? []).map((c) => (
-              <div key={c.id} className="grid grid-cols-[1fr_130px_100px_140px_140px_170px] items-center gap-3 px-4 py-3 text-[13px]">
+              <div
+                key={c.id}
+                className="grid grid-cols-[1fr_130px_100px_140px_140px_170px] items-center gap-3 px-4 py-3 text-[13px]"
+              >
                 <div>
                   <div className="font-semibold text-foreground">{c.name}</div>
-                  <div className="text-[11px] text-muted-foreground">
-                    {c.description ?? "—"}
-                  </div>
+                  <div className="text-[11px] text-muted-foreground">{c.description ?? "—"}</div>
                 </div>
                 <div className="text-muted-foreground">{c.provider}</div>
                 <div className="font-mono text-[11px] text-muted-foreground">{c.key_prefix}…</div>
@@ -269,20 +297,38 @@ function ServiceConnectSettings() {
                 </div>
                 <div>
                   {c.active ? (
-                    <Badge variant="outline" className="h-5 border-transparent bg-success/10 text-[10px] font-semibold text-success ring-1 ring-inset ring-success/20">
+                    <Badge
+                      variant="outline"
+                      className="h-5 border-transparent bg-success/10 text-[10px] font-semibold text-success ring-1 ring-inset ring-success/20"
+                    >
                       Active
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="h-5 border-transparent bg-muted text-[10px] font-semibold text-muted-foreground ring-1 ring-inset ring-border">
+                    <Badge
+                      variant="outline"
+                      className="h-5 border-transparent bg-muted text-[10px] font-semibold text-muted-foreground ring-1 ring-inset ring-border"
+                    >
                       Revoked
                     </Badge>
                   )}
                 </div>
                 <div className="flex justify-end gap-1">
-                  <Button size="sm" variant="ghost" className="h-7 px-2 text-[12px]" disabled={!c.active} onClick={() => handleRotate(c.id)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-7 px-2 text-[12px]"
+                    disabled={!c.active}
+                    onClick={() => handleRotate(c.id)}
+                  >
                     Rotate
                   </Button>
-                  <Button size="sm" variant="ghost" className="h-7 px-2 text-[12px] text-destructive" disabled={!c.active} onClick={() => handleRevoke(c.id)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-7 px-2 text-[12px] text-destructive"
+                    disabled={!c.active}
+                    onClick={() => handleRevoke(c.id)}
+                  >
                     Revoke
                   </Button>
                 </div>
@@ -290,7 +336,9 @@ function ServiceConnectSettings() {
             ))}
             {(!live || (clientsQ.data ?? []).length === 0) && (
               <div className="px-4 py-8 text-center text-[12px] text-muted-foreground">
-                {live ? "No API clients yet — issue one above to enable ServiceConnect." : "Sign in to manage API clients."}
+                {live
+                  ? "No API clients yet — issue one above to enable ServiceConnect."
+                  : "Sign in to manage API clients."}
               </div>
             )}
           </div>
@@ -302,18 +350,29 @@ function ServiceConnectSettings() {
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {[
-              "customers.read", "customers.write", "work_orders.completed",
-              "invoices.create", "invoices.read", "payments.create",
-              "inventory.consume", "refunds.create",
+              "customers.read",
+              "customers.write",
+              "work_orders.completed",
+              "events.ingest",
+              "invoices.create",
+              "invoices.read",
+              "payments.create",
+              "inventory.consume",
+              "refunds.create",
             ].map((s) => (
-              <Badge key={s} variant="outline" className="h-6 border-border/70 bg-background text-[11px] font-mono font-normal">
+              <Badge
+                key={s}
+                variant="outline"
+                className="h-6 border-border/70 bg-background text-[11px] font-mono font-normal"
+              >
                 {s}
               </Badge>
             ))}
           </div>
           <div className="mt-2 text-[12px] text-muted-foreground">
-            Scopes are stored per-client on <code className="font-mono">api_clients.scopes</code> and
-            enforced by <code className="font-mono">requireScope</code> on every /api/public/integrations/* handler.
+            Scopes are stored per-client on <code className="font-mono">api_clients.scopes</code>{" "}
+            and enforced by <code className="font-mono">requireScope</code> on every
+            /api/public/integrations/* handler.
           </div>
         </Card>
       </PageBody>
@@ -321,7 +380,17 @@ function ServiceConnectSettings() {
   );
 }
 
-function Field({ label, value, sub, mono }: { label: string; value: string; sub?: string; mono?: boolean }) {
+function Field({
+  label,
+  value,
+  sub,
+  mono,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  mono?: boolean;
+}) {
   return (
     <div>
       <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">

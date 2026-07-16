@@ -210,9 +210,19 @@ export const EXECUTIVE_WORKSPACES: ExecutiveWorkspace[] = [
       { title: "Audit Log", to: "/audit", icon: ShieldCheck },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
       { title: "Production Readiness", to: "/readiness/production", icon: ShieldCheck },
-      { title: "Master Feature Registry", to: "/feature-registry", icon: BookMarked, permission: "implementation.view" },
+      {
+        title: "Master Feature Registry",
+        to: "/feature-registry",
+        icon: BookMarked,
+        permission: "implementation.view",
+      },
       { title: "Project APEX", to: "/apex", icon: Compass, permission: "implementation.view" },
-      { title: "Implementation", to: "/implementation", icon: FileText, permission: "implementation.view" },
+      {
+        title: "Implementation",
+        to: "/implementation",
+        icon: FileText,
+        permission: "implementation.view",
+      },
     ],
   },
 ];

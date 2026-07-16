@@ -10,17 +10,23 @@ export const Route = createFileRoute("/implementation/readiness")({
 });
 
 function ReadinessPage() {
-  const avg = Math.round(READINESS_SCORECARD.reduce((s, r) => s + r.score, 0) / READINESS_SCORECARD.length);
+  const avg = Math.round(
+    READINESS_SCORECARD.reduce((s, r) => s + r.score, 0) / READINESS_SCORECARD.length,
+  );
   return (
     <ImplementationPage
       title="Readiness Scorecard"
       description="Ten dimensions scored 0–100. A green board is required before any real API mutation is enabled."
     >
       <Card className="border-border/70 p-5">
-        <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">Overall readiness</div>
+        <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+          Overall readiness
+        </div>
         <div className="mt-1 flex items-baseline gap-2">
           <div className="font-tabular text-[36px] font-bold">{avg}%</div>
-          <div className="text-[12px] text-muted-foreground">Target 85% before draft-only mutations, 95% before cutover.</div>
+          <div className="text-[12px] text-muted-foreground">
+            Target 85% before draft-only mutations, 95% before cutover.
+          </div>
         </div>
       </Card>
 
@@ -31,10 +37,16 @@ function ReadinessPage() {
             <Card key={r.area} className="border-border/70 p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="text-[13px] font-semibold">{r.area}</div>
-                <div className={cn(
-                  "font-tabular text-[14px] font-bold",
-                  tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-destructive",
-                )}>
+                <div
+                  className={cn(
+                    "font-tabular text-[14px] font-bold",
+                    tone === "success"
+                      ? "text-success"
+                      : tone === "warning"
+                        ? "text-warning"
+                        : "text-destructive",
+                  )}
+                >
                   {r.score}%
                 </div>
               </div>
@@ -42,7 +54,11 @@ function ReadinessPage() {
                 <div
                   className={cn(
                     "h-full rounded-full",
-                    tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : "bg-destructive",
+                    tone === "success"
+                      ? "bg-success"
+                      : tone === "warning"
+                        ? "bg-warning"
+                        : "bg-destructive",
                   )}
                   style={{ width: `${r.score}%` }}
                 />

@@ -19,7 +19,11 @@ export const Route = createFileRoute("/apex/relationship-graph")({
   head: () => ({
     meta: [
       { title: "Financial Relationship Graph — Project APEX" },
-      { name: "description", content: "Visualize how clients, invoices, payments, employees, vendors, campaigns, and decisions connect." },
+      {
+        name: "description",
+        content:
+          "Visualize how clients, invoices, payments, employees, vendors, campaigns, and decisions connect.",
+      },
     ],
   }),
   component: GraphPage,
@@ -32,7 +36,9 @@ function GraphPage() {
 
   const visibleNodes = GRAPH_NODES.filter((n) => types.has(n.type));
   const visibleNodeIds = new Set(visibleNodes.map((n) => n.id));
-  const visibleEdges = GRAPH_EDGES.filter((e) => visibleNodeIds.has(e.from) && visibleNodeIds.has(e.to));
+  const visibleEdges = GRAPH_EDGES.filter(
+    (e) => visibleNodeIds.has(e.from) && visibleNodeIds.has(e.to),
+  );
 
   function toggleType(t: GraphNodeType) {
     setTypes((prev) => {
@@ -61,7 +67,9 @@ function GraphPage() {
                   ? "border-foreground/40 bg-background text-foreground"
                   : "border-dashed border-border/60 bg-transparent text-muted-foreground opacity-60",
               )}
-              style={types.has(t) ? { boxShadow: `inset 0 -2px 0 ${NODE_TYPE_COLOR[t]}` } : undefined}
+              style={
+                types.has(t) ? { boxShadow: `inset 0 -2px 0 ${NODE_TYPE_COLOR[t]}` } : undefined
+              }
             >
               {t}
             </button>
@@ -73,7 +81,9 @@ function GraphPage() {
                 onClick={() => setMode(m)}
                 className={cn(
                   "px-3 py-1 font-medium",
-                  mode === m ? "bg-foreground text-background" : "bg-background text-muted-foreground",
+                  mode === m
+                    ? "bg-foreground text-background"
+                    : "bg-background text-muted-foreground",
                 )}
               >
                 {m === "graph" ? "Graph View" : "List View"}
@@ -159,16 +169,23 @@ function GraphPage() {
                 </thead>
                 <tbody>
                   {visibleNodes.map((n) => {
-                    const connections = visibleEdges.filter((e) => e.from === n.id || e.to === n.id).length;
+                    const connections = visibleEdges.filter(
+                      (e) => e.from === n.id || e.to === n.id,
+                    ).length;
                     return (
                       <tr key={n.id} className="border-t border-border/50 hover:bg-muted/40">
                         <td className="px-3 py-2">
-                          <button className="font-medium text-foreground hover:text-info" onClick={() => setSelected(n)}>
+                          <button
+                            className="font-medium text-foreground hover:text-info"
+                            onClick={() => setSelected(n)}
+                          >
                             {n.label}
                           </button>
                         </td>
                         <td className="px-3 py-2 text-muted-foreground">{n.type}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">{n.amount ? currency(n.amount) : "—"}</td>
+                        <td className="px-3 py-2 text-right tabular-nums">
+                          {n.amount ? currency(n.amount) : "—"}
+                        </td>
                         <td className="px-3 py-2 text-muted-foreground">{n.risk ?? "—"}</td>
                         <td className="px-3 py-2 text-muted-foreground">{connections}</td>
                       </tr>
@@ -183,31 +200,50 @@ function GraphPage() {
         <aside className="space-y-3">
           {selected && (
             <Card className="border-border/70 p-4">
-              <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{selected.type}</div>
+              <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+                {selected.type}
+              </div>
               <div className="text-[15px] font-semibold text-foreground">{selected.label}</div>
               <div className="mt-2">
-                {typeof selected.amount === "number" && <KVRow k="Amount" v={currency(selected.amount)} />}
+                {typeof selected.amount === "number" && (
+                  <KVRow k="Amount" v={currency(selected.amount)} />
+                )}
                 {selected.status && <KVRow k="Status" v={selected.status} />}
                 {selected.risk && <KVRow k="Risk" v={selected.risk} />}
                 {selected.owner && <KVRow k="Owner" v={selected.owner} />}
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5 text-[11px]">
                 {selected.relatedTimeline && (
-                  <Link to="/apex/timeline/$id" params={{ id: selected.relatedTimeline }} className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/timeline/$id"
+                    params={{ id: selected.relatedTimeline }}
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     Open timeline
                   </Link>
                 )}
                 {selected.relatedDna && (
-                  <Link to="/apex/financial-dna/$id" params={{ id: selected.relatedDna }} className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/financial-dna/$id"
+                    params={{ id: selected.relatedDna }}
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     View DNA
                   </Link>
                 )}
                 {selected.relatedOpportunity && (
-                  <Link to="/apex/opportunities/$id" params={{ id: selected.relatedOpportunity }} className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                  <Link
+                    to="/apex/opportunities/$id"
+                    params={{ id: selected.relatedOpportunity }}
+                    className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                  >
                     Open opportunity
                   </Link>
                 )}
-                <Link to="/apex/digital-twin" className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5">
+                <Link
+                  to="/apex/digital-twin"
+                  className="rounded-full border border-border/60 px-2 py-1 hover:bg-info/5"
+                >
                   Simulate decision
                 </Link>
               </div>

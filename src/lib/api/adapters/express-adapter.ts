@@ -27,10 +27,7 @@ function buildUrl(path: string, query?: HttpOptions["query"]): string {
       "VITE_LEDGEROS_API_BASE_URL is not set. Cannot reach production backend.",
     );
   }
-  const url = new URL(
-    path.startsWith("/") ? path.slice(1) : path,
-    apiConfig.baseUrl + "/",
-  );
+  const url = new URL(path.startsWith("/") ? path.slice(1) : path, apiConfig.baseUrl + "/");
   if (query) {
     for (const [k, v] of Object.entries(query)) {
       if (v !== undefined) url.searchParams.set(k, String(v));

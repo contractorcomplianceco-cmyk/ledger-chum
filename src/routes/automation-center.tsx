@@ -20,7 +20,10 @@ export const Route = createFileRoute("/automation-center")({
   head: () => ({
     meta: [
       { title: "Automation Center — LedgerOS" },
-      { name: "description", content: "Turn insight into recommendation, approval, action, result, and audit record." },
+      {
+        name: "description",
+        content: "Turn insight into recommendation, approval, action, result, and audit record.",
+      },
     ],
   }),
   component: AutomationCenter,
@@ -34,10 +37,33 @@ function AutomationCenter() {
       description="Insight → Recommendation → Approval → Action → Result → Audit. One control plane."
     >
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Kpi label="Active rules" value={String(k.activeRules)} sub={`${k.testRules} in test mode`} icon={<Bot className="h-4 w-4" />} />
-        <Kpi label="Pending approvals" value={String(k.pendingApprovals)} sub="Cross-source queue" icon={<ShieldCheck className="h-4 w-4" />} tone="brand" />
-        <Kpi label="Open exceptions" value={String(k.openExceptions)} sub={`${k.guardrailBreaches} guardrail breach`} icon={<AlertTriangle className="h-4 w-4" />} tone="warning" />
-        <Kpi label="Expected savings" value={currency(k.expectedSavings)} sub={`${currency(k.realizedSavings)} realized`} icon={<Coins className="h-4 w-4" />} tone="success" />
+        <Kpi
+          label="Active rules"
+          value={String(k.activeRules)}
+          sub={`${k.testRules} in test mode`}
+          icon={<Bot className="h-4 w-4" />}
+        />
+        <Kpi
+          label="Pending approvals"
+          value={String(k.pendingApprovals)}
+          sub="Cross-source queue"
+          icon={<ShieldCheck className="h-4 w-4" />}
+          tone="brand"
+        />
+        <Kpi
+          label="Open exceptions"
+          value={String(k.openExceptions)}
+          sub={`${k.guardrailBreaches} guardrail breach`}
+          icon={<AlertTriangle className="h-4 w-4" />}
+          tone="warning"
+        />
+        <Kpi
+          label="Expected savings"
+          value={currency(k.expectedSavings)}
+          sub={`${currency(k.realizedSavings)} realized`}
+          icon={<Coins className="h-4 w-4" />}
+          tone="success"
+        />
       </section>
 
       <section className="grid gap-4 xl:grid-cols-3">
@@ -47,9 +73,16 @@ function AutomationCenter() {
               <li key={r.id} className="flex items-center justify-between gap-2 py-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{r.name}</div>
-                  <div className="text-[11px] text-muted-foreground">{r.lastRun} · {r.successCount} ok · {r.failureCount} err</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {r.lastRun} · {r.successCount} ok · {r.failureCount} err
+                  </div>
                 </div>
-                <span className={cn("rounded-full border px-2 py-0.5 text-[10.5px] font-semibold", RULE_STATUS_META[r.status].tone)}>
+                <span
+                  className={cn(
+                    "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold",
+                    RULE_STATUS_META[r.status].tone,
+                  )}
+                >
                   {RULE_STATUS_META[r.status].label}
                 </span>
               </li>
@@ -63,7 +96,9 @@ function AutomationCenter() {
               <li key={a.id} className="flex items-center justify-between gap-2 py-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{a.title}</div>
-                  <div className="text-[11px] text-muted-foreground">{a.approver} · due {a.deadline}</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {a.approver} · due {a.deadline}
+                  </div>
                 </div>
                 <div className="font-tabular text-[12px]">{currency(a.amount)}</div>
               </li>
@@ -73,15 +108,22 @@ function AutomationCenter() {
 
         <Panel title="Top exceptions by dollar impact" to="/automation/exceptions">
           <ul className="divide-y divide-border text-[12.5px]">
-            {[...EXCEPTIONS].sort((a, b) => b.dollarImpact - a.dollarImpact).slice(0, 5).map((e) => (
-              <li key={e.id} className="flex items-center justify-between gap-2 py-2">
-                <div className="min-w-0">
-                  <div className="truncate font-medium">{e.title}</div>
-                  <div className="text-[11px] text-muted-foreground">{e.owner} · {e.age}d old · conf {e.confidence}%</div>
-                </div>
-                <div className="font-tabular text-[12px] text-destructive">{currency(e.dollarImpact)}</div>
-              </li>
-            ))}
+            {[...EXCEPTIONS]
+              .sort((a, b) => b.dollarImpact - a.dollarImpact)
+              .slice(0, 5)
+              .map((e) => (
+                <li key={e.id} className="flex items-center justify-between gap-2 py-2">
+                  <div className="min-w-0">
+                    <div className="truncate font-medium">{e.title}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {e.owner} · {e.age}d old · conf {e.confidence}%
+                    </div>
+                  </div>
+                  <div className="font-tabular text-[12px] text-destructive">
+                    {currency(e.dollarImpact)}
+                  </div>
+                </li>
+              ))}
           </ul>
         </Panel>
       </section>
@@ -96,10 +138,14 @@ function AutomationCenter() {
                   <span className="text-[11px] text-muted-foreground">{p.progressPct}%</span>
                 </div>
                 <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-muted">
-                  <div className="h-full bg-gradient-brand-cool" style={{ width: `${p.progressPct}%` }} />
+                  <div
+                    className="h-full bg-gradient-brand-cool"
+                    style={{ width: `${p.progressPct}%` }}
+                  />
                 </div>
                 <div className="mt-1 text-[11px] text-muted-foreground">
-                  {p.owner} · Expected {currency(p.expectedSavings)} · Realized {currency(p.realizedSavings)}
+                  {p.owner} · Expected {currency(p.expectedSavings)} · Realized{" "}
+                  {currency(p.realizedSavings)}
                 </div>
               </li>
             ))}
@@ -119,7 +165,8 @@ function AutomationCenter() {
                     "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold",
                     g.status === "healthy" && "border-success/30 bg-success/10 text-success",
                     g.status === "watch" && "border-warning/30 bg-warning/10 text-warning",
-                    g.status === "breach" && "border-destructive/30 bg-destructive/10 text-destructive",
+                    g.status === "breach" &&
+                      "border-destructive/30 bg-destructive/10 text-destructive",
                   )}
                 >
                   {g.status}
@@ -135,14 +182,17 @@ function AutomationCenter() {
               <li key={i.id} className="flex items-center justify-between gap-2 py-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{i.name}</div>
-                  <div className="text-[11px] text-muted-foreground">{i.lastSync} · {i.errors24h} err/24h</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {i.lastSync} · {i.errors24h} err/24h
+                  </div>
                 </div>
                 <span
                   className={cn(
                     "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold",
                     i.status === "healthy" && "border-success/30 bg-success/10 text-success",
                     i.status === "degraded" && "border-warning/30 bg-warning/10 text-warning",
-                    i.status === "down" && "border-destructive/30 bg-destructive/10 text-destructive",
+                    i.status === "down" &&
+                      "border-destructive/30 bg-destructive/10 text-destructive",
                   )}
                 >
                   {i.status}
@@ -160,7 +210,9 @@ function AutomationCenter() {
               <li key={d.id} className="flex items-center justify-between gap-3 py-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{d.title}</div>
-                  <div className="text-[11px] text-muted-foreground">{d.date} · {d.decidedBy} · {d.rationale}</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {d.date} · {d.decidedBy} · {d.rationale}
+                  </div>
                 </div>
                 <div className="font-tabular text-[12px]">{currency(d.amount)}</div>
               </li>
@@ -172,11 +224,25 @@ function AutomationCenter() {
   );
 }
 
-function Kpi({ label, value, sub, icon, tone = "default" }: { label: string; value: string; sub?: string; icon?: React.ReactNode; tone?: "default" | "brand" | "warning" | "success" }) {
+function Kpi({
+  label,
+  value,
+  sub,
+  icon,
+  tone = "default",
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  icon?: React.ReactNode;
+  tone?: "default" | "brand" | "warning" | "success";
+}) {
   return (
     <Card className="border-border/70 p-4">
       <div className="flex items-center justify-between">
-        <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+        <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+          {label}
+        </div>
         {icon && <span className="text-muted-foreground">{icon}</span>}
       </div>
       <div
@@ -199,7 +265,10 @@ function Panel({ title, to, children }: { title: string; to: string; children: R
     <Card className="border-border/70 p-4">
       <div className="mb-2 flex items-center justify-between">
         <h3 className="text-[13px] font-semibold">{title}</h3>
-        <Link to={to as "/automation-center"} className="inline-flex items-center gap-1 text-[11.5px] text-brand hover:underline">
+        <Link
+          to={to as "/automation-center"}
+          className="inline-flex items-center gap-1 text-[11.5px] text-brand hover:underline"
+        >
           Open <ArrowRight className="h-3 w-3" />
         </Link>
       </div>

@@ -11,7 +11,10 @@ export const Route = createFileRoute("/ledger/fixed-assets")({
   head: () => ({
     meta: [
       { title: "Fixed Assets — LedgerOS" },
-      { name: "description", content: "Fixed asset register, book value, and depreciation schedule." },
+      {
+        name: "description",
+        content: "Fixed asset register, book value, and depreciation schedule.",
+      },
       { property: "og:title", content: "Fixed Assets — LedgerOS" },
     ],
   }),
@@ -58,15 +61,27 @@ function FixedAssetsPage() {
                     <td className="px-3 py-2 font-mono text-[12px]">{a.asset_number}</td>
                     <td className="px-3 py-2">{a.name}</td>
                     <td className="px-3 py-2 text-muted-foreground">{a.acquisition_date}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">${Number(a.acquisition_cost).toLocaleString()}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">${Number(a.accumulated_depreciation).toLocaleString()}</td>
-                    <td className="px-3 py-2 text-right tabular-nums font-medium">${Number(a.book_value).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-right tabular-nums">
+                      ${Number(a.acquisition_cost).toLocaleString()}
+                    </td>
+                    <td className="px-3 py-2 text-right tabular-nums">
+                      ${Number(a.accumulated_depreciation).toLocaleString()}
+                    </td>
+                    <td className="px-3 py-2 text-right tabular-nums font-medium">
+                      ${Number(a.book_value).toLocaleString()}
+                    </td>
                     <td className="px-3 py-2 text-muted-foreground">{a.depreciation_method}</td>
-                    <td className="px-3 py-2"><Badge variant="secondary">{a.status}</Badge></td>
+                    <td className="px-3 py-2">
+                      <Badge variant="secondary">{a.status}</Badge>
+                    </td>
                   </tr>
                 ))}
                 {!assets.isLoading && (assets.data?.length ?? 0) === 0 && (
-                  <tr><td className="px-3 py-6 text-center text-muted-foreground" colSpan={8}>No fixed assets recorded.</td></tr>
+                  <tr>
+                    <td className="px-3 py-6 text-center text-muted-foreground" colSpan={8}>
+                      No fixed assets recorded.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

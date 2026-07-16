@@ -64,10 +64,7 @@ export const Route = createFileRoute("/api/public/integrations/payments")({
               .eq("external_id", a.invoice_external_id)
               .maybeSingle();
             if (!inv) {
-              throw new IntegrationError(
-                422,
-                `Invoice ${a.invoice_external_id} not found`,
-              );
+              throw new IntegrationError(422, `Invoice ${a.invoice_external_id} not found`);
             }
             applyPairs.push({ invoice_id: inv.id, amount: a.amount });
           }

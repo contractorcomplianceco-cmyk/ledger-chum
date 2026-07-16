@@ -5,7 +5,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { CompensationPlanVersion } from "@/lib/api/services/compensation";
 
@@ -42,11 +49,25 @@ function PlanVersionsPage() {
             onChange={(e) => setSummary(e.target.value)}
             className="max-w-md"
           />
-          <Button size="sm" onClick={createDraft}>Create new version</Button>
-          <Button size="sm" variant="outline" onClick={() => showDemoToast("Compare versions")}>Compare</Button>
-          <Button size="sm" variant="outline" onClick={() => showDemoToast("Scheduled")}>Schedule</Button>
-          <Button size="sm" variant="outline" onClick={() => showDemoToast("Restored draft")}>Restore Draft</Button>
-          <Button size="sm" variant="outline" onClick={() => showDemoToast("Cancelled future version")}>Cancel Future Version</Button>
+          <Button size="sm" onClick={createDraft}>
+            Create new version
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => showDemoToast("Compare versions")}>
+            Compare
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => showDemoToast("Scheduled")}>
+            Schedule
+          </Button>
+          <Button size="sm" variant="outline" onClick={() => showDemoToast("Restored draft")}>
+            Restore Draft
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => showDemoToast("Cancelled future version")}
+          >
+            Cancel Future Version
+          </Button>
         </div>
       </Card>
 
@@ -71,7 +92,8 @@ function PlanVersionsPage() {
                 <TableCell className="font-medium">v{v.version}</TableCell>
                 <TableCell>{v.effectiveDate}</TableCell>
                 <TableCell className="text-xs">
-                  {v.activeFrom ?? "—"} → {v.activeTo ?? (v.approvalStatus === "approved" ? "current" : "—")}
+                  {v.activeFrom ?? "—"} →{" "}
+                  {v.activeTo ?? (v.approvalStatus === "approved" ? "current" : "—")}
                 </TableCell>
                 <TableCell className="text-xs">{v.changeSummary}</TableCell>
                 <TableCell>{v.priorVersion ? `v${v.priorVersion}` : "—"}</TableCell>
@@ -81,8 +103,20 @@ function PlanVersionsPage() {
                   <Badge variant="outline">{v.approvalStatus}</Badge>
                 </TableCell>
                 <TableCell className="space-x-1 text-right">
-                  <Button size="sm" variant="ghost" onClick={() => showDemoToast(`Activated v${v.version}`)}>Activate</Button>
-                  <Button size="sm" variant="ghost" onClick={() => showDemoToast(`Retired v${v.version}`)}>Retire</Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => showDemoToast(`Activated v${v.version}`)}
+                  >
+                    Activate
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => showDemoToast(`Retired v${v.version}`)}
+                  >
+                    Retire
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

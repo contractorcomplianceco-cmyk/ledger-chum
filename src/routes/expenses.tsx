@@ -9,9 +9,17 @@ export const Route = createFileRoute("/expenses")({
   head: () => ({
     meta: [
       { title: "Expenses — LedgerOS" },
-      { name: "description", content: "Review, approve, match, and understand company spending with policy, receipt, anomaly, and subscription intelligence built in." },
+      {
+        name: "description",
+        content:
+          "Review, approve, match, and understand company spending with policy, receipt, anomaly, and subscription intelligence built in.",
+      },
       { property: "og:title", content: "Expenses — LedgerOS" },
-      { property: "og:description", content: "Expense management with smart matching, policy enforcement, anomaly detection, and reimbursable recovery." },
+      {
+        property: "og:description",
+        content:
+          "Expense management with smart matching, policy enforcement, anomaly detection, and reimbursable recovery.",
+      },
     ],
   }),
   component: ExpensesLayout,
@@ -53,7 +61,9 @@ function ExpensesLayout() {
               <Download className="mr-1.5 h-3.5 w-3.5" /> Export
             </Button>
             <Button size="sm" className="h-9" asChild>
-              <Link to="/expenses/submit"><Plus className="mr-1.5 h-3.5 w-3.5" /> Submit expense</Link>
+              <Link to="/expenses/submit">
+                <Plus className="mr-1.5 h-3.5 w-3.5" /> Submit expense
+              </Link>
             </Button>
           </>
         }
@@ -65,9 +75,14 @@ function ExpensesLayout() {
 
       {!isSubmit && (
         <div className="border-b border-border">
-          <nav className="flex flex-wrap items-center gap-x-1 gap-y-1 overflow-x-auto px-6 sm:px-8" aria-label="Expenses sections">
+          <nav
+            className="flex flex-wrap items-center gap-x-1 gap-y-1 overflow-x-auto px-6 sm:px-8"
+            aria-label="Expenses sections"
+          >
             {TABS.map((t) => {
-              const active = t.exact ? pathname === t.to : pathname === t.to || pathname.startsWith(t.to + "/");
+              const active = t.exact
+                ? pathname === t.to
+                : pathname === t.to || pathname.startsWith(t.to + "/");
               return (
                 <Link
                   key={t.to}
@@ -78,7 +93,9 @@ function ExpensesLayout() {
                   )}
                 >
                   {t.label}
-                  {active && <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-gradient-brand-cool" />}
+                  {active && (
+                    <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-gradient-brand-cool" />
+                  )}
                 </Link>
               );
             })}

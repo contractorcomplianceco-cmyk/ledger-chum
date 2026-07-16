@@ -27,13 +27,13 @@ inbound path.
 
 ## 1. Deliverables
 
-| Surface | Route | Purpose |
-| --- | --- | --- |
+| Surface                        | Route                        | Purpose                                                                                                                                                                                               |
+| ------------------------------ | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ServiceConnect Pilot Simulator | `/admin/integration-testing` | Fires representative payloads at `/api/public/integrations/*` using an operator-supplied API key. Read-only from LedgerOS's perspective — the simulator only presents outcomes the pipeline produced. |
-| Integration Test Center | `/admin/integration-testing` | Structured checklist: authentication, idempotency, event ingestion, mapping, materialization, accounting, reporting, error recovery. |
-| Production Readiness Dashboard | `/admin/readiness` | Five readiness categories: accounting, security, integration, intelligence, migration. |
-| Data Migration Framework | `/admin/migration` | Prepares (does NOT execute) imports for chart of accounts, customers, vendors, opening balances, historical transactions. |
-| Observability Framework | `/admin/observability` | Live view of integration failures, processing time, event volume, retry queue, audit events, system health. |
+| Integration Test Center        | `/admin/integration-testing` | Structured checklist: authentication, idempotency, event ingestion, mapping, materialization, accounting, reporting, error recovery.                                                                  |
+| Production Readiness Dashboard | `/admin/readiness`           | Five readiness categories: accounting, security, integration, intelligence, migration.                                                                                                                |
+| Data Migration Framework       | `/admin/migration`           | Prepares (does NOT execute) imports for chart of accounts, customers, vendors, opening balances, historical transactions.                                                                             |
+| Observability Framework        | `/admin/observability`       | Live view of integration failures, processing time, event volume, retry queue, audit events, system health.                                                                                           |
 
 ---
 

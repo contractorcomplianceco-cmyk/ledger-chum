@@ -49,17 +49,34 @@ function TechPortfolioPage() {
                     <td className="px-3 py-2 text-muted-foreground">{t.product}</td>
                     <td className="px-3 py-2 text-muted-foreground">{t.category}</td>
                     <td className="px-3 py-2">{t.owner}</td>
-                    <td className="px-3 py-2 text-right font-tabular font-semibold">{currency(t.monthly)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(t.annual)}</td>
+                    <td className="px-3 py-2 text-right font-tabular font-semibold">
+                      {currency(t.monthly)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(t.annual)}
+                    </td>
                     <td className="px-3 py-2 text-right font-tabular">{t.seats}</td>
                     <td className="px-3 py-2 text-right font-tabular">{t.activeUsers}</td>
-                    <td className={cn("px-3 py-2 text-right font-tabular font-semibold", utilTone)}>{util.toFixed(0)}%</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(t.costPerActiveUser)}</td>
+                    <td className={cn("px-3 py-2 text-right font-tabular font-semibold", utilTone)}>
+                      {util.toFixed(0)}%
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(t.costPerActiveUser)}
+                    </td>
                     <td className="px-3 py-2 text-muted-foreground">{t.renewal}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(t.revenueSupported)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{t.laborSaved}</td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(t.revenueSupported)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {t.laborSaved}
+                    </td>
                     <td className="px-3 py-2">
-                      <span className={cn("rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap", meta.className)}>
+                      <span
+                        className={cn(
+                          "rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap",
+                          meta.className,
+                        )}
+                      >
                         {meta.label}
                       </span>
                     </td>
@@ -72,8 +89,9 @@ function TechPortfolioPage() {
       </Card>
 
       <p className="text-[11px] italic text-muted-foreground">
-        Recommendations column omitted from the table for width — hover a row (or open the vendor detail) to view.
-        Alternatives considered: duplicates flagged automatically; renewal-soon rows highlight cancellation windows.
+        Recommendations column omitted from the table for width — hover a row (or open the vendor
+        detail) to view. Alternatives considered: duplicates flagged automatically; renewal-soon
+        rows highlight cancellation windows.
       </p>
     </IntelligencePage>
   );

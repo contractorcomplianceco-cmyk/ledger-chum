@@ -23,7 +23,10 @@ function SubscriptionActionsPage() {
       <section className="grid gap-3 sm:grid-cols-3">
         <Kpi label="Expected annual savings" value={currency(expected)} tone="success" />
         <Kpi label="Realized to date" value={currency(realized)} tone="success" />
-        <Kpi label="Open actions" value={String(SUB_ACTIONS.filter((a) => a.status !== "done").length)} />
+        <Kpi
+          label="Open actions"
+          value={String(SUB_ACTIONS.filter((a) => a.status !== "done").length)}
+        />
       </section>
 
       <Card className="border-border/70 p-0">
@@ -37,7 +40,10 @@ function SubscriptionActionsPage() {
           <span>Status</span>
         </div>
         {SUB_ACTIONS.map((a) => (
-          <div key={a.id} className="grid grid-cols-[1.2fr_1.4fr_1fr_1fr_1fr_1fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0">
+          <div
+            key={a.id}
+            className="grid grid-cols-[1.2fr_1.4fr_1fr_1fr_1fr_1fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0"
+          >
             <div>
               <div className="font-medium">{a.vendor}</div>
               <div className="text-[11px] text-muted-foreground">{a.notes}</div>
@@ -47,20 +53,29 @@ function SubscriptionActionsPage() {
             <span className="text-[11.5px] text-muted-foreground">{a.due}</span>
             <span className="font-tabular text-success">{currency(a.expectedSavings)}</span>
             <span className="font-tabular">{currency(a.realizedSavings)}</span>
-            <span className={cn(
-              "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
-              a.status === "open" && "border-border bg-muted/40 text-muted-foreground",
-              a.status === "in_progress" && "border-brand/30 bg-brand/10 text-brand",
-              a.status === "done" && "border-success/30 bg-success/10 text-success",
-              a.status === "blocked" && "border-destructive/30 bg-destructive/10 text-destructive",
-            )}>{a.status.replace("_", " ")}</span>
+            <span
+              className={cn(
+                "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
+                a.status === "open" && "border-border bg-muted/40 text-muted-foreground",
+                a.status === "in_progress" && "border-brand/30 bg-brand/10 text-brand",
+                a.status === "done" && "border-success/30 bg-success/10 text-success",
+                a.status === "blocked" &&
+                  "border-destructive/30 bg-destructive/10 text-destructive",
+              )}
+            >
+              {a.status.replace("_", " ")}
+            </span>
           </div>
         ))}
       </Card>
 
       <div className="flex gap-2">
-        <Button size="sm" variant="outline">Assign owner</Button>
-        <Button size="sm" variant="outline">Bulk mark done</Button>
+        <Button size="sm" variant="outline">
+          Assign owner
+        </Button>
+        <Button size="sm" variant="outline">
+          Bulk mark done
+        </Button>
         <Button size="sm">Create renewal task</Button>
       </div>
     </AutomationPage>
@@ -70,8 +85,17 @@ function SubscriptionActionsPage() {
 function Kpi({ label, value, tone }: { label: string; value: string; tone?: "success" }) {
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className={cn("mt-1 font-tabular text-[22px] font-bold", tone === "success" && "text-success")}>{value}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn(
+          "mt-1 font-tabular text-[22px] font-bold",
+          tone === "success" && "text-success",
+        )}
+      >
+        {value}
+      </div>
     </Card>
   );
 }

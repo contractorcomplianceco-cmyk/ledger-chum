@@ -14,7 +14,8 @@ export const Route = createFileRoute("/intelligence/recommendations")({
 
 function RecommendationsPage() {
   const [filter, setFilter] = useState<RecCategory | "all">("all");
-  const recs = filter === "all" ? RECOMMENDATIONS : RECOMMENDATIONS.filter((r) => r.category === filter);
+  const recs =
+    filter === "all" ? RECOMMENDATIONS : RECOMMENDATIONS.filter((r) => r.category === filter);
   const totalImpact = RECOMMENDATIONS.reduce((s, r) => s + Math.max(0, r.impact), 0);
   const categoriesUsed = Array.from(new Set(RECOMMENDATIONS.map((r) => r.category)));
 
@@ -34,13 +35,17 @@ function RecommendationsPage() {
           <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
             Cumulative positive impact
           </div>
-          <div className="mt-1 font-tabular text-[22px] font-bold text-success">{currency(totalImpact)}</div>
+          <div className="mt-1 font-tabular text-[22px] font-bold text-success">
+            {currency(totalImpact)}
+          </div>
         </Card>
         <Card className="border-border/70 p-4">
           <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
             Awaiting approval
           </div>
-          <div className="mt-1 font-tabular text-[22px] font-bold">{RECOMMENDATIONS.filter((r) => r.status === "open").length}</div>
+          <div className="mt-1 font-tabular text-[22px] font-bold">
+            {RECOMMENDATIONS.filter((r) => r.status === "open").length}
+          </div>
         </Card>
         <Card className="border-border/70 p-4">
           <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">

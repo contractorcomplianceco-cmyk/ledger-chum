@@ -24,6 +24,7 @@ One row per org. Holds `accounting_basis` (`cash|accrual`),
 `audit_retention_months`.
 
 Access:
+
 - Any org member can read.
 - Only `owner` or `accounting_lead` may write.
 
@@ -56,6 +57,7 @@ just ServiceConnect. Only `owner` may issue, rotate, or revoke.
 ### Pilot Organization Seed
 
 Inserted (idempotent):
+
 - Organization `CCA Pilot Financials` (slug `cca-pilot`)
 - `organization_settings` defaults
 - Fiscal year for the current calendar year, 12 monthly periods, all `open`
@@ -97,27 +99,27 @@ Foundation-level contracts (server functions, called from UI via
 remain gated by `verify.server.ts` (bearer + idempotency) — no financial
 posting behavior yet.
 
-| Purpose        | Function                                    |
-| -------------- | ------------------------------------------- |
-| Organizations  | Handled through Supabase browser client with RLS |
-| Fiscal years   | `listFiscalYears`, `createFiscalYear`       |
-| Fiscal periods | `listFiscalPeriods`, `setPeriodStatus`      |
-| Roles          | `listOrgRoles`, `assignRole`, `revokeRole`  |
+| Purpose        | Function                                                                 |
+| -------------- | ------------------------------------------------------------------------ |
+| Organizations  | Handled through Supabase browser client with RLS                         |
+| Fiscal years   | `listFiscalYears`, `createFiscalYear`                                    |
+| Fiscal periods | `listFiscalPeriods`, `setPeriodStatus`                                   |
+| Roles          | `listOrgRoles`, `assignRole`, `revokeRole`                               |
 | Api clients    | `listApiClients`, `issueApiClient`, `rotateApiClient`, `revokeApiClient` |
-| Audit          | Read via Supabase browser client under RLS  |
+| Audit          | Read via Supabase browser client under RLS                               |
 
 ## Permission Model
 
 Roles (existing `app_role` enum, kept for continuity with docs 02/06):
 
-| Role                  | Purpose                                        |
-| --------------------- | ---------------------------------------------- |
+| Role                  | Purpose                                                    |
+| --------------------- | ---------------------------------------------------------- |
 | `owner`               | Organization admin. Owns roles, api clients, org settings. |
-| `accounting_lead`     | Chart of accounts, fiscal calendar, period close. |
-| `accountant`          | Day-to-day posting (future phases).            |
-| `systems_reviewer`    | Read audit + sync history; reconciliation queue. |
-| `team_member`         | Operational read access; no financial writes.  |
-| `integration_service` | External systems acting via api_clients.       |
+| `accounting_lead`     | Chart of accounts, fiscal calendar, period close.          |
+| `accountant`          | Day-to-day posting (future phases).                        |
+| `systems_reviewer`    | Read audit + sync history; reconciliation queue.           |
+| `team_member`         | Operational read access; no financial writes.              |
+| `integration_service` | External systems acting via api_clients.                   |
 
 Owner is a hard gate for privileged foundation operations
 (`issueApiClient`, `rotateApiClient`, `revokeApiClient`, `assignRole`,
@@ -134,6 +136,7 @@ verified server handlers.
 ## Testing Notes
 
 Verified in this phase:
+
 - Non-member `SELECT`/`INSERT`/`UPDATE` on foundation tables is blocked by RLS.
 - Direct `UPDATE`/`DELETE` on `audit_events` from `authenticated` raises
   `audit_events is append-only`.

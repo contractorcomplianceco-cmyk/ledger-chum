@@ -20,10 +20,17 @@ function ActionPlansPage() {
     <AutomationPage
       title="Action Plans"
       description="Turn any insight into a leadership action plan — objective, owner, tasks, expected vs realized savings, approval, and outcome."
-      actions={<Button size="sm" className="h-9"><Plus className="mr-1.5 h-3.5 w-3.5" /> New action plan</Button>}
+      actions={
+        <Button size="sm" className="h-9">
+          <Plus className="mr-1.5 h-3.5 w-3.5" /> New action plan
+        </Button>
+      }
     >
       <section className="grid gap-3 sm:grid-cols-3">
-        <Kpi label="Active plans" value={String(ACTION_PLANS.filter((a) => a.status !== "done").length)} />
+        <Kpi
+          label="Active plans"
+          value={String(ACTION_PLANS.filter((a) => a.status !== "done").length)}
+        />
         <Kpi label="Expected savings" value={currency(expected)} tone="success" />
         <Kpi label="Realized savings" value={currency(realized)} tone="success" />
       </section>
@@ -33,17 +40,25 @@ function ActionPlansPage() {
           <Card key={p.id} className="border-border/70 p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{p.id} · {p.owner}</div>
+                <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {p.id} · {p.owner}
+                </div>
                 <div className="font-semibold">{p.objective}</div>
-                <div className="text-[11.5px] text-muted-foreground">Due {p.due} · Sources: {p.sources.join(", ")}</div>
+                <div className="text-[11.5px] text-muted-foreground">
+                  Due {p.due} · Sources: {p.sources.join(", ")}
+                </div>
               </div>
-              <span className={cn(
-                "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
-                p.status === "done" && "border-success/30 bg-success/10 text-success",
-                p.status === "in_progress" && "border-brand/30 bg-brand/10 text-brand",
-                p.status === "at_risk" && "border-warning/30 bg-warning/10 text-warning",
-                p.status === "not_started" && "border-border bg-muted/40 text-muted-foreground",
-              )}>{p.status.replace("_", " ")}</span>
+              <span
+                className={cn(
+                  "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
+                  p.status === "done" && "border-success/30 bg-success/10 text-success",
+                  p.status === "in_progress" && "border-brand/30 bg-brand/10 text-brand",
+                  p.status === "at_risk" && "border-warning/30 bg-warning/10 text-warning",
+                  p.status === "not_started" && "border-border bg-muted/40 text-muted-foreground",
+                )}
+              >
+                {p.status.replace("_", " ")}
+              </span>
             </div>
 
             <div className="mt-3">
@@ -52,7 +67,10 @@ function ActionPlansPage() {
                 <span className="font-tabular">{p.progressPct}%</span>
               </div>
               <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-muted">
-                <div className="h-full bg-gradient-brand-cool" style={{ width: `${p.progressPct}%` }} />
+                <div
+                  className="h-full bg-gradient-brand-cool"
+                  style={{ width: `${p.progressPct}%` }}
+                />
               </div>
             </div>
 
@@ -65,16 +83,28 @@ function ActionPlansPage() {
             <ul className="mt-3 space-y-1 text-[12.5px]">
               {p.tasks.map((t) => (
                 <li key={t.title} className="flex items-center gap-2">
-                  {t.done ? <CheckCircle2 className="h-3.5 w-3.5 text-success" /> : <Circle className="h-3.5 w-3.5 text-muted-foreground" />}
-                  <span className={cn(t.done && "text-muted-foreground line-through")}>{t.title}</span>
+                  {t.done ? (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-success" />
+                  ) : (
+                    <Circle className="h-3.5 w-3.5 text-muted-foreground" />
+                  )}
+                  <span className={cn(t.done && "text-muted-foreground line-through")}>
+                    {t.title}
+                  </span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-3 flex gap-1.5">
-              <Button size="sm" variant="outline" className="h-7">Add task</Button>
-              <Button size="sm" variant="outline" className="h-7">Reassign</Button>
-              <Button size="sm" className="h-7">Mark milestone</Button>
+              <Button size="sm" variant="outline" className="h-7">
+                Add task
+              </Button>
+              <Button size="sm" variant="outline" className="h-7">
+                Reassign
+              </Button>
+              <Button size="sm" className="h-7">
+                Mark milestone
+              </Button>
             </div>
           </Card>
         ))}
@@ -86,8 +116,17 @@ function ActionPlansPage() {
 function Kpi({ label, value, tone }: { label: string; value: string; tone?: "success" }) {
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className={cn("mt-1 font-tabular text-[22px] font-bold", tone === "success" && "text-success")}>{value}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn(
+          "mt-1 font-tabular text-[22px] font-bold",
+          tone === "success" && "text-success",
+        )}
+      >
+        {value}
+      </div>
     </Card>
   );
 }
@@ -95,8 +134,14 @@ function Kpi({ label, value, tone }: { label: string; value: string; tone?: "suc
 function Cell({ label, value, tone }: { label: string; value: string; tone?: "success" }) {
   return (
     <div className="rounded-md border border-border/70 bg-muted/30 p-2">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className={cn("mt-0.5 font-tabular font-semibold", tone === "success" && "text-success")}>{value}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn("mt-0.5 font-tabular font-semibold", tone === "success" && "text-success")}
+      >
+        {value}
+      </div>
     </div>
   );
 }

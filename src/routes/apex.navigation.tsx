@@ -18,7 +18,8 @@ export const Route = createFileRoute("/apex/navigation")({
           </div>
           <NavModeSwitcher />
           <div className="mt-2 text-[11.5px] text-white/70">
-            Preference persists to <code className="font-mono">localStorage</code> key <code className="font-mono">ledgeros.nav-mode</code>.
+            Preference persists to <code className="font-mono">localStorage</code> key{" "}
+            <code className="font-mono">ledgeros.nav-mode</code>.
           </div>
         </div>
       </ApexSection>
@@ -28,9 +29,14 @@ export const Route = createFileRoute("/apex/navigation")({
           <Card className="border-border/70 p-3">
             <div className="grid gap-1 text-[12px] sm:grid-cols-2 lg:grid-cols-3">
               {w.items.map((i) => (
-                <div key={i.to} className="flex items-center justify-between gap-2 border-b border-border/50 py-1 last:border-b-0">
+                <div
+                  key={i.to}
+                  className="flex items-center justify-between gap-2 border-b border-border/50 py-1 last:border-b-0"
+                >
                   <span className="truncate">{i.title}</span>
-                  <code className="truncate font-mono text-[11px] text-muted-foreground">{i.to}</code>
+                  <code className="truncate font-mono text-[11px] text-muted-foreground">
+                    {i.to}
+                  </code>
                 </div>
               ))}
             </div>

@@ -24,16 +24,18 @@ export interface CurrentUser {
   email: string;
   role: RoleKey;
   permissions: string[];
-  approvalLimits: Partial<Record<
-    | "expense"
-    | "invoice"
-    | "payment"
-    | "journal"
-    | "commission"
-    | "guardrail_override"
-    | "budget_override",
-    Money
-  >>;
+  approvalLimits: Partial<
+    Record<
+      | "expense"
+      | "invoice"
+      | "payment"
+      | "journal"
+      | "commission"
+      | "guardrail_override"
+      | "budget_override",
+      Money
+    >
+  >;
   sensitiveAccess: boolean;
 }
 

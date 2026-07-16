@@ -13,7 +13,10 @@ export function AIPersonaCard({ persona, compact }: { persona: AIPersona; compac
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4" />
           <div className="text-[13.5px] font-semibold">{persona.name}</div>
-          <Badge variant="outline" className="ml-auto border-white/40 bg-white/10 text-[10px] text-white">
+          <Badge
+            variant="outline"
+            className="ml-auto border-white/40 bg-white/10 text-[10px] text-white"
+          >
             Advisory only
           </Badge>
         </div>
@@ -22,7 +25,8 @@ export function AIPersonaCard({ persona, compact }: { persona: AIPersona; compac
       <div className="space-y-2 p-3">
         <div className="text-[12px] text-muted-foreground">{persona.purpose}</div>
         <div className="text-[11px] text-muted-foreground">
-          Intended roles: <span className="text-foreground">{persona.intendedRoles.join(", ")}</span>
+          Intended roles:{" "}
+          <span className="text-foreground">{persona.intendedRoles.join(", ")}</span>
         </div>
         {!compact && (
           <div className="mt-2">
@@ -61,7 +65,9 @@ export function AIGovernancePanel() {
           <CheckCircle2 className="h-4 w-4" /> AI can
         </div>
         <ul className="mt-2 space-y-1 text-[12px] text-foreground">
-          {AI_GOVERNANCE.can.map((c) => <li key={c}>• {c}</li>)}
+          {AI_GOVERNANCE.can.map((c) => (
+            <li key={c}>• {c}</li>
+          ))}
         </ul>
       </Card>
       <Card className="border-rose-500/30 bg-rose-500/5 p-3">
@@ -69,7 +75,9 @@ export function AIGovernancePanel() {
           <XCircle className="h-4 w-4" /> AI cannot
         </div>
         <ul className="mt-2 space-y-1 text-[12px] text-foreground">
-          {AI_GOVERNANCE.cannot.map((c) => <li key={c}>• {c}</li>)}
+          {AI_GOVERNANCE.cannot.map((c) => (
+            <li key={c}>• {c}</li>
+          ))}
         </ul>
       </Card>
       <Card className="border-border/70 p-3 md:col-span-2">
@@ -78,7 +86,9 @@ export function AIGovernancePanel() {
         </div>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {AI_RESPONSE_CONTRACT.map((r) => (
-            <Badge key={r} variant="outline" className="text-[10.5px]">{r}</Badge>
+            <Badge key={r} variant="outline" className="text-[10.5px]">
+              {r}
+            </Badge>
           ))}
         </div>
       </Card>

@@ -83,11 +83,13 @@ export const startPeriodClose = createServerFn({ method: "POST" })
 export const setCloseTaskStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      taskId: z.string().uuid(),
-      status: z.enum(["pending", "in_progress", "done", "skipped", "blocked"]),
-      note: z.string().max(1000).optional(),
-    }).parse(v),
+    z
+      .object({
+        taskId: z.string().uuid(),
+        status: z.enum(["pending", "in_progress", "done", "skipped", "blocked"]),
+        note: z.string().max(1000).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("set_close_task_status", {
@@ -102,10 +104,12 @@ export const setCloseTaskStatus = createServerFn({ method: "POST" })
 export const approvePeriodClose = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      closeRunId: z.string().uuid(),
-      note: z.string().max(2000).optional(),
-    }).parse(v),
+    z
+      .object({
+        closeRunId: z.string().uuid(),
+        note: z.string().max(2000).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("approve_period_close", {
@@ -119,11 +123,13 @@ export const approvePeriodClose = createServerFn({ method: "POST" })
 export const reopenPeriod = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      periodId: z.string().uuid(),
-      reason: z.string().min(1).max(2000),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        periodId: z.string().uuid(),
+        reason: z.string().min(1).max(2000),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const { data: res, error } = await context.supabase.rpc("reopen_period", {

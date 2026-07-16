@@ -27,20 +27,9 @@ export type MetricStatus = "draft" | "active" | "deprecated";
 export type MetricFreshness = "fresh" | "delayed" | "stale" | "unavailable";
 
 export type MetricRefreshFrequency =
-  | "realtime"
-  | "minutely"
-  | "hourly"
-  | "daily"
-  | "weekly"
-  | "monthly"
-  | "on_demand";
+  "realtime" | "minutely" | "hourly" | "daily" | "weekly" | "monthly" | "on_demand";
 
-export type MetricSourceType =
-  | "table"
-  | "view"
-  | "rpc"
-  | "derived"
-  | "external";
+export type MetricSourceType = "table" | "view" | "rpc" | "derived" | "external";
 
 export interface FinancialMetric {
   id: string;

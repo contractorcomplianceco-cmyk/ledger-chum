@@ -14,7 +14,10 @@ export async function mockGet<T>(fn: () => T): Promise<T> {
   return fn();
 }
 
-export async function mockMutation<T>(fn: () => T, message: string): Promise<{
+export async function mockMutation<T>(
+  fn: () => T,
+  message: string,
+): Promise<{
   ok: true;
   demo: true;
   data: T;

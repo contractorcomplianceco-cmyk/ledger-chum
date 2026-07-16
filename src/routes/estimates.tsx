@@ -9,9 +9,16 @@ export const Route = createFileRoute("/estimates")({
   head: () => ({
     meta: [
       { title: "Estimates — LedgerOS" },
-      { name: "description", content: "Estimates that convert directly into fully-allocated invoices." },
+      {
+        name: "description",
+        content: "Estimates that convert directly into fully-allocated invoices.",
+      },
       { property: "og:title", content: "Estimates — LedgerOS" },
-      { property: "og:description", content: "Draft estimates with automatic pass-through and commission preview before you send." },
+      {
+        property: "og:description",
+        content:
+          "Draft estimates with automatic pass-through and commission preview before you send.",
+      },
     ],
   }),
   component: EstimatesPage,
@@ -32,10 +39,14 @@ function EstimatesPage() {
       <div className="flex items-center justify-between gap-3">
         <div>
           <h2 className="text-[18px] font-semibold text-foreground">Estimates & proposals</h2>
-          <p className="mt-0.5 text-[13px] text-muted-foreground">Convert accepted estimates directly into pre-allocated invoices.</p>
+          <p className="mt-0.5 text-[13px] text-muted-foreground">
+            Convert accepted estimates directly into pre-allocated invoices.
+          </p>
         </div>
         <Button size="sm" asChild>
-          <Link to="/estimates/new"><Plus className="mr-1.5 h-3.5 w-3.5" /> New estimate</Link>
+          <Link to="/estimates/new">
+            <Plus className="mr-1.5 h-3.5 w-3.5" /> New estimate
+          </Link>
         </Button>
       </div>
 
@@ -61,12 +72,16 @@ function EstimatesPage() {
                 <td className="px-2 py-2.5 text-muted-foreground">{e.service}</td>
                 <td className="px-2 py-2.5 text-muted-foreground">{e.issued}</td>
                 <td className="px-2 py-2.5 text-muted-foreground">{e.expires}</td>
-                <td className="px-2 py-2.5 text-right font-tabular font-semibold text-foreground">{currency(e.total)}</td>
+                <td className="px-2 py-2.5 text-right font-tabular font-semibold text-foreground">
+                  {currency(e.total)}
+                </td>
                 <td className="px-2 py-2.5">
-                  <span className={cn(
-                    "rounded-md px-1.5 py-0.5 text-[11px] font-semibold ring-1 ring-inset capitalize",
-                    statusTone[e.status],
-                  )}>
+                  <span
+                    className={cn(
+                      "rounded-md px-1.5 py-0.5 text-[11px] font-semibold ring-1 ring-inset capitalize",
+                      statusTone[e.status],
+                    )}
+                  >
                     {e.status}
                   </span>
                 </td>

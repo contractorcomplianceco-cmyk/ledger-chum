@@ -27,7 +27,10 @@ export function ExplainabilityPanel({
       <ul className="mt-2 space-y-1 text-[11.5px] text-muted-foreground">
         {reasons.map((r, i) => (
           <li key={i} className="flex gap-1.5">
-            <span aria-hidden className="mt-1 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/50" />
+            <span
+              aria-hidden
+              className="mt-1 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/50"
+            />
             <span>{r}</span>
           </li>
         ))}

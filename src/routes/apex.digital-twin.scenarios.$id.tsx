@@ -15,7 +15,11 @@ export const Route = createFileRoute("/apex/digital-twin/scenarios/$id")({
   component: ScenarioDetail,
 });
 
-const METRIC_ROWS: Array<{ key: keyof ScenarioOutputs; label: string; fmt: "$" | "n" | "%" | "mo" }> = [
+const METRIC_ROWS: Array<{
+  key: keyof ScenarioOutputs;
+  label: string;
+  fmt: "$" | "n" | "%" | "mo";
+}> = [
   { key: "trueAvailableCash", label: "True Available Cash", fmt: "$" },
   { key: "revenue", label: "Revenue", fmt: "$" },
   { key: "grossProfit", label: "Gross Profit", fmt: "$" },
@@ -53,7 +57,9 @@ function ScenarioDetail() {
       decision="Can we afford this?"
       actions={
         <Link to="/apex/digital-twin">
-          <Button size="sm" variant="outline"><ArrowLeft className="mr-1 h-3 w-3" /> Digital Twin</Button>
+          <Button size="sm" variant="outline">
+            <ArrowLeft className="mr-1 h-3 w-3" /> Digital Twin
+          </Button>
         </Link>
       }
     >
@@ -61,7 +67,9 @@ function ScenarioDetail() {
         <Card className="border-border/70 p-4">
           <p className="text-[12.5px] text-muted-foreground">{s.description}</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-[11.5px] text-muted-foreground">
-            {s.assumptions.map((a) => <li key={a}>{a}</li>)}
+            {s.assumptions.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
           </ul>
         </Card>
       </ApexSection>
@@ -69,11 +77,21 @@ function ScenarioDetail() {
       <ApexSection title="Baseline vs. Proposed">
         <Card className="border-border/70 p-0 overflow-hidden">
           <div className="grid grid-cols-[1.4fr_repeat(4,_1fr)] gap-0 text-[11.5px]">
-            <div className="border-b border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">Metric</div>
-            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">Baseline</div>
-            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">30-day</div>
-            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">90-day</div>
-            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">12-mo</div>
+            <div className="border-b border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">
+              Metric
+            </div>
+            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">
+              Baseline
+            </div>
+            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">
+              30-day
+            </div>
+            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">
+              90-day
+            </div>
+            <div className="border-b border-l border-border/60 bg-muted px-3 py-2 font-semibold text-muted-foreground">
+              12-mo
+            </div>
             {METRIC_ROWS.map((r) => {
               const base = BASELINE[r.key];
               const p12 = s.outputs12mo[r.key];
@@ -83,18 +101,29 @@ function ScenarioDetail() {
               const negative = diff < 0;
               return (
                 <div key={r.key} className="contents">
-                  <div className="border-b border-border/40 px-3 py-2 text-foreground">{r.label}</div>
-                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-muted-foreground">{fmt(base, r.fmt)}</div>
-                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-foreground">{fmt(s.outputs30[r.key], r.fmt)}</div>
-                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-foreground">{fmt(s.outputs90[r.key], r.fmt)}</div>
-                  <div className={cn(
-                    "border-b border-l border-border/40 px-3 py-2 tabular-nums font-semibold",
-                    positive && "text-emerald-600",
-                    negative && "text-rose-600",
-                  )}>
+                  <div className="border-b border-border/40 px-3 py-2 text-foreground">
+                    {r.label}
+                  </div>
+                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-muted-foreground">
+                    {fmt(base, r.fmt)}
+                  </div>
+                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-foreground">
+                    {fmt(s.outputs30[r.key], r.fmt)}
+                  </div>
+                  <div className="border-b border-l border-border/40 px-3 py-2 tabular-nums text-foreground">
+                    {fmt(s.outputs90[r.key], r.fmt)}
+                  </div>
+                  <div
+                    className={cn(
+                      "border-b border-l border-border/40 px-3 py-2 tabular-nums font-semibold",
+                      positive && "text-emerald-600",
+                      negative && "text-rose-600",
+                    )}
+                  >
                     {fmt(p12, r.fmt)}
                     <span className="ml-1 text-[10.5px] opacity-70">
-                      {positive ? "+" : ""}{pctDiff.toFixed(1)}%
+                      {positive ? "+" : ""}
+                      {pctDiff.toFixed(1)}%
                     </span>
                   </div>
                 </div>
@@ -110,12 +139,23 @@ function ScenarioDetail() {
             <Card className="border-info/40 bg-info/5 p-4 text-[12.5px] text-foreground">
               Required approver: <strong>{s.approvalRequired}</strong>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Button size="sm" onClick={() => demo("Converted to recommendation")}>Convert to recommendation</Button>
-                <Button size="sm" variant="outline" onClick={() => demo("Draft action plan created")}>Create action plan draft</Button>
-                <Button size="sm" variant="ghost" onClick={() => demo("Scenario archived")}>Archive</Button>
+                <Button size="sm" onClick={() => demo("Converted to recommendation")}>
+                  Convert to recommendation
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => demo("Draft action plan created")}
+                >
+                  Create action plan draft
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => demo("Scenario archived")}>
+                  Archive
+                </Button>
               </div>
               <p className="mt-2 text-[10.5px] text-muted-foreground">
-                Digital Twin cannot commit a scenario. Owner approval is required to convert to a plan.
+                Digital Twin cannot commit a scenario. Owner approval is required to convert to a
+                plan.
               </p>
             </Card>
           </ApexSection>

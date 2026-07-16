@@ -10,19 +10,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import {
-  listJournals, getJournal, postManualJournal, reverseJournal,
+  listJournals,
+  getJournal,
+  postManualJournal,
+  reverseJournal,
 } from "@/lib/accounting/journals.functions";
 import { listAccountTree } from "@/lib/accounting/accounts.functions";
-import {
-  Plus, Trash2, CheckCircle2, AlertCircle, Undo2, ExternalLink,
-} from "lucide-react";
+import { Plus, Trash2, CheckCircle2, AlertCircle, Undo2, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -30,9 +40,17 @@ export const Route = createFileRoute("/ledger/journals")({
   head: () => ({
     meta: [
       { title: "Journal Entries — LedgerOS" },
-      { name: "description", content: "Create balanced manual journal entries, review posted journals, and issue reversals." },
+      {
+        name: "description",
+        content:
+          "Create balanced manual journal entries, review posted journals, and issue reversals.",
+      },
       { property: "og:title", content: "Journal Entries — LedgerOS" },
-      { property: "og:description", content: "Post double-entry journals with balance enforcement, fiscal-period checks, and full audit trail." },
+      {
+        property: "og:description",
+        content:
+          "Post double-entry journals with balance enforcement, fiscal-period checks, and full audit trail.",
+      },
     ],
   }),
   component: JournalsPage,
@@ -55,32 +73,38 @@ function JournalsPage() {
   const [newOpen, setNewOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [reverseTarget, setReverseTarget] = useState<{ id: string; memo: string } | null>(null);
-  const [statusFilter, setStatusFilter] = useState<"draft" | "posted" | "void" | undefined>(undefined);
+  const [statusFilter, setStatusFilter] = useState<"draft" | "posted" | "void" | undefined>(
+    undefined,
+  );
 
   const journalsQ = useQuery({
     queryKey: ["journals", orgId, statusFilter],
     queryFn: () => listFn({ data: { orgId: orgId!, status: statusFilter, limit: 100 } }),
-    enabled: !!orgId, retry: false,
+    enabled: !!orgId,
+    retry: false,
   });
 
   const accountsQ = useQuery({
     queryKey: ["accounts", orgId],
     queryFn: () => accountsFn({ data: { orgId: orgId! } }),
-    enabled: !!orgId, retry: false,
+    enabled: !!orgId,
+    retry: false,
   });
 
   const detailQ = useQuery({
     queryKey: ["journal", detailId],
     queryFn: () => getFn({ data: { id: detailId! } }),
-    enabled: !!detailId, retry: false,
+    enabled: !!detailId,
+    retry: false,
   });
 
   const postMut = useMutation({
     mutationFn: (input: {
-      entryDate: string; memo: string; description: string;
+      entryDate: string;
+      memo: string;
+      description: string;
       lines: Array<{ accountId: string; debit: number; credit: number; memo?: string }>;
-    }) =>
-      postFn({ data: { orgId: orgId!, ...input } }),
+    }) => postFn({ data: { orgId: orgId!, ...input } }),
     onSuccess: () => {
       toast.success("Journal posted");
       qc.invalidateQueries({ queryKey: ["journals", orgId] });
@@ -103,10 +127,18 @@ function JournalsPage() {
   });
 
   const journals = (journalsQ.data ?? []) as Array<{
-    id: string; entry_date: string; memo: string | null; description: string | null;
-    source_type: string | null; status: string; posted_at: string | null;
-    reversal_of: string | null; reversed_by: string | null;
-    total_debit: number; total_credit: number; line_count: number;
+    id: string;
+    entry_date: string;
+    memo: string | null;
+    description: string | null;
+    source_type: string | null;
+    status: string;
+    posted_at: string | null;
+    reversal_of: string | null;
+    reversed_by: string | null;
+    total_debit: number;
+    total_credit: number;
+    line_count: number;
   }>;
 
   return (
@@ -137,9 +169,13 @@ function JournalsPage() {
               <Label className="text-xs">Status</Label>
               <Select
                 value={statusFilter ?? "all"}
-                onValueChange={(v) => setStatusFilter(v === "all" ? undefined : (v as "draft" | "posted" | "void"))}
+                onValueChange={(v) =>
+                  setStatusFilter(v === "all" ? undefined : (v as "draft" | "posted" | "void"))
+                }
               >
-                <SelectTrigger className="h-9 w-40"><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-9 w-40">
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
                   <SelectItem value="posted">Posted</SelectItem>
@@ -178,10 +214,17 @@ function JournalsPage() {
                         <div className="font-medium">{j.memo}</div>
                         <div className="flex gap-1">
                           {j.reversal_of && (
-                            <Badge variant="outline" className="mt-0.5 h-4 text-[9px]">Reversal</Badge>
+                            <Badge variant="outline" className="mt-0.5 h-4 text-[9px]">
+                              Reversal
+                            </Badge>
                           )}
                           {j.reversed_by && (
-                            <Badge variant="outline" className="mt-0.5 h-4 text-[9px] text-amber-500">Reversed</Badge>
+                            <Badge
+                              variant="outline"
+                              className="mt-0.5 h-4 text-[9px] text-amber-500"
+                            >
+                              Reversed
+                            </Badge>
                           )}
                         </div>
                       </td>
@@ -239,7 +282,15 @@ function JournalsPage() {
         <NewJournalDialog
           open={newOpen}
           onOpenChange={setNewOpen}
-          accounts={(accountsQ.data ?? []) as Array<{ account_id: string; code: string; name: string; type: string; is_active: boolean }>}
+          accounts={
+            (accountsQ.data ?? []) as Array<{
+              account_id: string;
+              code: string;
+              name: string;
+              type: string;
+              is_active: boolean;
+            }>
+          }
           onSubmit={(v) => postMut.mutate(v)}
           busy={postMut.isPending}
         />
@@ -248,13 +299,17 @@ function JournalsPage() {
       <JournalDetailDialog
         journal={(detailQ.data as unknown as JournalDetail) ?? null}
         open={!!detailId}
-        onOpenChange={(o) => { if (!o) setDetailId(null); }}
+        onOpenChange={(o) => {
+          if (!o) setDetailId(null);
+        }}
       />
 
       <ReverseDialog
         target={reverseTarget}
         onCancel={() => setReverseTarget(null)}
-        onConfirm={(reason) => reverseTarget && reverseMut.mutate({ journalId: reverseTarget.id, reason })}
+        onConfirm={(reason) =>
+          reverseTarget && reverseMut.mutate({ journalId: reverseTarget.id, reason })
+        }
         busy={reverseMut.isPending}
       />
     </AppShell>
@@ -264,13 +319,25 @@ function JournalsPage() {
 // ---------- New Journal dialog ----------
 
 function NewJournalDialog({
-  open, onOpenChange, accounts, onSubmit, busy,
+  open,
+  onOpenChange,
+  accounts,
+  onSubmit,
+  busy,
 }: {
   open: boolean;
   onOpenChange: (o: boolean) => void;
-  accounts: Array<{ account_id: string; code: string; name: string; type: string; is_active: boolean }>;
+  accounts: Array<{
+    account_id: string;
+    code: string;
+    name: string;
+    type: string;
+    is_active: boolean;
+  }>;
   onSubmit: (v: {
-    entryDate: string; memo: string; description: string;
+    entryDate: string;
+    memo: string;
+    description: string;
     lines: Array<{ accountId: string; debit: number; credit: number; memo?: string }>;
   }) => void;
   busy: boolean;
@@ -292,7 +359,7 @@ function NewJournalDialog({
   const canSubmit =
     memo.trim().length > 0 &&
     lines.length >= 2 &&
-    lines.every((l) => l.accountId && ((Number(l.debit) > 0) !== (Number(l.credit) > 0))) &&
+    lines.every((l) => l.accountId && Number(l.debit) > 0 !== Number(l.credit) > 0) &&
     Math.abs(totals.diff) < 0.005 &&
     totals.d > 0;
 
@@ -302,7 +369,8 @@ function NewJournalDialog({
         <DialogHeader>
           <DialogTitle>New journal entry</DialogTitle>
           <DialogDescription>
-            Debits must equal credits. Posted journals are immutable — use a reversal to correct mistakes.
+            Debits must equal credits. Posted journals are immutable — use a reversal to correct
+            mistakes.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -313,11 +381,19 @@ function NewJournalDialog({
             </div>
             <div className="col-span-2">
               <Label>Memo</Label>
-              <Input value={memo} onChange={(e) => setMemo(e.target.value)} placeholder="Adjusting entry — depreciation" />
+              <Input
+                value={memo}
+                onChange={(e) => setMemo(e.target.value)}
+                placeholder="Adjusting entry — depreciation"
+              />
             </div>
             <div className="col-span-3">
               <Label>Description (optional)</Label>
-              <Textarea rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+              <Textarea
+                rows={2}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </div>
           </div>
 
@@ -338,15 +414,23 @@ function NewJournalDialog({
                     <td className="px-2 py-1.5">
                       <Select
                         value={l.accountId}
-                        onValueChange={(v) => setLines((prev) => prev.map((p, j) => (j === i ? { ...p, accountId: v } : p)))}
+                        onValueChange={(v) =>
+                          setLines((prev) =>
+                            prev.map((p, j) => (j === i ? { ...p, accountId: v } : p)),
+                          )
+                        }
                       >
-                        <SelectTrigger className="h-8"><SelectValue placeholder="Select account" /></SelectTrigger>
+                        <SelectTrigger className="h-8">
+                          <SelectValue placeholder="Select account" />
+                        </SelectTrigger>
                         <SelectContent>
-                          {accounts.filter((a) => a.is_active).map((a) => (
-                            <SelectItem key={a.account_id} value={a.account_id}>
-                              {a.code} — {a.name}
-                            </SelectItem>
-                          ))}
+                          {accounts
+                            .filter((a) => a.is_active)
+                            .map((a) => (
+                              <SelectItem key={a.account_id} value={a.account_id}>
+                                {a.code} — {a.name}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
                     </td>
@@ -354,7 +438,11 @@ function NewJournalDialog({
                       <Input
                         className="h-8"
                         value={l.memo}
-                        onChange={(e) => setLines((prev) => prev.map((p, j) => (j === i ? { ...p, memo: e.target.value } : p)))}
+                        onChange={(e) =>
+                          setLines((prev) =>
+                            prev.map((p, j) => (j === i ? { ...p, memo: e.target.value } : p)),
+                          )
+                        }
                       />
                     </td>
                     <td className="px-2 py-1.5">
@@ -363,7 +451,19 @@ function NewJournalDialog({
                         type="number"
                         step="0.01"
                         value={l.debit}
-                        onChange={(e) => setLines((prev) => prev.map((p, j) => (j === i ? { ...p, debit: e.target.value, credit: e.target.value ? "" : p.credit } : p)))}
+                        onChange={(e) =>
+                          setLines((prev) =>
+                            prev.map((p, j) =>
+                              j === i
+                                ? {
+                                    ...p,
+                                    debit: e.target.value,
+                                    credit: e.target.value ? "" : p.credit,
+                                  }
+                                : p,
+                            ),
+                          )
+                        }
                       />
                     </td>
                     <td className="px-2 py-1.5">
@@ -372,7 +472,19 @@ function NewJournalDialog({
                         type="number"
                         step="0.01"
                         value={l.credit}
-                        onChange={(e) => setLines((prev) => prev.map((p, j) => (j === i ? { ...p, credit: e.target.value, debit: e.target.value ? "" : p.debit } : p)))}
+                        onChange={(e) =>
+                          setLines((prev) =>
+                            prev.map((p, j) =>
+                              j === i
+                                ? {
+                                    ...p,
+                                    credit: e.target.value,
+                                    debit: e.target.value ? "" : p.debit,
+                                  }
+                                : p,
+                            ),
+                          )
+                        }
                       />
                     </td>
                     <td className="px-1.5 py-1.5">
@@ -391,7 +503,14 @@ function NewJournalDialog({
               <tfoot>
                 <tr className="border-t bg-muted/20 font-semibold">
                   <td className="px-3 py-2" colSpan={2}>
-                    <Button variant="ghost" size="sm" onClick={() => setLines((p) => [...p, { accountId: "", debit: "", credit: "", memo: "" }])} className="gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setLines((p) => [...p, { accountId: "", debit: "", credit: "", memo: "" }])
+                      }
+                      className="gap-1"
+                    >
                       <Plus className="h-3.5 w-3.5" /> Add line
                     </Button>
                   </td>
@@ -412,20 +531,22 @@ function NewJournalDialog({
             ) : (
               <>
                 <AlertCircle className="h-4 w-4 text-amber-500" />
-                <span className="text-amber-500">
-                  Unbalanced by {fmt(Math.abs(totals.diff))}
-                </span>
+                <span className="text-amber-500">Unbalanced by {fmt(Math.abs(totals.diff))}</span>
               </>
             )}
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
           <Button
             disabled={!canSubmit || busy}
             onClick={() =>
               onSubmit({
-                entryDate, memo, description,
+                entryDate,
+                memo,
+                description,
                 lines: lines.map((l) => ({
                   accountId: l.accountId,
                   debit: Number(l.debit) || 0,
@@ -468,8 +589,14 @@ type JournalDetail = {
 } | null;
 
 function JournalDetailDialog({
-  journal, open, onOpenChange,
-}: { journal: JournalDetail; open: boolean; onOpenChange: (o: boolean) => void }) {
+  journal,
+  open,
+  onOpenChange,
+}: {
+  journal: JournalDetail;
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
@@ -515,9 +642,7 @@ function JournalDetailDialog({
         </div>
         {(journal?.reversal_of || journal?.reversed_by) && (
           <div className="text-xs text-muted-foreground">
-            {journal.reversal_of && (
-              <div>Reverses journal {journal.reversal_of.slice(0, 8)}…</div>
-            )}
+            {journal.reversal_of && <div>Reverses journal {journal.reversal_of.slice(0, 8)}…</div>}
             {journal.reversed_by && (
               <div>Reversed by journal {journal.reversed_by.slice(0, 8)}…</div>
             )}
@@ -531,7 +656,10 @@ function JournalDetailDialog({
 // ---------- Reverse dialog ----------
 
 function ReverseDialog({
-  target, onCancel, onConfirm, busy,
+  target,
+  onCancel,
+  onConfirm,
+  busy,
 }: {
   target: { id: string; memo: string } | null;
   onCancel: () => void;
@@ -545,16 +673,28 @@ function ReverseDialog({
         <DialogHeader>
           <DialogTitle>Reverse journal</DialogTitle>
           <DialogDescription>
-            A new offsetting balanced entry will be posted today. The original stays as posted history.
+            A new offsetting balanced entry will be posted today. The original stays as posted
+            history.
           </DialogDescription>
         </DialogHeader>
         <div>
           <Label>Reason</Label>
-          <Textarea rows={3} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Why is this being reversed?" />
+          <Textarea
+            rows={3}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Why is this being reversed?"
+          />
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onCancel}>Cancel</Button>
-          <Button disabled={!reason.trim() || busy} onClick={() => onConfirm(reason)} className="gap-2">
+          <Button variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button
+            disabled={!reason.trim() || busy}
+            onClick={() => onConfirm(reason)}
+            className="gap-2"
+          >
             <Undo2 className="h-4 w-4" /> Post reversal
           </Button>
         </DialogFooter>

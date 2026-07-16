@@ -2,7 +2,11 @@ import { useState } from "react";
 import { ChevronDown, Receipt } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { currencyPrecise } from "@/lib/mock/finance";
-import { TREATMENT_META, type ClientPayment, type Spendability } from "@/lib/mock/cash-availability";
+import {
+  TREATMENT_META,
+  type ClientPayment,
+  type Spendability,
+} from "@/lib/mock/cash-availability";
 import { TreatmentBadge } from "./treatment-badge";
 
 function splitByBucket(p: ClientPayment) {
@@ -42,9 +46,13 @@ export function AllocationRow({
           </div>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          {buckets.restricted > 0 && <BucketPill spendability="restricted" amount={buckets.restricted} />}
+          {buckets.restricted > 0 && (
+            <BucketPill spendability="restricted" amount={buckets.restricted} />
+          )}
           {buckets.reserved > 0 && <BucketPill spendability="reserved" amount={buckets.reserved} />}
-          {buckets.operating > 0 && <BucketPill spendability="operating" amount={buckets.operating} />}
+          {buckets.operating > 0 && (
+            <BucketPill spendability="operating" amount={buckets.operating} />
+          )}
         </div>
         <div className="text-right">
           <div className="font-tabular text-[15px] font-bold text-foreground">
@@ -53,10 +61,7 @@ export function AllocationRow({
           <div className="text-[10.5px] text-muted-foreground">{payment.method}</div>
         </div>
         <ChevronDown
-          className={cn(
-            "h-4 w-4 text-muted-foreground transition-transform",
-            open && "rotate-180",
-          )}
+          className={cn("h-4 w-4 text-muted-foreground transition-transform", open && "rotate-180")}
         />
       </button>
 

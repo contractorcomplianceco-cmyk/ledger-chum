@@ -42,7 +42,11 @@ export function CollectionsLandscape({
         </linearGradient>
       </defs>
       {/* hills */}
-      <path d="M0,90 Q80,50 160,80 T320,70 L320,140 L0,140 Z" fill={`url(#${hill})`} opacity="0.7" />
+      <path
+        d="M0,90 Q80,50 160,80 T320,70 L320,140 L0,140 Z"
+        fill={`url(#${hill})`}
+        opacity="0.7"
+      />
       <path d="M0,105 Q100,80 200,95 T320,90 L320,140 L0,140 Z" fill="#059669" opacity="0.45" />
       {/* river */}
       <path
@@ -61,16 +65,43 @@ export function CollectionsLandscape({
       {/* floating documents */}
       <g>
         <g transform="translate(60,102) rotate(-8)">
-          <rect x="-8" y="-6" width="16" height="12" rx="1.5" fill={`url(#${doc})`} stroke="#0891b2" strokeWidth="0.6" />
+          <rect
+            x="-8"
+            y="-6"
+            width="16"
+            height="12"
+            rx="1.5"
+            fill={`url(#${doc})`}
+            stroke="#0891b2"
+            strokeWidth="0.6"
+          />
           <line x1="-5" y1="-3" x2="5" y2="-3" stroke="#0891b2" strokeWidth="0.6" />
           <line x1="-5" y1="0" x2="3" y2="0" stroke="#0891b2" strokeWidth="0.6" />
         </g>
         <g transform="translate(130,116) rotate(6)">
-          <rect x="-8" y="-6" width="16" height="12" rx="1.5" fill={`url(#${doc})`} stroke="#059669" strokeWidth="0.6" />
+          <rect
+            x="-8"
+            y="-6"
+            width="16"
+            height="12"
+            rx="1.5"
+            fill={`url(#${doc})`}
+            stroke="#059669"
+            strokeWidth="0.6"
+          />
           <circle cx="0" cy="0" r="2" fill="#34d399" />
         </g>
         <g transform="translate(260,102) rotate(-4)">
-          <rect x="-8" y="-6" width="16" height="12" rx="1.5" fill={`url(#${doc})`} stroke="#0891b2" strokeWidth="0.6" />
+          <rect
+            x="-8"
+            y="-6"
+            width="16"
+            height="12"
+            rx="1.5"
+            fill={`url(#${doc})`}
+            stroke="#0891b2"
+            strokeWidth="0.6"
+          />
           <line x1="-5" y1="-3" x2="5" y2="-3" stroke="#0891b2" strokeWidth="0.6" />
         </g>
       </g>

@@ -9,10 +9,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
 import { listBillPayments, recordVendorPayment } from "@/lib/accounting/bill-payments.functions";
@@ -25,9 +33,15 @@ export const Route = createFileRoute("/accounts-payable/payments")({
   head: () => ({
     meta: [
       { title: "Vendor Payments — LedgerOS" },
-      { name: "description", content: "Record vendor payments and allocate them across open bills." },
+      {
+        name: "description",
+        content: "Record vendor payments and allocate them across open bills.",
+      },
       { property: "og:title", content: "Vendor Payments — LedgerOS" },
-      { property: "og:description", content: "Post DR AP / CR Cash journals for outgoing vendor payments." },
+      {
+        property: "og:description",
+        content: "Post DR AP / CR Cash journals for outgoing vendor payments.",
+      },
     ],
   }),
   component: VendorPaymentsPage,
@@ -79,8 +93,13 @@ function VendorPaymentsPage() {
   const canPost = !!vendorId && amt > 0 && allocTotal <= amt + 0.005;
 
   const reset = () => {
-    setVendorId(""); setDate(today()); setMethod("default"); setReference("");
-    setAmount(""); setMemo(""); setAlloc({});
+    setVendorId("");
+    setDate(today());
+    setMethod("default");
+    setReference("");
+    setAmount("");
+    setMemo("");
+    setAlloc({});
   };
 
   const postMut = useMutation({
@@ -101,10 +120,9 @@ function VendorPaymentsPage() {
       });
     },
     onSuccess: (res) => {
-      toast.success(
-        `Payment recorded — unapplied ${fmt(Number(res.unapplied_amount ?? 0))}`,
-      );
-      setOpen(false); reset();
+      toast.success(`Payment recorded — unapplied ${fmt(Number(res.unapplied_amount ?? 0))}`);
+      setOpen(false);
+      reset();
       qc.invalidateQueries({ queryKey: ["ap.payments"] });
       qc.invalidateQueries({ queryKey: ["ap.bills"] });
       qc.invalidateQueries({ queryKey: ["ap.vendorBalances"] });
@@ -147,11 +165,17 @@ function VendorPaymentsPage() {
                     <td className="py-2 pr-3">{p.method ?? "—"}</td>
                     <td className="py-2 pr-3 text-muted-foreground">{p.reference ?? "—"}</td>
                     <td className="py-2 pr-3 text-right tabular-nums">{fmt(Number(p.amount))}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(Number(p.unapplied_amount))}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {fmt(Number(p.unapplied_amount))}
+                    </td>
                   </tr>
                 ))}
                 {paymentsQ.data && paymentsQ.data.length === 0 && (
-                  <tr><td colSpan={6} className="py-8 text-center text-muted-foreground">No payments yet.</td></tr>
+                  <tr>
+                    <td colSpan={6} className="py-8 text-center text-muted-foreground">
+                      No payments yet.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
@@ -160,16 +184,28 @@ function VendorPaymentsPage() {
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent className="max-w-2xl">
-            <DialogHeader><DialogTitle>Record vendor payment</DialogTitle></DialogHeader>
+            <DialogHeader>
+              <DialogTitle>Record vendor payment</DialogTitle>
+            </DialogHeader>
             <div className="grid gap-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>Vendor</Label>
-                  <Select value={vendorId} onValueChange={(v) => { setVendorId(v); setAlloc({}); }}>
-                    <SelectTrigger><SelectValue placeholder="Select vendor" /></SelectTrigger>
+                  <Select
+                    value={vendorId}
+                    onValueChange={(v) => {
+                      setVendorId(v);
+                      setAlloc({});
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select vendor" />
+                    </SelectTrigger>
                     <SelectContent>
                       {(vendorsQ.data ?? []).map((v) => (
-                        <SelectItem key={v.id} value={v.id}>{v.name}</SelectItem>
+                        <SelectItem key={v.id} value={v.id}>
+                          {v.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -188,7 +224,11 @@ function VendorPaymentsPage() {
                 </div>
                 <div>
                   <Label>Amount</Label>
-                  <Input inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                  <Input
+                    inputMode="decimal"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Label>Memo</Label>
@@ -200,17 +240,22 @@ function VendorPaymentsPage() {
                 <div>
                   <Label>Apply to open bills</Label>
                   {openBills.length === 0 ? (
-                    <div className="text-sm text-muted-foreground py-2">No open bills for this vendor.</div>
+                    <div className="text-sm text-muted-foreground py-2">
+                      No open bills for this vendor.
+                    </div>
                   ) : (
                     <div className="space-y-2">
                       {openBills.map((b) => (
                         <div key={b.id} className="grid grid-cols-12 gap-2 items-center text-sm">
                           <div className="col-span-3 font-medium">{b.bill_number}</div>
                           <div className="col-span-3 text-muted-foreground">Due {b.due_date}</div>
-                          <div className="col-span-3 text-right tabular-nums">{fmt(Number(b.balance))}</div>
+                          <div className="col-span-3 text-right tabular-nums">
+                            {fmt(Number(b.balance))}
+                          </div>
                           <div className="col-span-3">
                             <Input
-                              inputMode="decimal" placeholder="0.00"
+                              inputMode="decimal"
+                              placeholder="0.00"
                               value={alloc[b.id] ?? ""}
                               onChange={(e) => setAlloc({ ...alloc, [b.id]: e.target.value })}
                             />
@@ -220,14 +265,24 @@ function VendorPaymentsPage() {
                     </div>
                   )}
                   <div className="flex justify-end gap-4 border-t pt-2 mt-2 text-sm">
-                    <div>Applied <span className="tabular-nums font-medium ml-2">{fmt(allocTotal)}</span></div>
-                    <div>Unapplied <span className="tabular-nums font-medium ml-2">{fmt(Math.max(0, amt - allocTotal))}</span></div>
+                    <div>
+                      Applied{" "}
+                      <span className="tabular-nums font-medium ml-2">{fmt(allocTotal)}</span>
+                    </div>
+                    <div>
+                      Unapplied{" "}
+                      <span className="tabular-nums font-medium ml-2">
+                        {fmt(Math.max(0, amt - allocTotal))}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
             <DialogFooter>
-              <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="ghost" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
               <Button disabled={!canPost || postMut.isPending} onClick={() => postMut.mutate()}>
                 {postMut.isPending ? "Posting…" : "Post payment"}
               </Button>

@@ -41,7 +41,10 @@ function FinancialConfidencePage() {
             {CONFIDENCE_COMPONENTS.map((c) => {
               const ok = c.current === c.max;
               return (
-                <div key={c.key} className="grid grid-cols-[24px_1fr_140px_60px] items-center gap-2">
+                <div
+                  key={c.key}
+                  className="grid grid-cols-[24px_1fr_140px_60px] items-center gap-2"
+                >
                   {ok ? (
                     <CheckCircle2 className="h-4 w-4 text-success" />
                   ) : (
@@ -83,7 +86,8 @@ function FinancialConfidencePage() {
             ))}
           </ul>
           <p className="mt-3 text-[10.5px] italic text-muted-foreground">
-            Recommended actions are surfaced on the Executive Recommendations screen. All values are demonstration data.
+            Recommended actions are surfaced on the Executive Recommendations screen. All values are
+            demonstration data.
           </p>
         </Card>
       </section>

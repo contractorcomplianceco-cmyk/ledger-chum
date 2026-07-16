@@ -26,7 +26,10 @@ export const Route = createFileRoute("/feature-registry/$id")({
     return { feature: f };
   },
   notFoundComponent: () => (
-    <FeatureRegistryPage title="Feature not found" description="No feature with that ID exists in the registry.">
+    <FeatureRegistryPage
+      title="Feature not found"
+      description="No feature with that ID exists in the registry."
+    >
       <Card className="border-border/70 p-4 text-[12px]">
         <Link to="/feature-registry/all" className="text-brand hover:underline">
           Back to all features
@@ -40,8 +43,12 @@ export const Route = createFileRoute("/feature-registry/$id")({
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="grid grid-cols-[minmax(0,180px)_1fr] gap-3 border-t border-border/60 py-2 first:border-t-0">
-      <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="text-[12.5px] text-foreground">{value || <span className="text-muted-foreground">—</span>}</div>
+      <div className="text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div className="text-[12.5px] text-foreground">
+        {value || <span className="text-muted-foreground">—</span>}
+      </div>
     </div>
   );
 }
@@ -49,15 +56,15 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 function FeatureDetail() {
   const { feature: f } = Route.useLoaderData() as { feature: FeatureRecord };
   return (
-    <FeatureRegistryPage
-      title={f.name}
-      description={f.description}
-    >
+    <FeatureRegistryPage title={f.name} description={f.description}>
       <div className="grid gap-3 md:grid-cols-2">
         <Card className="border-border/70 p-4">
           <div className="text-[13px] font-semibold">Overview</div>
           <div className="mt-2">
-            <Row label="Feature ID" value={<code className="font-mono text-[11.5px]">{f.id}</code>} />
+            <Row
+              label="Feature ID"
+              value={<code className="font-mono text-[11.5px]">{f.id}</code>}
+            />
             <Row label="Module" value={f.module} />
             <Row label="Submodule" value={f.submodule} />
             <Row label="Status" value={STATUS_LABELS[f.status]} />
@@ -71,8 +78,14 @@ function FeatureDetail() {
         <Card className="border-border/70 p-4">
           <div className="text-[13px] font-semibold">Navigation</div>
           <div className="mt-2">
-            <Row label="Existing Route" value={f.existingRoute && <code className="font-mono">{f.existingRoute}</code>} />
-            <Row label="Future Route" value={f.futureRoute && <code className="font-mono">{f.futureRoute}</code>} />
+            <Row
+              label="Existing Route"
+              value={f.existingRoute && <code className="font-mono">{f.existingRoute}</code>}
+            />
+            <Row
+              label="Future Route"
+              value={f.futureRoute && <code className="font-mono">{f.futureRoute}</code>}
+            />
             <Row label="Existing Nav Group" value={f.existingNavGroup} />
             <Row label="Future Nav Group" value={f.futureNavGroup} />
             <Row label="Placement" value={f.placement} />

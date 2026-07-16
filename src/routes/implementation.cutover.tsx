@@ -19,7 +19,9 @@ function CutoverPage() {
           <Card key={c.phase} className="border-border/70 p-4">
             <div className="text-[13px] font-semibold">{c.phase}</div>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-[12px] text-muted-foreground">
-              {c.items.map((i) => <li key={i}>{i}</li>)}
+              {c.items.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
             </ul>
           </Card>
         ))}
@@ -27,7 +29,11 @@ function CutoverPage() {
 
       <Card className="border-border/70 p-4 text-[12px] text-muted-foreground">
         <div className="font-semibold text-foreground">Go / no-go authority</div>
-        <p className="mt-1">Rose is the sole go / no-go decision-maker on cutover day. Christin owns the reconciliation report; Carmen attests. A single failed acceptance test moves the cutover by 7 days by default.</p>
+        <p className="mt-1">
+          Rose is the sole go / no-go decision-maker on cutover day. Christin owns the
+          reconciliation report; Carmen attests. A single failed acceptance test moves the cutover
+          by 7 days by default.
+        </p>
       </Card>
     </ImplementationPage>
   );

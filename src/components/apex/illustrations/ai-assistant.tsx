@@ -51,16 +51,36 @@ export function AIAssistant({
       <line x1="70" y1="30" x2="70" y2="18" stroke="#94a3b8" strokeWidth="1.5" />
       <circle cx="70" cy="16" r="3" fill="#22d3ee" />
       {/* head */}
-      <rect x="38" y="34" width="64" height="56" rx="14" fill={`url(#${body})`} stroke="#94a3b8" strokeWidth="0.8" />
+      <rect
+        x="38"
+        y="34"
+        width="64"
+        height="56"
+        rx="14"
+        fill={`url(#${body})`}
+        stroke="#94a3b8"
+        strokeWidth="0.8"
+      />
       {/* visor */}
       <rect x="46" y="50" width="48" height="22" rx="10" fill={`url(#${visor})`} />
       {/* eyes */}
       <circle cx="60" cy="61" r="3" fill="#ffffff" />
       <circle cx="80" cy="61" r="3" fill="#ffffff" />
       {/* smile */}
-      <path d="M62,80 Q70,86 78,80" stroke="#94a3b8" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      <path
+        d="M62,80 Q70,86 78,80"
+        stroke="#94a3b8"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+      />
       {/* body/collar */}
-      <path d="M46,90 Q70,100 94,90 L96,110 Q70,116 44,110 Z" fill={`url(#${body})`} stroke="#94a3b8" strokeWidth="0.8" />
+      <path
+        d="M46,90 Q70,100 94,90 L96,110 Q70,116 44,110 Z"
+        fill={`url(#${body})`}
+        stroke="#94a3b8"
+        strokeWidth="0.8"
+      />
       <circle cx="70" cy="105" r="3" fill="#8b5cf6" />
       {/* side lights */}
       <circle cx="40" cy="62" r="2" fill="#22d3ee" />

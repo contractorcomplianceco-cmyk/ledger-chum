@@ -16,14 +16,54 @@ const STORAGE_META = {
 } as const;
 
 const LINEAGE = [
-  { number: "True available cash", source: "Cash Availability engine", inputs: "Bank balances · Pass-through obligations · Commission reserves · Payroll accrual", confidence: "High · reconciled hourly" },
-  { number: "Marketing ROI", source: "Attribution + GL", inputs: "Ad spend (per campaign) · Attributed revenue (per client) · Contribution margin", confidence: "Medium · attribution model dependent" },
-  { number: "Bonus obligation", source: "Bonus engine", inputs: "Invoice paid · Commission plan · Verification · Approval", confidence: "High post-verification" },
-  { number: "Technology ROI", source: "Tech portfolio", inputs: "Provider invoice · Usage telemetry · Attributed revenue · Adoption", confidence: "Medium" },
-  { number: "Client profitability", source: "Profitability engine", inputs: "Revenue · COGS · Attributed marketing · Support · Overhead allocation", confidence: "Medium" },
-  { number: "Revenue leakage", source: "Leakage engine", inputs: "Reimbursable expenses · Untracked hours · Milestone completion · Contract terms", confidence: "Medium — must be verified before invoicing" },
-  { number: "Financial Confidence Score", source: "Confidence engine", inputs: "13 signals · data freshness · reconciliation gap · approval coverage", confidence: "High for score, low for individual signals" },
-  { number: "Forecasts", source: "Forecasting engine", inputs: "Historical actuals · Booked pipeline · Scenario assumptions", confidence: "Scenario-dependent — always shown with range" },
+  {
+    number: "True available cash",
+    source: "Cash Availability engine",
+    inputs: "Bank balances · Pass-through obligations · Commission reserves · Payroll accrual",
+    confidence: "High · reconciled hourly",
+  },
+  {
+    number: "Marketing ROI",
+    source: "Attribution + GL",
+    inputs: "Ad spend (per campaign) · Attributed revenue (per client) · Contribution margin",
+    confidence: "Medium · attribution model dependent",
+  },
+  {
+    number: "Bonus obligation",
+    source: "Bonus engine",
+    inputs: "Invoice paid · Commission plan · Verification · Approval",
+    confidence: "High post-verification",
+  },
+  {
+    number: "Technology ROI",
+    source: "Tech portfolio",
+    inputs: "Provider invoice · Usage telemetry · Attributed revenue · Adoption",
+    confidence: "Medium",
+  },
+  {
+    number: "Client profitability",
+    source: "Profitability engine",
+    inputs: "Revenue · COGS · Attributed marketing · Support · Overhead allocation",
+    confidence: "Medium",
+  },
+  {
+    number: "Revenue leakage",
+    source: "Leakage engine",
+    inputs: "Reimbursable expenses · Untracked hours · Milestone completion · Contract terms",
+    confidence: "Medium — must be verified before invoicing",
+  },
+  {
+    number: "Financial Confidence Score",
+    source: "Confidence engine",
+    inputs: "13 signals · data freshness · reconciliation gap · approval coverage",
+    confidence: "High for score, low for individual signals",
+  },
+  {
+    number: "Forecasts",
+    source: "Forecasting engine",
+    inputs: "Historical actuals · Booked pipeline · Scenario assumptions",
+    confidence: "Scenario-dependent — always shown with range",
+  },
 ];
 
 function DataMap() {
@@ -49,7 +89,12 @@ function DataMap() {
             <code className="truncate font-mono text-[11px] text-muted-foreground">{d.file}</code>
             <code className="truncate font-mono text-[11px]">{d.entity}</code>
             <code className="truncate font-mono text-[11px] text-muted-foreground">{d.keys}</code>
-            <span className={cn("rounded-full border px-2 py-0.5 text-[10.5px] font-semibold", STORAGE_META[d.storage].tone)}>
+            <span
+              className={cn(
+                "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold",
+                STORAGE_META[d.storage].tone,
+              )}
+            >
               {STORAGE_META[d.storage].label}
             </span>
           </div>
@@ -58,14 +103,22 @@ function DataMap() {
 
       <div>
         <h3 className="text-[14px] font-semibold">Number lineage</h3>
-        <p className="text-[12px] text-muted-foreground">Every high-stakes figure surfaced in LedgerOS must disclose its lineage in-context.</p>
+        <p className="text-[12px] text-muted-foreground">
+          Every high-stakes figure surfaced in LedgerOS must disclose its lineage in-context.
+        </p>
         <div className="mt-2 grid gap-3 md:grid-cols-2">
           {LINEAGE.map((l) => (
             <Card key={l.number} className="border-border/70 p-4 text-[12px]">
               <div className="text-[13px] font-semibold">{l.number}</div>
-              <div className="mt-1 text-muted-foreground"><span className="font-medium text-foreground">Source:</span> {l.source}</div>
-              <div className="text-muted-foreground"><span className="font-medium text-foreground">Inputs:</span> {l.inputs}</div>
-              <div className="text-muted-foreground"><span className="font-medium text-foreground">Confidence:</span> {l.confidence}</div>
+              <div className="mt-1 text-muted-foreground">
+                <span className="font-medium text-foreground">Source:</span> {l.source}
+              </div>
+              <div className="text-muted-foreground">
+                <span className="font-medium text-foreground">Inputs:</span> {l.inputs}
+              </div>
+              <div className="text-muted-foreground">
+                <span className="font-medium text-foreground">Confidence:</span> {l.confidence}
+              </div>
             </Card>
           ))}
         </div>

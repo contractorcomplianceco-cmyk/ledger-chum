@@ -84,7 +84,12 @@ export function InvoiceLineEditor({
             {currencyPrecise(total)}
           </div>
         </div>
-        <Button variant="ghost" size="icon" onClick={onRemove} className="h-9 w-9 text-muted-foreground hover:text-destructive">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onRemove}
+          className="h-9 w-9 text-muted-foreground hover:text-destructive"
+        >
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
@@ -94,7 +99,10 @@ export function InvoiceLineEditor({
           <label className="block text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
             Financial treatment
           </label>
-          <Select value={line.treatment} onValueChange={(v) => onChange({ treatment: v as Treatment })}>
+          <Select
+            value={line.treatment}
+            onValueChange={(v) => onChange({ treatment: v as Treatment })}
+          >
             <SelectTrigger className="mt-1 h-8 text-[12px]">
               <SelectValue />
             </SelectTrigger>
@@ -144,7 +152,9 @@ export function InvoiceLineEditor({
 
       <div className="mt-2 flex items-center gap-2 pl-6 text-[11px] text-muted-foreground">
         <TreatmentBadge spendability={meta.spendability} />
-        <span>{meta.label} · {meta.glAccount}</span>
+        <span>
+          {meta.label} · {meta.glAccount}
+        </span>
       </div>
     </div>
   );

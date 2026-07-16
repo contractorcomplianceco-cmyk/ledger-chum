@@ -25,13 +25,13 @@ for every operational system that connects to LedgerOS.
 Base: `/api/public/integrations/*`. This prefix bypasses Lovable's
 published-site auth gate; every handler verifies its own Bearer token.
 
-| Method | Path                                    | Purpose |
-| ------ | --------------------------------------- | ------- |
-| POST   | `/api/public/integrations/customers`    | Upsert a customer |
-| POST   | `/api/public/integrations/work-orders/completed` | Supervisor-approved WO → draft invoice |
-| POST   | `/api/public/integrations/invoices`     | Direct invoice push |
-| POST   | `/api/public/integrations/payments`     | Record customer payment, optional apply |
-| POST   | `/api/public/integrations/inventory-consumption` | Parts/materials consumed on a WO |
+| Method | Path                                             | Purpose                                 |
+| ------ | ------------------------------------------------ | --------------------------------------- |
+| POST   | `/api/public/integrations/customers`             | Upsert a customer                       |
+| POST   | `/api/public/integrations/work-orders/completed` | Supervisor-approved WO → draft invoice  |
+| POST   | `/api/public/integrations/invoices`              | Direct invoice push                     |
+| POST   | `/api/public/integrations/payments`              | Record customer payment, optional apply |
+| POST   | `/api/public/integrations/inventory-consumption` | Parts/materials consumed on a WO        |
 
 Future contracts (roadmap): `/vendors`, `/bills`, `/vendor-payments`,
 `/bank-transactions`, `/reconciliation-events`.
@@ -85,14 +85,14 @@ this?" checks, retry decisions.
 
 ## 8. Error Model
 
-| Status | Class         | Retry? |
-| ------ | ------------- | ------ |
-| 400    | Bad request   | Fix and retry with a new key |
-| 401    | Auth failure  | Rotate/fix credentials |
-| 404    | Not found     | Fix and retry |
-| 422    | Validation or missing reference | Fix payload and retry |
-| 429    | Rate limited  | Backoff + retry same key |
-| 500    | Server error  | Safe to retry same key |
+| Status | Class                           | Retry?                       |
+| ------ | ------------------------------- | ---------------------------- |
+| 400    | Bad request                     | Fix and retry with a new key |
+| 401    | Auth failure                    | Rotate/fix credentials       |
+| 404    | Not found                       | Fix and retry                |
+| 422    | Validation or missing reference | Fix payload and retry        |
+| 429    | Rate limited                    | Backoff + retry same key     |
+| 500    | Server error                    | Safe to retry same key       |
 
 Body: `{ "error": "message", "correlation_id": "..." }`.
 

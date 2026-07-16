@@ -92,7 +92,9 @@ export function TopBar() {
                 RT
               </div>
               <div className="min-w-0 leading-tight">
-                <div className="truncate text-[12.5px] font-semibold text-foreground">Rose Taylor</div>
+                <div className="truncate text-[12.5px] font-semibold text-foreground">
+                  Rose Taylor
+                </div>
                 <div className="truncate text-[10.5px] text-muted-foreground">CEO</div>
               </div>
               <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />

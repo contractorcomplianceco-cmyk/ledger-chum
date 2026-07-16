@@ -24,11 +24,11 @@ the metric API — never by querying `journal_lines`, `invoices`, `bills`,
 
 Three tables carry the whole contract:
 
-| Table                        | Purpose                                                               |
-| ---------------------------- | --------------------------------------------------------------------- |
-| `financial_metrics`          | Catalog: definition, formula, method, owner, refresh, permissions.    |
-| `financial_metric_values`    | Time-stamped values with confidence + freshness + assumptions.        |
-| `financial_metric_lineage`   | Source tables/fields + dependency metrics (traceability).             |
+| Table                      | Purpose                                                            |
+| -------------------------- | ------------------------------------------------------------------ |
+| `financial_metrics`        | Catalog: definition, formula, method, owner, refresh, permissions. |
+| `financial_metric_values`  | Time-stamped values with confidence + freshness + assumptions.     |
+| `financial_metric_lineage` | Source tables/fields + dependency metrics (traceability).          |
 
 Every table is `org_id`-scoped and RLS-protected via `is_org_member`.
 Sensitive metrics carry `required_permission`; `calculateMetric` verifies
@@ -36,22 +36,22 @@ via `has_role` before running.
 
 ## Canonical metrics (seeded per org on first read)
 
-| Key                         | Category         | Formula                                                     |
-| --------------------------- | ---------------- | ----------------------------------------------------------- |
-| `true_available_cash`       | cash             | Bank Cash − Restricted − Committed − Reserved               |
-| `revenue`                   | revenue          | SUM(credit − debit) on revenue accounts (posted)            |
-| `gross_profit`              | profitability    | Revenue − COGS                                              |
-| `net_income`                | profitability    | Revenue − COGS − Operating Expenses                         |
-| `ar_balance`                | ar               | SUM(invoices.balance_due) where status ≠ paid               |
-| `ap_balance`                | ap               | SUM(bills.balance_due) where status ≠ paid                  |
-| `working_capital`           | profitability    | Current Assets − Current Liabilities                        |
-| `gross_margin`              | profitability    | Gross Profit / Revenue                                      |
-| `operating_margin`          | profitability    | Operating Income / Revenue                                  |
-| `cash_runway`               | cash             | Available Cash / Avg Monthly Burn *(demo)*                  |
-| `close_completion_score`    | operations       | Weighted close signals                                      |
-| `ar_collection_risk`        | ar               | Weighted aging + concentration                              |
-| `ap_payment_pressure`       | ap               | Weighted upcoming/overdue vs cash                           |
-| `financial_health_score`    | company_health   | Composite of component metrics *(framework)*                |
+| Key                      | Category       | Formula                                          |
+| ------------------------ | -------------- | ------------------------------------------------ |
+| `true_available_cash`    | cash           | Bank Cash − Restricted − Committed − Reserved    |
+| `revenue`                | revenue        | SUM(credit − debit) on revenue accounts (posted) |
+| `gross_profit`           | profitability  | Revenue − COGS                                   |
+| `net_income`             | profitability  | Revenue − COGS − Operating Expenses              |
+| `ar_balance`             | ar             | SUM(invoices.balance_due) where status ≠ paid    |
+| `ap_balance`             | ap             | SUM(bills.balance_due) where status ≠ paid       |
+| `working_capital`        | profitability  | Current Assets − Current Liabilities             |
+| `gross_margin`           | profitability  | Gross Profit / Revenue                           |
+| `operating_margin`       | profitability  | Operating Income / Revenue                       |
+| `cash_runway`            | cash           | Available Cash / Avg Monthly Burn _(demo)_       |
+| `close_completion_score` | operations     | Weighted close signals                           |
+| `ar_collection_risk`     | ar             | Weighted aging + concentration                   |
+| `ap_payment_pressure`    | ap             | Weighted upcoming/overdue vs cash                |
+| `financial_health_score` | company_health | Composite of component metrics _(framework)_     |
 
 `cash_runway` and `financial_health_score` are flagged
 `demonstration_only = true` until the forecasting/health engines land.
@@ -131,7 +131,7 @@ calculation history.
    calculation.
 6. ✅ Lineage is available for every seeded metric.
 7. ✅ AI response contract carries value + formula + evidence + confidence
-   + freshness + assumptions + missing data.
+   - freshness + assumptions + missing data.
 
 ## Known limitations
 

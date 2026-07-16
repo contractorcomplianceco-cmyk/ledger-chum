@@ -37,8 +37,24 @@ export function CashPulseBackdrop({
       </defs>
       <g opacity="0.45">
         <circle cx="40" cy="180" r="120" fill="none" stroke={`url(#${arc})`} strokeWidth="1.2" />
-        <circle cx="40" cy="180" r="80" fill="none" stroke="#22d3ee" strokeOpacity="0.2" strokeWidth="1" />
-        <circle cx="280" cy="30" r="90" fill="none" stroke="#8b5cf6" strokeOpacity="0.25" strokeWidth="1" />
+        <circle
+          cx="40"
+          cy="180"
+          r="80"
+          fill="none"
+          stroke="#22d3ee"
+          strokeOpacity="0.2"
+          strokeWidth="1"
+        />
+        <circle
+          cx="280"
+          cy="30"
+          r="90"
+          fill="none"
+          stroke="#8b5cf6"
+          strokeOpacity="0.25"
+          strokeWidth="1"
+        />
       </g>
       {/* coins */}
       <g opacity="0.85">

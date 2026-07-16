@@ -37,7 +37,9 @@ function OpportunityDetail() {
       decision={o.recommendedAction}
       actions={
         <Link to="/apex/opportunities">
-          <Button size="sm" variant="outline"><ArrowLeft className="mr-1 h-3 w-3" /> All opportunities</Button>
+          <Button size="sm" variant="outline">
+            <ArrowLeft className="mr-1 h-3 w-3" /> All opportunities
+          </Button>
         </Link>
       }
     >
@@ -52,8 +54,12 @@ function OpportunityDetail() {
                 <ConfidenceChip value={o.confidence} />
                 <FreshnessChip label={`TTV ${o.timeToValue}`} />
                 <span className="ml-auto text-right">
-                  <div className="text-[10.5px] uppercase tracking-wide text-muted-foreground">Estimated impact</div>
-                  <div className="text-[20px] font-bold text-foreground tabular-nums">{currency(o.financialImpact)}</div>
+                  <div className="text-[10.5px] uppercase tracking-wide text-muted-foreground">
+                    Estimated impact
+                  </div>
+                  <div className="text-[20px] font-bold text-foreground tabular-nums">
+                    {currency(o.financialImpact)}
+                  </div>
                 </span>
               </div>
               <p className="mt-3 text-[13px] text-muted-foreground">{o.description}</p>
@@ -65,7 +71,10 @@ function OpportunityDetail() {
               <EvidenceList items={o.evidence} />
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {o.sources.map((s) => (
-                  <span key={s} className="rounded-full bg-muted px-2 py-0.5 text-[10.5px] font-medium text-muted-foreground">
+                  <span
+                    key={s}
+                    className="rounded-full bg-muted px-2 py-0.5 text-[10.5px] font-medium text-muted-foreground"
+                  >
                     {s}
                   </span>
                 ))}
@@ -77,10 +86,18 @@ function OpportunityDetail() {
             <Card className="border-info/40 bg-info/5 p-4 text-[13px] text-foreground">
               {o.recommendedAction}
               <div className="mt-3 flex flex-wrap gap-2">
-                <Button size="sm" onClick={() => demo("Opportunity accepted")}>Accept</Button>
-                <Button size="sm" variant="outline" onClick={() => demo("Converted to task")}>Convert to task</Button>
-                <Button size="sm" variant="outline" onClick={() => demo("Sent for approval")}>Send for approval</Button>
-                <Button size="sm" variant="ghost" onClick={() => demo("Opportunity dismissed")}>Dismiss</Button>
+                <Button size="sm" onClick={() => demo("Opportunity accepted")}>
+                  Accept
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => demo("Converted to task")}>
+                  Convert to task
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => demo("Sent for approval")}>
+                  Send for approval
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => demo("Opportunity dismissed")}>
+                  Dismiss
+                </Button>
               </div>
             </Card>
           </ApexSection>

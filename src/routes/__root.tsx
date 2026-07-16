@@ -88,15 +88,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "LedgerOS — Financial Operating System" },
       {
         property: "og:description",
-        content: "LedgerOS by RoseOS Intelligence — a Fortune-500-grade double-entry accounting and financial operations platform.",
+        content:
+          "LedgerOS by RoseOS Intelligence — a Fortune-500-grade double-entry accounting and financial operations platform.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0f1730" },
       { name: "twitter:title", content: "LedgerOS — Financial Operating System" },
-      { name: "twitter:description", content: "LedgerOS by RoseOS Intelligence — a Fortune-500-grade double-entry accounting and financial operations platform." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa1c01ac-d04e-4307-91ec-09e982135810/id-preview-cb641463--2f92849f-0b96-46a1-aa37-3939fd2e2dcb.lovable.app-1783977182115.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa1c01ac-d04e-4307-91ec-09e982135810/id-preview-cb641463--2f92849f-0b96-46a1-aa37-3939fd2e2dcb.lovable.app-1783977182115.png" },
+      {
+        name: "twitter:description",
+        content:
+          "LedgerOS by RoseOS Intelligence — a Fortune-500-grade double-entry accounting and financial operations platform.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa1c01ac-d04e-4307-91ec-09e982135810/id-preview-cb641463--2f92849f-0b96-46a1-aa37-3939fd2e2dcb.lovable.app-1783977182115.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa1c01ac-d04e-4307-91ec-09e982135810/id-preview-cb641463--2f92849f-0b96-46a1-aa37-3939fd2e2dcb.lovable.app-1783977182115.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -108,7 +121,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,

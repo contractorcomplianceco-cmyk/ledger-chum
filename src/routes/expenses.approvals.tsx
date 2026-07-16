@@ -14,14 +14,30 @@ export const Route = createFileRoute("/expenses/approvals")({
 });
 
 const TABS = [
-  { id: "mine", label: "Awaiting My Approval", test: (e: Expense) => e.status === "pending_manager" || e.status === "submitted" },
-  { id: "clarify", label: "Needs Clarification", test: (e: Expense) => e.status === "needs_changes" },
+  {
+    id: "mine",
+    label: "Awaiting My Approval",
+    test: (e: Expense) => e.status === "pending_manager" || e.status === "submitted",
+  },
+  {
+    id: "clarify",
+    label: "Needs Clarification",
+    test: (e: Expense) => e.status === "needs_changes",
+  },
   { id: "highvalue", label: "High Value", test: (e: Expense) => e.amount >= 2000 },
   { id: "policy", label: "Policy Exception", test: (e: Expense) => e.policy !== "compliant" },
   { id: "missing", label: "Missing Receipt", test: (e: Expense) => !e.hasReceipt },
-  { id: "duplicate", label: "Possible Duplicate", test: (e: Expense) => e.policy === "possible_duplicate" },
+  {
+    id: "duplicate",
+    label: "Possible Duplicate",
+    test: (e: Expense) => e.policy === "possible_duplicate",
+  },
   { id: "anomaly", label: "Anomaly", test: (e: Expense) => !!e.anomaly },
-  { id: "approved", label: "Approved", test: (e: Expense) => e.status === "approved" || e.status === "paid" },
+  {
+    id: "approved",
+    label: "Approved",
+    test: (e: Expense) => e.status === "approved" || e.status === "paid",
+  },
   { id: "rejected", label: "Rejected", test: (e: Expense) => e.status === "rejected" },
 ];
 
@@ -49,7 +65,9 @@ function ApprovalsPage() {
               )}
             >
               {t.label}
-              <span className="ml-1.5 rounded-full bg-black/10 px-1 text-[10px]">{EXPENSES.filter(t.test).length}</span>
+              <span className="ml-1.5 rounded-full bg-black/10 px-1 text-[10px]">
+                {EXPENSES.filter(t.test).length}
+              </span>
             </button>
           ))}
         </div>
@@ -63,7 +81,9 @@ function ApprovalsPage() {
               onClick={() => setSelected(e)}
               className={cn(
                 "w-full rounded-lg border p-3 text-left transition",
-                selected?.id === e.id ? "border-brand bg-brand/5" : "border-border bg-surface hover:border-foreground/20",
+                selected?.id === e.id
+                  ? "border-brand bg-brand/5"
+                  : "border-border bg-surface hover:border-foreground/20",
               )}
             >
               <div className="flex items-center justify-between gap-2">
@@ -73,7 +93,9 @@ function ApprovalsPage() {
                     <StatusBadge status={e.status} />
                     <PolicyBadge result={e.policy} />
                   </div>
-                  <div className="text-[11.5px] text-muted-foreground">{e.employee} · {e.description} · {e.date}</div>
+                  <div className="text-[11.5px] text-muted-foreground">
+                    {e.employee} · {e.description} · {e.date}
+                  </div>
                 </div>
                 <div className="text-right font-tabular font-semibold">{currency(e.amount)}</div>
               </div>
@@ -93,17 +115,20 @@ function ApprovalsPage() {
 }
 
 function ApprovalDetail({ e }: { e: Expense | null }) {
-  if (!e) return (
-    <Card className="border-border/70 p-6 text-center text-[13px] text-muted-foreground">
-      Select an expense to review.
-    </Card>
-  );
+  if (!e)
+    return (
+      <Card className="border-border/70 p-6 text-center text-[13px] text-muted-foreground">
+        Select an expense to review.
+      </Card>
+    );
   return (
     <Card className="border-border/70 p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="font-semibold">{e.vendor}</div>
-          <div className="text-[11.5px] text-muted-foreground">{e.id} · {e.date} · {e.employee}</div>
+          <div className="text-[11.5px] text-muted-foreground">
+            {e.id} · {e.date} · {e.employee}
+          </div>
         </div>
         <div className="text-right font-tabular text-lg font-bold">{currency(e.amount)}</div>
       </div>
@@ -151,14 +176,30 @@ function ApprovalDetail({ e }: { e: Expense | null }) {
       )}
 
       <div className="mt-4 grid grid-cols-2 gap-1.5">
-        <Button size="sm" className="h-8"><CheckCircle2 className="mr-1 h-3.5 w-3.5" /> Approve</Button>
-        <Button size="sm" variant="outline" className="h-8"><MessageSquare className="mr-1 h-3.5 w-3.5" /> Approve with note</Button>
-        <Button size="sm" variant="outline" className="h-8">Request receipt</Button>
-        <Button size="sm" variant="outline" className="h-8">Reclassify</Button>
-        <Button size="sm" variant="outline" className="h-8">Split</Button>
-        <Button size="sm" variant="outline" className="h-8">Mark non-reimbursable</Button>
-        <Button size="sm" variant="outline" className="h-8"><ArrowUpRight className="mr-1 h-3.5 w-3.5" /> Escalate to Rose</Button>
-        <Button size="sm" variant="outline" className="h-8 text-destructive"><XCircle className="mr-1 h-3.5 w-3.5" /> Reject</Button>
+        <Button size="sm" className="h-8">
+          <CheckCircle2 className="mr-1 h-3.5 w-3.5" /> Approve
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          <MessageSquare className="mr-1 h-3.5 w-3.5" /> Approve with note
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          Request receipt
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          Reclassify
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          Split
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          Mark non-reimbursable
+        </Button>
+        <Button size="sm" variant="outline" className="h-8">
+          <ArrowUpRight className="mr-1 h-3.5 w-3.5" /> Escalate to Rose
+        </Button>
+        <Button size="sm" variant="outline" className="h-8 text-destructive">
+          <XCircle className="mr-1 h-3.5 w-3.5" /> Reject
+        </Button>
       </div>
     </Card>
   );
@@ -167,7 +208,9 @@ function ApprovalDetail({ e }: { e: Expense | null }) {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className="mt-0.5 capitalize">{value}</div>
     </div>
   );

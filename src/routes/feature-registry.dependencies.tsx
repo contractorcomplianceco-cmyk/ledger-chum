@@ -6,7 +6,9 @@ import { FEATURE_REGISTRY } from "@/lib/mock/feature-registry";
 export const Route = createFileRoute("/feature-registry/dependencies")({
   head: () => ({ meta: [{ title: "Dependency Map — Feature Registry" }] }),
   component: () => {
-    const withDeps = FEATURE_REGISTRY.filter((f) => (f.dependencies?.length ?? 0) > 0 || (f.blockingDecisions?.length ?? 0) > 0);
+    const withDeps = FEATURE_REGISTRY.filter(
+      (f) => (f.dependencies?.length ?? 0) > 0 || (f.blockingDecisions?.length ?? 0) > 0,
+    );
     return (
       <FeatureRegistryPage
         title="Dependency Map"
@@ -14,8 +16,8 @@ export const Route = createFileRoute("/feature-registry/dependencies")({
       >
         <Card className="border-border/70 p-4 text-[12px] text-muted-foreground">
           Dependency records are captured at the feature level. Legal, accounting, and integration
-          blockers are visible in the flag columns of every feature table. Full transitive dependency
-          graphs will be generated at production-build handoff time.
+          blockers are visible in the flag columns of every feature table. Full transitive
+          dependency graphs will be generated at production-build handoff time.
         </Card>
         <Card className="border-border/70 p-0 overflow-hidden">
           <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,2fr)] gap-2 border-b border-border bg-muted/30 px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">

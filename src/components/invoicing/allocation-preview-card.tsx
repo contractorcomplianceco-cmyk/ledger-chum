@@ -19,14 +19,54 @@ export function AllocationPreviewCard({ lines }: { lines: InvoiceLine[] }) {
     kind: "gross" | "op" | "restricted" | "reserved" | "net";
     hint?: string;
   }> = [
-    { label: "Total client charge", amount: c.total, kind: "gross", hint: "What the customer owes." },
-    { label: "Expected CCA revenue", amount: c.ccaRevenue, kind: "op", hint: "Earned service revenue recognized to CCA." },
-    { label: "Restricted pass-through", amount: c.passThrough, kind: "restricted", hint: "Owed to state, agencies, or third parties. Never spendable." },
-    { label: "Commission reserve", amount: c.commission, kind: "reserved", hint: "Held for sales commission payout." },
-    { label: "Tax reserve", amount: c.taxReserve, kind: "reserved", hint: "Set aside for sales/income tax obligations." },
-    { label: "Deferred revenue", amount: c.deferredRevenue, kind: "reserved", hint: "Cash collected for work not yet delivered." },
-    { label: "Estimated fulfillment cost", amount: c.fulfillmentCost, kind: "reserved", hint: "Cost to deliver the services on this invoice." },
-    { label: "True available cash impact", amount: c.trueAvailableAfterCollection, kind: "net", hint: "Cash truly free to spend once this invoice is collected." },
+    {
+      label: "Total client charge",
+      amount: c.total,
+      kind: "gross",
+      hint: "What the customer owes.",
+    },
+    {
+      label: "Expected CCA revenue",
+      amount: c.ccaRevenue,
+      kind: "op",
+      hint: "Earned service revenue recognized to CCA.",
+    },
+    {
+      label: "Restricted pass-through",
+      amount: c.passThrough,
+      kind: "restricted",
+      hint: "Owed to state, agencies, or third parties. Never spendable.",
+    },
+    {
+      label: "Commission reserve",
+      amount: c.commission,
+      kind: "reserved",
+      hint: "Held for sales commission payout.",
+    },
+    {
+      label: "Tax reserve",
+      amount: c.taxReserve,
+      kind: "reserved",
+      hint: "Set aside for sales/income tax obligations.",
+    },
+    {
+      label: "Deferred revenue",
+      amount: c.deferredRevenue,
+      kind: "reserved",
+      hint: "Cash collected for work not yet delivered.",
+    },
+    {
+      label: "Estimated fulfillment cost",
+      amount: c.fulfillmentCost,
+      kind: "reserved",
+      hint: "Cost to deliver the services on this invoice.",
+    },
+    {
+      label: "True available cash impact",
+      amount: c.trueAvailableAfterCollection,
+      kind: "net",
+      hint: "Cash truly free to spend once this invoice is collected.",
+    },
   ];
 
   return (
@@ -58,8 +98,8 @@ export function AllocationPreviewCard({ lines }: { lines: InvoiceLine[] }) {
       <div className="mt-3 flex items-start gap-2 rounded-lg bg-muted/40 p-2.5 text-[11px] leading-relaxed text-muted-foreground">
         <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
         <span>
-          These allocations feed the Cash Availability Engine automatically when the invoice is collected — no
-          journal entry required.
+          These allocations feed the Cash Availability Engine automatically when the invoice is
+          collected — no journal entry required.
         </span>
       </div>
     </Card>
@@ -133,11 +173,18 @@ function MiniStat({
   }[tone];
   return (
     <div className="rounded-lg border border-border/60 bg-background/60 p-2">
-      <div className={cn("inline-flex items-center gap-1 rounded-md px-1 py-0.5 text-[10px] font-semibold", toneClass)}>
+      <div
+        className={cn(
+          "inline-flex items-center gap-1 rounded-md px-1 py-0.5 text-[10px] font-semibold",
+          toneClass,
+        )}
+      >
         <Icon className="h-3 w-3" />
         {label}
       </div>
-      <div className="mt-1 font-tabular text-[13.5px] font-bold text-foreground">{currency(value)}</div>
+      <div className="mt-1 font-tabular text-[13.5px] font-bold text-foreground">
+        {currency(value)}
+      </div>
     </div>
   );
 }

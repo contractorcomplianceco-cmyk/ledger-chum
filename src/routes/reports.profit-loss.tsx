@@ -13,9 +13,15 @@ export const Route = createFileRoute("/reports/profit-loss")({
   head: () => ({
     meta: [
       { title: "Profit & Loss — LedgerOS" },
-      { name: "description", content: "Revenue, expense, and net income for a fiscal period, from posted journal lines." },
+      {
+        name: "description",
+        content: "Revenue, expense, and net income for a fiscal period, from posted journal lines.",
+      },
       { property: "og:title", content: "Profit & Loss — LedgerOS" },
-      { property: "og:description", content: "Period income statement driven by the LedgerOS posting engine." },
+      {
+        property: "og:description",
+        content: "Period income statement driven by the LedgerOS posting engine.",
+      },
     ],
   }),
   component: PnlPage,
@@ -24,10 +30,20 @@ export const Route = createFileRoute("/reports/profit-loss")({
 const fmt = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
-function Section({ title, rows, total }: { title: string; rows: Array<{ account_id: string; code: string; name: string; amount: number }>; total: number }) {
+function Section({
+  title,
+  rows,
+  total,
+}: {
+  title: string;
+  rows: Array<{ account_id: string; code: string; name: string; amount: number }>;
+  total: number;
+}) {
   return (
     <div className="mb-6">
-      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">{title}</div>
+      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+        {title}
+      </div>
       <table className="w-full text-sm">
         <tbody>
           {rows.map((r) => (
@@ -40,7 +56,9 @@ function Section({ title, rows, total }: { title: string; rows: Array<{ account_
         </tbody>
         <tfoot>
           <tr className="border-t font-semibold">
-            <td colSpan={2} className="py-2">Total {title}</td>
+            <td colSpan={2} className="py-2">
+              Total {title}
+            </td>
             <td className="py-2 text-right tabular-nums">{fmt(total)}</td>
           </tr>
         </tfoot>
@@ -52,7 +70,9 @@ function Section({ title, rows, total }: { title: string; rows: Array<{ account_
 function PnlPage() {
   const orgId = useOrgId();
   const today = new Date();
-  const [from, setFrom] = useState(new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10));
+  const [from, setFrom] = useState(
+    new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10),
+  );
   const [to, setTo] = useState(today.toISOString().slice(0, 10));
   const fn = useServerFn(getProfitAndLoss);
   const q = useQuery({
@@ -63,12 +83,22 @@ function PnlPage() {
 
   return (
     <AppShell>
-      <PageHeader eyebrow="LedgerOS · Reporting" title="Profit & Loss" description="Revenue − Expense = Net Income." />
+      <PageHeader
+        eyebrow="LedgerOS · Reporting"
+        title="Profit & Loss"
+        description="Revenue − Expense = Net Income."
+      />
       <PageBody>
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
-            <div><Label>From</Label><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
-            <div><Label>To</Label><Input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></div>
+            <div>
+              <Label>From</Label>
+              <Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+            </div>
+            <div>
+              <Label>To</Label>
+              <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+            </div>
           </div>
         </Card>
         <Card className="p-6">
@@ -80,7 +110,9 @@ function PnlPage() {
               <Section title="Expense" rows={q.data.expense} total={q.data.expenseTotal} />
               <div className="border-t-2 pt-3 flex justify-between font-bold text-lg">
                 <span>Net Income</span>
-                <span className={q.data.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>{fmt(q.data.netIncome)}</span>
+                <span className={q.data.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>
+                  {fmt(q.data.netIncome)}
+                </span>
               </div>
             </>
           )}

@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
@@ -31,7 +35,10 @@ export const Route = createFileRoute("/admin/financial-events")({
   head: () => ({
     meta: [
       { title: "Financial Event Bus — LedgerOS" },
-      { name: "description", content: "Review, approve, and reject financial events from external systems." },
+      {
+        name: "description",
+        content: "Review, approve, and reject financial events from external systems.",
+      },
       { property: "og:title", content: "Financial Event Bus — LedgerOS" },
     ],
   }),
@@ -50,18 +57,30 @@ const STATUS_TONE: Record<string, string> = {
 };
 
 const STATUS_OPTIONS = [
-  "all", "received", "validated", "mapped",
-  "pending_approval", "approved", "materialized", "rejected", "error",
+  "all",
+  "received",
+  "validated",
+  "mapped",
+  "pending_approval",
+  "approved",
+  "materialized",
+  "rejected",
+  "error",
 ] as const;
 
 function FinancialEventsPage() {
   const orgId = useOrgId();
   const qc = useQueryClient();
-  const [status, setStatus] = useState<typeof STATUS_OPTIONS[number]>("pending_approval");
+  const [status, setStatus] = useState<(typeof STATUS_OPTIONS)[number]>("pending_approval");
   const [ruleDraft, setRuleDraft] = useState({
-    name: "", priority: 100, active: true,
-    source_system: "", external_event_type: "", ledger_object: "",
-    auto_approve: false, require_approval: false,
+    name: "",
+    priority: 100,
+    active: true,
+    source_system: "",
+    external_event_type: "",
+    ledger_object: "",
+    auto_approve: false,
+    require_approval: false,
   });
 
   const listEventsFn = useServerFn(listFinancialEvents);
@@ -146,7 +165,8 @@ function FinancialEventsPage() {
     if (!ruleDraft.name.trim()) return toast.error("Name is required");
     const conditions: Record<string, string> = {};
     if (ruleDraft.source_system) conditions.source_system = ruleDraft.source_system;
-    if (ruleDraft.external_event_type) conditions.external_event_type = ruleDraft.external_event_type;
+    if (ruleDraft.external_event_type)
+      conditions.external_event_type = ruleDraft.external_event_type;
     if (ruleDraft.ledger_object) conditions.ledger_object = ruleDraft.ledger_object;
     const actions: Record<string, boolean> = {};
     if (ruleDraft.auto_approve) actions.auto_approve = true;
@@ -163,7 +183,16 @@ function FinancialEventsPage() {
         },
       });
       toast.success("Rule saved");
-      setRuleDraft({ name: "", priority: 100, active: true, source_system: "", external_event_type: "", ledger_object: "", auto_approve: false, require_approval: false });
+      setRuleDraft({
+        name: "",
+        priority: 100,
+        active: true,
+        source_system: "",
+        external_event_type: "",
+        ledger_object: "",
+        auto_approve: false,
+        require_approval: false,
+      });
       invalidate();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Save failed");
@@ -199,11 +228,19 @@ function FinancialEventsPage() {
       />
       <PageBody>
         <div className="flex flex-wrap items-center gap-3">
-          <Select value={status} onValueChange={(v) => setStatus(v as typeof STATUS_OPTIONS[number])}>
-            <SelectTrigger className="w-56"><SelectValue /></SelectTrigger>
+          <Select
+            value={status}
+            onValueChange={(v) => setStatus(v as (typeof STATUS_OPTIONS)[number])}
+          >
+            <SelectTrigger className="w-56">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               {STATUS_OPTIONS.map((s) => (
-                <SelectItem key={s} value={s}>{s}{counts[s] ? ` (${counts[s]})` : ""}</SelectItem>
+                <SelectItem key={s} value={s}>
+                  {s}
+                  {counts[s] ? ` (${counts[s]})` : ""}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -228,36 +265,48 @@ function FinancialEventsPage() {
               </thead>
               <tbody>
                 {rows.length === 0 ? (
-                  <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">No events at this status.</td></tr>
-                ) : rows.map((r) => (
-                  <tr key={r.id} className="border-t border-border">
-                    <td className="p-3 text-muted-foreground">{new Date(r.created_at).toLocaleString()}</td>
-                    <td className="p-3">{r.source_system}</td>
-                    <td className="p-3 font-mono text-xs">{r.external_event_type}</td>
-                    <td className="p-3 font-mono text-xs">{r.external_id ?? "—"}</td>
-                    <td className="p-3">{r.ledger_object ?? "—"}</td>
-                    <td className="p-3">
-                      <Badge className={STATUS_TONE[r.status] ?? "bg-muted"}>{r.status}</Badge>
-                    </td>
-                    <td className="p-3 text-right">
-                      {["pending_approval", "mapped", "validated"].includes(r.status) && (
-                        <div className="inline-flex gap-2">
-                          <Button size="sm" variant="outline" onClick={() => handleApprove(r.id)}>
-                            <CheckCircle2 className="h-4 w-4 mr-1" /> Approve
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => handleReject(r.id)}>
-                            <XCircle className="h-4 w-4 mr-1" /> Reject
-                          </Button>
-                        </div>
-                      )}
-                      {r.status === "approved" && (
-                        <Button size="sm" variant="outline" onClick={() => handleMaterialize(r.id)}>
-                          <Play className="h-4 w-4 mr-1" /> Materialize
-                        </Button>
-                      )}
+                  <tr>
+                    <td colSpan={7} className="p-6 text-center text-muted-foreground">
+                      No events at this status.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  rows.map((r) => (
+                    <tr key={r.id} className="border-t border-border">
+                      <td className="p-3 text-muted-foreground">
+                        {new Date(r.created_at).toLocaleString()}
+                      </td>
+                      <td className="p-3">{r.source_system}</td>
+                      <td className="p-3 font-mono text-xs">{r.external_event_type}</td>
+                      <td className="p-3 font-mono text-xs">{r.external_id ?? "—"}</td>
+                      <td className="p-3">{r.ledger_object ?? "—"}</td>
+                      <td className="p-3">
+                        <Badge className={STATUS_TONE[r.status] ?? "bg-muted"}>{r.status}</Badge>
+                      </td>
+                      <td className="p-3 text-right">
+                        {["pending_approval", "mapped", "validated"].includes(r.status) && (
+                          <div className="inline-flex gap-2">
+                            <Button size="sm" variant="outline" onClick={() => handleApprove(r.id)}>
+                              <CheckCircle2 className="h-4 w-4 mr-1" /> Approve
+                            </Button>
+                            <Button size="sm" variant="outline" onClick={() => handleReject(r.id)}>
+                              <XCircle className="h-4 w-4 mr-1" /> Reject
+                            </Button>
+                          </div>
+                        )}
+                        {r.status === "approved" && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleMaterialize(r.id)}
+                          >
+                            <Play className="h-4 w-4 mr-1" /> Materialize
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -266,7 +315,8 @@ function FinancialEventsPage() {
         <div className="mt-8">
           <h2 className="text-lg font-semibold">Materialization Queue</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Approved events materialize into draft financial objects (customers, invoices, payments, credits). Journal posting still requires a human step in the ledger.
+            Approved events materialize into draft financial objects (customers, invoices, payments,
+            credits). Journal posting still requires a human step in the ledger.
           </p>
           <Card className="overflow-hidden">
             <div className="overflow-x-auto">
@@ -284,30 +334,44 @@ function FinancialEventsPage() {
                 </thead>
                 <tbody>
                   {(materializationsQ.data ?? []).length === 0 ? (
-                    <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">No materializations yet.</td></tr>
-                  ) : (materializationsQ.data ?? []).map((m) => (
-                    <tr key={m.id} className="border-t border-border">
-                      <td className="p-3 text-muted-foreground">{new Date(m.created_at).toLocaleString()}</td>
-                      <td className="p-3">{m.materialization_type}</td>
-                      <td className="p-3 font-mono text-xs">
-                        {m.target_object_type ? `${m.target_object_type}:${m.target_object_id?.slice(0,8)}` : "—"}
-                      </td>
-                      <td className="p-3">
-                        <Badge className={STATUS_TONE[m.status] ?? "bg-muted"}>{m.status}</Badge>
-                      </td>
-                      <td className="p-3 text-xs text-red-500">
-                        {m.error_code ? `${m.error_code}: ${m.error_message ?? ""}` : "—"}
-                      </td>
-                      <td className="p-3">{m.retry_count}</td>
-                      <td className="p-3 text-right">
-                        {["failed", "requires_review"].includes(m.status) && (
-                          <Button size="sm" variant="outline" onClick={() => handleRetry(m.event_id)}>
-                            <RefreshCw className="h-4 w-4 mr-1" /> Retry
-                          </Button>
-                        )}
+                    <tr>
+                      <td colSpan={7} className="p-6 text-center text-muted-foreground">
+                        No materializations yet.
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    (materializationsQ.data ?? []).map((m) => (
+                      <tr key={m.id} className="border-t border-border">
+                        <td className="p-3 text-muted-foreground">
+                          {new Date(m.created_at).toLocaleString()}
+                        </td>
+                        <td className="p-3">{m.materialization_type}</td>
+                        <td className="p-3 font-mono text-xs">
+                          {m.target_object_type
+                            ? `${m.target_object_type}:${m.target_object_id?.slice(0, 8)}`
+                            : "—"}
+                        </td>
+                        <td className="p-3">
+                          <Badge className={STATUS_TONE[m.status] ?? "bg-muted"}>{m.status}</Badge>
+                        </td>
+                        <td className="p-3 text-xs text-red-500">
+                          {m.error_code ? `${m.error_code}: ${m.error_message ?? ""}` : "—"}
+                        </td>
+                        <td className="p-3">{m.retry_count}</td>
+                        <td className="p-3 text-right">
+                          {["failed", "requires_review"].includes(m.status) && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleRetry(m.event_id)}
+                            >
+                              <RefreshCw className="h-4 w-4 mr-1" /> Retry
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -317,18 +381,66 @@ function FinancialEventsPage() {
         <div className="mt-8">
           <h2 className="text-lg font-semibold">Rules</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Highest priority (lowest number) wins. Match by any combination of source system, event type, and mapped ledger object.
+            Highest priority (lowest number) wins. Match by any combination of source system, event
+            type, and mapped ledger object.
           </p>
           <Card className="p-4 space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <Input placeholder="Rule name" value={ruleDraft.name} onChange={(e) => setRuleDraft({ ...ruleDraft, name: e.target.value })} />
-              <Input placeholder="source_system (optional)" value={ruleDraft.source_system} onChange={(e) => setRuleDraft({ ...ruleDraft, source_system: e.target.value })} />
-              <Input placeholder="external_event_type (optional)" value={ruleDraft.external_event_type} onChange={(e) => setRuleDraft({ ...ruleDraft, external_event_type: e.target.value })} />
-              <Input placeholder="ledger_object (optional)" value={ruleDraft.ledger_object} onChange={(e) => setRuleDraft({ ...ruleDraft, ledger_object: e.target.value })} />
-              <Input type="number" placeholder="priority" value={ruleDraft.priority} onChange={(e) => setRuleDraft({ ...ruleDraft, priority: Number(e.target.value) })} />
+              <Input
+                placeholder="Rule name"
+                value={ruleDraft.name}
+                onChange={(e) => setRuleDraft({ ...ruleDraft, name: e.target.value })}
+              />
+              <Input
+                placeholder="source_system (optional)"
+                value={ruleDraft.source_system}
+                onChange={(e) => setRuleDraft({ ...ruleDraft, source_system: e.target.value })}
+              />
+              <Input
+                placeholder="external_event_type (optional)"
+                value={ruleDraft.external_event_type}
+                onChange={(e) =>
+                  setRuleDraft({ ...ruleDraft, external_event_type: e.target.value })
+                }
+              />
+              <Input
+                placeholder="ledger_object (optional)"
+                value={ruleDraft.ledger_object}
+                onChange={(e) => setRuleDraft({ ...ruleDraft, ledger_object: e.target.value })}
+              />
+              <Input
+                type="number"
+                placeholder="priority"
+                value={ruleDraft.priority}
+                onChange={(e) => setRuleDraft({ ...ruleDraft, priority: Number(e.target.value) })}
+              />
               <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 text-sm"><Switch checked={ruleDraft.auto_approve} onCheckedChange={(v) => setRuleDraft({ ...ruleDraft, auto_approve: v, require_approval: v ? false : ruleDraft.require_approval })} /> auto_approve</label>
-                <label className="flex items-center gap-2 text-sm"><Switch checked={ruleDraft.require_approval} onCheckedChange={(v) => setRuleDraft({ ...ruleDraft, require_approval: v, auto_approve: v ? false : ruleDraft.auto_approve })} /> require_approval</label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Switch
+                    checked={ruleDraft.auto_approve}
+                    onCheckedChange={(v) =>
+                      setRuleDraft({
+                        ...ruleDraft,
+                        auto_approve: v,
+                        require_approval: v ? false : ruleDraft.require_approval,
+                      })
+                    }
+                  />{" "}
+                  auto_approve
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Switch
+                    checked={ruleDraft.require_approval}
+                    onCheckedChange={(v) =>
+                      setRuleDraft({
+                        ...ruleDraft,
+                        require_approval: v,
+                        auto_approve: v ? false : ruleDraft.auto_approve,
+                      })
+                    }
+                  />{" "}
+                  require_approval
+                </label>
               </div>
             </div>
             <div className="flex justify-end">
@@ -350,21 +462,29 @@ function FinancialEventsPage() {
               </thead>
               <tbody>
                 {rules.length === 0 ? (
-                  <tr><td colSpan={6} className="p-6 text-center text-muted-foreground">No rules configured — events default to <code>requires_approval=true</code>.</td></tr>
-                ) : rules.map((r) => (
-                  <tr key={r.id} className="border-t border-border">
-                    <td className="p-3">{r.priority}</td>
-                    <td className="p-3 font-medium">{r.name}</td>
-                    <td className="p-3 font-mono text-xs">{JSON.stringify(r.conditions)}</td>
-                    <td className="p-3 font-mono text-xs">{JSON.stringify(r.actions)}</td>
-                    <td className="p-3">{r.active ? <Badge>on</Badge> : <Badge variant="outline">off</Badge>}</td>
-                    <td className="p-3 text-right">
-                      <Button size="sm" variant="ghost" onClick={() => handleDeleteRule(r.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                  <tr>
+                    <td colSpan={6} className="p-6 text-center text-muted-foreground">
+                      No rules configured — events default to <code>requires_approval=true</code>.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  rules.map((r) => (
+                    <tr key={r.id} className="border-t border-border">
+                      <td className="p-3">{r.priority}</td>
+                      <td className="p-3 font-medium">{r.name}</td>
+                      <td className="p-3 font-mono text-xs">{JSON.stringify(r.conditions)}</td>
+                      <td className="p-3 font-mono text-xs">{JSON.stringify(r.actions)}</td>
+                      <td className="p-3">
+                        {r.active ? <Badge>on</Badge> : <Badge variant="outline">off</Badge>}
+                      </td>
+                      <td className="p-3 text-right">
+                        <Button size="sm" variant="ghost" onClick={() => handleDeleteRule(r.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </Card>

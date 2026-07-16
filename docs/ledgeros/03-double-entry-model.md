@@ -58,53 +58,53 @@ posted history.
 
 ### Invoice sent (AR recognition)
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| Accounts Receivable | Total |        |
-| Revenue (per line's account) |    | Line subtotal |
-| Sales Tax Payable |       | Tax    |
+| Line                         | Debit | Credit        |
+| ---------------------------- | ----- | ------------- |
+| Accounts Receivable          | Total |               |
+| Revenue (per line's account) |       | Line subtotal |
+| Sales Tax Payable            |       | Tax           |
 
 ### Customer payment (cash receipt)
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| Undeposited Funds or Bank | Amount |    |
-| Accounts Receivable |     | Amount applied |
+| Line                      | Debit  | Credit         |
+| ------------------------- | ------ | -------------- |
+| Undeposited Funds or Bank | Amount |                |
+| Accounts Receivable       |        | Amount applied |
 
 ### Refund of a payment
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
+| Line                | Debit  | Credit |
+| ------------------- | ------ | ------ |
 | Accounts Receivable | Amount |        |
-| Bank              |       | Amount |
+| Bank                |        | Amount |
 
 ### Credit memo issued
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| Revenue / Adjustment | Amount |     |
-| Accounts Receivable |     | Amount |
+| Line                 | Debit  | Credit |
+| -------------------- | ------ | ------ |
+| Revenue / Adjustment | Amount |        |
+| Accounts Receivable  |        | Amount |
 
 ### Bill received (AP recognition)
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| Expense / COGS    | Amount |        |
-| Accounts Payable  |       | Amount |
+| Line             | Debit  | Credit |
+| ---------------- | ------ | ------ |
+| Expense / COGS   | Amount |        |
+| Accounts Payable |        | Amount |
 
 ### Vendor payment
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| Accounts Payable  | Amount |        |
-| Bank              |       | Amount |
+| Line             | Debit  | Credit |
+| ---------------- | ------ | ------ |
+| Accounts Payable | Amount |        |
+| Bank             |        | Amount |
 
 ### Inventory consumption on a work order (COGS)
 
-| Line              | Debit | Credit |
-| ----------------- | ----- | ------ |
-| COGS              | total_cost |    |
-| Inventory Asset   |       | total_cost |
+| Line            | Debit      | Credit     |
+| --------------- | ---------- | ---------- |
+| COGS            | total_cost |            |
+| Inventory Asset |            | total_cost |
 
 ## 6. Period Close
 

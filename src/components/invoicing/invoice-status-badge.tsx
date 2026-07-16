@@ -10,7 +10,13 @@ const toneClass: Record<string, string> = {
   violet: "bg-violet-500/10 text-violet-600 ring-violet-500/20",
 };
 
-export function InvoiceStatusBadge({ status, className }: { status: InvoiceStatus; className?: string }) {
+export function InvoiceStatusBadge({
+  status,
+  className,
+}: {
+  status: InvoiceStatus;
+  className?: string;
+}) {
   const meta = INVOICE_STATUS_META[status];
   return (
     <span

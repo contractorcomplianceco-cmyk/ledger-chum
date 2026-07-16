@@ -27,12 +27,14 @@ const billLineSchema = z.object({
 export const listBills = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      status: z.enum(["draft", "open", "partial", "paid", "void"]).optional(),
-      vendorId: z.string().uuid().optional(),
-      limit: z.number().int().min(1).max(500).default(100),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        status: z.enum(["draft", "open", "partial", "paid", "void"]).optional(),
+        vendorId: z.string().uuid().optional(),
+        limit: z.number().int().min(1).max(500).default(100),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     let q = context.supabase
@@ -64,21 +66,23 @@ export const getBill = createServerFn({ method: "GET" })
 export const postBill = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      vendorId: z.string().uuid(),
-      billNumber: z.string().min(1),
-      issueDate: z.string(),
-      dueDate: z.string(),
-      memo: z.string().optional(),
-      tax: z.number().min(0).default(0),
-      lines: z.array(billLineSchema).min(1),
-      externalSource: z.string().optional(),
-      externalId: z.string().optional(),
-      sourceSystem: z.string().optional(),
-      sourceRef: z.string().optional(),
-      correlationId: z.string().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        vendorId: z.string().uuid(),
+        billNumber: z.string().min(1),
+        issueDate: z.string(),
+        dueDate: z.string(),
+        memo: z.string().optional(),
+        tax: z.number().min(0).default(0),
+        lines: z.array(billLineSchema).min(1),
+        externalSource: z.string().optional(),
+        externalId: z.string().optional(),
+        sourceSystem: z.string().optional(),
+        sourceRef: z.string().optional(),
+        correlationId: z.string().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const payload = {
@@ -107,10 +111,7 @@ export const postBill = createServerFn({ method: "POST" })
       _source_ref: data.sourceRef ?? "",
       _correlation_id: data.correlationId ?? "",
     };
-    const { data: result, error } = await context.supabase.rpc(
-      "post_bill_with_posting",
-      payload,
-    );
+    const { data: result, error } = await context.supabase.rpc("post_bill_with_posting", payload);
     if (error) throw new Error(error.message);
     return result as { bill_id: string; journal_id: string; total: number };
   });

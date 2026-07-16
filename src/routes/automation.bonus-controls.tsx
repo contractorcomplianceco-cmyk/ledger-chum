@@ -46,7 +46,10 @@ function BonusControlsPage() {
           <span>Status</span>
         </div>
         {BONUS_CONTROLS.map((b) => (
-          <div key={b.id} className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_1fr_1.4fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0">
+          <div
+            key={b.id}
+            className="grid grid-cols-[1.2fr_1fr_1fr_1fr_1fr_1fr_1.4fr_auto] items-center gap-2 border-b border-border px-4 py-3 text-[12.5px] last:border-b-0"
+          >
             <span className="font-medium">{b.employee}</span>
             <span className="text-[11.5px] text-muted-foreground">{b.plan}</span>
             <span className="font-tabular">{currency(b.earned)}</span>
@@ -54,25 +57,54 @@ function BonusControlsPage() {
             <span className="font-tabular text-warning">{currency(b.held)}</span>
             <span className="font-tabular text-success">{currency(b.released)}</span>
             <span className="text-[11.5px] text-muted-foreground">{b.reason}</span>
-            <span className={cn("rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase", STATUS_TONE[b.status])}>{b.status.replace("_", " ")}</span>
+            <span
+              className={cn(
+                "rounded-full border px-2 py-0.5 text-[10.5px] font-semibold uppercase",
+                STATUS_TONE[b.status],
+              )}
+            >
+              {b.status.replace("_", " ")}
+            </span>
           </div>
         ))}
       </Card>
 
       <div className="flex gap-2">
-        <Button size="sm" variant="outline">Recompute eligibility</Button>
-        <Button size="sm" variant="outline">Release cleared</Button>
+        <Button size="sm" variant="outline">
+          Recompute eligibility
+        </Button>
+        <Button size="sm" variant="outline">
+          Release cleared
+        </Button>
         <Button size="sm">Request Rose approval</Button>
       </div>
     </AutomationPage>
   );
 }
 
-function Kpi({ label, value, tone }: { label: string; value: string; tone?: "success" | "warning" }) {
+function Kpi({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone?: "success" | "warning";
+}) {
   return (
     <Card className="border-border/70 p-4">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className={cn("mt-1 font-tabular text-[22px] font-bold", tone === "success" && "text-success", tone === "warning" && "text-warning")}>{value}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn(
+          "mt-1 font-tabular text-[22px] font-bold",
+          tone === "success" && "text-success",
+          tone === "warning" && "text-warning",
+        )}
+      >
+        {value}
+      </div>
     </Card>
   );
 }

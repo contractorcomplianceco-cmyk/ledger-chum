@@ -12,7 +12,8 @@ export const Route = createFileRoute("/expenses/copilot")({
 });
 
 const DEFAULT_ANSWER = {
-  summary: "Ask about expenses, subscriptions, budgets, anomalies, reimbursements, client recovery, or vendor pricing. Every response includes evidence and a suggested action.",
+  summary:
+    "Ask about expenses, subscriptions, budgets, anomalies, reimbursements, client recovery, or vendor pricing. Every response includes evidence and a suggested action.",
   evidence: [] as string[],
   confidence: 0,
   impact: 0,
@@ -33,26 +34,43 @@ function CopilotPage() {
             </div>
             <div>
               <h3 className="text-[13px] font-semibold">Expense Copilot</h3>
-              <div className="text-[11.5px] text-muted-foreground">Demonstration insight — based on mock data</div>
+              <div className="text-[11.5px] text-muted-foreground">
+                Demonstration insight — based on mock data
+              </div>
             </div>
           </div>
 
           <div className="mt-4 flex gap-2">
-            <Input value={q} onChange={(e) => setQ(e.target.value)} className="h-10 flex-1 text-[13px]" />
-            <Button className="h-10"><Send className="mr-1.5 h-3.5 w-3.5" /> Ask</Button>
+            <Input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              className="h-10 flex-1 text-[13px]"
+            />
+            <Button className="h-10">
+              <Send className="mr-1.5 h-3.5 w-3.5" /> Ask
+            </Button>
           </div>
         </Card>
 
         <Card className="border-border/70 p-5">
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Answer</div>
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+            Answer
+          </div>
           <p className="mt-2 text-[14px] leading-relaxed">{answer.summary}</p>
 
           {answer.evidence.length > 0 && (
             <div className="mt-4">
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Evidence</div>
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Evidence
+              </div>
               <ul className="mt-2 space-y-1 text-[12.5px]">
                 {answer.evidence.map((e) => (
-                  <li key={e} className="rounded-md border border-border/70 bg-muted/30 px-2 py-1 font-mono text-[11.5px]">{e}</li>
+                  <li
+                    key={e}
+                    className="rounded-md border border-border/70 bg-muted/30 px-2 py-1 font-mono text-[11.5px]"
+                  >
+                    {e}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -68,7 +86,9 @@ function CopilotPage() {
 
           {answer.action && (
             <div className="mt-4 rounded-md border border-brand/20 bg-brand/5 p-3 text-[12.5px]">
-              <div className="text-[10.5px] font-semibold uppercase tracking-wide text-brand">Suggested action</div>
+              <div className="text-[10.5px] font-semibold uppercase tracking-wide text-brand">
+                Suggested action
+              </div>
               <div className="mt-1">{answer.action}</div>
             </div>
           )}
@@ -82,7 +102,9 @@ function CopilotPage() {
 
       <aside>
         <Card className="border-border/70 p-4">
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Example questions</div>
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+            Example questions
+          </div>
           <ul className="mt-2 space-y-1">
             {COPILOT_QUESTIONS.map((question) => (
               <li key={question}>
@@ -104,7 +126,9 @@ function CopilotPage() {
 function Cell({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md bg-muted/40 p-2">
-      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-[10.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
       <div className="mt-0.5 font-tabular font-semibold">{value}</div>
     </div>
   );

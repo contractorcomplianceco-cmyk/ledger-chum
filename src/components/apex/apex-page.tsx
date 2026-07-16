@@ -104,9 +104,7 @@ export function ApexSection({
     <section className={cn("space-y-3", className)}>
       <div>
         <h2 className="text-[15px] font-semibold text-foreground">{title}</h2>
-        {description && (
-          <p className="text-[12.5px] text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="text-[12.5px] text-muted-foreground">{description}</p>}
       </div>
       {children}
     </section>

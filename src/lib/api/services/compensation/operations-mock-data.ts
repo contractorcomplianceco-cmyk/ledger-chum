@@ -147,7 +147,11 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
       "Meridian Advisors paid $12,000 with $1,200 in pass-through fees, leaving $10,800 realized. Tara qualifies at 5% (carved) and salesperson receives the remaining 5%. Total compensation: $1,080; 10% holdback ($108) applied.",
     auditTimeline: [
       { at: now, actor: "Rose Delacroix", action: "Calculation created" },
-      { at: now, actor: "Accounting Lead", action: "Verified attribution and pass-through exclusion" },
+      {
+        at: now,
+        actor: "Accounting Lead",
+        action: "Verified attribution and pass-through exclusion",
+      },
       { at: now, actor: "Rose Delacroix", action: "Approved" },
     ],
     sourceIdempotencyKey: "pay_9911:cp_std_sales:v3",
@@ -183,7 +187,18 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
     totalHoldback: 37.5,
     totalAdjustment: 0,
     totalNetPayable: 337.5,
-    lines: [line({ id: "cl_002a", participantName: "Devon Locke", participantId: "pp_devon", baseAmount: 3750, grossAmount: 375, holdback: 37.5, netPayable: 337.5, status: "pending_clearance" })],
+    lines: [
+      line({
+        id: "cl_002a",
+        participantName: "Devon Locke",
+        participantId: "pp_devon",
+        baseAmount: 3750,
+        grossAmount: 375,
+        holdback: 37.5,
+        netPayable: 337.5,
+        status: "pending_clearance",
+      }),
+    ],
     marginImpact: -0.1,
     cashImpact: -337.5,
     status: "pending_clearance",
@@ -197,8 +212,11 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
     createdAt: now,
     createdBy: "Rose Delacroix",
     updatedAt: now,
-    explanation: "Partial payment of $4,000 of $8,000 invoiced. Pro-rata: $250 pass-through excluded → $3,750 realized → $375 compensation.",
-    auditTimeline: [{ at: now, actor: "Integration Service", action: "Draft created from partial payment event" }],
+    explanation:
+      "Partial payment of $4,000 of $8,000 invoiced. Pro-rata: $250 pass-through excluded → $3,750 realized → $375 compensation.",
+    auditTimeline: [
+      { at: now, actor: "Integration Service", action: "Draft created from partial payment event" },
+    ],
     sourceIdempotencyKey: "inv_4402:cp_std_sales:v3",
   },
   {
@@ -378,7 +396,19 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
     totalHoldback: 43,
     totalAdjustment: -150,
     totalNetPayable: 237,
-    lines: [line({ id: "cl_005a", participantName: "Priya Kapoor", participantId: "pp_priya", baseAmount: 4300, grossAmount: 430, holdback: 43, adjustment: -150, netPayable: 237, status: "adjusted" })],
+    lines: [
+      line({
+        id: "cl_005a",
+        participantName: "Priya Kapoor",
+        participantId: "pp_priya",
+        baseAmount: 4300,
+        grossAmount: 430,
+        holdback: 43,
+        adjustment: -150,
+        netPayable: 237,
+        status: "adjusted",
+      }),
+    ],
     marginImpact: -0.07,
     cashImpact: -237,
     status: "adjusted",
@@ -392,7 +422,8 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
     createdAt: now,
     createdBy: "Rose Delacroix",
     updatedAt: now,
-    explanation: "Expansion payment $6,000; $1,500 refund reduced realized to $4,300; 10% pool = $430; refund adjustment −$150; net payable $237.",
+    explanation:
+      "Expansion payment $6,000; $1,500 refund reduced realized to $4,300; 10% pool = $430; refund adjustment −$150; net payable $237.",
     auditTimeline: [
       { at: now, actor: "Rose Delacroix", action: "Original calculation posted" },
       { at: now, actor: "Rose Delacroix", action: "Refund adjustment posted" },
@@ -404,12 +435,57 @@ export const MOCK_CALCULATIONS: CompensationCalculation[] = [
 // ─── Verifications ────────────────────────────────────────────────────────
 
 export const MOCK_VERIFICATIONS: CompensationVerification[] = [
-  { id: "ver_001", calculationId: "calc_001", category: "attribution", status: "verified", reviewer: "Accounting Lead", reviewedAt: now, evidenceCount: 3 },
-  { id: "ver_002", calculationId: "calc_001", category: "pass_through", status: "verified", reviewer: "Accounting Lead", reviewedAt: now, evidenceCount: 1 },
-  { id: "ver_003", calculationId: "calc_002", category: "collection_clearance", status: "pending", evidenceCount: 0, note: "Awaiting payment clearance" },
-  { id: "ver_004", calculationId: "calc_002", category: "split_validation", status: "pending", evidenceCount: 0 },
-  { id: "ver_005", calculationId: "calc_005", category: "refund_chargeback", status: "evidence_requested", reviewer: "Rose Delacroix", note: "Need refund memo attached", evidenceCount: 1 },
-  { id: "ver_006", calculationId: "calc_003", category: "software_participation", status: "verified", reviewer: "Accounting Lead", reviewedAt: now, evidenceCount: 2 },
+  {
+    id: "ver_001",
+    calculationId: "calc_001",
+    category: "attribution",
+    status: "verified",
+    reviewer: "Accounting Lead",
+    reviewedAt: now,
+    evidenceCount: 3,
+  },
+  {
+    id: "ver_002",
+    calculationId: "calc_001",
+    category: "pass_through",
+    status: "verified",
+    reviewer: "Accounting Lead",
+    reviewedAt: now,
+    evidenceCount: 1,
+  },
+  {
+    id: "ver_003",
+    calculationId: "calc_002",
+    category: "collection_clearance",
+    status: "pending",
+    evidenceCount: 0,
+    note: "Awaiting payment clearance",
+  },
+  {
+    id: "ver_004",
+    calculationId: "calc_002",
+    category: "split_validation",
+    status: "pending",
+    evidenceCount: 0,
+  },
+  {
+    id: "ver_005",
+    calculationId: "calc_005",
+    category: "refund_chargeback",
+    status: "evidence_requested",
+    reviewer: "Rose Delacroix",
+    note: "Need refund memo attached",
+    evidenceCount: 1,
+  },
+  {
+    id: "ver_006",
+    calculationId: "calc_003",
+    category: "software_participation",
+    status: "verified",
+    reviewer: "Accounting Lead",
+    reviewedAt: now,
+    evidenceCount: 2,
+  },
 ];
 
 // ─── Approvals ────────────────────────────────────────────────────────────
@@ -939,7 +1015,14 @@ export const MOCK_CLAWBACKS: CompensationClawback[] = [
     accountingImpact: "DR Commission Clawback Receivable $500 / CR Commission Expense $500",
     payrollApImpact: "Offset next Devon payroll cycle up to remaining balance",
     recoveries: [
-      { id: "rec_001", clawbackId: "cb_001", amount: 200, method: "offset_future_payable", recordedAt: now, recordedBy: "Accounting Lead" },
+      {
+        id: "rec_001",
+        clawbackId: "cb_001",
+        amount: 200,
+        method: "offset_future_payable",
+        recordedAt: now,
+        recordedBy: "Accounting Lead",
+      },
     ],
     createdAt: now,
     createdBy: "Accounting Lead",
@@ -964,7 +1047,9 @@ export const MOCK_CLAWBACKS: CompensationClawback[] = [
     recoveries: [],
     createdAt: now,
     createdBy: "Accounting Lead",
-    auditTimeline: [{ at: now, actor: "Accounting Lead", action: "Clawback drafted from partial refund" }],
+    auditTimeline: [
+      { at: now, actor: "Accounting Lead", action: "Clawback drafted from partial refund" },
+    ],
   },
 ];
 

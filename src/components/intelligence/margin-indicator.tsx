@@ -19,7 +19,9 @@ export function MarginIndicator({
           style={{ width: `${Math.min(100, pct)}%` }}
         />
       </div>
-      <span className={cn("font-tabular font-semibold", below ? "text-destructive" : "text-success")}>
+      <span
+        className={cn("font-tabular font-semibold", below ? "text-destructive" : "text-success")}
+      >
         {value.toFixed(1)}%
       </span>
       <span className="text-muted-foreground">/ {target.toFixed(0)}%</span>

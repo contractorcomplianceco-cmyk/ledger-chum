@@ -109,7 +109,9 @@ function MetricCenterPage() {
             <Card className="p-3">
               <div className="mb-2 flex items-center justify-between px-1">
                 <div className="text-sm font-semibold">Catalog</div>
-                <Badge variant="outline" className="text-[10px]">{metrics.length}</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  {metrics.length}
+                </Badge>
               </div>
               <div className="max-h-[70vh] space-y-3 overflow-y-auto pr-1">
                 {Object.entries(byCategory).map(([cat, items]) => (
@@ -131,7 +133,9 @@ function MetricCenterPage() {
                           <div className="flex items-center justify-between gap-2">
                             <span className="truncate font-medium">{m.metric_name}</span>
                             {m.demonstration_only && (
-                              <Badge variant="outline" className="text-[9px]">demo</Badge>
+                              <Badge variant="outline" className="text-[9px]">
+                                demo
+                              </Badge>
                             )}
                           </div>
                           <div className="truncate text-[10px] text-muted-foreground">
@@ -197,7 +201,9 @@ function MetricCenterPage() {
                           Freshness
                         </div>
                         <div className="mt-1">
-                          <Badge className={FRESHNESS_TONE[latest?.freshness_status ?? "unavailable"]}>
+                          <Badge
+                            className={FRESHNESS_TONE[latest?.freshness_status ?? "unavailable"]}
+                          >
                             {latest?.freshness_status ?? "unavailable"}
                           </Badge>
                         </div>
@@ -222,9 +228,16 @@ function MetricCenterPage() {
                         <TabsTrigger value="history">History</TabsTrigger>
                       </TabsList>
                       <TabsContent value="overview" className="space-y-2 pt-3 text-sm">
-                        <div><span className="text-muted-foreground">Owner:</span> {active.owner_role}</div>
-                        <div><span className="text-muted-foreground">Status:</span> {active.status}</div>
-                        <div><span className="text-muted-foreground">Confidence rule:</span> {active.confidence_rule ?? "—"}</div>
+                        <div>
+                          <span className="text-muted-foreground">Owner:</span> {active.owner_role}
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Status:</span> {active.status}
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Confidence rule:</span>{" "}
+                          {active.confidence_rule ?? "—"}
+                        </div>
                         {active.demonstration_only && (
                           <div className="rounded-md border border-amber-500/40 bg-amber-500/5 p-2 text-xs text-amber-600">
                             Demonstration calculation until forecasting/health engine is connected.
@@ -264,7 +277,10 @@ function MetricCenterPage() {
                           {(lineageQ.data ?? [])
                             .filter((l: any) => l.dependency_metric_key)
                             .map((l: any) => (
-                              <div key={l.id} className="rounded-md border border-border/60 p-2 text-xs">
+                              <div
+                                key={l.id}
+                                className="rounded-md border border-border/60 p-2 text-xs"
+                              >
                                 <Badge variant="outline" className="mr-2">
                                   {l.dependency_metric_key}
                                 </Badge>
@@ -280,8 +296,14 @@ function MetricCenterPage() {
                         </div>
                       </TabsContent>
                       <TabsContent value="permissions" className="pt-3 text-sm">
-                        <div><span className="text-muted-foreground">Sensitive:</span> {active.is_sensitive ? "yes" : "no"}</div>
-                        <div><span className="text-muted-foreground">Required permission:</span> {active.required_permission ?? "—"}</div>
+                        <div>
+                          <span className="text-muted-foreground">Sensitive:</span>{" "}
+                          {active.is_sensitive ? "yes" : "no"}
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Required permission:</span>{" "}
+                          {active.required_permission ?? "—"}
+                        </div>
                         <div className="mt-2 text-xs text-muted-foreground">
                           Organization isolation enforced via RLS on financial_metrics /
                           financial_metric_values / financial_metric_lineage.
@@ -332,13 +354,17 @@ function MetricCenterPage() {
                       <div className="rounded-md border border-border/60 bg-surface p-2">
                         <div className="text-[10px] uppercase text-muted-foreground">Sources</div>
                         <div>
-                          {(lineageQ.data ?? [])
-                            .filter((l: any) => !l.dependency_metric_key).length}{" "}
+                          {
+                            (lineageQ.data ?? []).filter((l: any) => !l.dependency_metric_key)
+                              .length
+                          }{" "}
                           tables/fields
                         </div>
                       </div>
                       <div className="rounded-md border border-border/60 bg-surface p-2">
-                        <div className="text-[10px] uppercase text-muted-foreground">Dependencies</div>
+                        <div className="text-[10px] uppercase text-muted-foreground">
+                          Dependencies
+                        </div>
                         <div>
                           {(lineageQ.data ?? [])
                             .filter((l: any) => l.dependency_metric_key)
@@ -351,7 +377,9 @@ function MetricCenterPage() {
                         <div>Trial Balance · P&amp;L · Balance Sheet</div>
                       </div>
                       <div className="rounded-md border border-border/60 bg-surface p-2">
-                        <div className="text-[10px] uppercase text-muted-foreground">APEX Usage</div>
+                        <div className="text-[10px] uppercase text-muted-foreground">
+                          APEX Usage
+                        </div>
                         <div>Consumed via metric API only</div>
                       </div>
                     </div>

@@ -14,7 +14,9 @@ async function sha256Hex(input: string): Promise<string> {
 function randomToken(len = 40): string {
   const bytes = new Uint8Array(len);
   crypto.getRandomValues(bytes);
-  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function assertOwner(
@@ -36,7 +38,9 @@ export const listApiClients = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await context.supabase
       .from("api_clients")
-      .select("id, name, provider, description, active, key_prefix, last_used_at, expires_at, revoked_at, created_at")
+      .select(
+        "id, name, provider, description, active, key_prefix, last_used_at, expires_at, revoked_at, created_at",
+      )
       .eq("org_id", data.orgId)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
@@ -46,13 +50,15 @@ export const listApiClients = createServerFn({ method: "GET" })
 export const issueApiClient = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      name: z.string().min(1).max(200),
-      provider: z.string().min(1).max(100).default("generic"),
-      description: z.string().max(1000).optional(),
-      expiresAt: z.string().datetime().optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        name: z.string().min(1).max(200),
+        provider: z.string().min(1).max(100).default("generic"),
+        description: z.string().max(1000).optional(),
+        expiresAt: z.string().datetime().optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     await assertOwner(context, data.orgId);
@@ -97,9 +103,7 @@ export const issueApiClient = createServerFn({ method: "POST" })
 
 export const rotateApiClient = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ id: z.string().uuid(), orgId: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ id: z.string().uuid(), orgId: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     await assertOwner(context, data.orgId);
 
@@ -134,9 +138,7 @@ export const rotateApiClient = createServerFn({ method: "POST" })
 
 export const revokeApiClient = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) =>
-    z.object({ id: z.string().uuid(), orgId: z.string().uuid() }).parse(v),
-  )
+  .inputValidator((v) => z.object({ id: z.string().uuid(), orgId: z.string().uuid() }).parse(v))
   .handler(async ({ data, context }) => {
     await assertOwner(context, data.orgId);
 

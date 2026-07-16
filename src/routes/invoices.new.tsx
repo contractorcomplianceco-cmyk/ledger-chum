@@ -73,11 +73,17 @@ function NewInvoicePage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <Button variant="ghost" size="sm" asChild>
-          <Link to="/invoices"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices</Link>
+          <Link to="/invoices">
+            <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices
+          </Link>
         </Button>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm"><Save className="mr-1.5 h-3.5 w-3.5" /> Save draft</Button>
-          <Button size="sm"><Send className="mr-1.5 h-3.5 w-3.5" /> Send for approval</Button>
+          <Button variant="outline" size="sm">
+            <Save className="mr-1.5 h-3.5 w-3.5" /> Save draft
+          </Button>
+          <Button size="sm">
+            <Send className="mr-1.5 h-3.5 w-3.5" /> Send for approval
+          </Button>
         </div>
       </div>
 
@@ -86,29 +92,47 @@ function NewInvoicePage() {
           <Card className="border border-border/70 bg-surface p-4 shadow-card">
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Customer</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Customer
+                </label>
                 <Select value={customerId} onValueChange={setCustomerId}>
-                  <SelectTrigger className="mt-1 h-9 text-[13px]"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1 h-9 text-[13px]">
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
                     {CUSTOMERS.map((c) => (
-                      <SelectItem key={c.id} value={c.id} className="text-[13px]">{c.name}</SelectItem>
+                      <SelectItem key={c.id} value={c.id} className="text-[13px]">
+                        {c.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <div className="mt-1 text-[11px] text-muted-foreground">{customer.email}</div>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Issue date</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Issue date
+                </label>
                 <Input value={issued} readOnly className="mt-1 h-9 text-[13px]" />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Due date</label>
-                <Input value={due} onChange={(e) => setDue(e.target.value)} className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Due date
+                </label>
+                <Input
+                  value={due}
+                  onChange={(e) => setDue(e.target.value)}
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Terms</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Terms
+                </label>
                 <Select value={terms} onValueChange={setTerms}>
-                  <SelectTrigger className="mt-1 h-9 text-[13px]"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1 h-9 text-[13px]">
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Due on receipt">Due on receipt</SelectItem>
                     <SelectItem value="Net 7">Net 7</SelectItem>
@@ -119,12 +143,26 @@ function NewInvoicePage() {
                 </Select>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">PO number</label>
-                <Input value={po} onChange={(e) => setPo(e.target.value)} placeholder="Optional" className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  PO number
+                </label>
+                <Input
+                  value={po}
+                  onChange={(e) => setPo(e.target.value)}
+                  placeholder="Optional"
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
               <div className="md:col-span-2 xl:col-span-2">
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Internal notes</label>
-                <Input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Not shown to client" className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Internal notes
+                </label>
+                <Input
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Not shown to client"
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
             </div>
           </Card>
@@ -155,10 +193,14 @@ function NewInvoicePage() {
                 <Plus className="mr-1.5 h-3.5 w-3.5" /> Blank line
               </Button>
               <Select onValueChange={(v) => add(v)}>
-                <SelectTrigger className="h-9 w-64 text-[13px]"><SelectValue placeholder="Add from service catalog…" /></SelectTrigger>
+                <SelectTrigger className="h-9 w-64 text-[13px]">
+                  <SelectValue placeholder="Add from service catalog…" />
+                </SelectTrigger>
                 <SelectContent>
                   {SERVICE_CATALOG.map((s) => (
-                    <SelectItem key={s.id} value={s.id} className="text-[13px]">{s.name}</SelectItem>
+                    <SelectItem key={s.id} value={s.id} className="text-[13px]">
+                      {s.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

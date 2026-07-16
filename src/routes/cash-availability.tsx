@@ -61,9 +61,7 @@ function CashAvailabilityLayout() {
                 to={t.to as "/cash-availability"}
                 className={cn(
                   "relative rounded-t-md px-3 py-2 text-[13px] font-medium transition",
-                  active
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
+                  active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {t.label}

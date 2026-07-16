@@ -69,8 +69,7 @@ function ApexInsightsPage() {
     return byKind.sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0));
   }, [audience, kind, anomalies.data, recs.data, expl.data, health.data, close.data]);
 
-  const anyDemo =
-    anomalies.isDemo || recs.isDemo || expl.isDemo || health.isDemo || close.isDemo;
+  const anyDemo = anomalies.isDemo || recs.isDemo || expl.isDemo || health.isDemo || close.isDemo;
 
   return (
     <ApexPage
@@ -187,13 +186,10 @@ function InsightCard({ item }: { item: IntelligenceItem }) {
                 {Math.round((item.confidence ?? 0) * 100)}%
               </span>
             </span>
-            <span className={cn("font-semibold", freshTone)}>
-              {item.freshness}
-            </span>
+            <span className={cn("font-semibold", freshTone)}>{item.freshness}</span>
             {item.sourceMetricKey && (
               <span className="text-muted-foreground">
-                Source{" "}
-                <span className="font-mono text-foreground">{item.sourceMetricKey}</span>
+                Source <span className="font-mono text-foreground">{item.sourceMetricKey}</span>
               </span>
             )}
             {item.severity && item.severity !== "info" && (
@@ -221,9 +217,7 @@ function InsightCard({ item }: { item: IntelligenceItem }) {
                   >
                     <span className="text-foreground">{e.label}</span>
                     {e.value != null && (
-                      <span className="ml-1 font-mono text-muted-foreground">
-                        · {e.value}
-                      </span>
+                      <span className="ml-1 font-mono text-muted-foreground">· {e.value}</span>
                     )}
                   </li>
                 ))}
@@ -235,9 +229,7 @@ function InsightCard({ item }: { item: IntelligenceItem }) {
             <div className="mt-2 rounded-md border border-border/70 bg-surface p-2 text-[12px]">
               {item.recommendedAction && (
                 <div>
-                  <span className="font-semibold text-foreground">
-                    Recommended action:{" "}
-                  </span>
+                  <span className="font-semibold text-foreground">Recommended action: </span>
                   {item.recommendedAction}
                 </div>
               )}
@@ -281,13 +273,7 @@ function InsightCard({ item }: { item: IntelligenceItem }) {
       </div>
 
       <div className="mt-3 flex items-center justify-end gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          className="h-8 text-[12px]"
-          disabled
-        >
+        <Button type="button" variant="outline" size="sm" className="h-8 text-[12px]" disabled>
           Advisory only
         </Button>
       </div>

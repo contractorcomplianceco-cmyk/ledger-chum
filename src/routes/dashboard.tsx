@@ -139,7 +139,8 @@ function ExecutiveDashboard() {
         <RecentTransactionsCard />
 
         <p className="pt-2 text-center text-[11px] text-muted-foreground">
-          LedgerOS UI Design Lab — All values are demonstration data. No accounting records were created or modified.
+          LedgerOS UI Design Lab — All values are demonstration data. No accounting records were
+          created or modified.
         </p>
       </PageBody>
     </AppShell>
@@ -392,7 +393,8 @@ function UtilityColumn() {
         <div className="space-y-2.5">
           {ALERTS.map((a) => {
             const Icon = a.severity === "warning" ? AlertTriangle : AlertCircle;
-            const tone = a.severity === "warning" ? "text-warning bg-warning/10" : "text-brand bg-brand/10";
+            const tone =
+              a.severity === "warning" ? "text-warning bg-warning/10" : "text-brand bg-brand/10";
             return (
               <div key={a.title} className="flex items-start gap-2.5">
                 <div className={cn("grid h-8 w-8 shrink-0 place-items-center rounded-lg", tone)}>
@@ -422,10 +424,7 @@ function RecentTransactionsCard() {
     <Card className="border border-border/70 bg-surface p-0 shadow-card">
       <div className="flex items-center justify-between px-5 pb-3 pt-4">
         <div className="text-[15.5px] font-semibold text-foreground">Recent Transactions</div>
-        <button
-          type="button"
-          className="text-[12.5px] font-semibold text-brand hover:underline"
-        >
+        <button type="button" className="text-[12.5px] font-semibold text-brand hover:underline">
           View All
         </button>
       </div>
@@ -462,9 +461,7 @@ function RecentTransactionsCard() {
               <TableCell>
                 <TypeChip type={t.type as TxnType} />
               </TableCell>
-              <TableCell className="text-[13px] font-medium text-foreground">
-                {t.desc}
-              </TableCell>
+              <TableCell className="text-[13px] font-medium text-foreground">{t.desc}</TableCell>
               <TableCell className="font-mono text-[12.5px] text-muted-foreground">
                 {t.account}
               </TableCell>

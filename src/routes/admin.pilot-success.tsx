@@ -6,10 +6,17 @@ import { AppShell, PageBody, PageHeader } from "@/components/app-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useOrgId } from "@/hooks/use-current-org";
-import { listFinancialEvents, listMaterializations } from "@/lib/accounting/financial-events.functions";
+import {
+  listFinancialEvents,
+  listMaterializations,
+} from "@/lib/accounting/financial-events.functions";
 import { listFailedSyncHistory } from "@/lib/accounting/integrations.functions";
 import { listMetrics } from "@/lib/intelligence/metrics.functions";
-import { listAnomalies, listRecommendations, listExplanations } from "@/lib/intelligence/services.functions";
+import {
+  listAnomalies,
+  listRecommendations,
+  listExplanations,
+} from "@/lib/intelligence/services.functions";
 import {
   Workflow,
   Boxes,
@@ -90,7 +97,10 @@ function PilotSuccessPage() {
   });
 
   const stats = useMemo(() => {
-    const events = (eventsQ.data ?? []) as Array<{ status: string; materialized_target_type?: string | null }>;
+    const events = (eventsQ.data ?? []) as Array<{
+      status: string;
+      materialized_target_type?: string | null;
+    }>;
     const mats = (matsQ.data ?? []) as Array<{ status: string; target_object_type: string | null }>;
     const sync = (syncQ.data ?? []) as Array<{ status: string }>;
     const metrics = (metricsQ.data ?? []) as unknown[];
@@ -101,7 +111,9 @@ function PilotSuccessPage() {
     const materialized = events.filter((e) => e.status === "materialized").length;
     const journalObjectTypes = new Set(["journal_entry", "journal", "invoice", "bill", "payment"]);
     const journalsPosted = mats.filter(
-      (m) => m.status === "completed" && (m.target_object_type ? journalObjectTypes.has(m.target_object_type) : false),
+      (m) =>
+        m.status === "completed" &&
+        (m.target_object_type ? journalObjectTypes.has(m.target_object_type) : false),
     ).length;
     const syncErrors = sync.filter((r) => r.status === "error").length;
 
@@ -112,8 +124,7 @@ function PilotSuccessPage() {
       materialized,
       reportsAvailable: 4, // P&L, BS, TB, Cash Flow — canonical surfaces
       exceptions: syncErrors + anoms.length,
-      auditCompleteness:
-        events.length === 0 ? 0 : Math.round((materialized / events.length) * 100),
+      auditCompleteness: events.length === 0 ? 0 : Math.round((materialized / events.length) * 100),
       metrics: metrics.length,
       anomalies: anoms.length,
       recommendations: recs.length,
@@ -206,8 +217,8 @@ function PilotSuccessPage() {
         <Card className="border-border/60 p-5">
           <div className="text-sm font-semibold">Lifecycle coverage</div>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            Every event must complete the mandatory lifecycle. Advisory only — no
-            corrective action is taken from this surface.
+            Every event must complete the mandatory lifecycle. Advisory only — no corrective action
+            is taken from this surface.
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-[12px]">
             <Badge variant="outline">Event Bus</Badge>
@@ -226,7 +237,10 @@ function PilotSuccessPage() {
         <Card className="border-border/60 bg-muted/20 p-5">
           <div className="text-sm font-medium">Invariants</div>
           <ul className="mt-2 space-y-1 text-[13px] text-muted-foreground">
-            <li>• All numbers above derive from existing bus / materialization / intelligence surfaces.</li>
+            <li>
+              • All numbers above derive from existing bus / materialization / intelligence
+              surfaces.
+            </li>
             <li>• No direct queries to accounting tables from this UI.</li>
             <li>• AI is advisory-only.</li>
             <li>• LedgerOS remains the independent financial operating system.</li>

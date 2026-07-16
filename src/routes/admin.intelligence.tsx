@@ -273,13 +273,25 @@ function IntelligenceCenterPage() {
                           </div>
                           {a.status === "open" && (
                             <div className="flex flex-col gap-1">
-                              <Button size="sm" variant="outline" onClick={() => ackAnomaly(a.id, "acknowledged")}>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => ackAnomaly(a.id, "acknowledged")}
+                              >
                                 Acknowledge
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => ackAnomaly(a.id, "dismissed")}>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => ackAnomaly(a.id, "dismissed")}
+                              >
                                 Dismiss
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => ackAnomaly(a.id, "resolved")}>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => ackAnomaly(a.id, "resolved")}
+                              >
                                 Resolve
                               </Button>
                             </div>
@@ -334,13 +346,25 @@ function IntelligenceCenterPage() {
                           </div>
                           {["generated", "needs_review"].includes(r.state) && (
                             <div className="flex flex-col gap-1">
-                              <Button size="sm" variant="outline" onClick={() => reviewRec(r.id, "accepted")}>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => reviewRec(r.id, "accepted")}
+                              >
                                 Accept
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => reviewRec(r.id, "needs_review")}>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => reviewRec(r.id, "needs_review")}
+                              >
                                 Needs review
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => reviewRec(r.id, "dismissed")}>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => reviewRec(r.id, "dismissed")}
+                              >
                                 Dismiss
                               </Button>
                             </div>
@@ -435,7 +459,9 @@ function IntelligenceCenterPage() {
                         </div>
                       </div>
                       <div className="rounded-md border border-border/60 p-3 md:col-span-2">
-                        <div className="text-xs font-semibold">Immutability enforcement (DB triggers)</div>
+                        <div className="text-xs font-semibold">
+                          Immutability enforcement (DB triggers)
+                        </div>
                         <ul className="mt-1 space-y-1 text-xs font-mono">
                           <li>anomalies · {govQ.data.immutability.anomalies}</li>
                           <li>recommendations · {govQ.data.immutability.recommendations}</li>

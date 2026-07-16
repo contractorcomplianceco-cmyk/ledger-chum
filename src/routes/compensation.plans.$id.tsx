@@ -1,6 +1,10 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CompensationShell, DemoActionNotice, showDemoToast } from "@/components/compensation/compensation-shell";
+import {
+  CompensationShell,
+  DemoActionNotice,
+  showDemoToast,
+} from "@/components/compensation/compensation-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -50,30 +54,42 @@ function PlanDetailPage() {
       actions={
         <>
           <Button size="sm" variant="outline" asChild>
-            <Link to="/compensation/plans/$id/versions" params={{ id }}>Versions</Link>
+            <Link to="/compensation/plans/$id/versions" params={{ id }}>
+              Versions
+            </Link>
           </Button>
           <Button size="sm" variant="outline" asChild>
-            <Link to="/compensation/plans/$id/participants" params={{ id }}>Participants</Link>
+            <Link to="/compensation/plans/$id/participants" params={{ id }}>
+              Participants
+            </Link>
           </Button>
-          <Button size="sm" onClick={() => showDemoToast("Plan edit opened")}>Edit</Button>
+          <Button size="sm" onClick={() => showDemoToast("Plan edit opened")}>
+            Edit
+          </Button>
         </>
       }
     >
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="p-5 lg:col-span-2">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Plain-language summary</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Plain-language summary
+          </h3>
           <p className="text-sm">{plan.plainLanguageSummary}</p>
           <div className="mt-4 rounded-lg border border-border/60 bg-muted/30 p-3 text-xs">
             <span className="font-semibold">Formula:</span> {plan.formulaText}
           </div>
         </Card>
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Status</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Status
+          </h3>
           <div className="flex flex-wrap gap-1.5">
             <Badge variant="outline">{plan.status.replaceAll("_", " ")}</Badge>
             <Badge variant="outline">v{plan.currentVersion}</Badge>
             {plan.active ? (
-              <Badge variant="outline" className="border-success/40 bg-success/10 text-success">Active</Badge>
+              <Badge variant="outline" className="border-success/40 bg-success/10 text-success">
+                Active
+              </Badge>
             ) : (
               <Badge variant="outline">Inactive</Badge>
             )}
@@ -96,18 +112,25 @@ function PlanDetailPage() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Calculation</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Calculation
+          </h3>
           <KV label="Family" value={plan.family.replaceAll("_", " ")} />
           <KV label="Disbursement class" value={plan.disbursementClass.replaceAll("_", " ")} />
           <KV label="Basis" value={plan.basis.replaceAll("_", " ")} />
-          <KV label="Default rate" value={plan.defaultRate ? `${(plan.defaultRate * 100).toFixed(2)}%` : "—"} />
+          <KV
+            label="Default rate"
+            value={plan.defaultRate ? `${(plan.defaultRate * 100).toFixed(2)}%` : "—"}
+          />
           <KV label="Fixed amount" value={plan.fixedAmount ? currency(plan.fixedAmount) : "—"} />
           <KV label="Effective" value={plan.effectiveDate} />
           <KV label="Expires" value={plan.expirationDate ?? "—"} />
         </Card>
 
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Eligibility</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Eligibility
+          </h3>
           <KV label="Services" value={plan.eligibleServices.join(", ") || "—"} />
           <KV label="Products" value={plan.eligibleProducts.join(", ") || "—"} />
           <KV label="Apps" value={plan.eligibleApps.join(", ") || "—"} />
@@ -120,9 +143,17 @@ function PlanDetailPage() {
         </Card>
 
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Deductions & invariants</h3>
-          <KV label="Pass-through treatment" value={plan.passThroughTreatment.replaceAll("_", " ")} />
-          <KV label="Collection requirement" value={plan.collectionRequirement.replaceAll("_", " ")} />
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Deductions & invariants
+          </h3>
+          <KV
+            label="Pass-through treatment"
+            value={plan.passThroughTreatment.replaceAll("_", " ")}
+          />
+          <KV
+            label="Collection requirement"
+            value={plan.collectionRequirement.replaceAll("_", " ")}
+          />
           <KV label="Refunds" value="deducted" />
           <KV label="Chargebacks" value="deducted" />
           <KV label="Credits" value="deducted" />
@@ -130,12 +161,15 @@ function PlanDetailPage() {
           <KV label="Holdback %" value={`${(plan.holdbackPercent * 100).toFixed(0)}%`} />
           <KV label="Survival" value={`${plan.survivalMonths}`} />
           <div className="mt-3 rounded-md border border-warning/40 bg-warning/5 p-2 text-xs">
-            Any relaxation of pass-through or uncollected-revenue exclusion requires attached legal review + Owner approval, a written reason, an audit event, and a calculation snapshot.
+            Any relaxation of pass-through or uncollected-revenue exclusion requires attached legal
+            review + Owner approval, a written reason, an audit event, and a calculation snapshot.
           </div>
         </Card>
 
         <Card className="p-5">
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Approval & GL</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Approval & GL
+          </h3>
           <KV label="Approval route" value={plan.approvalRoute.join(" → ")} />
           <KV label="Expense GL" value={plan.glExpenseAccount} />
           <KV label="Payable GL" value={plan.glPayableAccount} />
@@ -146,12 +180,15 @@ function PlanDetailPage() {
       </div>
 
       <Card className="p-5">
-        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Resolved policy snapshot</h3>
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          Resolved policy snapshot
+        </h3>
         <p className="mb-3 text-xs text-muted-foreground">
-          Snapshot resolved from §11 defaults + this plan's overrides. Snapshotted at calculation time on every line for audit reproducibility.
+          Snapshot resolved from §11 defaults + this plan's overrides. Snapshotted at calculation
+          time on every line for audit reproducibility.
         </p>
         <pre className="max-h-72 overflow-auto rounded-md border border-border/60 bg-muted/30 p-3 text-[11px]">
-{JSON.stringify(policy, null, 2)}
+          {JSON.stringify(policy, null, 2)}
         </pre>
       </Card>
 

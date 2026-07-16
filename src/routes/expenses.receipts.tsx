@@ -49,8 +49,14 @@ function ReceiptInboxPage() {
       </Card>
 
       <div className="flex items-center justify-between text-[12px] text-muted-foreground">
-        <span>Forward receipts to <strong className="font-semibold text-foreground">receipts@ledgeros.demo</strong>, upload from mobile, or import via integration.</span>
-        <Button size="sm" variant="outline" className="h-8">Bulk match</Button>
+        <span>
+          Forward receipts to{" "}
+          <strong className="font-semibold text-foreground">receipts@ledgeros.demo</strong>, upload
+          from mobile, or import via integration.
+        </span>
+        <Button size="sm" variant="outline" className="h-8">
+          Bulk match
+        </Button>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">

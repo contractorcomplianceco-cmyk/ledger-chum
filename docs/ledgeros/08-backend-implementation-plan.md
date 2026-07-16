@@ -105,7 +105,7 @@ Rules:
 
 - `audit_events` is the primary trace.
 - Server functions and routes log `{ correlation_id, endpoint,
-  duration_ms, status }`.
+duration_ms, status }`.
 - `sync_history.status = 'error'` rows are the queue for
   systems-reviewer alerts.
 

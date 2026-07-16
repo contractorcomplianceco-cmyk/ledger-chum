@@ -20,16 +20,18 @@ export const getOrganizationSettings = createServerFn({ method: "GET" })
 export const upsertOrganizationSettings = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      accountingBasis: z.enum(["cash", "accrual"]).optional(),
-      defaultCurrency: z.string().min(3).max(3).optional(),
-      timezone: z.string().max(64).optional(),
-      fiscalCalendar: z.string().max(64).optional(),
-      softCloseDays: z.number().int().min(0).max(31).optional(),
-      hardCloseDays: z.number().int().min(0).max(60).optional(),
-      auditRetentionMonths: z.number().int().min(12).max(240).optional(),
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        accountingBasis: z.enum(["cash", "accrual"]).optional(),
+        defaultCurrency: z.string().min(3).max(3).optional(),
+        timezone: z.string().max(64).optional(),
+        fiscalCalendar: z.string().max(64).optional(),
+        softCloseDays: z.number().int().min(0).max(31).optional(),
+        hardCloseDays: z.number().int().min(0).max(60).optional(),
+        auditRetentionMonths: z.number().int().min(12).max(240).optional(),
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     const patch: {

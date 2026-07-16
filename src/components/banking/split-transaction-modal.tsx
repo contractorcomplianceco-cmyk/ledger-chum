@@ -34,7 +34,13 @@ export function SplitTransactionModal({
   originalAmount: number;
 }) {
   const [lines, setLines] = useState<SplitLine[]>([
-    { id: "l1", account: "6210 Software & Infrastructure", description: "", tag: "", amount: originalAmount * 0.6 },
+    {
+      id: "l1",
+      account: "6210 Software & Infrastructure",
+      description: "",
+      tag: "",
+      amount: originalAmount * 0.6,
+    },
     { id: "l2", account: "6820 Bank Fees", description: "", tag: "", amount: originalAmount * 0.4 },
   ]);
 
@@ -48,7 +54,13 @@ export function SplitTransactionModal({
   const add = () =>
     setLines((prev) => [
       ...prev,
-      { id: `l${Date.now()}`, account: "", description: "", tag: "", amount: Math.max(remaining, 0) },
+      {
+        id: `l${Date.now()}`,
+        account: "",
+        description: "",
+        tag: "",
+        amount: Math.max(remaining, 0),
+      },
     ]);
 
   return (
@@ -92,9 +104,14 @@ export function SplitTransactionModal({
           {lines.map((line, i) => {
             const pct = originalAmount > 0 ? (line.amount / originalAmount) * 100 : 0;
             return (
-              <div key={line.id} className="grid grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_auto] items-center gap-2 rounded-lg border border-border p-2">
+              <div
+                key={line.id}
+                className="grid grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_auto] items-center gap-2 rounded-lg border border-border p-2"
+              >
                 <div className="min-w-0">
-                  <label className="sr-only" htmlFor={`acct-${line.id}`}>Account line {i + 1}</label>
+                  <label className="sr-only" htmlFor={`acct-${line.id}`}>
+                    Account line {i + 1}
+                  </label>
                   <Input
                     id={`acct-${line.id}`}
                     value={line.account}
@@ -158,7 +175,9 @@ export function SplitTransactionModal({
           )}
         >
           {balanced ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
-          {balanced ? "Split is balanced." : "Split is out of balance — allocate the full amount to continue."}
+          {balanced
+            ? "Split is balanced."
+            : "Split is out of balance — allocate the full amount to continue."}
         </div>
 
         <DemoNotice />

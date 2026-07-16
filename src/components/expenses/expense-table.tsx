@@ -34,15 +34,23 @@ export function ExpenseTable({
           <tbody className="divide-y divide-border">
             {rows.map((e) => (
               <tr key={e.id} className="hover:bg-muted/30">
-                <td className="whitespace-nowrap px-3 py-2 font-tabular text-[12px] text-muted-foreground">{e.date}</td>
+                <td className="whitespace-nowrap px-3 py-2 font-tabular text-[12px] text-muted-foreground">
+                  {e.date}
+                </td>
                 <td className="px-3 py-2 font-medium">{e.employee}</td>
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-1.5">
                     <span>{e.vendor}</span>
-                    {e.anomaly && <AlertTriangle className="h-3 w-3 text-warning" aria-label="Anomaly" />}
+                    {e.anomaly && (
+                      <AlertTriangle className="h-3 w-3 text-warning" aria-label="Anomaly" />
+                    )}
                   </div>
                 </td>
-                {!compact && <td className="px-3 py-2 text-muted-foreground max-w-[240px] truncate">{e.description}</td>}
+                {!compact && (
+                  <td className="px-3 py-2 text-muted-foreground max-w-[240px] truncate">
+                    {e.description}
+                  </td>
+                )}
                 <td className="px-3 py-2">
                   <span className="inline-flex items-center gap-1.5 text-[12px]">
                     <span
@@ -55,7 +63,9 @@ export function ExpenseTable({
                 </td>
                 {!compact && <td className="px-3 py-2 text-muted-foreground">{e.department}</td>}
                 {!compact && <td className="px-3 py-2 text-muted-foreground">{e.client ?? "—"}</td>}
-                <td className="px-3 py-2 text-right font-tabular font-semibold">{currency(e.amount)}</td>
+                <td className="px-3 py-2 text-right font-tabular font-semibold">
+                  {currency(e.amount)}
+                </td>
                 <td className="px-3 py-2">
                   {e.hasReceipt ? (
                     <Receipt className="h-4 w-4 text-success" aria-label="Receipt attached" />
@@ -65,13 +75,20 @@ export function ExpenseTable({
                     </span>
                   )}
                 </td>
-                <td className="px-3 py-2"><PolicyBadge result={e.policy} /></td>
-                <td className="px-3 py-2"><StatusBadge status={e.status} /></td>
+                <td className="px-3 py-2">
+                  <PolicyBadge result={e.policy} />
+                </td>
+                <td className="px-3 py-2">
+                  <StatusBadge status={e.status} />
+                </td>
               </tr>
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={11} className="px-3 py-10 text-center text-[13px] text-muted-foreground">
+                <td
+                  colSpan={11}
+                  className="px-3 py-10 text-center text-[13px] text-muted-foreground"
+                >
                   No expenses match this view.
                 </td>
               </tr>

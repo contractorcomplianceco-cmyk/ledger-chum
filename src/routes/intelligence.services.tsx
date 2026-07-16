@@ -13,7 +13,7 @@ export const Route = createFileRoute("/intelligence/services")({
 });
 
 function ServiceProfitPage() {
-  const warnings = SERVICE_PROFITABILITY.filter((s) => s.contribution / s.avgPrice < 0.20);
+  const warnings = SERVICE_PROFITABILITY.filter((s) => s.contribution / s.avgPrice < 0.2);
 
   return (
     <IntelligencePage
@@ -24,7 +24,8 @@ function ServiceProfitPage() {
         <Card className="border-warning/40 bg-warning/[0.06] p-3">
           <div className="flex items-center gap-1.5 text-[12px] font-semibold text-warning">
             <AlertTriangle className="h-3.5 w-3.5" />
-            {warnings.length} service{warnings.length === 1 ? "" : "s"} below 20% contribution margin — consider pricing or scope review
+            {warnings.length} service{warnings.length === 1 ? "" : "s"} below 20% contribution
+            margin — consider pricing or scope review
           </div>
           <div className="mt-1 text-[11.5px] text-warning/90">
             {warnings.map((w) => w.name).join(" · ")}
@@ -60,11 +61,21 @@ function ServiceProfitPage() {
                   <tr key={s.id} className="border-t border-border/70 hover:bg-muted/30">
                     <td className="px-3 py-2 font-semibold">{s.name}</td>
                     <td className="px-3 py-2 text-right font-tabular">{currency(s.avgPrice)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(s.passthrough)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(s.commission)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(s.labor)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(s.tech)}</td>
-                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">{currency(s.marketing)}</td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(s.passthrough)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(s.commission)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(s.labor)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(s.tech)}
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular text-muted-foreground">
+                      {currency(s.marketing)}
+                    </td>
                     <td className="px-3 py-2 text-right font-tabular">{currency(s.gross)}</td>
                     <td
                       className={cn(
@@ -78,9 +89,15 @@ function ServiceProfitPage() {
                       <MarginIndicator value={margin} target={25} compact />
                     </td>
                     <td className="px-3 py-2 text-right font-tabular">{s.completionDays}</td>
-                    <td className="px-3 py-2 text-right font-tabular">{s.reworkRate.toFixed(1)}%</td>
-                    <td className="px-3 py-2 text-right font-tabular">{s.refundRate.toFixed(1)}%</td>
-                    <td className="px-3 py-2 text-right font-tabular">{s.chargebackRate.toFixed(1)}%</td>
+                    <td className="px-3 py-2 text-right font-tabular">
+                      {s.reworkRate.toFixed(1)}%
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular">
+                      {s.refundRate.toFixed(1)}%
+                    </td>
+                    <td className="px-3 py-2 text-right font-tabular">
+                      {s.chargebackRate.toFixed(1)}%
+                    </td>
                   </tr>
                 );
               })}

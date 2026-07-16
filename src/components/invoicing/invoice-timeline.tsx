@@ -5,7 +5,9 @@ export function InvoiceTimeline({ events }: { events: TimelineEvent[] }) {
   return (
     <Card className="border border-border/70 bg-surface p-4 shadow-card">
       <div className="text-[13.5px] font-semibold text-foreground">Activity timeline</div>
-      <div className="mt-1 text-[11.5px] text-muted-foreground">Every action leaves an audit trail</div>
+      <div className="mt-1 text-[11.5px] text-muted-foreground">
+        Every action leaves an audit trail
+      </div>
       <ol className="mt-4 space-y-3">
         {events.map((e, i) => (
           <li key={i} className="relative pl-6">

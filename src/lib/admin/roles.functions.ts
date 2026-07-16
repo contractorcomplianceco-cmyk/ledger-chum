@@ -41,11 +41,13 @@ export const listOrgRoles = createServerFn({ method: "GET" })
 export const assignRole = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      userId: z.string().uuid(),
-      role: roleEnum,
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        userId: z.string().uuid(),
+        role: roleEnum,
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     await assertOwner(context, data.orgId);
@@ -60,10 +62,9 @@ export const assignRole = createServerFn({ method: "POST" })
       .single();
     if (error) throw new Error(error.message);
 
-    await context.supabase.from("org_members").upsert(
-      { org_id: data.orgId, user_id: data.userId },
-      { onConflict: "org_id,user_id" },
-    );
+    await context.supabase
+      .from("org_members")
+      .upsert({ org_id: data.orgId, user_id: data.userId }, { onConflict: "org_id,user_id" });
 
     await context.supabase.from("audit_events").insert({
       org_id: data.orgId,
@@ -83,11 +84,13 @@ export const assignRole = createServerFn({ method: "POST" })
 export const revokeRole = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) =>
-    z.object({
-      orgId: z.string().uuid(),
-      userId: z.string().uuid(),
-      role: roleEnum,
-    }).parse(v),
+    z
+      .object({
+        orgId: z.string().uuid(),
+        userId: z.string().uuid(),
+        role: roleEnum,
+      })
+      .parse(v),
   )
   .handler(async ({ data, context }) => {
     await assertOwner(context, data.orgId);

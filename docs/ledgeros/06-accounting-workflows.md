@@ -128,18 +128,18 @@ marked "no match".
 
 ## 9. Role Matrix (accounting actions)
 
-| Action                     | Owner | AcctLead | Acct | SysReview | Member | IntegrationSvc |
-| -------------------------- | :---: | :------: | :--: | :-------: | :----: | :------------: |
-| View reports               |  ✓    |    ✓     |  ✓   |    ✓      |   —    |       —        |
-| Draft invoice              |  ✓    |    ✓     |  ✓   |    —      |   —    |       ✓        |
-| Post invoice               |  ✓    |    ✓     |  ✓   |    —      |   —    |       —        |
-| Void invoice               |  ✓    |    ✓     |  —   |    —      |   —    |       —        |
-| Record payment             |  ✓    |    ✓     |  ✓   |    —      |   —    |       ✓        |
-| Refund                     |  ✓    |    ✓     |  —   |    —      |   —    |       —        |
-| Credit memo                |  ✓    |    ✓     |  ✓   |    —      |   —    |       —        |
-| Post journal (manual)      |  ✓    |    ✓     |  ✓   |    —      |   —    |       —        |
-| Close period               |  ✓    |    ✓     |  —   |    —      |   —    |       —        |
-| Reconcile bank             |  ✓    |    ✓     |  ✓   |    —      |   —    |       —        |
-| Manage users/roles         |  ✓    |    —     |  —   |    —      |   —    |       —        |
-| Issue API keys             |  ✓    |    —     |  —   |    —      |   —    |       —        |
-| View sync history          |  ✓    |    ✓     |  ✓   |    ✓      |   —    |       —        |
+| Action                | Owner | AcctLead | Acct | SysReview | Member | IntegrationSvc |
+| --------------------- | :---: | :------: | :--: | :-------: | :----: | :------------: |
+| View reports          |   ✓   |    ✓     |  ✓   |     ✓     |   —    |       —        |
+| Draft invoice         |   ✓   |    ✓     |  ✓   |     —     |   —    |       ✓        |
+| Post invoice          |   ✓   |    ✓     |  ✓   |     —     |   —    |       —        |
+| Void invoice          |   ✓   |    ✓     |  —   |     —     |   —    |       —        |
+| Record payment        |   ✓   |    ✓     |  ✓   |     —     |   —    |       ✓        |
+| Refund                |   ✓   |    ✓     |  —   |     —     |   —    |       —        |
+| Credit memo           |   ✓   |    ✓     |  ✓   |     —     |   —    |       —        |
+| Post journal (manual) |   ✓   |    ✓     |  ✓   |     —     |   —    |       —        |
+| Close period          |   ✓   |    ✓     |  —   |     —     |   —    |       —        |
+| Reconcile bank        |   ✓   |    ✓     |  ✓   |     —     |   —    |       —        |
+| Manage users/roles    |   ✓   |    —     |  —   |     —     |   —    |       —        |
+| Issue API keys        |   ✓   |    —     |  —   |     —     |   —    |       —        |
+| View sync history     |   ✓   |    ✓     |  ✓   |     ✓     |   —    |       —        |

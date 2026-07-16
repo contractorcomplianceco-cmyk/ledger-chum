@@ -3,14 +3,34 @@ import { ApexPage, ApexSection } from "@/components/apex/apex-page";
 import { Card } from "@/components/ui/card";
 
 const ROLES = [
-  { role: "Rose / Owner", surfaces: "Company Health · available cash · priorities · risks · opportunities · approvals · profitability · hiring · expansion · owner and investor decisions" },
-  { role: "Christin / Accounting Lead", surfaces: "Close readiness · banking exceptions · expense approvals · payroll reconciliation · compensation verification · cash reserves · data quality · tax review items" },
+  {
+    role: "Rose / Owner",
+    surfaces:
+      "Company Health · available cash · priorities · risks · opportunities · approvals · profitability · hiring · expansion · owner and investor decisions",
+  },
+  {
+    role: "Christin / Accounting Lead",
+    surfaces:
+      "Close readiness · banking exceptions · expense approvals · payroll reconciliation · compensation verification · cash reserves · data quality · tax review items",
+  },
   { role: "Accounting / Tax Advisor", surfaces: "Tax and accountant review items only" },
-  { role: "Sales Leadership", surfaces: "Collections · revenue · customer profitability · commission progress · attribution · pricing opportunities · renewals · expansions" },
+  {
+    role: "Sales Leadership",
+    surfaces:
+      "Collections · revenue · customer profitability · commission progress · attribution · pricing opportunities · renewals · expansions",
+  },
   { role: "Marketing", surfaces: "Campaign contribution profit · attribution · marketing ROI" },
-  { role: "Operations", surfaces: "Exceptions · bills · expenses · client recovery · vendor activity · process risks · action plans" },
+  {
+    role: "Operations",
+    surfaces:
+      "Exceptions · bills · expenses · client recovery · vendor activity · process risks · action plans",
+  },
   { role: "Systems Reviewer", surfaces: "Data quality · integration health · governance" },
-  { role: "Team Member", surfaces: "My expenses · reimbursements · compensation statement · travel · education budget · tasks · approvals — no companywide sensitive data" },
+  {
+    role: "Team Member",
+    surfaces:
+      "My expenses · reimbursements · compensation statement · travel · education budget · tasks · approvals — no companywide sensitive data",
+  },
 ];
 
 export const Route = createFileRoute("/apex/roles")({

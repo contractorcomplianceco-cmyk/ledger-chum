@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { CompensationShell } from "@/components/compensation/compensation-shell";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { api } from "@/lib/api/client";
 import type { PlanPreviewResponse } from "@/lib/api/services/compensation";
 import { currency } from "@/lib/mock/finance";
@@ -36,7 +43,9 @@ function PreviewPage() {
               key={s.scenarioKey}
               onClick={() => setActiveKey(s.scenarioKey)}
               className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${
-                active?.scenarioKey === s.scenarioKey ? "border-brand bg-brand/10 text-foreground" : "border-border text-muted-foreground hover:bg-muted"
+                active?.scenarioKey === s.scenarioKey
+                  ? "border-brand bg-brand/10 text-foreground"
+                  : "border-border text-muted-foreground hover:bg-muted"
               }`}
             >
               {s.scenarioLabel}
@@ -51,9 +60,16 @@ function PreviewPage() {
             <div className="mb-1 flex items-center gap-2">
               <h3 className="text-lg font-semibold">{active.scenarioLabel}</h3>
               {active.legalReviewRequired && (
-                <Badge variant="outline" className="border-destructive/40 bg-destructive/10 text-destructive">Legal review required</Badge>
+                <Badge
+                  variant="outline"
+                  className="border-destructive/40 bg-destructive/10 text-destructive"
+                >
+                  Legal review required
+                </Badge>
               )}
-              {active.accountingReviewRequired && <Badge variant="outline">Accounting review</Badge>}
+              {active.accountingReviewRequired && (
+                <Badge variant="outline">Accounting review</Badge>
+              )}
             </div>
             <p className="text-sm text-muted-foreground">{active.narrative}</p>
           </Card>
@@ -78,18 +94,28 @@ function PreviewPage() {
             <Card className="p-5">
               <div className="text-xs text-muted-foreground">Applicable plans</div>
               <ul className="mt-1 ml-4 list-disc text-sm">
-                {active.applicablePlans.map((p) => <li key={p}>{p}</li>)}
+                {active.applicablePlans.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
               </ul>
               <div className="mt-3 text-xs text-muted-foreground">Required approvals</div>
               <div className="mt-1 flex flex-wrap gap-1.5">
-                {active.requiredApprovals.map((r) => <Badge key={r} variant="outline">{r}</Badge>)}
-                {active.requiredApprovals.length === 0 && <span className="text-sm text-muted-foreground">None</span>}
+                {active.requiredApprovals.map((r) => (
+                  <Badge key={r} variant="outline">
+                    {r}
+                  </Badge>
+                ))}
+                {active.requiredApprovals.length === 0 && (
+                  <span className="text-sm text-muted-foreground">None</span>
+                )}
               </div>
             </Card>
           </div>
 
           <Card className="overflow-x-auto">
-            <div className="p-4 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Pools & participants</div>
+            <div className="p-4 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Pools & participants
+            </div>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -127,18 +153,31 @@ function PreviewPage() {
                   </TableRow>
                 ))}
                 {active.participants.length === 0 && (
-                  <TableRow><TableCell colSpan={5} className="py-4 text-center text-sm text-muted-foreground">No participants — pool suppressed.</TableCell></TableRow>
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="py-4 text-center text-sm text-muted-foreground"
+                    >
+                      No participants — pool suppressed.
+                    </TableCell>
+                  </TableRow>
                 )}
               </TableBody>
             </Table>
           </Card>
 
           <Card className="p-5">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Invariant checks</h3>
+            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Invariant checks
+            </h3>
             <ul className="space-y-1 text-sm">
               {active.invariantChecks.map((c, i) => (
                 <li key={i} className="flex items-center gap-2">
-                  {c.passed ? <CheckCircle2 className="h-4 w-4 text-success" /> : <XCircle className="h-4 w-4 text-destructive" />}
+                  {c.passed ? (
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-destructive" />
+                  )}
                   <span>{c.label}</span>
                   {c.note && <span className="text-xs text-muted-foreground">— {c.note}</span>}
                 </li>
@@ -147,12 +186,15 @@ function PreviewPage() {
           </Card>
 
           <Card className="p-5">
-            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Resolved policy snapshot</h3>
+            <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Resolved policy snapshot
+            </h3>
             <p className="mb-2 text-xs text-muted-foreground">
-              Snapshotted at calculation time and stored on the calculation line for audit reproducibility.
+              Snapshotted at calculation time and stored on the calculation line for audit
+              reproducibility.
             </p>
             <pre className="max-h-60 overflow-auto rounded-md border border-border/60 bg-muted/30 p-3 text-[11px]">
-{JSON.stringify(active.resolvedPolicySnapshot, null, 2)}
+              {JSON.stringify(active.resolvedPolicySnapshot, null, 2)}
             </pre>
           </Card>
         </>

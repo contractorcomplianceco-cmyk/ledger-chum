@@ -32,14 +32,28 @@ function PreSpendPage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="text-[13px] text-muted-foreground">
-          Pre-approve software, marketing, travel, and services — with cash guardrails, duplicate checks, and payback preview.
+          Pre-approve software, marketing, travel, and services — with cash guardrails, duplicate
+          checks, and payback preview.
         </div>
-        <Button size="sm" className="h-9">New request</Button>
+        <Button size="sm" className="h-9">
+          New request
+        </Button>
       </div>
 
       <Card className="border-border/70 p-3">
         <div className="flex flex-wrap items-center gap-1.5">
-          {(["all", "submitted", "pending_manager", "pending_rose", "approved", "needs_info", "rejected", "converted"] as const).map((s) => (
+          {(
+            [
+              "all",
+              "submitted",
+              "pending_manager",
+              "pending_rose",
+              "approved",
+              "needs_info",
+              "rejected",
+              "converted",
+            ] as const
+          ).map((s) => (
             <button
               key={s}
               onClick={() => setStatus(s as "all" | PreSpendStatus)}
@@ -71,7 +85,11 @@ function PreSpendPage() {
                     {p.requester} · {p.department} · Needed by {p.neededBy}
                   </div>
                 </div>
-                <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${meta.className} whitespace-nowrap`}>{meta.label}</span>
+                <span
+                  className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${meta.className} whitespace-nowrap`}
+                >
+                  {meta.label}
+                </span>
               </div>
 
               <p className="mt-2 text-[13px]">{p.description}</p>
@@ -79,14 +97,21 @@ function PreSpendPage() {
               <div className="mt-3 grid grid-cols-3 gap-2 text-[12px]">
                 <div className="rounded-md bg-muted/40 p-2">
                   <div className="text-muted-foreground">Amount</div>
-                  <div className="font-tabular font-semibold">{currency(p.amount)}<span className="text-[10.5px] font-normal text-muted-foreground">/{p.frequency === "one_time" ? "once" : p.frequency}</span></div>
+                  <div className="font-tabular font-semibold">
+                    {currency(p.amount)}
+                    <span className="text-[10.5px] font-normal text-muted-foreground">
+                      /{p.frequency === "one_time" ? "once" : p.frequency}
+                    </span>
+                  </div>
                 </div>
                 <div className="rounded-md bg-muted/40 p-2">
                   <div className="text-muted-foreground">Expected outcome</div>
                   <div className="text-[11.5px]">{p.expectedOutcome}</div>
                 </div>
                 <div className="rounded-md bg-muted/40 p-2">
-                  <div className="text-muted-foreground flex items-center gap-1"><TrendingUp className="h-3 w-3" /> Payback</div>
+                  <div className="text-muted-foreground flex items-center gap-1">
+                    <TrendingUp className="h-3 w-3" /> Payback
+                  </div>
                   <div className="font-tabular font-semibold">{p.paybackMonths ?? "—"} mo</div>
                 </div>
               </div>
@@ -94,14 +119,23 @@ function PreSpendPage() {
               {p.duplicateRisk && (
                 <div className="mt-3 flex items-start gap-1.5 rounded-md border border-warning/30 bg-warning/5 p-2 text-[12px] text-warning">
                   <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                  <span><strong className="font-semibold">Duplicate capability:</strong> {p.duplicateRisk}</span>
+                  <span>
+                    <strong className="font-semibold">Duplicate capability:</strong>{" "}
+                    {p.duplicateRisk}
+                  </span>
                 </div>
               )}
 
               <div className="mt-3 flex items-center gap-1.5">
-                <Button size="sm" className="h-7 text-[11.5px]">Approve</Button>
-                <Button size="sm" variant="outline" className="h-7 text-[11.5px]">Request info</Button>
-                <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">Reject</Button>
+                <Button size="sm" className="h-7 text-[11.5px]">
+                  Approve
+                </Button>
+                <Button size="sm" variant="outline" className="h-7 text-[11.5px]">
+                  Request info
+                </Button>
+                <Button size="sm" variant="ghost" className="h-7 text-[11.5px]">
+                  Reject
+                </Button>
               </div>
             </Card>
           );

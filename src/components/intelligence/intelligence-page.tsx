@@ -69,7 +69,9 @@ export function IntelligencePage({
           aria-label="Financial Intelligence sections"
         >
           {INTEL_TABS.map((t) => {
-            const active = t.exact ? pathname === t.to : pathname === t.to || pathname.startsWith(t.to + "/");
+            const active = t.exact
+              ? pathname === t.to
+              : pathname === t.to || pathname.startsWith(t.to + "/");
             return (
               <Link
                 key={t.to}

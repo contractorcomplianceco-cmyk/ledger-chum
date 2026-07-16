@@ -43,7 +43,9 @@ async function fetchAggregated(
 ): Promise<Row[]> {
   let q = supabase
     .from("journal_lines")
-    .select("debit, credit, account:accounts!inner(id, code, name, type, org_id), journal:journal_entries!inner(status, entry_date, org_id)")
+    .select(
+      "debit, credit, account:accounts!inner(id, code, name, type, org_id), journal:journal_entries!inner(status, entry_date, org_id)",
+    )
     .eq("account.org_id", orgId)
     .eq("journal.org_id", orgId)
     .eq("journal.status", "posted");
@@ -58,8 +60,12 @@ async function fetchAggregated(
     if (!a) continue;
     const key = a.id;
     const row = map.get(key) ?? {
-      account_id: a.id, code: a.code, name: a.name, type: a.type,
-      debit: 0, credit: 0,
+      account_id: a.id,
+      code: a.code,
+      name: a.name,
+      type: a.type,
+      debit: 0,
+      credit: 0,
     };
     row.debit += Number(r.debit ?? 0);
     row.credit += Number(r.credit ?? 0);
@@ -78,7 +84,8 @@ export const getTrialBalanceRanged = createServerFn({ method: "GET" })
       { debit: 0, credit: 0 },
     );
     return {
-      from: data.from ?? null, to: data.to ?? null,
+      from: data.from ?? null,
+      to: data.to ?? null,
       rows: rows.map((r) => ({ ...r, balance: r.debit - r.credit })),
       totals,
       balanced: Math.abs(totals.debit - totals.credit) < 0.005,
@@ -99,16 +106,21 @@ export const getProfitAndLoss = createServerFn({ method: "GET" })
     const revenueTotal = revenue.reduce((s, r) => s + r.amount, 0);
     const expenseTotal = expense.reduce((s, r) => s + r.amount, 0);
     return {
-      from: data.from ?? null, to: data.to ?? null,
-      revenue, expense,
-      revenueTotal, expenseTotal,
+      from: data.from ?? null,
+      to: data.to ?? null,
+      revenue,
+      expense,
+      revenueTotal,
+      expenseTotal,
       netIncome: revenueTotal - expenseTotal,
     };
   });
 
 export const getBalanceSheetAsOf = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((v) => z.object({ orgId: z.string().uuid(), asOf: z.string().optional() }).parse(v))
+  .inputValidator((v) =>
+    z.object({ orgId: z.string().uuid(), asOf: z.string().optional() }).parse(v),
+  )
   .handler(async ({ data, context }) => {
     // Cumulative through asOf (or all-time).
     const rows = await fetchAggregated(context.supabase, data.orgId, undefined, data.asOf);
@@ -121,9 +133,11 @@ export const getBalanceSheetAsOf = createServerFn({ method: "GET" })
     const equity = rows
       .filter((r) => r.type === "equity")
       .map((r) => ({ ...r, amount: r.credit - r.debit }));
-    const revenue = rows.filter((r) => r.type === "revenue")
+    const revenue = rows
+      .filter((r) => r.type === "revenue")
       .reduce((s, r) => s + (r.credit - r.debit), 0);
-    const expense = rows.filter((r) => r.type === "expense")
+    const expense = rows
+      .filter((r) => r.type === "expense")
       .reduce((s, r) => s + (r.debit - r.credit), 0);
     const retainedEarnings = revenue - expense;
 
@@ -134,7 +148,9 @@ export const getBalanceSheetAsOf = createServerFn({ method: "GET" })
 
     return {
       asOf: data.asOf ?? null,
-      asset, liability, equity,
+      asset,
+      liability,
+      equity,
       retainedEarnings,
       totals: {
         asset: assetTotal,
@@ -157,8 +173,12 @@ export const getCashFlow = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const inRange = await fetchAggregated(context.supabase, data.orgId, data.from, data.to);
 
-    const revenue = inRange.filter((r) => r.type === "revenue").reduce((s, r) => s + (r.credit - r.debit), 0);
-    const expense = inRange.filter((r) => r.type === "expense").reduce((s, r) => s + (r.debit - r.credit), 0);
+    const revenue = inRange
+      .filter((r) => r.type === "revenue")
+      .reduce((s, r) => s + (r.credit - r.debit), 0);
+    const expense = inRange
+      .filter((r) => r.type === "expense")
+      .reduce((s, r) => s + (r.debit - r.credit), 0);
     const netIncome = revenue - expense;
 
     // Working-capital deltas from asset (AR/inventory) & liability (AP) accounts within the range.
@@ -175,7 +195,8 @@ export const getCashFlow = createServerFn({ method: "GET" })
     const operating = netIncome - arDelta - invDelta + apDelta;
 
     return {
-      from: data.from ?? null, to: data.to ?? null,
+      from: data.from ?? null,
+      to: data.to ?? null,
       netIncome,
       adjustments: { arIncrease: arDelta, inventoryIncrease: invDelta, apIncrease: apDelta },
       operating,

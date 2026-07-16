@@ -44,10 +44,14 @@ function InvoicesLayout() {
         actions={
           <>
             <Button variant="outline" size="sm" className="h-9" asChild>
-              <Link to="/invoices"><Download className="mr-1.5 h-3.5 w-3.5" /> Export</Link>
+              <Link to="/invoices">
+                <Download className="mr-1.5 h-3.5 w-3.5" /> Export
+              </Link>
             </Button>
             <Button size="sm" className="h-9" asChild>
-              <Link to="/invoices/new"><Plus className="mr-1.5 h-3.5 w-3.5" /> New invoice</Link>
+              <Link to="/invoices/new">
+                <Plus className="mr-1.5 h-3.5 w-3.5" /> New invoice
+              </Link>
             </Button>
           </>
         }

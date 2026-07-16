@@ -37,15 +37,18 @@ function CompanyHealthPage() {
                 <TrendChip delta={APEX_HEALTH.trend} suffix=" pts" />
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px] text-white/70">
-                <span className="rounded-full bg-white/10 px-2 py-0.5">Stress · {APEX_HEALTH.stress}</span>
+                <span className="rounded-full bg-white/10 px-2 py-0.5">
+                  Stress · {APEX_HEALTH.stress}
+                </span>
                 <ConfidenceChip value={APEX_HEALTH.confidence} />
                 <DemoBadge />
               </div>
             </div>
             <div className="max-w-md text-[12.5px] leading-relaxed text-white/80">
-              A higher score requires resolving one unreconciled account, addressing two declining-margin clients,
-              filing two open sales-tax returns, and consolidating three unused software seats. Expected lift on
-              full remediation: <span className="font-semibold text-white">+4 pts → 96.</span>
+              A higher score requires resolving one unreconciled account, addressing two
+              declining-margin clients, filing two open sales-tax returns, and consolidating three
+              unused software seats. Expected lift on full remediation:{" "}
+              <span className="font-semibold text-white">+4 pts → 96.</span>
             </div>
           </div>
         </Card>

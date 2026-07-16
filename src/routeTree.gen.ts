@@ -23,6 +23,7 @@ import { Route as CloseRouteImport } from './routes/close'
 import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
 import { Route as BillsRouteImport } from './routes/bills'
 import { Route as AutomationCenterRouteImport } from './routes/automation-center'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as AccountingCenterRouteImport } from './routes/accounting-center'
 import { Route as IndexRouteImport } from './routes/index'
@@ -295,6 +296,11 @@ const BillsRoute = BillsRouteImport.update({
 const AutomationCenterRoute = AutomationCenterRouteImport.update({
   id: '/automation-center',
   path: '/automation-center',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuditRoute = AuditRouteImport.update({
@@ -1363,6 +1369,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
+  '/auth': typeof AuthRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
@@ -1582,6 +1589,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
+  '/auth': typeof AuthRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/close': typeof CloseRouteWithChildren
@@ -1799,6 +1807,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounting-center': typeof AccountingCenterRoute
   '/audit': typeof AuditRoute
+  '/auth': typeof AuthRoute
   '/automation-center': typeof AutomationCenterRoute
   '/bills': typeof BillsRoute
   '/cash-availability': typeof CashAvailabilityRouteWithChildren
@@ -2020,6 +2029,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounting-center'
     | '/audit'
+    | '/auth'
     | '/automation-center'
     | '/bills'
     | '/cash-availability'
@@ -2239,6 +2249,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounting-center'
     | '/audit'
+    | '/auth'
     | '/automation-center'
     | '/bills'
     | '/close'
@@ -2455,6 +2466,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounting-center'
     | '/audit'
+    | '/auth'
     | '/automation-center'
     | '/bills'
     | '/cash-availability'
@@ -2675,6 +2687,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountingCenterRoute: typeof AccountingCenterRoute
   AuditRoute: typeof AuditRoute
+  AuthRoute: typeof AuthRoute
   AutomationCenterRoute: typeof AutomationCenterRoute
   BillsRoute: typeof BillsRoute
   CashAvailabilityRoute: typeof CashAvailabilityRouteWithChildren
@@ -2950,6 +2963,13 @@ declare module '@tanstack/react-router' {
       path: '/automation-center'
       fullPath: '/automation-center'
       preLoaderRoute: typeof AutomationCenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audit': {
@@ -4617,6 +4637,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountingCenterRoute: AccountingCenterRoute,
   AuditRoute: AuditRoute,
+  AuthRoute: AuthRoute,
   AutomationCenterRoute: AutomationCenterRoute,
   BillsRoute: BillsRoute,
   CashAvailabilityRoute: CashAvailabilityRouteWithChildren,
@@ -4798,13 +4819,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

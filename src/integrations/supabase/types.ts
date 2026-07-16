@@ -4559,6 +4559,7 @@ export type Database = {
         }
         Returns: Json
       }
+      ensure_sample_demo_membership: { Args: never; Returns: string }
       has_role: {
         Args: {
           _org: string

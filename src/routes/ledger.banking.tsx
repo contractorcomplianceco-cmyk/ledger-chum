@@ -47,9 +47,7 @@ const fmt = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
 /** Parse a simple CSV: expects header row with date,description,amount[,reference,external_id]. */
-function parseCsv(
-  text: string,
-): Array<{
+function parseCsv(text: string): Array<{
   txnDate: string;
   description: string;
   amount: number;

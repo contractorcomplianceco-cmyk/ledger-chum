@@ -23,6 +23,28 @@ import { Card } from "@/components/ui/card";
 import { DEMO_URL, DEMO_IS_EXTERNAL } from "@/config/marketing";
 
 export const Route = createFileRoute("/welcome")({
+  head: () => ({
+    meta: [
+      { title: "LedgerOS — Financial Operating System for Contractor Compliance" },
+      {
+        name: "description",
+        content:
+          "LedgerOS turns every operational event into a balanced, immutable double-entry journal — with real-time reporting, clean period close, and compliance enforced in the database itself.",
+      },
+      { property: "og:title", content: "LedgerOS — Financial Operating System" },
+      {
+        property: "og:description",
+        content:
+          "Modern double-entry accounting and financial operations for contractor compliance businesses.",
+      },
+      { property: "og:image", content: "/ledgeros-logo.png" },
+      { name: "twitter:image", content: "/ledgeros-logo.png" },
+    ],
+    links: [
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+    ],
+  }),
   component: MarketingPage,
 });
 
@@ -48,9 +70,19 @@ function LaunchDemoButton({
     </>
   );
 
+  // The default CTA gets the brand gradient + glow; other variants pass through.
+  const brandClass =
+    variant === "default"
+      ? cx(
+          "border-0 bg-gradient-brand-full text-white shadow-glow transition-transform",
+          "hover:opacity-95 hover:brightness-110 hover:-translate-y-0.5",
+          className,
+        )
+      : className;
+
   if (DEMO_IS_EXTERNAL) {
     return (
-      <Button asChild size={size} variant={variant} className={className}>
+      <Button asChild size={size} variant={variant} className={brandClass}>
         <a href={DEMO_URL} rel="noopener noreferrer">
           {content}
         </a>
@@ -59,7 +91,7 @@ function LaunchDemoButton({
   }
 
   return (
-    <Button asChild size={size} variant={variant} className={className}>
+    <Button asChild size={size} variant={variant} className={brandClass}>
       <Link to={DEMO_URL}>{content}</Link>
     </Button>
   );
@@ -127,6 +159,16 @@ function Reveal({
 
 function cx(...parts: Array<string | false | undefined>) {
   return parts.filter(Boolean).join(" ");
+}
+
+/* Wordmark — white "Ledger" + gradient "OS", matching the logo. */
+function Wordmark({ className }: { className?: string }) {
+  return (
+    <span className={cx("font-bold tracking-tight", className)}>
+      Ledger
+      <span className="bg-gradient-brand-full bg-clip-text text-transparent">OS</span>
+    </span>
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -252,11 +294,15 @@ function SiteHeader() {
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6"
       >
-        <Link to="/welcome" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-gradient-brand-full text-white shadow-glow">
-            <Layers className="h-4 w-4" aria-hidden="true" />
-          </span>
-          <span className="text-lg">LedgerOS</span>
+        <Link to="/welcome" className="flex items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-navy">
+          <img
+            src="/ledgeros-emblem.png"
+            alt="LedgerOS"
+            width={32}
+            height={32}
+            className="h-8 w-8 shrink-0 drop-shadow-[0_0_12px_oklch(0.58_0.2_258/0.45)]"
+          />
+          <Wordmark className="text-lg" />
         </Link>
         <div className="flex items-center gap-3">
           <a
@@ -293,8 +339,20 @@ function Hero() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-32">
         <div>
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-navy-foreground/80">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <div className="flex items-center gap-3">
+              <img
+                src="/ledgeros-emblem.png"
+                alt="LedgerOS"
+                width={56}
+                height={56}
+                className="h-14 w-14 shrink-0 drop-shadow-[0_0_28px_oklch(0.58_0.2_258/0.55)]"
+              />
+              <Wordmark className="text-2xl" />
+            </div>
+          </Reveal>
+          <Reveal delay={40}>
+            <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-navy-foreground/80">
+              <Sparkles className="h-3.5 w-3.5 text-brand-cyan" aria-hidden="true" />
               The financial operating system for contractor compliance
             </span>
           </Reveal>
@@ -348,9 +406,7 @@ function HeroVisual() {
       <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-2xl backdrop-blur-sm">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm font-medium text-navy-foreground/80">
-            <span className="grid h-6 w-6 place-items-center rounded bg-gradient-brand-full">
-              <Layers className="h-3.5 w-3.5 text-white" />
-            </span>
+            <img src="/ledgeros-emblem.png" alt="" aria-hidden="true" className="h-6 w-6" />
             Trial Balance
           </div>
           <span className="rounded-full bg-success/20 px-2 py-0.5 text-xs font-medium text-success">
@@ -597,12 +653,14 @@ function SiteFooter() {
     <footer className="border-t border-border bg-muted/40">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-12 md:flex-row md:items-center md:justify-between">
         <div className="max-w-sm">
-          <div className="flex items-center gap-2 font-semibold tracking-tight">
-            <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-brand-full text-white">
-              <Layers className="h-4 w-4" aria-hidden="true" />
-            </span>
-            LedgerOS
-          </div>
+          <img
+            src="/ledgeros-logo.png"
+            alt="LedgerOS"
+            width={148}
+            height={133}
+            className="h-14 w-auto"
+          />
+          <p className="sr-only">LedgerOS</p>
           <p className="mt-3 text-sm text-muted-foreground">
             Double-entry accounting and financial operations for the Contractors Compliance
             Authority.

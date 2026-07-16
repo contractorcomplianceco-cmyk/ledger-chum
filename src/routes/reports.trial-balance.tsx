@@ -40,7 +40,7 @@ function TrialBalancePage() {
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Trial Balance" description="Sum of debits and credits per account. Must balance." />
       <PageBody>
-        <Card className="p-4 mb-4">
+        <Card data-tour="trial-balance" className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div>
               <Label>From</Label>

@@ -59,6 +59,17 @@ function waitForElement(selector: string, timeout = 1500): Promise<Element | nul
   });
 }
 
+/**
+ * Public, unauthenticated routes the tour must never hijack. A visitor who
+ * lands on the marketing landing page or the sign-in screen has to stay there —
+ * the tour only auto-starts once they are inside the app.
+ */
+const PUBLIC_ROUTES = ["/welcome", "/auth"];
+
+function isPublicRoute(pathname: string): boolean {
+  return PUBLIC_ROUTES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
 export function TourProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const driverRef = useRef<Driver | null>(null);
@@ -165,9 +176,14 @@ export function TourProvider({ children }: { children: ReactNode }) {
     });
   }, [cleanup, markSeen, prepareStep]);
 
-  // Auto-start once per browser on first demo visit.
+  // Auto-start once per browser on first demo visit — but never on a public
+  // route. A fresh visitor on /welcome or /auth stays put; the tour only kicks
+  // in once they enter the app (e.g. via "Launch Demo").
+  const autoStartedRef = useRef(false);
   useEffect(() => {
     if (!ready) return;
+    if (autoStartedRef.current) return;
+    if (isPublicRoute(pathname)) return;
     let seen = "1";
     try {
       seen = window.localStorage.getItem(TOUR_SEEN_KEY) ?? "";
@@ -175,9 +191,10 @@ export function TourProvider({ children }: { children: ReactNode }) {
       seen = "1";
     }
     if (seen) return;
+    autoStartedRef.current = true;
     const t = window.setTimeout(() => startTour(), 900);
     return () => window.clearTimeout(t);
-  }, [ready, startTour]);
+  }, [ready, pathname, startTour]);
 
   useEffect(() => cleanup, [cleanup]);
 

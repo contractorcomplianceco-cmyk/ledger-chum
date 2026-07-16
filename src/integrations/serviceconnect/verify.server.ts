@@ -19,6 +19,7 @@ export type IntegrationScope =
   | "customers.read"
   | "customers.write"
   | "work_orders.completed"
+  | "events.ingest"
   | "invoices.create"
   | "invoices.read"
   | "payments.create"

@@ -134,6 +134,23 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    // Auto-seed the sample workspace whenever a user signs in or the
+    // session is first restored on load. Idempotent server-side.
+    const seed = () => {
+      supabase.rpc("ensure_sample_demo_membership").then(({ error }) => {
+        if (!error) queryClient.invalidateQueries();
+      });
+    };
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) seed();
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "USER_UPDATED") seed();
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [queryClient]);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}

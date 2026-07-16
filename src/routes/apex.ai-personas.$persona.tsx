@@ -28,7 +28,9 @@ export const Route = createFileRoute("/apex/ai-personas/$persona")({
 });
 
 function PersonaDetail() {
-  const { persona } = Route.useLoaderData();
+  const { persona: personaSlug } = Route.useParams();
+  const persona = getPersona(personaSlug);
+  if (!persona) return null;
   return (
     <ApexPage title={persona.name} description={persona.tagline} decision={persona.questions[0]}>
       <div

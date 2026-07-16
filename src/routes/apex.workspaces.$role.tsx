@@ -24,6 +24,8 @@ export const Route = createFileRoute("/apex/workspaces/$role")({
 });
 
 function RoleWorkspaceRoute() {
-  const { ws } = Route.useLoaderData();
+  const { role } = Route.useParams();
+  const ws = getRoleWorkspace(role);
+  if (!ws) return null;
   return <RoleWorkspaceShell ws={ws} />;
 }

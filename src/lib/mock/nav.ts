@@ -110,6 +110,7 @@ export const NAV_GROUPS: NavGroup[] = [
     title: "Accounting",
     icon: BookOpen,
     defaultOpen: true,
+    items: [
       { title: "Accounting Center", to: "/accounting-center", icon: BookOpenCheck, badge: "New", badgeTone: "violet", keywords: ["accountant", "workspace", "approvals", "drafts", "exceptions", "close", "reconciliation"] },
       { title: "Journal Entries", to: "/ledger/journals", icon: NotebookPen },
       { title: "Chart of Accounts", to: "/ledger/accounts", icon: BookOpen },

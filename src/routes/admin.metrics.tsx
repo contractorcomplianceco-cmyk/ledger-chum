@@ -55,7 +55,7 @@ function MetricCenterPage() {
     enabled: !!orgId,
   });
 
-  const metrics = metricsQ.data ?? [];
+  const metrics = useMemo(() => metricsQ.data ?? [], [metricsQ.data]);
   const active = useMemo(
     () => metrics.find((m: any) => m.metric_key === selected) ?? metrics[0],
     [metrics, selected],

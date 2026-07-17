@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
 /**
  * Financial Reports — date-ranged aggregations from journal_lines.
@@ -35,8 +37,21 @@ type Row = {
   credit: number;
 };
 
+type AggregatedLine = {
+  debit: number | null;
+  credit: number | null;
+  account: {
+    id: string;
+    code: string;
+    name: string;
+    type: Row["type"];
+    org_id: string;
+  } | null;
+  journal: { status: string; entry_date: string; org_id: string } | null;
+};
+
 async function fetchAggregated(
-  supabase: any,
+  supabase: SupabaseClient<Database>,
   orgId: string,
   from?: string,
   to?: string,
@@ -49,11 +64,11 @@ async function fetchAggregated(
     .eq("journal.status", "posted");
   if (from) q = q.gte("journal.entry_date", from);
   if (to) q = q.lte("journal.entry_date", to);
-  const { data, error } = await q;
+  const { data, error } = await q.overrideTypes<AggregatedLine[]>();
   if (error) throw new Error(error.message);
 
   const map = new Map<string, Row>();
-  for (const r of (data ?? []) as any[]) {
+  for (const r of data ?? []) {
     const a = r.account;
     if (!a) continue;
     const key = a.id;

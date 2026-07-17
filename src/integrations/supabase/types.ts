@@ -4539,7 +4539,7 @@ export type Database = {
     }
     Functions: {
       approve_financial_event: {
-        Args: { _event_id: string; _note: string; _org_id: string }
+        Args: { _event_id: string; _note: string | null; _org_id: string }
         Returns: Json
       }
       approve_period_close: {
@@ -4572,11 +4572,11 @@ export type Database = {
         Args: {
           _correlation_id: string
           _external_event_type: string
-          _external_id: string
+          _external_id: string | null
           _idempotency_key: string
           _org_id: string
           _payload: Json
-          _source_id: string
+          _source_id: string | null
           _source_system: string
         }
         Returns: Json
@@ -4634,7 +4634,7 @@ export type Database = {
           _correlation_id: string
           _external_id: string
           _external_source: string
-          _item_description: string
+          _item_description: string | null
           _item_ref: string
           _org_id: string
           _quantity: number
@@ -4653,11 +4653,11 @@ export type Database = {
           _customer_id: string
           _external_id: string
           _external_source: string
-          _memo: string
-          _method: string
+          _memo: string | null
+          _method: string | null
           _org_id: string
           _payment_date: string
-          _reference: string
+          _reference: string | null
         }
         Returns: Json
       }
@@ -4667,8 +4667,8 @@ export type Database = {
           _actor_type: string
           _amount: number
           _correlation_id: string
-          _memo: string
-          _method: string
+          _memo: string | null
+          _method: string | null
           _org_id: string
           _payment_id: string
           _refund_date: string

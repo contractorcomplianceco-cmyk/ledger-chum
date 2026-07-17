@@ -66,12 +66,12 @@ export const Route = createFileRoute("/api/public/integrations/work-orders/compl
 
           // Resolve mapped revenue accounts once
           const { data: laborRev } = await supabaseAdmin.rpc(
-            "resolve_account" as never,
-            { _org: ctx.orgId, _purpose: "labor_revenue" } as never,
+            "resolve_account",
+            { _org: ctx.orgId, _purpose: "labor_revenue" },
           );
           const { data: materialRev } = await supabaseAdmin.rpc(
-            "resolve_account" as never,
-            { _org: ctx.orgId, _purpose: "material_revenue" } as never,
+            "resolve_account",
+            { _org: ctx.orgId, _purpose: "material_revenue" },
           );
           const laborRevId = (laborRev as string | null) ?? null;
           const materialRevId = (materialRev as string | null) ?? null;

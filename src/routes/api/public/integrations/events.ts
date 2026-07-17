@@ -10,6 +10,7 @@ import {
   type IntegrationContext,
 } from "@/integrations/serviceconnect/verify.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { Json } from "@/integrations/supabase/types";
 
 /**
  * Public financial-event ingestion endpoint.
@@ -57,7 +58,7 @@ export const Route = createFileRoute("/api/public/integrations/events")({
             .maybeSingle();
 
           const { data: ingest, error } = await supabaseAdmin.rpc(
-            "ingest_financial_event" as never,
+            "ingest_financial_event",
             {
               _org_id: ctx.orgId,
               _source_id: source?.id ?? null,
@@ -66,8 +67,8 @@ export const Route = createFileRoute("/api/public/integrations/events")({
               _external_id: p.external_id ?? null,
               _idempotency_key: ctx.idempotencyKey,
               _correlation_id: ctx.correlationId,
-              _payload: p.payload,
-            } as never,
+              _payload: p.payload as Json,
+            },
           );
           if (error) throw new IntegrationError(500, error.message);
 

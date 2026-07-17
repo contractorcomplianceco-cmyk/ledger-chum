@@ -1,7 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 // AI response contract shape lives in ./types (client-side).
+
+type MetricCtx = { supabase: SupabaseClient<Database> };
 
 /**
  * M9A — Canonical Financial Metrics Layer
@@ -50,7 +54,11 @@ export const listMetrics = createServerFn({ method: "GET" })
       .order("category", { ascending: true })
       .order("metric_name", { ascending: true });
     if (data.status !== "all") q = q.eq("status", data.status);
-    if (data.category) q = q.eq("category", data.category as never);
+    if (data.category)
+      q = q.eq(
+        "category",
+        data.category as Database["public"]["Enums"]["metric_category"],
+      );
 
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
@@ -161,7 +169,7 @@ type CalcInput = {
   to?: string;
 };
 
-async function calcRevenue(ctx: { supabase: any }, i: CalcInput) {
+async function calcRevenue(ctx: MetricCtx, i: CalcInput) {
   let q = ctx.supabase
     .from("journal_lines")
     .select(
@@ -176,14 +184,14 @@ async function calcRevenue(ctx: { supabase: any }, i: CalcInput) {
   const { data, error } = await q;
   if (error) throw new Error(error.message);
   const value = (data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.credit ?? 0) - Number(r.debit ?? 0),
+    (s, r) => s + Number(r.credit ?? 0) - Number(r.debit ?? 0),
     0,
   );
   return { value, sourceCount: data?.length ?? 0 };
 }
 
 async function calcAccountTypeTotal(
-  ctx: { supabase: any },
+  ctx: MetricCtx,
   i: CalcInput,
   type: string,
   sign: 1 | -1,
@@ -202,31 +210,30 @@ async function calcAccountTypeTotal(
   const { data, error } = await q;
   if (error) throw new Error(error.message);
   const value = (data ?? []).reduce(
-    (s: number, r: any) =>
-      s + sign * (Number(r.debit ?? 0) - Number(r.credit ?? 0)),
+    (s, r) => s + sign * (Number(r.debit ?? 0) - Number(r.credit ?? 0)),
     0,
   );
   return { value, sourceCount: data?.length ?? 0 };
 }
 
-async function calcTrueAvailableCash(ctx: { supabase: any }, i: CalcInput) {
+async function calcTrueAvailableCash(ctx: MetricCtx, i: CalcInput) {
   const bank = await ctx.supabase
     .from("bank_accounts")
-    .select("current_balance, is_active")
+    .select("opening_balance, is_active")
     .eq("org_id", i.orgId);
   if (bank.error) throw new Error(bank.error.message);
   const cash = (bank.data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.current_balance ?? 0),
+    (s, r) => s + Number(r.opening_balance ?? 0),
     0,
   );
   const ap = await ctx.supabase
     .from("bills")
-    .select("balance_due, status")
+    .select("balance, status")
     .eq("org_id", i.orgId)
     .neq("status", "paid");
   if (ap.error) throw new Error(ap.error.message);
   const obligations = (ap.data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.balance_due ?? 0),
+    (s, r) => s + Number(r.balance ?? 0),
     0,
   );
   return {
@@ -238,29 +245,29 @@ async function calcTrueAvailableCash(ctx: { supabase: any }, i: CalcInput) {
   };
 }
 
-async function calcArBalance(ctx: { supabase: any }, i: CalcInput) {
+async function calcArBalance(ctx: MetricCtx, i: CalcInput) {
   const { data, error } = await ctx.supabase
     .from("invoices")
-    .select("balance_due, status")
+    .select("balance, status")
     .eq("org_id", i.orgId)
     .neq("status", "paid");
   if (error) throw new Error(error.message);
   const value = (data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.balance_due ?? 0),
+    (s, r) => s + Number(r.balance ?? 0),
     0,
   );
   return { value, sourceCount: data?.length ?? 0 };
 }
 
-async function calcApBalance(ctx: { supabase: any }, i: CalcInput) {
+async function calcApBalance(ctx: MetricCtx, i: CalcInput) {
   const { data, error } = await ctx.supabase
     .from("bills")
-    .select("balance_due, status")
+    .select("balance, status")
     .eq("org_id", i.orgId)
     .neq("status", "paid");
   if (error) throw new Error(error.message);
   const value = (data ?? []).reduce(
-    (s: number, r: any) => s + Number(r.balance_due ?? 0),
+    (s, r) => s + Number(r.balance ?? 0),
     0,
   );
   return { value, sourceCount: data?.length ?? 0 };

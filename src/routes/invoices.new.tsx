@@ -11,11 +11,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InvoiceLineEditor } from "@/components/invoicing/invoice-line-editor";
 import { AllocationPreviewCard } from "@/components/invoicing/allocation-preview-card";
 import { MarginPreviewCard } from "@/components/invoicing/margin-preview-card";
+import { InvoiceDocument } from "@/components/invoicing/invoice-document";
 import { CUSTOMERS, SERVICE_CATALOG, type InvoiceLine } from "@/lib/mock/invoicing";
 import { TREATMENT_META } from "@/lib/mock/cash-availability";
+import {
+  DEFAULT_ISSUER,
+  computeDocumentTotals,
+  lineAmount,
+  type InvoiceDocumentData,
+} from "@/lib/invoicing/invoice-document";
 import { Plus, ArrowLeft, Send, Save } from "lucide-react";
 
 export const Route = createFileRoute("/invoices/new")({
@@ -63,6 +71,35 @@ function NewInvoicePage() {
 
   const customer = CUSTOMERS.find((c) => c.id === customerId)!;
 
+  // Live client-facing document — mirrors the form state and, like the internal
+  // allocation preview, updates on every change. Only client fields are mapped;
+  // treatments / GL / commission owners never reach this document.
+  const previewDoc: InvoiceDocumentData = {
+    number: "DRAFT",
+    issueDate: issued,
+    dueDate: due,
+    terms,
+    poNumber: po || undefined,
+    billFrom: DEFAULT_ISSUER,
+    billTo: {
+      name: customer.name,
+      lines: [customer.address].filter(Boolean),
+      email: customer.email,
+      phone: customer.phone,
+    },
+    lines: lines.map((l) => ({
+      id: l.id,
+      description: l.service,
+      detail: [l.jurisdiction, l.project].filter(Boolean).join(" · ") || undefined,
+      quantity: l.qty,
+      rate: l.rate,
+      amount: lineAmount(l),
+    })),
+    totals: computeDocumentTotals(lines, 0),
+    notes: customerNotes || undefined,
+    footer: "Thank you for your business.",
+  };
+
   const patch = (id: string, p: Partial<InvoiceLine>) =>
     setLines((prev) => prev.map((l) => (l.id === id ? { ...l, ...p } : l)));
   const remove = (id: string) => setLines((prev) => prev.filter((l) => l.id !== id));
@@ -73,11 +110,17 @@ function NewInvoicePage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <Button variant="ghost" size="sm" asChild>
-          <Link to="/invoices"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices</Link>
+          <Link to="/invoices">
+            <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices
+          </Link>
         </Button>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm"><Save className="mr-1.5 h-3.5 w-3.5" /> Save draft</Button>
-          <Button size="sm"><Send className="mr-1.5 h-3.5 w-3.5" /> Send for approval</Button>
+          <Button variant="outline" size="sm">
+            <Save className="mr-1.5 h-3.5 w-3.5" /> Save draft
+          </Button>
+          <Button size="sm">
+            <Send className="mr-1.5 h-3.5 w-3.5" /> Send for approval
+          </Button>
         </div>
       </div>
 
@@ -86,29 +129,47 @@ function NewInvoicePage() {
           <Card className="border border-border/70 bg-surface p-4 shadow-card">
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Customer</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Customer
+                </label>
                 <Select value={customerId} onValueChange={setCustomerId}>
-                  <SelectTrigger className="mt-1 h-9 text-[13px]"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1 h-9 text-[13px]">
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
                     {CUSTOMERS.map((c) => (
-                      <SelectItem key={c.id} value={c.id} className="text-[13px]">{c.name}</SelectItem>
+                      <SelectItem key={c.id} value={c.id} className="text-[13px]">
+                        {c.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <div className="mt-1 text-[11px] text-muted-foreground">{customer.email}</div>
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Issue date</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Issue date
+                </label>
                 <Input value={issued} readOnly className="mt-1 h-9 text-[13px]" />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Due date</label>
-                <Input value={due} onChange={(e) => setDue(e.target.value)} className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Due date
+                </label>
+                <Input
+                  value={due}
+                  onChange={(e) => setDue(e.target.value)}
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Terms</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Terms
+                </label>
                 <Select value={terms} onValueChange={setTerms}>
-                  <SelectTrigger className="mt-1 h-9 text-[13px]"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="mt-1 h-9 text-[13px]">
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Due on receipt">Due on receipt</SelectItem>
                     <SelectItem value="Net 7">Net 7</SelectItem>
@@ -119,12 +180,26 @@ function NewInvoicePage() {
                 </Select>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">PO number</label>
-                <Input value={po} onChange={(e) => setPo(e.target.value)} placeholder="Optional" className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  PO number
+                </label>
+                <Input
+                  value={po}
+                  onChange={(e) => setPo(e.target.value)}
+                  placeholder="Optional"
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
               <div className="md:col-span-2 xl:col-span-2">
-                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Internal notes</label>
-                <Input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Not shown to client" className="mt-1 h-9 text-[13px]" />
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  Internal notes
+                </label>
+                <Input
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Not shown to client"
+                  className="mt-1 h-9 text-[13px]"
+                />
               </div>
             </div>
           </Card>
@@ -155,10 +230,14 @@ function NewInvoicePage() {
                 <Plus className="mr-1.5 h-3.5 w-3.5" /> Blank line
               </Button>
               <Select onValueChange={(v) => add(v)}>
-                <SelectTrigger className="h-9 w-64 text-[13px]"><SelectValue placeholder="Add from service catalog…" /></SelectTrigger>
+                <SelectTrigger className="h-9 w-64 text-[13px]">
+                  <SelectValue placeholder="Add from service catalog…" />
+                </SelectTrigger>
                 <SelectContent>
                   {SERVICE_CATALOG.map((s) => (
-                    <SelectItem key={s.id} value={s.id} className="text-[13px]">{s.name}</SelectItem>
+                    <SelectItem key={s.id} value={s.id} className="text-[13px]">
+                      {s.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -176,9 +255,30 @@ function NewInvoicePage() {
           </Card>
         </div>
 
-        <aside className="space-y-4">
-          <AllocationPreviewCard lines={lines} />
-          <MarginPreviewCard invoice={{ lines, laborCost, techAllocation, marketingCac }} />
+        <aside>
+          <Tabs defaultValue="preview" className="space-y-3">
+            <TabsList className="w-full">
+              <TabsTrigger value="preview" className="flex-1">
+                Client preview
+              </TabsTrigger>
+              <TabsTrigger value="internal" className="flex-1">
+                Internal (CCA)
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="preview">
+              <Card className="border border-border/70 bg-muted/30 p-3 shadow-card">
+                <InvoiceDocument data={previewDoc} />
+              </Card>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                Live preview of exactly what the client will see. Internal allocation is on the next
+                tab.
+              </p>
+            </TabsContent>
+            <TabsContent value="internal" className="space-y-4">
+              <AllocationPreviewCard lines={lines} />
+              <MarginPreviewCard invoice={{ lines, laborCost, techAllocation, marketingCac }} />
+            </TabsContent>
+          </Tabs>
         </aside>
       </div>
     </div>

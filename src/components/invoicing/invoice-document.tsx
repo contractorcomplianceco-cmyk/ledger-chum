@@ -1,7 +1,12 @@
 import { cn } from "@/lib/utils";
 import { currencyPrecise } from "@/lib/mock/finance";
 import type { InvoiceDocumentData, InvoiceParty } from "@/lib/invoicing/invoice-document";
-import { CLASSIC_THEME, themeToCssVars, type InvoiceTheme } from "@/lib/invoicing/invoice-theme";
+import {
+  CLASSIC_THEME,
+  styleDataAttrs,
+  styleToCssVars,
+  type InvoiceStyle,
+} from "@/lib/invoicing/invoice-theme";
 
 /**
  * A real, client-facing invoice document — not a data table. Renders brand header,
@@ -9,41 +14,52 @@ import { CLASSIC_THEME, themeToCssVars, type InvoiceTheme } from "@/lib/invoicin
  * placeholder (Phase C wires it).
  *
  * Content comes from `data` (client-only figures — see `InvoiceDocumentData`) and
- * every styling decision comes from `theme`, surfaced as `--inv-*` CSS variables.
+ * every presentation decision comes from `style`. Visual tokens are surfaced as
+ * `--inv-*` CSS variables; structural choices (header layout, table style, density,
+ * logo placement) are surfaced as `data-*` attributes the component/CSS branch on.
  * The two are independent by construction, which is what Phase B (AI styling) plugs
- * into: generate a new `InvoiceTheme`, pass it here, numbers are untouched.
+ * into: generate a new `InvoiceStyle`, pass it here, numbers are untouched.
  *
  * The root carries `.invoice-print-region` so the print stylesheet can isolate it
  * for PDF export / browser print.
  */
 export function InvoiceDocument({
   data,
-  theme = CLASSIC_THEME,
+  style = CLASSIC_THEME,
   className,
 }: {
   data: InvoiceDocumentData;
-  theme?: InvoiceTheme;
+  style?: InvoiceStyle;
   className?: string;
 }) {
   const { totals } = data;
-  const headerAlign = theme.layout.header;
+  const { headerLayout, logoPlacement } = style.layout;
+  const showLogo = logoPlacement !== "none";
 
   return (
     <div
       className={cn("invoice-print-region invoice-document", className)}
-      style={themeToCssVars(theme)}
+      style={styleToCssVars(style)}
       data-testid="invoice-document"
+      {...styleDataAttrs(style)}
     >
       <div className="invoice-document__page">
         <header
           className={cn(
             "invoice-document__header",
-            headerAlign === "centered" && "invoice-document__header--centered",
-            headerAlign === "logo-right" && "invoice-document__header--reverse",
+            headerLayout === "centered" && "invoice-document__header--centered",
+            headerLayout === "banner" && "invoice-document__header--banner",
+            headerLayout === "sidebar" && "invoice-document__header--sidebar",
+            logoPlacement === "right" && "invoice-document__header--reverse",
           )}
         >
-          <div className="invoice-document__brand">
-            {theme.layout.showLogo && (
+          <div
+            className={cn(
+              "invoice-document__brand",
+              logoPlacement === "center" && "invoice-document__brand--center",
+            )}
+          >
+            {showLogo && (
               <div className="invoice-document__logo" aria-hidden="true">
                 {initials(data.billFrom.name)}
               </div>

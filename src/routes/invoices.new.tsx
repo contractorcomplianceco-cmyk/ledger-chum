@@ -16,6 +16,9 @@ import { InvoiceLineEditor } from "@/components/invoicing/invoice-line-editor";
 import { AllocationPreviewCard } from "@/components/invoicing/allocation-preview-card";
 import { MarginPreviewCard } from "@/components/invoicing/margin-preview-card";
 import { InvoiceDocument } from "@/components/invoicing/invoice-document";
+import { InvoiceStylePanel } from "@/components/invoicing/invoice-style-panel";
+import { CLASSIC_THEME, type InvoiceStyle } from "@/lib/invoicing/invoice-theme";
+import { useBrandStyle } from "@/lib/invoicing/brand-style-store";
 import { CUSTOMERS, SERVICE_CATALOG, type InvoiceLine } from "@/lib/mock/invoicing";
 import { TREATMENT_META } from "@/lib/mock/cash-availability";
 import {
@@ -70,6 +73,12 @@ function NewInvoicePage() {
   ]);
 
   const customer = CUSTOMERS.find((c) => c.id === customerId)!;
+
+  // Style seam (Phase B): a new invoice inherits the company brand default; the user
+  // can override it here. Styling never affects the figures below.
+  const { brandStyle, save: saveBrand, canSave } = useBrandStyle();
+  const [override, setOverride] = useState<InvoiceStyle | null>(null);
+  const activeStyle = override ?? brandStyle ?? CLASSIC_THEME;
 
   // Live client-facing document — mirrors the form state and, like the internal
   // allocation preview, updates on every change. Only client fields are mapped;
@@ -265,11 +274,18 @@ function NewInvoicePage() {
                 Internal (CCA)
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="preview">
+            <TabsContent value="preview" className="space-y-3">
               <Card className="border border-border/70 bg-muted/30 p-3 shadow-card">
-                <InvoiceDocument data={previewDoc} />
+                <InvoiceDocument data={previewDoc} style={activeStyle} />
               </Card>
-              <p className="mt-2 text-[11px] text-muted-foreground">
+              <InvoiceStylePanel
+                style={activeStyle}
+                onChange={setOverride}
+                companyName={DEFAULT_ISSUER.name}
+                onSaveBrand={saveBrand}
+                canSaveBrand={canSave}
+              />
+              <p className="text-[11px] text-muted-foreground">
                 Live preview of exactly what the client will see. Internal allocation is on the next
                 tab.
               </p>

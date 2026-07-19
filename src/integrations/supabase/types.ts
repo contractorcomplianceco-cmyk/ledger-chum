@@ -4539,7 +4539,7 @@ export type Database = {
     }
     Functions: {
       approve_financial_event: {
-        Args: { _event_id: string; _note: string; _org_id: string }
+        Args: { _event_id: string; _note?: string | null; _org_id: string }
         Returns: Json
       }
       approve_period_close: {
@@ -4572,11 +4572,11 @@ export type Database = {
         Args: {
           _correlation_id: string
           _external_event_type: string
-          _external_id: string
+          _external_id?: string | null
           _idempotency_key: string
           _org_id: string
           _payload: Json
-          _source_id: string
+          _source_id?: string | null
           _source_system: string
         }
         Returns: Json

@@ -58,9 +58,9 @@ function InvoiceDetailPage() {
           <Link to="/invoices"><ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back to invoices</Link>
         </Button>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm"><Download className="mr-1.5 h-3.5 w-3.5" /> PDF</Button>
-          <Button variant="outline" size="sm"><MessageSquare className="mr-1.5 h-3.5 w-3.5" /> Remind</Button>
-          <Button size="sm"><Send className="mr-1.5 h-3.5 w-3.5" /> Record payment</Button>
+          <Button variant="outline" size="sm" disabled title="PDF export arrives in a later phase"><Download className="mr-1.5 h-3.5 w-3.5" /> PDF</Button>
+          <Button variant="outline" size="sm" disabled title="Payment reminders arrive in a later phase"><MessageSquare className="mr-1.5 h-3.5 w-3.5" /> Remind</Button>
+          <Button size="sm" disabled title="Payment recording arrives in a later phase"><Send className="mr-1.5 h-3.5 w-3.5" /> Record payment</Button>
         </div>
       </div>
 

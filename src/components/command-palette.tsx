@@ -10,6 +10,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { NAV_GROUPS, ALL_NAV_ITEMS, type NavItem } from "@/lib/mock/nav";
+import { applyModeToNavGroups, applyModeToNavItems } from "@/lib/nav-visibility";
 import { usePermission } from "@/hooks/use-permission";
 import { useFavorites, useRecents } from "@/lib/nav-storage";
 import { Star, Clock } from "lucide-react";
@@ -37,7 +38,7 @@ export function CommandPalette({
   const { favorites, toggle, isFavorite } = useFavorites();
   const recents = useRecents();
 
-  const permitted = usePermittedItems(ALL_NAV_ITEMS);
+  const permitted = usePermittedItems(applyModeToNavItems(ALL_NAV_ITEMS));
 
   const favoriteItems = useMemo(
     () => favorites.map((to) => permitted.find((i) => i.to === to)).filter(Boolean) as NavItem[],
@@ -104,7 +105,7 @@ export function CommandPalette({
           </>
         )}
 
-        {NAV_GROUPS.map((group) => {
+        {applyModeToNavGroups(NAV_GROUPS).map((group) => {
           const items = group.items.filter((i) => !i.hidden);
           if (items.length === 0) return null;
           return (

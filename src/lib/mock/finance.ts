@@ -1,5 +1,9 @@
 // Mock data for LedgerOS UI Design Lab. Not connected to any accounting system.
 
+// Whole-dollar formatter — intentionally drops cents. Use ONLY where cents are
+// noise (chart axis labels, coarse headline KPIs). For any figure a user might
+// reconcile against (balances, line totals, invoices, estimates) use
+// `currencyPrecise` so the cents are shown.
 export const currency = (n: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",

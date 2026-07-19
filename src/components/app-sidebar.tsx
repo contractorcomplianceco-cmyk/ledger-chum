@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NAV_GROUPS, type NavGroup, type NavItem } from "@/lib/mock/nav";
 import { APEX_EXECUTIVE_NAV_GROUPS } from "@/lib/mock/nav-apex";
+import { applyModeToNavGroups } from "@/lib/nav-visibility";
 import { LedgerLogo } from "@/components/ledger-logo";
 import { NavModeSwitcher } from "@/components/apex/nav-mode-switcher";
 import { useNavMode } from "@/hooks/use-nav-mode";
@@ -48,7 +49,13 @@ export function AppSidebar() {
   const forceExecutive = pathname === "/apex" || pathname.startsWith("/apex/");
   const effectiveMode: "operational" | "executive" =
     forceExecutive ? "executive" : mode;
-  const activeGroups = effectiveMode === "executive" ? APEX_EXECUTIVE_NAV_GROUPS : NAV_GROUPS;
+  const activeGroups = useMemo(
+    () =>
+      applyModeToNavGroups(
+        effectiveMode === "executive" ? APEX_EXECUTIVE_NAV_GROUPS : NAV_GROUPS,
+      ),
+    [effectiveMode],
+  );
 
   const groupDefaults = useMemo(() => {
     const d: Record<string, boolean> = {};

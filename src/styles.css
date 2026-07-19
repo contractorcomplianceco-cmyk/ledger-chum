@@ -350,3 +350,266 @@
     font-family: var(--font-mono);
   }
 }
+
+/*
+ * Visual invoice document.
+ * Styling is driven entirely by the `--inv-*` custom properties emitted by
+ * `themeToCssVars` (see src/lib/invoicing/invoice-theme.ts). The component never
+ * hardcodes color/spacing, so Phase B can restyle it by swapping the theme object.
+ */
+.invoice-document {
+  color: var(--inv-text);
+  font-family: var(--inv-body-font);
+  font-size: var(--inv-base-size);
+  line-height: 1.5;
+}
+.invoice-document__page {
+  width: 100%;
+  max-width: var(--inv-page-width);
+  min-height: var(--inv-page-min-height);
+  margin-inline: auto;
+  padding: var(--inv-page-padding);
+  background: var(--inv-surface);
+  border: 1px solid var(--inv-border);
+  border-radius: var(--inv-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--inv-section-gap);
+}
+.invoice-document__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+.invoice-document__header--reverse {
+  flex-direction: row-reverse;
+}
+.invoice-document__header--centered {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.invoice-document__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.invoice-document__logo {
+  display: grid;
+  place-items: center;
+  height: 44px;
+  width: 44px;
+  border-radius: var(--inv-radius);
+  background: var(--inv-accent);
+  color: var(--inv-accent-fg);
+  font-family: var(--inv-heading-font);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.invoice-document__title {
+  text-align: right;
+}
+.invoice-document__header--centered .invoice-document__title {
+  text-align: center;
+}
+.invoice-document__title-word {
+  font-family: var(--inv-heading-font);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--inv-accent);
+}
+.invoice-document__number {
+  margin-top: 2px;
+  font-variant-numeric: var(--inv-numeric);
+  font-weight: 600;
+}
+.invoice-document__status {
+  margin-top: 6px;
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--inv-border);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--inv-muted);
+}
+.invoice-document__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+.invoice-document__meta-label,
+.invoice-document__party-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--inv-muted);
+}
+.invoice-document__meta-value {
+  margin-top: 2px;
+  font-weight: 500;
+}
+.invoice-document__parties {
+  display: flex;
+  gap: 40px;
+}
+.invoice-document__party {
+  margin-top: 4px;
+}
+.invoice-document__party-name {
+  font-weight: 500;
+}
+.invoice-document__party-name--strong {
+  font-family: var(--inv-heading-font);
+  font-weight: 700;
+  font-size: 14px;
+}
+.invoice-document__party-line {
+  color: var(--inv-muted);
+  font-size: 12px;
+}
+.invoice-document__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.invoice-document__th {
+  background: var(--inv-thead-bg);
+  color: var(--inv-thead-fg);
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: left;
+  padding: 8px 10px;
+}
+.invoice-document__th--num {
+  text-align: right;
+}
+.invoice-document__th--desc {
+  border-top-left-radius: var(--inv-radius);
+}
+.invoice-document__th:last-child {
+  border-top-right-radius: var(--inv-radius);
+}
+.invoice-document__td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--inv-border);
+  vertical-align: top;
+}
+.invoice-document__td--num {
+  text-align: right;
+  font-variant-numeric: var(--inv-numeric);
+  white-space: nowrap;
+}
+.invoice-document__line-desc {
+  font-weight: 500;
+}
+.invoice-document__line-detail {
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--inv-muted);
+}
+.invoice-document__totals {
+  display: flex;
+  justify-content: flex-end;
+}
+.invoice-document__totals-list {
+  width: min(320px, 100%);
+  margin: 0;
+}
+.invoice-document__total-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 5px 0;
+  color: var(--inv-muted);
+}
+.invoice-document__total-row dd {
+  margin: 0;
+  font-variant-numeric: var(--inv-numeric);
+  font-weight: 500;
+  color: var(--inv-text);
+}
+.invoice-document__total-row--emphasize {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 2px solid var(--inv-accent);
+  color: var(--inv-text);
+  font-weight: 700;
+}
+.invoice-document__total-row--emphasize dd {
+  font-weight: 700;
+  font-size: 15px;
+}
+.invoice-document__notes-body {
+  margin: 4px 0 0;
+  color: var(--inv-muted);
+  font-size: 12.5px;
+}
+.invoice-document__pay {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.invoice-document__pay-btn {
+  background: var(--inv-accent);
+  color: var(--inv-accent-fg);
+  border: none;
+  border-radius: var(--inv-radius);
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+.invoice-document__pay-hint {
+  font-size: 11.5px;
+  color: var(--inv-muted);
+}
+.invoice-document__footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--inv-border);
+  color: var(--inv-muted);
+  font-size: 11.5px;
+}
+
+/*
+ * Print / PDF export. Isolate the invoice document and drop the app chrome so
+ * "Save as PDF" and physical print both produce a clean, page-accurate invoice.
+ */
+@media print {
+  body {
+    background: #ffffff;
+  }
+  /* Hide everything, then reveal only the targeted invoice document. Uses
+     visibility (not display) so a print region nested deep in the app tree still
+     shows even though its ancestors are hidden. */
+  body.printing-invoice * {
+    visibility: hidden !important;
+  }
+  body.printing-invoice .invoice-print-region--active,
+  body.printing-invoice .invoice-print-region--active * {
+    visibility: visible !important;
+  }
+  body.printing-invoice .invoice-print-region--active {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+  }
+  .invoice-print-region--active .invoice-document__page {
+    border: none;
+    border-radius: 0;
+    min-height: auto;
+    max-width: none;
+    box-shadow: none;
+  }
+  .invoice-print-region--active [data-print-hidden="true"] {
+    display: none !important;
+  }
+}

@@ -3515,6 +3515,83 @@ export type Database = {
           },
         ]
       }
+      email_settings: {
+        Row: {
+          created_at: string
+          from_address: string
+          from_name: string
+          id: string
+          inbound_enabled: boolean
+          inbound_host: string
+          inbound_password: string
+          inbound_port: number
+          inbound_protocol: string
+          inbound_secure: boolean
+          inbound_username: string
+          org_id: string
+          provider: string
+          smtp_enabled: boolean
+          smtp_host: string
+          smtp_password: string
+          smtp_port: number
+          smtp_secure: boolean
+          smtp_username: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          from_address?: string
+          from_name?: string
+          id?: string
+          inbound_enabled?: boolean
+          inbound_host?: string
+          inbound_password?: string
+          inbound_port?: number
+          inbound_protocol?: string
+          inbound_secure?: boolean
+          inbound_username?: string
+          org_id: string
+          provider?: string
+          smtp_enabled?: boolean
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_secure?: boolean
+          smtp_username?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          from_address?: string
+          from_name?: string
+          id?: string
+          inbound_enabled?: boolean
+          inbound_host?: string
+          inbound_password?: string
+          inbound_port?: number
+          inbound_protocol?: string
+          inbound_secure?: boolean
+          inbound_username?: string
+          org_id?: string
+          provider?: string
+          smtp_enabled?: boolean
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_secure?: boolean
+          smtp_username?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_settings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organization_settings: {
         Row: {
           accounting_basis: string

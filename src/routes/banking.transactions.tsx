@@ -12,6 +12,8 @@ import { MatchPicker } from "@/components/banking/match-picker";
 import { SplitTransactionModal } from "@/components/banking/split-transaction-modal";
 import { TRANSACTIONS, type Tx } from "@/lib/mock/banking";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { isProductionMode } from "@/lib/app-mode";
+import { ProductionUnavailable } from "@/components/production-unavailable";
 import { Download, Wand2 } from "lucide-react";
 
 export const Route = createFileRoute("/banking/transactions")({
@@ -34,6 +36,20 @@ export const Route = createFileRoute("/banking/transactions")({
 });
 
 function TransactionReview() {
+  if (isProductionMode()) {
+    return (
+      <ProductionUnavailable
+        title="Transaction Review"
+        description="This is the design-lab transaction review preview. Live bank transactions live under Ledger."
+        to="/ledger/banking"
+        toLabel="Go to live banking"
+      />
+    );
+  }
+  return <TransactionReviewWorkspace />;
+}
+
+function TransactionReviewWorkspace() {
   const [search, setSearch] = useState("");
   const [view, setView] = useState<SavedView>("all");
   const [account, setAccount] = useState("all");

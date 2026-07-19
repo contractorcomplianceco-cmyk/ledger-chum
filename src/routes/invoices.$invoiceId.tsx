@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Card } from "@/components/ui/card";
@@ -24,7 +24,9 @@ import { TREATMENT_META, type Treatment } from "@/lib/mock/cash-availability";
 import { currencyPrecise } from "@/lib/mock/finance";
 import { fromInvoiceRow, fromMockInvoice, type InvoiceRow } from "@/lib/invoicing/invoice-document";
 import { printInvoiceDocument } from "@/lib/invoicing/print-invoice";
-import { CLASSIC_THEME } from "@/lib/invoicing/invoice-theme";
+import { CLASSIC_THEME, type InvoiceStyle } from "@/lib/invoicing/invoice-theme";
+import { InvoiceStylePanel } from "@/components/invoicing/invoice-style-panel";
+import { useBrandStyle } from "@/lib/invoicing/brand-style-store";
 import { isProductionMode } from "@/lib/app-mode";
 import { getInvoice } from "@/lib/accounting/invoices.functions";
 import {
@@ -71,6 +73,12 @@ function InvoiceDetailPage() {
   const production = isProductionMode();
   const printRef = useRef<HTMLDivElement>(null);
 
+  // Style seam (Phase B). Active style = per-invoice override, else the saved
+  // company brand default, else Classic. Numbers/content are independent of this.
+  const { brandStyle, save: saveBrand, canSave } = useBrandStyle();
+  const [override, setOverride] = useState<InvoiceStyle | null>(null);
+  const activeStyle = override ?? brandStyle ?? CLASSIC_THEME;
+
   // Data-mode seam (Phase 1): production reads the live invoice via the real
   // server function; demo renders the mock fixture. Mock data never renders in
   // production because the mock branch is not consulted when `production` is true.
@@ -82,7 +90,16 @@ function InvoiceDetailPage() {
     retry: false,
   });
 
-  const doPrint = () => printInvoiceDocument(printRef.current, CLASSIC_THEME.paper);
+  const doPrint = () => printInvoiceDocument(printRef.current, activeStyle.paper);
+
+  const stylePanel = (
+    <InvoiceStylePanel
+      style={activeStyle}
+      onChange={setOverride}
+      onSaveBrand={saveBrand}
+      canSaveBrand={canSave}
+    />
+  );
 
   const header = (
     <div className="flex items-center justify-between gap-3">
@@ -130,8 +147,11 @@ function InvoiceDetailPage() {
     return (
       <div className="space-y-4">
         {header}
-        <div ref={printRef}>
-          <InvoiceDocument data={data} theme={CLASSIC_THEME} />
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
+          <div ref={printRef}>
+            <InvoiceDocument data={data} style={activeStyle} />
+          </div>
+          {stylePanel}
         </div>
       </div>
     );
@@ -157,8 +177,11 @@ function InvoiceDetailPage() {
         </TabsList>
 
         <TabsContent value="document">
-          <div className="mx-auto max-w-4xl" ref={printRef}>
-            <InvoiceDocument data={doc} theme={CLASSIC_THEME} />
+          <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
+            <div ref={printRef}>
+              <InvoiceDocument data={doc} style={activeStyle} />
+            </div>
+            {stylePanel}
           </div>
         </TabsContent>
 

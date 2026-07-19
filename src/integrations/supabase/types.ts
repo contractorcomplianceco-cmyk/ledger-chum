@@ -3039,6 +3039,35 @@ export type Database = {
           },
         ]
       }
+      invoice_brand_styles: {
+        Row: {
+          org_id: string
+          style: Json
+          updated_at: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          org_id: string
+          style: Json
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          org_id?: string
+          style?: Json
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_brand_styles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invoice_lines: {
         Row: {
           account_id: string | null

@@ -25,7 +25,9 @@ const DEMO_ONLY_PREFIXES = [
 /** Exact placeholder / mock routes (ComingSoon or mock-only content). */
 const DEMO_ONLY_EXACT = new Set<string>([
   "/dashboard", // mock "operational" dashboard — real home is /dashboards/accounting
-  "/payments",
+  // NOTE: "/payments" is a real, shipping surface as of Phase C (customer
+  // payments: collect/record/reconcile via server fns), so it is intentionally
+  // NOT demo-only — it must remain visible in production.
   "/bills",
   "/vendors",
   "/audit",

@@ -9,306 +9,231 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VendorsRouteImport } from './routes/vendors'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as PaymentsRouteImport } from './routes/payments'
-import { Route as InvoicesRouteImport } from './routes/invoices'
-import { Route as IntegrationsRouteImport } from './routes/integrations'
-import { Route as ExpensesRouteImport } from './routes/expenses'
-import { Route as EstimatesRouteImport } from './routes/estimates'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as CustomersRouteImport } from './routes/customers'
-import { Route as ControlsRouteImport } from './routes/controls'
-import { Route as CloseRouteImport } from './routes/close'
-import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
-import { Route as BillsRouteImport } from './routes/bills'
-import { Route as AutomationCenterRouteImport } from './routes/automation-center'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuditRouteImport } from './routes/audit'
-import { Route as AccountingCenterRouteImport } from './routes/accounting-center'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ReportsIndexRouteImport } from './routes/reports.index'
-import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
-import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
-import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
-import { Route as FeatureRegistryIndexRouteImport } from './routes/feature-registry.index'
-import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
-import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
-import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
-import { Route as BankingIndexRouteImport } from './routes/banking.index'
-import { Route as ApexIndexRouteImport } from './routes/apex.index'
-import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
-import { Route as SettingsEmailRouteImport } from './routes/settings.email'
-import { Route as EmailInboxRouteImport } from './routes/email.inbox'
-import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
-import { Route as ReportsTrialBalanceRouteImport } from './routes/reports.trial-balance'
-import { Route as ReportsProfitLossRouteImport } from './routes/reports.profit-loss'
-import { Route as ReportsCashFlowRouteImport } from './routes/reports.cash-flow'
-import { Route as ReportsBalanceSheetRouteImport } from './routes/reports.balance-sheet'
-import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
-import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
-import { Route as LedgerTaxRouteImport } from './routes/ledger.tax'
-import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
-import { Route as LedgerInventoryRouteImport } from './routes/ledger.inventory'
-import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
-import { Route as LedgerFixedAssetsRouteImport } from './routes/ledger.fixed-assets'
-import { Route as LedgerEntitiesRouteImport } from './routes/ledger.entities'
-import { Route as LedgerBankingRouteImport } from './routes/ledger.banking'
-import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
-import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
-import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
-import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
-import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
-import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
-import { Route as IntelligenceTechPortfolioRouteImport } from './routes/intelligence.tech-portfolio'
-import { Route as IntelligenceTechRouteImport } from './routes/intelligence.tech'
-import { Route as IntelligenceServicesRouteImport } from './routes/intelligence.services'
-import { Route as IntelligenceRecommendationsRouteImport } from './routes/intelligence.recommendations'
-import { Route as IntelligenceProfitabilityRouteImport } from './routes/intelligence.profitability'
-import { Route as IntelligenceOverheadAnomaliesRouteImport } from './routes/intelligence.overhead-anomalies'
-import { Route as IntelligenceOverheadRouteImport } from './routes/intelligence.overhead'
-import { Route as IntelligenceMarketingRouteImport } from './routes/intelligence.marketing'
-import { Route as IntelligenceLeakageRouteImport } from './routes/intelligence.leakage'
-import { Route as IntelligenceForecastingRouteImport } from './routes/intelligence.forecasting'
-import { Route as IntelligenceDepartmentsRouteImport } from './routes/intelligence.departments'
-import { Route as IntelligenceConfidenceRouteImport } from './routes/intelligence.confidence'
-import { Route as IntelligenceClientsRouteImport } from './routes/intelligence.clients'
-import { Route as IntelligenceCampaignsRouteImport } from './routes/intelligence.campaigns'
-import { Route as IntelligenceBonusesRouteImport } from './routes/intelligence.bonuses'
-import { Route as IntelligenceBonusPlansRouteImport } from './routes/intelligence.bonus-plans'
-import { Route as IntelligenceBonusForecastRouteImport } from './routes/intelligence.bonus-forecast'
-import { Route as IntelligenceAttributionRouteImport } from './routes/intelligence.attribution'
-import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
-import { Route as IntegrationsSandboxRouteImport } from './routes/integrations.sandbox'
-import { Route as ImplementationTestingRouteImport } from './routes/implementation.testing'
-import { Route as ImplementationSecurityRouteImport } from './routes/implementation.security'
-import { Route as ImplementationReadinessRouteImport } from './routes/implementation.readiness'
-import { Route as ImplementationPermissionsRouteImport } from './routes/implementation.permissions'
-import { Route as ImplementationMigrationRouteImport } from './routes/implementation.migration'
-import { Route as ImplementationIntegrationsRouteImport } from './routes/implementation.integrations'
-import { Route as ImplementationHandoffRouteImport } from './routes/implementation.handoff'
-import { Route as ImplementationEventsRouteImport } from './routes/implementation.events'
-import { Route as ImplementationDataMapRouteImport } from './routes/implementation.data-map'
-import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
-import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
-import { Route as FeatureRegistryReleasesRouteImport } from './routes/feature-registry.releases'
-import { Route as FeatureRegistryReadinessRouteImport } from './routes/feature-registry.readiness'
-import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
-import { Route as FeatureRegistryNavigationRouteImport } from './routes/feature-registry.navigation'
-import { Route as FeatureRegistryLegalAccountingRouteImport } from './routes/feature-registry.legal-accounting'
-import { Route as FeatureRegistryIntegrationsRouteImport } from './routes/feature-registry.integrations'
-import { Route as FeatureRegistryDependenciesRouteImport } from './routes/feature-registry.dependencies'
-import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
-import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
-import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
-import { Route as FeatureRegistryIdRouteImport } from './routes/feature-registry.$id'
-import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
-import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
-import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
-import { Route as ExpensesReportsRouteImport } from './routes/expenses.reports'
-import { Route as ExpensesReimbursementsRouteImport } from './routes/expenses.reimbursements'
-import { Route as ExpensesRecoveryRouteImport } from './routes/expenses.recovery'
-import { Route as ExpensesReceiptsRouteImport } from './routes/expenses.receipts'
-import { Route as ExpensesPreSpendRouteImport } from './routes/expenses.pre-spend'
-import { Route as ExpensesPoliciesRouteImport } from './routes/expenses.policies'
-import { Route as ExpensesMatchingRouteImport } from './routes/expenses.matching'
-import { Route as ExpensesListRouteImport } from './routes/expenses.list'
-import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.intelligence'
-import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
-import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
-import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
-import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
-import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
-import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
-import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
-import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
-import { Route as CompensationVerificationRouteImport } from './routes/compensation.verification'
-import { Route as CompensationReservesRouteImport } from './routes/compensation.reserves'
-import { Route as CompensationReconciliationRouteImport } from './routes/compensation.reconciliation'
-import { Route as CompensationPreviewRouteImport } from './routes/compensation.preview'
-import { Route as CompensationHoldbacksRouteImport } from './routes/compensation.holdbacks'
-import { Route as CompensationEligibilityRouteImport } from './routes/compensation.eligibility'
-import { Route as CompensationClawbacksRouteImport } from './routes/compensation.clawbacks'
-import { Route as CompensationAuditRouteImport } from './routes/compensation.audit'
-import { Route as CompensationApprovalsRouteImport } from './routes/compensation.approvals'
-import { Route as CompensationAdjustmentsRouteImport } from './routes/compensation.adjustments'
-import { Route as CloseAiAssistantRouteImport } from './routes/close.ai-assistant'
-import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
-import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
-import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
-import { Route as BankingReconciliationRouteImport } from './routes/banking.reconciliation'
-import { Route as AutomationSubscriptionActionsRouteImport } from './routes/automation.subscription-actions'
-import { Route as AutomationRulesRouteImport } from './routes/automation.rules'
-import { Route as AutomationRevenueRecoveryRouteImport } from './routes/automation.revenue-recovery'
-import { Route as AutomationPayablesRouteImport } from './routes/automation.payables'
-import { Route as AutomationIntegrationHealthRouteImport } from './routes/automation.integration-health'
-import { Route as AutomationExceptionsRouteImport } from './routes/automation.exceptions'
-import { Route as AutomationDecisionLogRouteImport } from './routes/automation.decision-log'
-import { Route as AutomationDataQualityRouteImport } from './routes/automation.data-quality'
-import { Route as AutomationCollectionsRouteImport } from './routes/automation.collections'
-import { Route as AutomationCashControlsRouteImport } from './routes/automation.cash-controls'
-import { Route as AutomationBudgetControlsRouteImport } from './routes/automation.budget-controls'
-import { Route as AutomationBonusControlsRouteImport } from './routes/automation.bonus-controls'
-import { Route as AutomationApprovalsRouteImport } from './routes/automation.approvals'
-import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
-import { Route as ApexWidgetsRouteImport } from './routes/apex.widgets'
-import { Route as ApexTimelineRouteImport } from './routes/apex.timeline'
-import { Route as ApexRolesRouteImport } from './routes/apex.roles'
-import { Route as ApexRelationshipGraphRouteImport } from './routes/apex.relationship-graph'
-import { Route as ApexPersonasRouteImport } from './routes/apex.personas'
-import { Route as ApexPeopleRouteImport } from './routes/apex.people'
-import { Route as ApexOpportunitiesRouteImport } from './routes/apex.opportunities'
-import { Route as ApexNavigationRouteImport } from './routes/apex.navigation'
-import { Route as ApexMoneyRouteImport } from './routes/apex.money'
-import { Route as ApexInsightsRouteImport } from './routes/apex.insights'
-import { Route as ApexHandoffRouteImport } from './routes/apex.handoff'
-import { Route as ApexGrowthRouteImport } from './routes/apex.growth'
-import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dna'
-import { Route as ApexDigitalTwinRouteImport } from './routes/apex.digital-twin'
-import { Route as ApexCompanyHealthRouteImport } from './routes/apex.company-health'
-import { Route as ApexCompanyRouteImport } from './routes/apex.company'
-import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
-import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
-import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
-import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
-import { Route as AdminProductionReviewRouteImport } from './routes/admin.production-review'
-import { Route as AdminPilotSuccessRouteImport } from './routes/admin.pilot-success'
-import { Route as AdminPilotSimulationRouteImport } from './routes/admin.pilot-simulation'
-import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
-import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
-import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
-import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
-import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
-import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
-import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
-import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
-import { Route as AdminAcceptanceTestsRouteImport } from './routes/admin.acceptance-tests'
-import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
-import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
-import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
-import { Route as AccountsPayableBillsRouteImport } from './routes/accounts-payable.bills'
+import { Route as AccountingCenterRouteImport } from './routes/accounting-center'
+import { Route as AuditRouteImport } from './routes/audit'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AutomationCenterRouteImport } from './routes/automation-center'
+import { Route as BillsRouteImport } from './routes/bills'
+import { Route as CashAvailabilityRouteImport } from './routes/cash-availability'
+import { Route as CloseRouteImport } from './routes/close'
+import { Route as ControlsRouteImport } from './routes/controls'
+import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as EstimatesRouteImport } from './routes/estimates'
+import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as InvoicesRouteImport } from './routes/invoices'
+import { Route as PaymentsRouteImport } from './routes/payments'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as VendorsRouteImport } from './routes/vendors'
 import { Route as AccountsPayableAgingRouteImport } from './routes/accounts-payable.aging'
-import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
-import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
-import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
-import { Route as CompensationPayablesIndexRouteImport } from './routes/compensation.payables.index'
-import { Route as CompensationParticipantsIndexRouteImport } from './routes/compensation.participants.index'
-import { Route as CompensationDisputesIndexRouteImport } from './routes/compensation.disputes.index'
-import { Route as CompensationCalculationsIndexRouteImport } from './routes/compensation.calculations.index'
-import { Route as CompensationAttributionIndexRouteImport } from './routes/compensation.attribution.index'
-import { Route as ApexWorkspacesIndexRouteImport } from './routes/apex.workspaces.index'
+import { Route as AccountsPayableBillsRouteImport } from './routes/accounts-payable.bills'
+import { Route as AccountsPayablePaymentsRouteImport } from './routes/accounts-payable.payments'
+import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
+import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
+import { Route as AdminAcceptanceTestsRouteImport } from './routes/admin.acceptance-tests'
+import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
+import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
+import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
+import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminIntelligenceRouteImport } from './routes/admin.intelligence'
+import { Route as AdminMetricsRouteImport } from './routes/admin.metrics'
+import { Route as AdminMigrationRouteImport } from './routes/admin.migration'
+import { Route as AdminObservabilityRouteImport } from './routes/admin.observability'
+import { Route as AdminPilotSimulationRouteImport } from './routes/admin.pilot-simulation'
+import { Route as AdminPilotSuccessRouteImport } from './routes/admin.pilot-success'
+import { Route as AdminProductionReviewRouteImport } from './routes/admin.production-review'
+import { Route as AdminReadinessRouteImport } from './routes/admin.readiness'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as ApexIndexRouteImport } from './routes/apex.index'
+import { Route as ApexArchitectureRouteImport } from './routes/apex.architecture'
+import { Route as ApexAssetsRouteImport } from './routes/apex.assets'
+import { Route as ApexBriefingRouteImport } from './routes/apex.briefing'
+import { Route as ApexCompanyRouteImport } from './routes/apex.company'
+import { Route as ApexCompanyHealthRouteImport } from './routes/apex.company-health'
+import { Route as ApexDigitalTwinRouteImport } from './routes/apex.digital-twin'
+import { Route as ApexFinancialDnaRouteImport } from './routes/apex.financial-dna'
+import { Route as ApexGrowthRouteImport } from './routes/apex.growth'
+import { Route as ApexHandoffRouteImport } from './routes/apex.handoff'
+import { Route as ApexInsightsRouteImport } from './routes/apex.insights'
+import { Route as ApexMoneyRouteImport } from './routes/apex.money'
+import { Route as ApexNavigationRouteImport } from './routes/apex.navigation'
+import { Route as ApexOpportunitiesRouteImport } from './routes/apex.opportunities'
+import { Route as ApexPeopleRouteImport } from './routes/apex.people'
+import { Route as ApexPersonasRouteImport } from './routes/apex.personas'
+import { Route as ApexRelationshipGraphRouteImport } from './routes/apex.relationship-graph'
+import { Route as ApexRolesRouteImport } from './routes/apex.roles'
+import { Route as ApexTimelineRouteImport } from './routes/apex.timeline'
+import { Route as ApexWidgetsRouteImport } from './routes/apex.widgets'
+import { Route as AutomationActionPlansRouteImport } from './routes/automation.action-plans'
+import { Route as AutomationApprovalsRouteImport } from './routes/automation.approvals'
+import { Route as AutomationBonusControlsRouteImport } from './routes/automation.bonus-controls'
+import { Route as AutomationBudgetControlsRouteImport } from './routes/automation.budget-controls'
+import { Route as AutomationCashControlsRouteImport } from './routes/automation.cash-controls'
+import { Route as AutomationCollectionsRouteImport } from './routes/automation.collections'
+import { Route as AutomationDataQualityRouteImport } from './routes/automation.data-quality'
+import { Route as AutomationDecisionLogRouteImport } from './routes/automation.decision-log'
+import { Route as AutomationExceptionsRouteImport } from './routes/automation.exceptions'
+import { Route as AutomationIntegrationHealthRouteImport } from './routes/automation.integration-health'
+import { Route as AutomationPayablesRouteImport } from './routes/automation.payables'
+import { Route as AutomationRevenueRecoveryRouteImport } from './routes/automation.revenue-recovery'
+import { Route as AutomationRulesRouteImport } from './routes/automation.rules'
+import { Route as AutomationSubscriptionActionsRouteImport } from './routes/automation.subscription-actions'
+import { Route as BankingIndexRouteImport } from './routes/banking.index'
+import { Route as BankingReconciliationRouteImport } from './routes/banking.reconciliation'
+import { Route as BankingTransactionsRouteImport } from './routes/banking.transactions'
+import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availability.index'
+import { Route as CashAvailabilityAllocationsRouteImport } from './routes/cash-availability.allocations'
+import { Route as CashAvailabilityRulesRouteImport } from './routes/cash-availability.rules'
+import { Route as CloseAiAssistantRouteImport } from './routes/close.ai-assistant'
+import { Route as CompensationIndexRouteImport } from './routes/compensation.index'
+import { Route as CompensationAdjustmentsRouteImport } from './routes/compensation.adjustments'
+import { Route as CompensationApprovalsRouteImport } from './routes/compensation.approvals'
+import { Route as CompensationAuditRouteImport } from './routes/compensation.audit'
+import { Route as CompensationClawbacksRouteImport } from './routes/compensation.clawbacks'
+import { Route as CompensationEligibilityRouteImport } from './routes/compensation.eligibility'
+import { Route as CompensationHoldbacksRouteImport } from './routes/compensation.holdbacks'
+import { Route as CompensationPreviewRouteImport } from './routes/compensation.preview'
+import { Route as CompensationReconciliationRouteImport } from './routes/compensation.reconciliation'
+import { Route as CompensationReservesRouteImport } from './routes/compensation.reserves'
+import { Route as CompensationVerificationRouteImport } from './routes/compensation.verification'
+import { Route as CustomersCustomerIdRouteImport } from './routes/customers.$customerId'
+import { Route as DashboardsAccountingRouteImport } from './routes/dashboards.accounting'
+import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
+import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
+import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
+import { Route as EmailInboxRouteImport } from './routes/email.inbox'
+import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
+import { Route as ExpensesIndexRouteImport } from './routes/expenses.index'
+import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
+import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
+import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.intelligence'
+import { Route as ExpensesListRouteImport } from './routes/expenses.list'
+import { Route as ExpensesMatchingRouteImport } from './routes/expenses.matching'
+import { Route as ExpensesPoliciesRouteImport } from './routes/expenses.policies'
+import { Route as ExpensesPreSpendRouteImport } from './routes/expenses.pre-spend'
+import { Route as ExpensesReceiptsRouteImport } from './routes/expenses.receipts'
+import { Route as ExpensesRecoveryRouteImport } from './routes/expenses.recovery'
+import { Route as ExpensesReimbursementsRouteImport } from './routes/expenses.reimbursements'
+import { Route as ExpensesReportsRouteImport } from './routes/expenses.reports'
+import { Route as ExpensesSubmitRouteImport } from './routes/expenses.submit'
+import { Route as ExpensesSubscriptionsRouteImport } from './routes/expenses.subscriptions'
+import { Route as ExpensesVendorsRouteImport } from './routes/expenses.vendors'
+import { Route as FeatureRegistryIndexRouteImport } from './routes/feature-registry.index'
+import { Route as FeatureRegistryIdRouteImport } from './routes/feature-registry.$id'
+import { Route as FeatureRegistryAllRouteImport } from './routes/feature-registry.all'
+import { Route as FeatureRegistryBlockedRouteImport } from './routes/feature-registry.blocked'
+import { Route as FeatureRegistryBuiltRouteImport } from './routes/feature-registry.built'
+import { Route as FeatureRegistryDependenciesRouteImport } from './routes/feature-registry.dependencies'
+import { Route as FeatureRegistryIntegrationsRouteImport } from './routes/feature-registry.integrations'
+import { Route as FeatureRegistryLegalAccountingRouteImport } from './routes/feature-registry.legal-accounting'
+import { Route as FeatureRegistryNavigationRouteImport } from './routes/feature-registry.navigation'
+import { Route as FeatureRegistryPlannedRouteImport } from './routes/feature-registry.planned'
+import { Route as FeatureRegistryReadinessRouteImport } from './routes/feature-registry.readiness'
+import { Route as FeatureRegistryReleasesRouteImport } from './routes/feature-registry.releases'
+import { Route as ImplementationIndexRouteImport } from './routes/implementation.index'
+import { Route as ImplementationApiMapRouteImport } from './routes/implementation.api-map'
+import { Route as ImplementationCutoverRouteImport } from './routes/implementation.cutover'
+import { Route as ImplementationDataMapRouteImport } from './routes/implementation.data-map'
+import { Route as ImplementationEventsRouteImport } from './routes/implementation.events'
+import { Route as ImplementationHandoffRouteImport } from './routes/implementation.handoff'
+import { Route as ImplementationIntegrationsRouteImport } from './routes/implementation.integrations'
+import { Route as ImplementationMigrationRouteImport } from './routes/implementation.migration'
+import { Route as ImplementationPermissionsRouteImport } from './routes/implementation.permissions'
+import { Route as ImplementationReadinessRouteImport } from './routes/implementation.readiness'
+import { Route as ImplementationSecurityRouteImport } from './routes/implementation.security'
+import { Route as ImplementationTestingRouteImport } from './routes/implementation.testing'
+import { Route as IntegrationsSandboxRouteImport } from './routes/integrations.sandbox'
+import { Route as IntelligenceIndexRouteImport } from './routes/intelligence.index'
+import { Route as IntelligenceAppsRouteImport } from './routes/intelligence.apps'
+import { Route as IntelligenceAttributionRouteImport } from './routes/intelligence.attribution'
+import { Route as IntelligenceBonusForecastRouteImport } from './routes/intelligence.bonus-forecast'
+import { Route as IntelligenceBonusPlansRouteImport } from './routes/intelligence.bonus-plans'
+import { Route as IntelligenceBonusesRouteImport } from './routes/intelligence.bonuses'
+import { Route as IntelligenceCampaignsRouteImport } from './routes/intelligence.campaigns'
+import { Route as IntelligenceClientsRouteImport } from './routes/intelligence.clients'
+import { Route as IntelligenceConfidenceRouteImport } from './routes/intelligence.confidence'
+import { Route as IntelligenceDepartmentsRouteImport } from './routes/intelligence.departments'
+import { Route as IntelligenceForecastingRouteImport } from './routes/intelligence.forecasting'
+import { Route as IntelligenceLeakageRouteImport } from './routes/intelligence.leakage'
+import { Route as IntelligenceMarketingRouteImport } from './routes/intelligence.marketing'
+import { Route as IntelligenceOverheadRouteImport } from './routes/intelligence.overhead'
+import { Route as IntelligenceOverheadAnomaliesRouteImport } from './routes/intelligence.overhead-anomalies'
+import { Route as IntelligenceProfitabilityRouteImport } from './routes/intelligence.profitability'
+import { Route as IntelligenceRecommendationsRouteImport } from './routes/intelligence.recommendations'
+import { Route as IntelligenceServicesRouteImport } from './routes/intelligence.services'
+import { Route as IntelligenceTechRouteImport } from './routes/intelligence.tech'
+import { Route as IntelligenceTechPortfolioRouteImport } from './routes/intelligence.tech-portfolio'
+import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
+import { Route as InvoicesInvoiceIdRouteImport } from './routes/invoices.$invoiceId'
+import { Route as InvoicesCreditNotesRouteImport } from './routes/invoices.credit-notes'
+import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
+import { Route as InvoicesRecurringRouteImport } from './routes/invoices.recurring'
+import { Route as InvoicesReviewRouteImport } from './routes/invoices.review'
+import { Route as LedgerAccountsRouteImport } from './routes/ledger.accounts'
+import { Route as LedgerBankingRouteImport } from './routes/ledger.banking'
+import { Route as LedgerEntitiesRouteImport } from './routes/ledger.entities'
+import { Route as LedgerFixedAssetsRouteImport } from './routes/ledger.fixed-assets'
+import { Route as LedgerGeneralRouteImport } from './routes/ledger.general'
+import { Route as LedgerInventoryRouteImport } from './routes/ledger.inventory'
+import { Route as LedgerJournalsRouteImport } from './routes/ledger.journals'
+import { Route as LedgerTaxRouteImport } from './routes/ledger.tax'
+import { Route as ReadinessMigrationRouteImport } from './routes/readiness.migration'
+import { Route as ReadinessProductionRouteImport } from './routes/readiness.production'
+import { Route as ReportsIndexRouteImport } from './routes/reports.index'
+import { Route as ReportsBalanceSheetRouteImport } from './routes/reports.balance-sheet'
+import { Route as ReportsCashFlowRouteImport } from './routes/reports.cash-flow'
+import { Route as ReportsProfitLossRouteImport } from './routes/reports.profit-loss'
+import { Route as ReportsTrialBalanceRouteImport } from './routes/reports.trial-balance'
+import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
+import { Route as SettingsEmailRouteImport } from './routes/settings.email'
+import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
 import { Route as ApexAiPersonasIndexRouteImport } from './routes/apex.ai-personas.index'
-import { Route as LedgerBankingReconcileRouteImport } from './routes/ledger.banking.reconcile'
-import { Route as CompensationStatementsIdRouteImport } from './routes/compensation.statements.$id'
-import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
-import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
-import { Route as CompensationPaymentBatchesIdRouteImport } from './routes/compensation.payment-batches.$id'
-import { Route as CompensationPayablesIdRouteImport } from './routes/compensation.payables.$id'
-import { Route as CompensationParticipantsIdRouteImport } from './routes/compensation.participants.$id'
-import { Route as CompensationDisputesIdRouteImport } from './routes/compensation.disputes.$id'
-import { Route as CompensationCalculationsNewRouteImport } from './routes/compensation.calculations.new'
-import { Route as CompensationCalculationsIdRouteImport } from './routes/compensation.calculations.$id'
-import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
-import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
-import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
-import { Route as ApexWorkspacesRoleRouteImport } from './routes/apex.workspaces.$role'
-import { Route as ApexTimelineIdRouteImport } from './routes/apex.timeline.$id'
-import { Route as ApexOpportunitiesIdRouteImport } from './routes/apex.opportunities.$id'
-import { Route as ApexFinancialDnaIdRouteImport } from './routes/apex.financial-dna.$id'
-import { Route as ApexDigitalTwinScenariosRouteImport } from './routes/apex.digital-twin.scenarios'
 import { Route as ApexAiPersonasPersonaRouteImport } from './routes/apex.ai-personas.$persona'
-import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
-import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
-import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
+import { Route as ApexDigitalTwinScenariosRouteImport } from './routes/apex.digital-twin.scenarios'
+import { Route as ApexFinancialDnaIdRouteImport } from './routes/apex.financial-dna.$id'
+import { Route as ApexOpportunitiesIdRouteImport } from './routes/apex.opportunities.$id'
+import { Route as ApexTimelineIdRouteImport } from './routes/apex.timeline.$id'
+import { Route as ApexWorkspacesIndexRouteImport } from './routes/apex.workspaces.index'
+import { Route as ApexWorkspacesRoleRouteImport } from './routes/apex.workspaces.$role'
 import { Route as ApiWebhooksAuthorizeNetRouteImport } from './routes/api/webhooks/authorize-net'
-import { Route as ApiPublicIntegrationsRefundsRouteImport } from './routes/api/public/integrations/refunds'
-import { Route as ApiPublicIntegrationsPaymentsRouteImport } from './routes/api/public/integrations/payments'
-import { Route as ApiPublicIntegrationsInvoicesRouteImport } from './routes/api/public/integrations/invoices'
-import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from './routes/api/public/integrations/inventory-consumption'
-import { Route as ApiPublicIntegrationsEventsRouteImport } from './routes/api/public/integrations/events'
-import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
+import { Route as CompensationAttributionIndexRouteImport } from './routes/compensation.attribution.index'
+import { Route as CompensationAttributionIdRouteImport } from './routes/compensation.attribution.$id'
+import { Route as CompensationAttributionConflictsRouteImport } from './routes/compensation.attribution.conflicts'
+import { Route as CompensationAttributionEvidenceRouteImport } from './routes/compensation.attribution.evidence'
+import { Route as CompensationCalculationsIndexRouteImport } from './routes/compensation.calculations.index'
+import { Route as CompensationCalculationsIdRouteImport } from './routes/compensation.calculations.$id'
+import { Route as CompensationCalculationsNewRouteImport } from './routes/compensation.calculations.new'
+import { Route as CompensationDisputesIndexRouteImport } from './routes/compensation.disputes.index'
+import { Route as CompensationDisputesIdRouteImport } from './routes/compensation.disputes.$id'
+import { Route as CompensationParticipantsIndexRouteImport } from './routes/compensation.participants.index'
+import { Route as CompensationParticipantsIdRouteImport } from './routes/compensation.participants.$id'
+import { Route as CompensationPayablesIndexRouteImport } from './routes/compensation.payables.index'
+import { Route as CompensationPayablesIdRouteImport } from './routes/compensation.payables.$id'
+import { Route as CompensationPaymentBatchesIndexRouteImport } from './routes/compensation.payment-batches.index'
+import { Route as CompensationPaymentBatchesIdRouteImport } from './routes/compensation.payment-batches.$id'
+import { Route as CompensationPlansIndexRouteImport } from './routes/compensation.plans.index'
+import { Route as CompensationPlansIdRouteImport } from './routes/compensation.plans.$id'
+import { Route as CompensationPlansNewRouteImport } from './routes/compensation.plans.new'
+import { Route as CompensationStatementsIndexRouteImport } from './routes/compensation.statements.index'
+import { Route as CompensationStatementsIdRouteImport } from './routes/compensation.statements.$id'
+import { Route as LedgerBankingReconcileRouteImport } from './routes/ledger.banking.reconcile'
 import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
+import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
+import { Route as ApiPublicIntegrationsEventsRouteImport } from './routes/api/public/integrations/events'
+import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from './routes/api/public/integrations/inventory-consumption'
+import { Route as ApiPublicIntegrationsInvoicesRouteImport } from './routes/api/public/integrations/invoices'
+import { Route as ApiPublicIntegrationsPaymentsRouteImport } from './routes/api/public/integrations/payments'
+import { Route as ApiPublicIntegrationsRefundsRouteImport } from './routes/api/public/integrations/refunds'
+import { Route as CompensationCalculationsIdPreviewRouteImport } from './routes/compensation.calculations.$id.preview'
+import { Route as CompensationPlansIdParticipantsRouteImport } from './routes/compensation.plans.$id.participants'
+import { Route as CompensationPlansIdVersionsRouteImport } from './routes/compensation.plans.$id.versions'
 import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
 
-const VendorsRoute = VendorsRouteImport.update({
-  id: '/vendors',
-  path: '/vendors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PaymentsRoute = PaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InvoicesRoute = InvoicesRouteImport.update({
-  id: '/invoices',
-  path: '/invoices',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntegrationsRoute = IntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExpensesRoute = ExpensesRouteImport.update({
-  id: '/expenses',
-  path: '/expenses',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EstimatesRoute = EstimatesRouteImport.update({
-  id: '/estimates',
-  path: '/estimates',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomersRoute = CustomersRouteImport.update({
-  id: '/customers',
-  path: '/customers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ControlsRoute = ControlsRouteImport.update({
-  id: '/controls',
-  path: '/controls',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CloseRoute = CloseRouteImport.update({
-  id: '/close',
-  path: '/close',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CashAvailabilityRoute = CashAvailabilityRouteImport.update({
-  id: '/cash-availability',
-  path: '/cash-availability',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BillsRoute = BillsRouteImport.update({
-  id: '/bills',
-  path: '/bills',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationCenterRoute = AutomationCenterRouteImport.update({
-  id: '/automation-center',
-  path: '/automation-center',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuditRoute = AuditRouteImport.update({
-  id: '/audit',
-  path: '/audit',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountingCenterRoute = AccountingCenterRouteImport.update({
@@ -316,54 +241,179 @@ const AccountingCenterRoute = AccountingCenterRouteImport.update({
   path: '/accounting-center',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsIndexRoute = ReportsIndexRouteImport.update({
-  id: '/reports/',
-  path: '/reports/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
-  id: '/intelligence/',
-  path: '/intelligence/',
+const AutomationCenterRoute = AutomationCenterRouteImport.update({
+  id: '/automation-center',
+  path: '/automation-center',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImplementationIndexRoute = ImplementationIndexRouteImport.update({
-  id: '/implementation/',
-  path: '/implementation/',
+const BillsRoute = BillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FeatureRegistryIndexRoute = FeatureRegistryIndexRouteImport.update({
-  id: '/feature-registry/',
-  path: '/feature-registry/',
+const CashAvailabilityRoute = CashAvailabilityRouteImport.update({
+  id: '/cash-availability',
+  path: '/cash-availability',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const CompensationIndexRoute = CompensationIndexRouteImport.update({
-  id: '/compensation/',
-  path: '/compensation/',
+const CloseRoute = CloseRouteImport.update({
+  id: '/close',
+  path: '/close',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CashAvailabilityRoute,
+const ControlsRoute = ControlsRouteImport.update({
+  id: '/controls',
+  path: '/controls',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BankingIndexRoute = BankingIndexRouteImport.update({
-  id: '/banking/',
-  path: '/banking/',
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimatesRoute = EstimatesRouteImport.update({
+  id: '/estimates',
+  path: '/estimates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesRoute = InvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VendorsRoute = VendorsRouteImport.update({
+  id: '/vendors',
+  path: '/vendors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsPayableAgingRoute = AccountsPayableAgingRouteImport.update({
+  id: '/accounts-payable/aging',
+  path: '/accounts-payable/aging',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsPayableBillsRoute = AccountsPayableBillsRouteImport.update({
+  id: '/accounts-payable/bills',
+  path: '/accounts-payable/bills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsPayablePaymentsRoute = AccountsPayablePaymentsRouteImport.update({
+  id: '/accounts-payable/payments',
+  path: '/accounts-payable/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsPayableVendorsRoute = AccountsPayableVendorsRouteImport.update({
+  id: '/accounts-payable/vendors',
+  path: '/accounts-payable/vendors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
+  id: '/accounts-receivable/aging',
+  path: '/accounts-receivable/aging',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAcceptanceTestsRoute = AdminAcceptanceTestsRouteImport.update({
+  id: '/admin/acceptance-tests',
+  path: '/admin/acceptance-tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
+  id: '/admin/customer-onboarding',
+  path: '/admin/customer-onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
+  id: '/admin/financial-events',
+  path: '/admin/financial-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIntegrationTestingRoute = AdminIntegrationTestingRouteImport.update({
+  id: '/admin/integration-testing',
+  path: '/admin/integration-testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
+  id: '/admin/integrations',
+  path: '/admin/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIntelligenceRoute = AdminIntelligenceRouteImport.update({
+  id: '/admin/intelligence',
+  path: '/admin/intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMetricsRoute = AdminMetricsRouteImport.update({
+  id: '/admin/metrics',
+  path: '/admin/metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMigrationRoute = AdminMigrationRouteImport.update({
+  id: '/admin/migration',
+  path: '/admin/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminObservabilityRoute = AdminObservabilityRouteImport.update({
+  id: '/admin/observability',
+  path: '/admin/observability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPilotSimulationRoute = AdminPilotSimulationRouteImport.update({
+  id: '/admin/pilot-simulation',
+  path: '/admin/pilot-simulation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPilotSuccessRoute = AdminPilotSuccessRouteImport.update({
+  id: '/admin/pilot-success',
+  path: '/admin/pilot-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductionReviewRoute = AdminProductionReviewRouteImport.update({
+  id: '/admin/production-review',
+  path: '/admin/production-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReadinessRoute = AdminReadinessRouteImport.update({
+  id: '/admin/readiness',
+  path: '/admin/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApexIndexRoute = ApexIndexRouteImport.update({
@@ -371,10 +421,719 @@ const ApexIndexRoute = ApexIndexRouteImport.update({
   path: '/apex/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SettingsServiceconnectRoute = SettingsServiceconnectRouteImport.update({
-  id: '/serviceconnect',
-  path: '/serviceconnect',
-  getParentRoute: () => SettingsRoute,
+const ApexArchitectureRoute = ApexArchitectureRouteImport.update({
+  id: '/apex/architecture',
+  path: '/apex/architecture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexAssetsRoute = ApexAssetsRouteImport.update({
+  id: '/apex/assets',
+  path: '/apex/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexBriefingRoute = ApexBriefingRouteImport.update({
+  id: '/apex/briefing',
+  path: '/apex/briefing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexCompanyRoute = ApexCompanyRouteImport.update({
+  id: '/apex/company',
+  path: '/apex/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexCompanyHealthRoute = ApexCompanyHealthRouteImport.update({
+  id: '/apex/company-health',
+  path: '/apex/company-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexDigitalTwinRoute = ApexDigitalTwinRouteImport.update({
+  id: '/apex/digital-twin',
+  path: '/apex/digital-twin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexFinancialDnaRoute = ApexFinancialDnaRouteImport.update({
+  id: '/apex/financial-dna',
+  path: '/apex/financial-dna',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexGrowthRoute = ApexGrowthRouteImport.update({
+  id: '/apex/growth',
+  path: '/apex/growth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexHandoffRoute = ApexHandoffRouteImport.update({
+  id: '/apex/handoff',
+  path: '/apex/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexInsightsRoute = ApexInsightsRouteImport.update({
+  id: '/apex/insights',
+  path: '/apex/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexMoneyRoute = ApexMoneyRouteImport.update({
+  id: '/apex/money',
+  path: '/apex/money',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexNavigationRoute = ApexNavigationRouteImport.update({
+  id: '/apex/navigation',
+  path: '/apex/navigation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexOpportunitiesRoute = ApexOpportunitiesRouteImport.update({
+  id: '/apex/opportunities',
+  path: '/apex/opportunities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexPeopleRoute = ApexPeopleRouteImport.update({
+  id: '/apex/people',
+  path: '/apex/people',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexPersonasRoute = ApexPersonasRouteImport.update({
+  id: '/apex/personas',
+  path: '/apex/personas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexRelationshipGraphRoute = ApexRelationshipGraphRouteImport.update({
+  id: '/apex/relationship-graph',
+  path: '/apex/relationship-graph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexRolesRoute = ApexRolesRouteImport.update({
+  id: '/apex/roles',
+  path: '/apex/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexTimelineRoute = ApexTimelineRouteImport.update({
+  id: '/apex/timeline',
+  path: '/apex/timeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApexWidgetsRoute = ApexWidgetsRouteImport.update({
+  id: '/apex/widgets',
+  path: '/apex/widgets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationActionPlansRoute = AutomationActionPlansRouteImport.update({
+  id: '/automation/action-plans',
+  path: '/automation/action-plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationApprovalsRoute = AutomationApprovalsRouteImport.update({
+  id: '/automation/approvals',
+  path: '/automation/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationBonusControlsRoute = AutomationBonusControlsRouteImport.update({
+  id: '/automation/bonus-controls',
+  path: '/automation/bonus-controls',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationBudgetControlsRoute =
+  AutomationBudgetControlsRouteImport.update({
+    id: '/automation/budget-controls',
+    path: '/automation/budget-controls',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationCashControlsRoute = AutomationCashControlsRouteImport.update({
+  id: '/automation/cash-controls',
+  path: '/automation/cash-controls',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationCollectionsRoute = AutomationCollectionsRouteImport.update({
+  id: '/automation/collections',
+  path: '/automation/collections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationDataQualityRoute = AutomationDataQualityRouteImport.update({
+  id: '/automation/data-quality',
+  path: '/automation/data-quality',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationDecisionLogRoute = AutomationDecisionLogRouteImport.update({
+  id: '/automation/decision-log',
+  path: '/automation/decision-log',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationExceptionsRoute = AutomationExceptionsRouteImport.update({
+  id: '/automation/exceptions',
+  path: '/automation/exceptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationIntegrationHealthRoute =
+  AutomationIntegrationHealthRouteImport.update({
+    id: '/automation/integration-health',
+    path: '/automation/integration-health',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationPayablesRoute = AutomationPayablesRouteImport.update({
+  id: '/automation/payables',
+  path: '/automation/payables',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationRevenueRecoveryRoute =
+  AutomationRevenueRecoveryRouteImport.update({
+    id: '/automation/revenue-recovery',
+    path: '/automation/revenue-recovery',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AutomationRulesRoute = AutomationRulesRouteImport.update({
+  id: '/automation/rules',
+  path: '/automation/rules',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomationSubscriptionActionsRoute =
+  AutomationSubscriptionActionsRouteImport.update({
+    id: '/automation/subscription-actions',
+    path: '/automation/subscription-actions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BankingIndexRoute = BankingIndexRouteImport.update({
+  id: '/banking/',
+  path: '/banking/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BankingReconciliationRoute = BankingReconciliationRouteImport.update({
+  id: '/banking/reconciliation',
+  path: '/banking/reconciliation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BankingTransactionsRoute = BankingTransactionsRouteImport.update({
+  id: '/banking/transactions',
+  path: '/banking/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CashAvailabilityIndexRoute = CashAvailabilityIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CashAvailabilityRoute,
+} as any)
+const CashAvailabilityAllocationsRoute =
+  CashAvailabilityAllocationsRouteImport.update({
+    id: '/allocations',
+    path: '/allocations',
+    getParentRoute: () => CashAvailabilityRoute,
+  } as any)
+const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => CashAvailabilityRoute,
+} as any)
+const CloseAiAssistantRoute = CloseAiAssistantRouteImport.update({
+  id: '/ai-assistant',
+  path: '/ai-assistant',
+  getParentRoute: () => CloseRoute,
+} as any)
+const CompensationIndexRoute = CompensationIndexRouteImport.update({
+  id: '/compensation/',
+  path: '/compensation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationAdjustmentsRoute = CompensationAdjustmentsRouteImport.update({
+  id: '/compensation/adjustments',
+  path: '/compensation/adjustments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationApprovalsRoute = CompensationApprovalsRouteImport.update({
+  id: '/compensation/approvals',
+  path: '/compensation/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationAuditRoute = CompensationAuditRouteImport.update({
+  id: '/compensation/audit',
+  path: '/compensation/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationClawbacksRoute = CompensationClawbacksRouteImport.update({
+  id: '/compensation/clawbacks',
+  path: '/compensation/clawbacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationEligibilityRoute = CompensationEligibilityRouteImport.update({
+  id: '/compensation/eligibility',
+  path: '/compensation/eligibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationHoldbacksRoute = CompensationHoldbacksRouteImport.update({
+  id: '/compensation/holdbacks',
+  path: '/compensation/holdbacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationPreviewRoute = CompensationPreviewRouteImport.update({
+  id: '/compensation/preview',
+  path: '/compensation/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationReconciliationRoute =
+  CompensationReconciliationRouteImport.update({
+    id: '/compensation/reconciliation',
+    path: '/compensation/reconciliation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationReservesRoute = CompensationReservesRouteImport.update({
+  id: '/compensation/reserves',
+  path: '/compensation/reserves',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationVerificationRoute =
+  CompensationVerificationRouteImport.update({
+    id: '/compensation/verification',
+    path: '/compensation/verification',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
+  id: '/$customerId',
+  path: '/$customerId',
+  getParentRoute: () => CustomersRoute,
+} as any)
+const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
+  id: '/dashboards/accounting',
+  path: '/dashboards/accounting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardsReviewerRoute = DashboardsReviewerRouteImport.update({
+  id: '/dashboards/reviewer',
+  path: '/dashboards/reviewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
+  id: '/dashboards/team',
+  path: '/dashboards/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
+  id: '/docs/integrations',
+  path: '/docs/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailInboxRoute = EmailInboxRouteImport.update({
+  id: '/email/inbox',
+  path: '/email/inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimatesNewRoute = EstimatesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => EstimatesRoute,
+} as any)
+const ExpensesIndexRoute = ExpensesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesApprovalsRoute = ExpensesApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesCopilotRoute = ExpensesCopilotRouteImport.update({
+  id: '/copilot',
+  path: '/copilot',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesIntelligenceRoute = ExpensesIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesListRoute = ExpensesListRouteImport.update({
+  id: '/list',
+  path: '/list',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesMatchingRoute = ExpensesMatchingRouteImport.update({
+  id: '/matching',
+  path: '/matching',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesPoliciesRoute = ExpensesPoliciesRouteImport.update({
+  id: '/policies',
+  path: '/policies',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesPreSpendRoute = ExpensesPreSpendRouteImport.update({
+  id: '/pre-spend',
+  path: '/pre-spend',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReceiptsRoute = ExpensesReceiptsRouteImport.update({
+  id: '/receipts',
+  path: '/receipts',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesRecoveryRoute = ExpensesRecoveryRouteImport.update({
+  id: '/recovery',
+  path: '/recovery',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReimbursementsRoute = ExpensesReimbursementsRouteImport.update({
+  id: '/reimbursements',
+  path: '/reimbursements',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesReportsRoute = ExpensesReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesSubmitRoute = ExpensesSubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesSubscriptionsRoute = ExpensesSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
+  id: '/vendors',
+  path: '/vendors',
+  getParentRoute: () => ExpensesRoute,
+} as any)
+const FeatureRegistryIndexRoute = FeatureRegistryIndexRouteImport.update({
+  id: '/feature-registry/',
+  path: '/feature-registry/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryIdRoute = FeatureRegistryIdRouteImport.update({
+  id: '/feature-registry/$id',
+  path: '/feature-registry/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
+  id: '/feature-registry/all',
+  path: '/feature-registry/all',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryBlockedRoute = FeatureRegistryBlockedRouteImport.update({
+  id: '/feature-registry/blocked',
+  path: '/feature-registry/blocked',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
+  id: '/feature-registry/built',
+  path: '/feature-registry/built',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryDependenciesRoute =
+  FeatureRegistryDependenciesRouteImport.update({
+    id: '/feature-registry/dependencies',
+    path: '/feature-registry/dependencies',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryIntegrationsRoute =
+  FeatureRegistryIntegrationsRouteImport.update({
+    id: '/feature-registry/integrations',
+    path: '/feature-registry/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryLegalAccountingRoute =
+  FeatureRegistryLegalAccountingRouteImport.update({
+    id: '/feature-registry/legal-accounting',
+    path: '/feature-registry/legal-accounting',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryNavigationRoute =
+  FeatureRegistryNavigationRouteImport.update({
+    id: '/feature-registry/navigation',
+    path: '/feature-registry/navigation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
+  id: '/feature-registry/planned',
+  path: '/feature-registry/planned',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureRegistryReadinessRoute =
+  FeatureRegistryReadinessRouteImport.update({
+    id: '/feature-registry/readiness',
+    path: '/feature-registry/readiness',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const FeatureRegistryReleasesRoute = FeatureRegistryReleasesRouteImport.update({
+  id: '/feature-registry/releases',
+  path: '/feature-registry/releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationIndexRoute = ImplementationIndexRouteImport.update({
+  id: '/implementation/',
+  path: '/implementation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationApiMapRoute = ImplementationApiMapRouteImport.update({
+  id: '/implementation/api-map',
+  path: '/implementation/api-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationCutoverRoute = ImplementationCutoverRouteImport.update({
+  id: '/implementation/cutover',
+  path: '/implementation/cutover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationDataMapRoute = ImplementationDataMapRouteImport.update({
+  id: '/implementation/data-map',
+  path: '/implementation/data-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationEventsRoute = ImplementationEventsRouteImport.update({
+  id: '/implementation/events',
+  path: '/implementation/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationHandoffRoute = ImplementationHandoffRouteImport.update({
+  id: '/implementation/handoff',
+  path: '/implementation/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationIntegrationsRoute =
+  ImplementationIntegrationsRouteImport.update({
+    id: '/implementation/integrations',
+    path: '/implementation/integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ImplementationMigrationRoute = ImplementationMigrationRouteImport.update({
+  id: '/implementation/migration',
+  path: '/implementation/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationPermissionsRoute =
+  ImplementationPermissionsRouteImport.update({
+    id: '/implementation/permissions',
+    path: '/implementation/permissions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ImplementationReadinessRoute = ImplementationReadinessRouteImport.update({
+  id: '/implementation/readiness',
+  path: '/implementation/readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationSecurityRoute = ImplementationSecurityRouteImport.update({
+  id: '/implementation/security',
+  path: '/implementation/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImplementationTestingRoute = ImplementationTestingRouteImport.update({
+  id: '/implementation/testing',
+  path: '/implementation/testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsSandboxRoute = IntegrationsSandboxRouteImport.update({
+  id: '/sandbox',
+  path: '/sandbox',
+  getParentRoute: () => IntegrationsRoute,
+} as any)
+const IntelligenceIndexRoute = IntelligenceIndexRouteImport.update({
+  id: '/intelligence/',
+  path: '/intelligence/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
+  id: '/intelligence/apps',
+  path: '/intelligence/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceAttributionRoute = IntelligenceAttributionRouteImport.update({
+  id: '/intelligence/attribution',
+  path: '/intelligence/attribution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceBonusForecastRoute =
+  IntelligenceBonusForecastRouteImport.update({
+    id: '/intelligence/bonus-forecast',
+    path: '/intelligence/bonus-forecast',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceBonusPlansRoute = IntelligenceBonusPlansRouteImport.update({
+  id: '/intelligence/bonus-plans',
+  path: '/intelligence/bonus-plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceBonusesRoute = IntelligenceBonusesRouteImport.update({
+  id: '/intelligence/bonuses',
+  path: '/intelligence/bonuses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceCampaignsRoute = IntelligenceCampaignsRouteImport.update({
+  id: '/intelligence/campaigns',
+  path: '/intelligence/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceClientsRoute = IntelligenceClientsRouteImport.update({
+  id: '/intelligence/clients',
+  path: '/intelligence/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceConfidenceRoute = IntelligenceConfidenceRouteImport.update({
+  id: '/intelligence/confidence',
+  path: '/intelligence/confidence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceDepartmentsRoute = IntelligenceDepartmentsRouteImport.update({
+  id: '/intelligence/departments',
+  path: '/intelligence/departments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceForecastingRoute = IntelligenceForecastingRouteImport.update({
+  id: '/intelligence/forecasting',
+  path: '/intelligence/forecasting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceLeakageRoute = IntelligenceLeakageRouteImport.update({
+  id: '/intelligence/leakage',
+  path: '/intelligence/leakage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceMarketingRoute = IntelligenceMarketingRouteImport.update({
+  id: '/intelligence/marketing',
+  path: '/intelligence/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceOverheadRoute = IntelligenceOverheadRouteImport.update({
+  id: '/intelligence/overhead',
+  path: '/intelligence/overhead',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceOverheadAnomaliesRoute =
+  IntelligenceOverheadAnomaliesRouteImport.update({
+    id: '/intelligence/overhead-anomalies',
+    path: '/intelligence/overhead-anomalies',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceProfitabilityRoute =
+  IntelligenceProfitabilityRouteImport.update({
+    id: '/intelligence/profitability',
+    path: '/intelligence/profitability',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceRecommendationsRoute =
+  IntelligenceRecommendationsRouteImport.update({
+    id: '/intelligence/recommendations',
+    path: '/intelligence/recommendations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const IntelligenceServicesRoute = IntelligenceServicesRouteImport.update({
+  id: '/intelligence/services',
+  path: '/intelligence/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceTechRoute = IntelligenceTechRouteImport.update({
+  id: '/intelligence/tech',
+  path: '/intelligence/tech',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceTechPortfolioRoute =
+  IntelligenceTechPortfolioRouteImport.update({
+    id: '/intelligence/tech-portfolio',
+    path: '/intelligence/tech-portfolio',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
+  id: '/$invoiceId',
+  path: '/$invoiceId',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesCreditNotesRoute = InvoicesCreditNotesRouteImport.update({
+  id: '/credit-notes',
+  path: '/credit-notes',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesNewRoute = InvoicesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
+  id: '/recurring',
+  path: '/recurring',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const InvoicesReviewRoute = InvoicesReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => InvoicesRoute,
+} as any)
+const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
+  id: '/ledger/accounts',
+  path: '/ledger/accounts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerBankingRoute = LedgerBankingRouteImport.update({
+  id: '/ledger/banking',
+  path: '/ledger/banking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerEntitiesRoute = LedgerEntitiesRouteImport.update({
+  id: '/ledger/entities',
+  path: '/ledger/entities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerFixedAssetsRoute = LedgerFixedAssetsRouteImport.update({
+  id: '/ledger/fixed-assets',
+  path: '/ledger/fixed-assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerGeneralRoute = LedgerGeneralRouteImport.update({
+  id: '/ledger/general',
+  path: '/ledger/general',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerInventoryRoute = LedgerInventoryRouteImport.update({
+  id: '/ledger/inventory',
+  path: '/ledger/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerJournalsRoute = LedgerJournalsRouteImport.update({
+  id: '/ledger/journals',
+  path: '/ledger/journals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerTaxRoute = LedgerTaxRouteImport.update({
+  id: '/ledger/tax',
+  path: '/ledger/tax',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadinessMigrationRoute = ReadinessMigrationRouteImport.update({
+  id: '/readiness/migration',
+  path: '/readiness/migration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
+  id: '/readiness/production',
+  path: '/readiness/production',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/reports/',
+  path: '/reports/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsBalanceSheetRoute = ReportsBalanceSheetRouteImport.update({
+  id: '/reports/balance-sheet',
+  path: '/reports/balance-sheet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsCashFlowRoute = ReportsCashFlowRouteImport.update({
+  id: '/reports/cash-flow',
+  path: '/reports/cash-flow',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsProfitLossRoute = ReportsProfitLossRouteImport.update({
+  id: '/reports/profit-loss',
+  path: '/reports/profit-loss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsTrialBalanceRoute = ReportsTrialBalanceRouteImport.update({
+  id: '/reports/trial-balance',
+  path: '/reports/trial-balance',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
   id: '/account-mappings',
@@ -386,892 +1145,61 @@ const SettingsEmailRoute = SettingsEmailRouteImport.update({
   path: '/email',
   getParentRoute: () => SettingsRoute,
 } as any)
-const EmailInboxRoute = EmailInboxRouteImport.update({
-  id: '/email/inbox',
-  path: '/email/inbox',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsTrialBalanceRoute = ReportsTrialBalanceRouteImport.update({
-  id: '/reports/trial-balance',
-  path: '/reports/trial-balance',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsProfitLossRoute = ReportsProfitLossRouteImport.update({
-  id: '/reports/profit-loss',
-  path: '/reports/profit-loss',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsCashFlowRoute = ReportsCashFlowRouteImport.update({
-  id: '/reports/cash-flow',
-  path: '/reports/cash-flow',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsBalanceSheetRoute = ReportsBalanceSheetRouteImport.update({
-  id: '/reports/balance-sheet',
-  path: '/reports/balance-sheet',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReadinessProductionRoute = ReadinessProductionRouteImport.update({
-  id: '/readiness/production',
-  path: '/readiness/production',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReadinessMigrationRoute = ReadinessMigrationRouteImport.update({
-  id: '/readiness/migration',
-  path: '/readiness/migration',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerTaxRoute = LedgerTaxRouteImport.update({
-  id: '/ledger/tax',
-  path: '/ledger/tax',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerJournalsRoute = LedgerJournalsRouteImport.update({
-  id: '/ledger/journals',
-  path: '/ledger/journals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerInventoryRoute = LedgerInventoryRouteImport.update({
-  id: '/ledger/inventory',
-  path: '/ledger/inventory',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerGeneralRoute = LedgerGeneralRouteImport.update({
-  id: '/ledger/general',
-  path: '/ledger/general',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerFixedAssetsRoute = LedgerFixedAssetsRouteImport.update({
-  id: '/ledger/fixed-assets',
-  path: '/ledger/fixed-assets',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerEntitiesRoute = LedgerEntitiesRouteImport.update({
-  id: '/ledger/entities',
-  path: '/ledger/entities',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerBankingRoute = LedgerBankingRouteImport.update({
-  id: '/ledger/banking',
-  path: '/ledger/banking',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LedgerAccountsRoute = LedgerAccountsRouteImport.update({
-  id: '/ledger/accounts',
-  path: '/ledger/accounts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InvoicesReviewRoute = InvoicesReviewRouteImport.update({
-  id: '/review',
-  path: '/review',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const InvoicesRecurringRoute = InvoicesRecurringRouteImport.update({
-  id: '/recurring',
-  path: '/recurring',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const InvoicesNewRoute = InvoicesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const InvoicesCreditNotesRoute = InvoicesCreditNotesRouteImport.update({
-  id: '/credit-notes',
-  path: '/credit-notes',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const InvoicesInvoiceIdRoute = InvoicesInvoiceIdRouteImport.update({
-  id: '/$invoiceId',
-  path: '/$invoiceId',
-  getParentRoute: () => InvoicesRoute,
-} as any)
-const IntelligenceTechPortfolioRoute =
-  IntelligenceTechPortfolioRouteImport.update({
-    id: '/intelligence/tech-portfolio',
-    path: '/intelligence/tech-portfolio',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const IntelligenceTechRoute = IntelligenceTechRouteImport.update({
-  id: '/intelligence/tech',
-  path: '/intelligence/tech',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceServicesRoute = IntelligenceServicesRouteImport.update({
-  id: '/intelligence/services',
-  path: '/intelligence/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceRecommendationsRoute =
-  IntelligenceRecommendationsRouteImport.update({
-    id: '/intelligence/recommendations',
-    path: '/intelligence/recommendations',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const IntelligenceProfitabilityRoute =
-  IntelligenceProfitabilityRouteImport.update({
-    id: '/intelligence/profitability',
-    path: '/intelligence/profitability',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const IntelligenceOverheadAnomaliesRoute =
-  IntelligenceOverheadAnomaliesRouteImport.update({
-    id: '/intelligence/overhead-anomalies',
-    path: '/intelligence/overhead-anomalies',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const IntelligenceOverheadRoute = IntelligenceOverheadRouteImport.update({
-  id: '/intelligence/overhead',
-  path: '/intelligence/overhead',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceMarketingRoute = IntelligenceMarketingRouteImport.update({
-  id: '/intelligence/marketing',
-  path: '/intelligence/marketing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceLeakageRoute = IntelligenceLeakageRouteImport.update({
-  id: '/intelligence/leakage',
-  path: '/intelligence/leakage',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceForecastingRoute = IntelligenceForecastingRouteImport.update({
-  id: '/intelligence/forecasting',
-  path: '/intelligence/forecasting',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceDepartmentsRoute = IntelligenceDepartmentsRouteImport.update({
-  id: '/intelligence/departments',
-  path: '/intelligence/departments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceConfidenceRoute = IntelligenceConfidenceRouteImport.update({
-  id: '/intelligence/confidence',
-  path: '/intelligence/confidence',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceClientsRoute = IntelligenceClientsRouteImport.update({
-  id: '/intelligence/clients',
-  path: '/intelligence/clients',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceCampaignsRoute = IntelligenceCampaignsRouteImport.update({
-  id: '/intelligence/campaigns',
-  path: '/intelligence/campaigns',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceBonusesRoute = IntelligenceBonusesRouteImport.update({
-  id: '/intelligence/bonuses',
-  path: '/intelligence/bonuses',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceBonusPlansRoute = IntelligenceBonusPlansRouteImport.update({
-  id: '/intelligence/bonus-plans',
-  path: '/intelligence/bonus-plans',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceBonusForecastRoute =
-  IntelligenceBonusForecastRouteImport.update({
-    id: '/intelligence/bonus-forecast',
-    path: '/intelligence/bonus-forecast',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const IntelligenceAttributionRoute = IntelligenceAttributionRouteImport.update({
-  id: '/intelligence/attribution',
-  path: '/intelligence/attribution',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntelligenceAppsRoute = IntelligenceAppsRouteImport.update({
-  id: '/intelligence/apps',
-  path: '/intelligence/apps',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntegrationsSandboxRoute = IntegrationsSandboxRouteImport.update({
-  id: '/sandbox',
-  path: '/sandbox',
-  getParentRoute: () => IntegrationsRoute,
-} as any)
-const ImplementationTestingRoute = ImplementationTestingRouteImport.update({
-  id: '/implementation/testing',
-  path: '/implementation/testing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationSecurityRoute = ImplementationSecurityRouteImport.update({
-  id: '/implementation/security',
-  path: '/implementation/security',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationReadinessRoute = ImplementationReadinessRouteImport.update({
-  id: '/implementation/readiness',
-  path: '/implementation/readiness',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationPermissionsRoute =
-  ImplementationPermissionsRouteImport.update({
-    id: '/implementation/permissions',
-    path: '/implementation/permissions',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ImplementationMigrationRoute = ImplementationMigrationRouteImport.update({
-  id: '/implementation/migration',
-  path: '/implementation/migration',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationIntegrationsRoute =
-  ImplementationIntegrationsRouteImport.update({
-    id: '/implementation/integrations',
-    path: '/implementation/integrations',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ImplementationHandoffRoute = ImplementationHandoffRouteImport.update({
-  id: '/implementation/handoff',
-  path: '/implementation/handoff',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationEventsRoute = ImplementationEventsRouteImport.update({
-  id: '/implementation/events',
-  path: '/implementation/events',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationDataMapRoute = ImplementationDataMapRouteImport.update({
-  id: '/implementation/data-map',
-  path: '/implementation/data-map',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationCutoverRoute = ImplementationCutoverRouteImport.update({
-  id: '/implementation/cutover',
-  path: '/implementation/cutover',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImplementationApiMapRoute = ImplementationApiMapRouteImport.update({
-  id: '/implementation/api-map',
-  path: '/implementation/api-map',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryReleasesRoute = FeatureRegistryReleasesRouteImport.update({
-  id: '/feature-registry/releases',
-  path: '/feature-registry/releases',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryReadinessRoute =
-  FeatureRegistryReadinessRouteImport.update({
-    id: '/feature-registry/readiness',
-    path: '/feature-registry/readiness',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FeatureRegistryPlannedRoute = FeatureRegistryPlannedRouteImport.update({
-  id: '/feature-registry/planned',
-  path: '/feature-registry/planned',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryNavigationRoute =
-  FeatureRegistryNavigationRouteImport.update({
-    id: '/feature-registry/navigation',
-    path: '/feature-registry/navigation',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FeatureRegistryLegalAccountingRoute =
-  FeatureRegistryLegalAccountingRouteImport.update({
-    id: '/feature-registry/legal-accounting',
-    path: '/feature-registry/legal-accounting',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FeatureRegistryIntegrationsRoute =
-  FeatureRegistryIntegrationsRouteImport.update({
-    id: '/feature-registry/integrations',
-    path: '/feature-registry/integrations',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FeatureRegistryDependenciesRoute =
-  FeatureRegistryDependenciesRouteImport.update({
-    id: '/feature-registry/dependencies',
-    path: '/feature-registry/dependencies',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FeatureRegistryBuiltRoute = FeatureRegistryBuiltRouteImport.update({
-  id: '/feature-registry/built',
-  path: '/feature-registry/built',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryBlockedRoute = FeatureRegistryBlockedRouteImport.update({
-  id: '/feature-registry/blocked',
-  path: '/feature-registry/blocked',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryAllRoute = FeatureRegistryAllRouteImport.update({
-  id: '/feature-registry/all',
-  path: '/feature-registry/all',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeatureRegistryIdRoute = FeatureRegistryIdRouteImport.update({
-  id: '/feature-registry/$id',
-  path: '/feature-registry/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExpensesVendorsRoute = ExpensesVendorsRouteImport.update({
-  id: '/vendors',
-  path: '/vendors',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesSubscriptionsRoute = ExpensesSubscriptionsRouteImport.update({
-  id: '/subscriptions',
-  path: '/subscriptions',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesSubmitRoute = ExpensesSubmitRouteImport.update({
-  id: '/submit',
-  path: '/submit',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesReportsRoute = ExpensesReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesReimbursementsRoute = ExpensesReimbursementsRouteImport.update({
-  id: '/reimbursements',
-  path: '/reimbursements',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesRecoveryRoute = ExpensesRecoveryRouteImport.update({
-  id: '/recovery',
-  path: '/recovery',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesReceiptsRoute = ExpensesReceiptsRouteImport.update({
-  id: '/receipts',
-  path: '/receipts',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesPreSpendRoute = ExpensesPreSpendRouteImport.update({
-  id: '/pre-spend',
-  path: '/pre-spend',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesPoliciesRoute = ExpensesPoliciesRouteImport.update({
-  id: '/policies',
-  path: '/policies',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesMatchingRoute = ExpensesMatchingRouteImport.update({
-  id: '/matching',
-  path: '/matching',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesListRoute = ExpensesListRouteImport.update({
-  id: '/list',
-  path: '/list',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesIntelligenceRoute = ExpensesIntelligenceRouteImport.update({
-  id: '/intelligence',
-  path: '/intelligence',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesCopilotRoute = ExpensesCopilotRouteImport.update({
-  id: '/copilot',
-  path: '/copilot',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const ExpensesApprovalsRoute = ExpensesApprovalsRouteImport.update({
-  id: '/approvals',
-  path: '/approvals',
-  getParentRoute: () => ExpensesRoute,
-} as any)
-const EstimatesNewRoute = EstimatesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => EstimatesRoute,
-} as any)
-const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
-  id: '/docs/integrations',
-  path: '/docs/integrations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardsTeamRoute = DashboardsTeamRouteImport.update({
-  id: '/dashboards/team',
-  path: '/dashboards/team',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardsReviewerRoute = DashboardsReviewerRouteImport.update({
-  id: '/dashboards/reviewer',
-  path: '/dashboards/reviewer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardsAccountingRoute = DashboardsAccountingRouteImport.update({
-  id: '/dashboards/accounting',
-  path: '/dashboards/accounting',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomersCustomerIdRoute = CustomersCustomerIdRouteImport.update({
-  id: '/$customerId',
-  path: '/$customerId',
-  getParentRoute: () => CustomersRoute,
-} as any)
-const CompensationVerificationRoute =
-  CompensationVerificationRouteImport.update({
-    id: '/compensation/verification',
-    path: '/compensation/verification',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationReservesRoute = CompensationReservesRouteImport.update({
-  id: '/compensation/reserves',
-  path: '/compensation/reserves',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationReconciliationRoute =
-  CompensationReconciliationRouteImport.update({
-    id: '/compensation/reconciliation',
-    path: '/compensation/reconciliation',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationPreviewRoute = CompensationPreviewRouteImport.update({
-  id: '/compensation/preview',
-  path: '/compensation/preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationHoldbacksRoute = CompensationHoldbacksRouteImport.update({
-  id: '/compensation/holdbacks',
-  path: '/compensation/holdbacks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationEligibilityRoute = CompensationEligibilityRouteImport.update({
-  id: '/compensation/eligibility',
-  path: '/compensation/eligibility',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationClawbacksRoute = CompensationClawbacksRouteImport.update({
-  id: '/compensation/clawbacks',
-  path: '/compensation/clawbacks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationAuditRoute = CompensationAuditRouteImport.update({
-  id: '/compensation/audit',
-  path: '/compensation/audit',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationApprovalsRoute = CompensationApprovalsRouteImport.update({
-  id: '/compensation/approvals',
-  path: '/compensation/approvals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationAdjustmentsRoute = CompensationAdjustmentsRouteImport.update({
-  id: '/compensation/adjustments',
-  path: '/compensation/adjustments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CloseAiAssistantRoute = CloseAiAssistantRouteImport.update({
-  id: '/ai-assistant',
-  path: '/ai-assistant',
-  getParentRoute: () => CloseRoute,
-} as any)
-const CashAvailabilityRulesRoute = CashAvailabilityRulesRouteImport.update({
-  id: '/rules',
-  path: '/rules',
-  getParentRoute: () => CashAvailabilityRoute,
-} as any)
-const CashAvailabilityAllocationsRoute =
-  CashAvailabilityAllocationsRouteImport.update({
-    id: '/allocations',
-    path: '/allocations',
-    getParentRoute: () => CashAvailabilityRoute,
-  } as any)
-const BankingTransactionsRoute = BankingTransactionsRouteImport.update({
-  id: '/banking/transactions',
-  path: '/banking/transactions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BankingReconciliationRoute = BankingReconciliationRouteImport.update({
-  id: '/banking/reconciliation',
-  path: '/banking/reconciliation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationSubscriptionActionsRoute =
-  AutomationSubscriptionActionsRouteImport.update({
-    id: '/automation/subscription-actions',
-    path: '/automation/subscription-actions',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AutomationRulesRoute = AutomationRulesRouteImport.update({
-  id: '/automation/rules',
-  path: '/automation/rules',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationRevenueRecoveryRoute =
-  AutomationRevenueRecoveryRouteImport.update({
-    id: '/automation/revenue-recovery',
-    path: '/automation/revenue-recovery',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AutomationPayablesRoute = AutomationPayablesRouteImport.update({
-  id: '/automation/payables',
-  path: '/automation/payables',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationIntegrationHealthRoute =
-  AutomationIntegrationHealthRouteImport.update({
-    id: '/automation/integration-health',
-    path: '/automation/integration-health',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AutomationExceptionsRoute = AutomationExceptionsRouteImport.update({
-  id: '/automation/exceptions',
-  path: '/automation/exceptions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationDecisionLogRoute = AutomationDecisionLogRouteImport.update({
-  id: '/automation/decision-log',
-  path: '/automation/decision-log',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationDataQualityRoute = AutomationDataQualityRouteImport.update({
-  id: '/automation/data-quality',
-  path: '/automation/data-quality',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationCollectionsRoute = AutomationCollectionsRouteImport.update({
-  id: '/automation/collections',
-  path: '/automation/collections',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationCashControlsRoute = AutomationCashControlsRouteImport.update({
-  id: '/automation/cash-controls',
-  path: '/automation/cash-controls',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationBudgetControlsRoute =
-  AutomationBudgetControlsRouteImport.update({
-    id: '/automation/budget-controls',
-    path: '/automation/budget-controls',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AutomationBonusControlsRoute = AutomationBonusControlsRouteImport.update({
-  id: '/automation/bonus-controls',
-  path: '/automation/bonus-controls',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationApprovalsRoute = AutomationApprovalsRouteImport.update({
-  id: '/automation/approvals',
-  path: '/automation/approvals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AutomationActionPlansRoute = AutomationActionPlansRouteImport.update({
-  id: '/automation/action-plans',
-  path: '/automation/action-plans',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexWidgetsRoute = ApexWidgetsRouteImport.update({
-  id: '/apex/widgets',
-  path: '/apex/widgets',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexTimelineRoute = ApexTimelineRouteImport.update({
-  id: '/apex/timeline',
-  path: '/apex/timeline',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexRolesRoute = ApexRolesRouteImport.update({
-  id: '/apex/roles',
-  path: '/apex/roles',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexRelationshipGraphRoute = ApexRelationshipGraphRouteImport.update({
-  id: '/apex/relationship-graph',
-  path: '/apex/relationship-graph',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexPersonasRoute = ApexPersonasRouteImport.update({
-  id: '/apex/personas',
-  path: '/apex/personas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexPeopleRoute = ApexPeopleRouteImport.update({
-  id: '/apex/people',
-  path: '/apex/people',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexOpportunitiesRoute = ApexOpportunitiesRouteImport.update({
-  id: '/apex/opportunities',
-  path: '/apex/opportunities',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexNavigationRoute = ApexNavigationRouteImport.update({
-  id: '/apex/navigation',
-  path: '/apex/navigation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexMoneyRoute = ApexMoneyRouteImport.update({
-  id: '/apex/money',
-  path: '/apex/money',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexInsightsRoute = ApexInsightsRouteImport.update({
-  id: '/apex/insights',
-  path: '/apex/insights',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexHandoffRoute = ApexHandoffRouteImport.update({
-  id: '/apex/handoff',
-  path: '/apex/handoff',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexGrowthRoute = ApexGrowthRouteImport.update({
-  id: '/apex/growth',
-  path: '/apex/growth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexFinancialDnaRoute = ApexFinancialDnaRouteImport.update({
-  id: '/apex/financial-dna',
-  path: '/apex/financial-dna',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexDigitalTwinRoute = ApexDigitalTwinRouteImport.update({
-  id: '/apex/digital-twin',
-  path: '/apex/digital-twin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexCompanyHealthRoute = ApexCompanyHealthRouteImport.update({
-  id: '/apex/company-health',
-  path: '/apex/company-health',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexCompanyRoute = ApexCompanyRouteImport.update({
-  id: '/apex/company',
-  path: '/apex/company',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexBriefingRoute = ApexBriefingRouteImport.update({
-  id: '/apex/briefing',
-  path: '/apex/briefing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexAssetsRoute = ApexAssetsRouteImport.update({
-  id: '/apex/assets',
-  path: '/apex/assets',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApexArchitectureRoute = ApexArchitectureRouteImport.update({
-  id: '/apex/architecture',
-  path: '/apex/architecture',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminReadinessRoute = AdminReadinessRouteImport.update({
-  id: '/admin/readiness',
-  path: '/admin/readiness',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminProductionReviewRoute = AdminProductionReviewRouteImport.update({
-  id: '/admin/production-review',
-  path: '/admin/production-review',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminPilotSuccessRoute = AdminPilotSuccessRouteImport.update({
-  id: '/admin/pilot-success',
-  path: '/admin/pilot-success',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminPilotSimulationRoute = AdminPilotSimulationRouteImport.update({
-  id: '/admin/pilot-simulation',
-  path: '/admin/pilot-simulation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminObservabilityRoute = AdminObservabilityRouteImport.update({
-  id: '/admin/observability',
-  path: '/admin/observability',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminMigrationRoute = AdminMigrationRouteImport.update({
-  id: '/admin/migration',
-  path: '/admin/migration',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminMetricsRoute = AdminMetricsRouteImport.update({
-  id: '/admin/metrics',
-  path: '/admin/metrics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIntelligenceRoute = AdminIntelligenceRouteImport.update({
-  id: '/admin/intelligence',
-  path: '/admin/intelligence',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
-  id: '/admin/integrations',
-  path: '/admin/integrations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIntegrationTestingRoute = AdminIntegrationTestingRouteImport.update({
-  id: '/admin/integration-testing',
-  path: '/admin/integration-testing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminFinancialEventsRoute = AdminFinancialEventsRouteImport.update({
-  id: '/admin/financial-events',
-  path: '/admin/financial-events',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
-  id: '/admin/customer-onboarding',
-  path: '/admin/customer-onboarding',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAcceptanceTestsRoute = AdminAcceptanceTestsRouteImport.update({
-  id: '/admin/acceptance-tests',
-  path: '/admin/acceptance-tests',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsReceivableAgingRoute = AccountsReceivableAgingRouteImport.update({
-  id: '/accounts-receivable/aging',
-  path: '/accounts-receivable/aging',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsPayableVendorsRoute = AccountsPayableVendorsRouteImport.update({
-  id: '/accounts-payable/vendors',
-  path: '/accounts-payable/vendors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsPayablePaymentsRoute = AccountsPayablePaymentsRouteImport.update({
-  id: '/accounts-payable/payments',
-  path: '/accounts-payable/payments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsPayableBillsRoute = AccountsPayableBillsRouteImport.update({
-  id: '/accounts-payable/bills',
-  path: '/accounts-payable/bills',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsPayableAgingRoute = AccountsPayableAgingRouteImport.update({
-  id: '/accounts-payable/aging',
-  path: '/accounts-payable/aging',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationStatementsIndexRoute =
-  CompensationStatementsIndexRouteImport.update({
-    id: '/compensation/statements/',
-    path: '/compensation/statements/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationPlansIndexRoute = CompensationPlansIndexRouteImport.update({
-  id: '/compensation/plans/',
-  path: '/compensation/plans/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompensationPaymentBatchesIndexRoute =
-  CompensationPaymentBatchesIndexRouteImport.update({
-    id: '/compensation/payment-batches/',
-    path: '/compensation/payment-batches/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationPayablesIndexRoute =
-  CompensationPayablesIndexRouteImport.update({
-    id: '/compensation/payables/',
-    path: '/compensation/payables/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationParticipantsIndexRoute =
-  CompensationParticipantsIndexRouteImport.update({
-    id: '/compensation/participants/',
-    path: '/compensation/participants/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationDisputesIndexRoute =
-  CompensationDisputesIndexRouteImport.update({
-    id: '/compensation/disputes/',
-    path: '/compensation/disputes/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationCalculationsIndexRoute =
-  CompensationCalculationsIndexRouteImport.update({
-    id: '/compensation/calculations/',
-    path: '/compensation/calculations/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationAttributionIndexRoute =
-  CompensationAttributionIndexRouteImport.update({
-    id: '/compensation/attribution/',
-    path: '/compensation/attribution/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApexWorkspacesIndexRoute = ApexWorkspacesIndexRouteImport.update({
-  id: '/apex/workspaces/',
-  path: '/apex/workspaces/',
-  getParentRoute: () => rootRouteImport,
+const SettingsServiceconnectRoute = SettingsServiceconnectRouteImport.update({
+  id: '/serviceconnect',
+  path: '/serviceconnect',
+  getParentRoute: () => SettingsRoute,
 } as any)
 const ApexAiPersonasIndexRoute = ApexAiPersonasIndexRouteImport.update({
   id: '/apex/ai-personas/',
   path: '/apex/ai-personas/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LedgerBankingReconcileRoute = LedgerBankingReconcileRouteImport.update({
-  id: '/reconcile',
-  path: '/reconcile',
-  getParentRoute: () => LedgerBankingRoute,
-} as any)
-const CompensationStatementsIdRoute =
-  CompensationStatementsIdRouteImport.update({
-    id: '/compensation/statements/$id',
-    path: '/compensation/statements/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationPlansNewRoute = CompensationPlansNewRouteImport.update({
-  id: '/compensation/plans/new',
-  path: '/compensation/plans/new',
+const ApexAiPersonasPersonaRoute = ApexAiPersonasPersonaRouteImport.update({
+  id: '/apex/ai-personas/$persona',
+  path: '/apex/ai-personas/$persona',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompensationPlansIdRoute = CompensationPlansIdRouteImport.update({
-  id: '/compensation/plans/$id',
-  path: '/compensation/plans/$id',
+const ApexDigitalTwinScenariosRoute =
+  ApexDigitalTwinScenariosRouteImport.update({
+    id: '/scenarios',
+    path: '/scenarios',
+    getParentRoute: () => ApexDigitalTwinRoute,
+  } as any)
+const ApexFinancialDnaIdRoute = ApexFinancialDnaIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexFinancialDnaRoute,
+} as any)
+const ApexOpportunitiesIdRoute = ApexOpportunitiesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexOpportunitiesRoute,
+} as any)
+const ApexTimelineIdRoute = ApexTimelineIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApexTimelineRoute,
+} as any)
+const ApexWorkspacesIndexRoute = ApexWorkspacesIndexRouteImport.update({
+  id: '/apex/workspaces/',
+  path: '/apex/workspaces/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompensationPaymentBatchesIdRoute =
-  CompensationPaymentBatchesIdRouteImport.update({
-    id: '/compensation/payment-batches/$id',
-    path: '/compensation/payment-batches/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationPayablesIdRoute = CompensationPayablesIdRouteImport.update({
-  id: '/compensation/payables/$id',
-  path: '/compensation/payables/$id',
+const ApexWorkspacesRoleRoute = ApexWorkspacesRoleRouteImport.update({
+  id: '/apex/workspaces/$role',
+  path: '/apex/workspaces/$role',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompensationParticipantsIdRoute =
-  CompensationParticipantsIdRouteImport.update({
-    id: '/compensation/participants/$id',
-    path: '/compensation/participants/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationDisputesIdRoute = CompensationDisputesIdRouteImport.update({
-  id: '/compensation/disputes/$id',
-  path: '/compensation/disputes/$id',
+const ApiWebhooksAuthorizeNetRoute = ApiWebhooksAuthorizeNetRouteImport.update({
+  id: '/api/webhooks/authorize-net',
+  path: '/api/webhooks/authorize-net',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompensationCalculationsNewRoute =
-  CompensationCalculationsNewRouteImport.update({
-    id: '/compensation/calculations/new',
-    path: '/compensation/calculations/new',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationCalculationsIdRoute =
-  CompensationCalculationsIdRouteImport.update({
-    id: '/compensation/calculations/$id',
-    path: '/compensation/calculations/$id',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationAttributionEvidenceRoute =
-  CompensationAttributionEvidenceRouteImport.update({
-    id: '/compensation/attribution/evidence',
-    path: '/compensation/attribution/evidence',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const CompensationAttributionConflictsRoute =
-  CompensationAttributionConflictsRouteImport.update({
-    id: '/compensation/attribution/conflicts',
-    path: '/compensation/attribution/conflicts',
+const CompensationAttributionIndexRoute =
+  CompensationAttributionIndexRouteImport.update({
+    id: '/compensation/attribution/',
+    path: '/compensation/attribution/',
     getParentRoute: () => rootRouteImport,
   } as any)
 const CompensationAttributionIdRoute =
@@ -1280,83 +1208,124 @@ const CompensationAttributionIdRoute =
     path: '/compensation/attribution/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApexWorkspacesRoleRoute = ApexWorkspacesRoleRouteImport.update({
-  id: '/apex/workspaces/$role',
-  path: '/apex/workspaces/$role',
+const CompensationAttributionConflictsRoute =
+  CompensationAttributionConflictsRouteImport.update({
+    id: '/compensation/attribution/conflicts',
+    path: '/compensation/attribution/conflicts',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationAttributionEvidenceRoute =
+  CompensationAttributionEvidenceRouteImport.update({
+    id: '/compensation/attribution/evidence',
+    path: '/compensation/attribution/evidence',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsIndexRoute =
+  CompensationCalculationsIndexRouteImport.update({
+    id: '/compensation/calculations/',
+    path: '/compensation/calculations/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsIdRoute =
+  CompensationCalculationsIdRouteImport.update({
+    id: '/compensation/calculations/$id',
+    path: '/compensation/calculations/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsNewRoute =
+  CompensationCalculationsNewRouteImport.update({
+    id: '/compensation/calculations/new',
+    path: '/compensation/calculations/new',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationDisputesIndexRoute =
+  CompensationDisputesIndexRouteImport.update({
+    id: '/compensation/disputes/',
+    path: '/compensation/disputes/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationDisputesIdRoute = CompensationDisputesIdRouteImport.update({
+  id: '/compensation/disputes/$id',
+  path: '/compensation/disputes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApexTimelineIdRoute = ApexTimelineIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ApexTimelineRoute,
-} as any)
-const ApexOpportunitiesIdRoute = ApexOpportunitiesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ApexOpportunitiesRoute,
-} as any)
-const ApexFinancialDnaIdRoute = ApexFinancialDnaIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ApexFinancialDnaRoute,
-} as any)
-const ApexDigitalTwinScenariosRoute =
-  ApexDigitalTwinScenariosRouteImport.update({
-    id: '/scenarios',
-    path: '/scenarios',
-    getParentRoute: () => ApexDigitalTwinRoute,
+const CompensationParticipantsIndexRoute =
+  CompensationParticipantsIndexRouteImport.update({
+    id: '/compensation/participants/',
+    path: '/compensation/participants/',
+    getParentRoute: () => rootRouteImport,
   } as any)
-const ApexAiPersonasPersonaRoute = ApexAiPersonasPersonaRouteImport.update({
-  id: '/apex/ai-personas/$persona',
-  path: '/apex/ai-personas/$persona',
+const CompensationParticipantsIdRoute =
+  CompensationParticipantsIdRouteImport.update({
+    id: '/compensation/participants/$id',
+    path: '/compensation/participants/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationPayablesIndexRoute =
+  CompensationPayablesIndexRouteImport.update({
+    id: '/compensation/payables/',
+    path: '/compensation/payables/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationPayablesIdRoute = CompensationPayablesIdRouteImport.update({
+  id: '/compensation/payables/$id',
+  path: '/compensation/payables/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompensationPlansIdVersionsRoute =
-  CompensationPlansIdVersionsRouteImport.update({
-    id: '/versions',
-    path: '/versions',
-    getParentRoute: () => CompensationPlansIdRoute,
-  } as any)
-const CompensationPlansIdParticipantsRoute =
-  CompensationPlansIdParticipantsRouteImport.update({
-    id: '/participants',
-    path: '/participants',
-    getParentRoute: () => CompensationPlansIdRoute,
-  } as any)
-const CompensationCalculationsIdPreviewRoute =
-  CompensationCalculationsIdPreviewRouteImport.update({
-    id: '/preview',
-    path: '/preview',
-    getParentRoute: () => CompensationCalculationsIdRoute,
-  } as any)
-const ApiWebhooksAuthorizeNetRoute =
-  ApiWebhooksAuthorizeNetRouteImport.update({
-    id: '/api/webhooks/authorize-net',
-    path: '/api/webhooks/authorize-net',
+const CompensationPaymentBatchesIndexRoute =
+  CompensationPaymentBatchesIndexRouteImport.update({
+    id: '/compensation/payment-batches/',
+    path: '/compensation/payment-batches/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicIntegrationsRefundsRoute =
-  ApiPublicIntegrationsRefundsRouteImport.update({
-    id: '/api/public/integrations/refunds',
-    path: '/api/public/integrations/refunds',
+const CompensationPaymentBatchesIdRoute =
+  CompensationPaymentBatchesIdRouteImport.update({
+    id: '/compensation/payment-batches/$id',
+    path: '/compensation/payment-batches/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicIntegrationsPaymentsRoute =
-  ApiPublicIntegrationsPaymentsRouteImport.update({
-    id: '/api/public/integrations/payments',
-    path: '/api/public/integrations/payments',
+const CompensationPlansIndexRoute = CompensationPlansIndexRouteImport.update({
+  id: '/compensation/plans/',
+  path: '/compensation/plans/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationPlansIdRoute = CompensationPlansIdRouteImport.update({
+  id: '/compensation/plans/$id',
+  path: '/compensation/plans/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationPlansNewRoute = CompensationPlansNewRouteImport.update({
+  id: '/compensation/plans/new',
+  path: '/compensation/plans/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompensationStatementsIndexRoute =
+  CompensationStatementsIndexRouteImport.update({
+    id: '/compensation/statements/',
+    path: '/compensation/statements/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicIntegrationsInvoicesRoute =
-  ApiPublicIntegrationsInvoicesRouteImport.update({
-    id: '/api/public/integrations/invoices',
-    path: '/api/public/integrations/invoices',
+const CompensationStatementsIdRoute =
+  CompensationStatementsIdRouteImport.update({
+    id: '/compensation/statements/$id',
+    path: '/compensation/statements/$id',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicIntegrationsInventoryConsumptionRoute =
-  ApiPublicIntegrationsInventoryConsumptionRouteImport.update({
-    id: '/api/public/integrations/inventory-consumption',
-    path: '/api/public/integrations/inventory-consumption',
+const LedgerBankingReconcileRoute = LedgerBankingReconcileRouteImport.update({
+  id: '/reconcile',
+  path: '/reconcile',
+  getParentRoute: () => LedgerBankingRoute,
+} as any)
+const ApexDigitalTwinScenariosIdRoute =
+  ApexDigitalTwinScenariosIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => ApexDigitalTwinScenariosRoute,
+  } as any)
+const ApiPublicIntegrationsCustomersRoute =
+  ApiPublicIntegrationsCustomersRouteImport.update({
+    id: '/api/public/integrations/customers',
+    path: '/api/public/integrations/customers',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiPublicIntegrationsEventsRoute =
@@ -1365,17 +1334,47 @@ const ApiPublicIntegrationsEventsRoute =
     path: '/api/public/integrations/events',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicIntegrationsCustomersRoute =
-  ApiPublicIntegrationsCustomersRouteImport.update({
-    id: '/api/public/integrations/customers',
-    path: '/api/public/integrations/customers',
+const ApiPublicIntegrationsInventoryConsumptionRoute =
+  ApiPublicIntegrationsInventoryConsumptionRouteImport.update({
+    id: '/api/public/integrations/inventory-consumption',
+    path: '/api/public/integrations/inventory-consumption',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApexDigitalTwinScenariosIdRoute =
-  ApexDigitalTwinScenariosIdRouteImport.update({
-    id: '/$id',
-    path: '/$id',
-    getParentRoute: () => ApexDigitalTwinScenariosRoute,
+const ApiPublicIntegrationsInvoicesRoute =
+  ApiPublicIntegrationsInvoicesRouteImport.update({
+    id: '/api/public/integrations/invoices',
+    path: '/api/public/integrations/invoices',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicIntegrationsPaymentsRoute =
+  ApiPublicIntegrationsPaymentsRouteImport.update({
+    id: '/api/public/integrations/payments',
+    path: '/api/public/integrations/payments',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicIntegrationsRefundsRoute =
+  ApiPublicIntegrationsRefundsRouteImport.update({
+    id: '/api/public/integrations/refunds',
+    path: '/api/public/integrations/refunds',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CompensationCalculationsIdPreviewRoute =
+  CompensationCalculationsIdPreviewRouteImport.update({
+    id: '/preview',
+    path: '/preview',
+    getParentRoute: () => CompensationCalculationsIdRoute,
+  } as any)
+const CompensationPlansIdParticipantsRoute =
+  CompensationPlansIdParticipantsRouteImport.update({
+    id: '/participants',
+    path: '/participants',
+    getParentRoute: () => CompensationPlansIdRoute,
+  } as any)
+const CompensationPlansIdVersionsRoute =
+  CompensationPlansIdVersionsRouteImport.update({
+    id: '/versions',
+    path: '/versions',
+    getParentRoute: () => CompensationPlansIdRoute,
   } as any)
 const ApiPublicIntegrationsWorkOrdersCompletedRoute =
   ApiPublicIntegrationsWorkOrdersCompletedRouteImport.update({
@@ -1475,6 +1474,7 @@ export interface FileRoutesByFullPath {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1553,7 +1553,6 @@ export interface FileRoutesByFullPath {
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/email': typeof SettingsEmailRoute
-  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
@@ -1571,6 +1570,7 @@ export interface FileRoutesByFullPath {
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
+  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1600,7 +1600,6 @@ export interface FileRoutesByFullPath {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
-  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
@@ -1695,6 +1694,7 @@ export interface FileRoutesByTo {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1773,7 +1773,6 @@ export interface FileRoutesByTo {
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/email': typeof SettingsEmailRoute
-  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
@@ -1791,6 +1790,7 @@ export interface FileRoutesByTo {
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
+  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -1820,7 +1820,6 @@ export interface FileRoutesByTo {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
-  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
@@ -1919,6 +1918,7 @@ export interface FileRoutesById {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1997,7 +1997,6 @@ export interface FileRoutesById {
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
   '/settings/email': typeof SettingsEmailRoute
-  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
@@ -2015,6 +2014,7 @@ export interface FileRoutesById {
   '/apex/opportunities/$id': typeof ApexOpportunitiesIdRoute
   '/apex/timeline/$id': typeof ApexTimelineIdRoute
   '/apex/workspaces/$role': typeof ApexWorkspacesRoleRoute
+  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/compensation/attribution/$id': typeof CompensationAttributionIdRoute
   '/compensation/attribution/conflicts': typeof CompensationAttributionConflictsRoute
   '/compensation/attribution/evidence': typeof CompensationAttributionEvidenceRoute
@@ -2044,7 +2044,6 @@ export interface FileRoutesById {
   '/api/public/integrations/inventory-consumption': typeof ApiPublicIntegrationsInventoryConsumptionRoute
   '/api/public/integrations/invoices': typeof ApiPublicIntegrationsInvoicesRoute
   '/api/public/integrations/payments': typeof ApiPublicIntegrationsPaymentsRoute
-  '/api/webhooks/authorize-net': typeof ApiWebhooksAuthorizeNetRoute
   '/api/public/integrations/refunds': typeof ApiPublicIntegrationsRefundsRoute
   '/compensation/calculations/$id/preview': typeof CompensationCalculationsIdPreviewRoute
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
@@ -2144,6 +2143,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/email/inbox'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2222,7 +2222,6 @@ export interface FileRouteTypes {
     | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/email'
-    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
@@ -2240,6 +2239,7 @@ export interface FileRouteTypes {
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
     | '/apex/workspaces/$role'
+    | '/api/webhooks/authorize-net'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -2269,7 +2269,6 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
-    | '/api/webhooks/authorize-net'
     | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
@@ -2364,6 +2363,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/email/inbox'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2442,7 +2442,6 @@ export interface FileRouteTypes {
     | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/email'
-    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex'
     | '/banking'
@@ -2460,6 +2459,7 @@ export interface FileRouteTypes {
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
     | '/apex/workspaces/$role'
+    | '/api/webhooks/authorize-net'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -2489,7 +2489,6 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
-    | '/api/webhooks/authorize-net'
     | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
@@ -2587,6 +2586,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/email/inbox'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2665,7 +2665,6 @@ export interface FileRouteTypes {
     | '/reports/trial-balance'
     | '/settings/account-mappings'
     | '/settings/email'
-    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
@@ -2683,6 +2682,7 @@ export interface FileRouteTypes {
     | '/apex/opportunities/$id'
     | '/apex/timeline/$id'
     | '/apex/workspaces/$role'
+    | '/api/webhooks/authorize-net'
     | '/compensation/attribution/$id'
     | '/compensation/attribution/conflicts'
     | '/compensation/attribution/evidence'
@@ -2712,7 +2712,6 @@ export interface FileRouteTypes {
     | '/api/public/integrations/inventory-consumption'
     | '/api/public/integrations/invoices'
     | '/api/public/integrations/payments'
-    | '/api/webhooks/authorize-net'
     | '/api/public/integrations/refunds'
     | '/compensation/calculations/$id/preview'
     | '/compensation/plans/$id/participants'
@@ -2732,7 +2731,6 @@ export interface RootRouteChildren {
   ControlsRoute: typeof ControlsRoute
   CustomersRoute: typeof CustomersRouteWithChildren
   DashboardRoute: typeof DashboardRoute
-  EmailInboxRoute: typeof EmailInboxRoute
   EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRouteWithChildren
@@ -2808,6 +2806,7 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   DocsIntegrationsRoute: typeof DocsIntegrationsRoute
+  EmailInboxRoute: typeof EmailInboxRoute
   FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
@@ -2872,6 +2871,7 @@ export interface RootRouteChildren {
   ReportsIndexRoute: typeof ReportsIndexRoute
   ApexAiPersonasPersonaRoute: typeof ApexAiPersonasPersonaRoute
   ApexWorkspacesRoleRoute: typeof ApexWorkspacesRoleRoute
+  ApiWebhooksAuthorizeNetRoute: typeof ApiWebhooksAuthorizeNetRoute
   CompensationAttributionIdRoute: typeof CompensationAttributionIdRoute
   CompensationAttributionConflictsRoute: typeof CompensationAttributionConflictsRoute
   CompensationAttributionEvidenceRoute: typeof CompensationAttributionEvidenceRoute
@@ -2899,123 +2899,17 @@ export interface RootRouteChildren {
   ApiPublicIntegrationsInventoryConsumptionRoute: typeof ApiPublicIntegrationsInventoryConsumptionRoute
   ApiPublicIntegrationsInvoicesRoute: typeof ApiPublicIntegrationsInvoicesRoute
   ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
-  ApiWebhooksAuthorizeNetRoute: typeof ApiWebhooksAuthorizeNetRoute
   ApiPublicIntegrationsRefundsRoute: typeof ApiPublicIntegrationsRefundsRoute
   ApiPublicIntegrationsWorkOrdersCompletedRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vendors': {
-      id: '/vendors'
-      path: '/vendors'
-      fullPath: '/vendors'
-      preLoaderRoute: typeof VendorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payments': {
-      id: '/payments'
-      path: '/payments'
-      fullPath: '/payments'
-      preLoaderRoute: typeof PaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/invoices': {
-      id: '/invoices'
-      path: '/invoices'
-      fullPath: '/invoices'
-      preLoaderRoute: typeof InvoicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/integrations': {
-      id: '/integrations'
-      path: '/integrations'
-      fullPath: '/integrations'
-      preLoaderRoute: typeof IntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/expenses': {
-      id: '/expenses'
-      path: '/expenses'
-      fullPath: '/expenses'
-      preLoaderRoute: typeof ExpensesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/estimates': {
-      id: '/estimates'
-      path: '/estimates'
-      fullPath: '/estimates'
-      preLoaderRoute: typeof EstimatesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers': {
-      id: '/customers'
-      path: '/customers'
-      fullPath: '/customers'
-      preLoaderRoute: typeof CustomersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/controls': {
-      id: '/controls'
-      path: '/controls'
-      fullPath: '/controls'
-      preLoaderRoute: typeof ControlsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/close': {
-      id: '/close'
-      path: '/close'
-      fullPath: '/close'
-      preLoaderRoute: typeof CloseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cash-availability': {
-      id: '/cash-availability'
-      path: '/cash-availability'
-      fullPath: '/cash-availability'
-      preLoaderRoute: typeof CashAvailabilityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bills': {
-      id: '/bills'
-      path: '/bills'
-      fullPath: '/bills'
-      preLoaderRoute: typeof BillsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation-center': {
-      id: '/automation-center'
-      path: '/automation-center'
-      fullPath: '/automation-center'
-      preLoaderRoute: typeof AutomationCenterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/audit': {
-      id: '/audit'
-      path: '/audit'
-      fullPath: '/audit'
-      preLoaderRoute: typeof AuditRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accounting-center': {
@@ -3025,74 +2919,249 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountingCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reports/': {
-      id: '/reports/'
-      path: '/reports'
-      fullPath: '/reports/'
-      preLoaderRoute: typeof ReportsIndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/invoices/': {
-      id: '/invoices/'
-      path: '/'
-      fullPath: '/invoices/'
-      preLoaderRoute: typeof InvoicesIndexRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/intelligence/': {
-      id: '/intelligence/'
-      path: '/intelligence'
-      fullPath: '/intelligence/'
-      preLoaderRoute: typeof IntelligenceIndexRouteImport
+    '/automation-center': {
+      id: '/automation-center'
+      path: '/automation-center'
+      fullPath: '/automation-center'
+      preLoaderRoute: typeof AutomationCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/implementation/': {
-      id: '/implementation/'
-      path: '/implementation'
-      fullPath: '/implementation/'
-      preLoaderRoute: typeof ImplementationIndexRouteImport
+    '/bills': {
+      id: '/bills'
+      path: '/bills'
+      fullPath: '/bills'
+      preLoaderRoute: typeof BillsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/feature-registry/': {
-      id: '/feature-registry/'
-      path: '/feature-registry'
-      fullPath: '/feature-registry/'
-      preLoaderRoute: typeof FeatureRegistryIndexRouteImport
+    '/cash-availability': {
+      id: '/cash-availability'
+      path: '/cash-availability'
+      fullPath: '/cash-availability'
+      preLoaderRoute: typeof CashAvailabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/expenses/': {
-      id: '/expenses/'
-      path: '/'
-      fullPath: '/expenses/'
-      preLoaderRoute: typeof ExpensesIndexRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/compensation/': {
-      id: '/compensation/'
-      path: '/compensation'
-      fullPath: '/compensation/'
-      preLoaderRoute: typeof CompensationIndexRouteImport
+    '/close': {
+      id: '/close'
+      path: '/close'
+      fullPath: '/close'
+      preLoaderRoute: typeof CloseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cash-availability/': {
-      id: '/cash-availability/'
-      path: '/'
-      fullPath: '/cash-availability/'
-      preLoaderRoute: typeof CashAvailabilityIndexRouteImport
-      parentRoute: typeof CashAvailabilityRoute
+    '/controls': {
+      id: '/controls'
+      path: '/controls'
+      fullPath: '/controls'
+      preLoaderRoute: typeof ControlsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/banking/': {
-      id: '/banking/'
-      path: '/banking'
-      fullPath: '/banking/'
-      preLoaderRoute: typeof BankingIndexRouteImport
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimates': {
+      id: '/estimates'
+      path: '/estimates'
+      fullPath: '/estimates'
+      preLoaderRoute: typeof EstimatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices': {
+      id: '/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vendors': {
+      id: '/vendors'
+      path: '/vendors'
+      fullPath: '/vendors'
+      preLoaderRoute: typeof VendorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts-payable/aging': {
+      id: '/accounts-payable/aging'
+      path: '/accounts-payable/aging'
+      fullPath: '/accounts-payable/aging'
+      preLoaderRoute: typeof AccountsPayableAgingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts-payable/bills': {
+      id: '/accounts-payable/bills'
+      path: '/accounts-payable/bills'
+      fullPath: '/accounts-payable/bills'
+      preLoaderRoute: typeof AccountsPayableBillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts-payable/payments': {
+      id: '/accounts-payable/payments'
+      path: '/accounts-payable/payments'
+      fullPath: '/accounts-payable/payments'
+      preLoaderRoute: typeof AccountsPayablePaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts-payable/vendors': {
+      id: '/accounts-payable/vendors'
+      path: '/accounts-payable/vendors'
+      fullPath: '/accounts-payable/vendors'
+      preLoaderRoute: typeof AccountsPayableVendorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts-receivable/aging': {
+      id: '/accounts-receivable/aging'
+      path: '/accounts-receivable/aging'
+      fullPath: '/accounts-receivable/aging'
+      preLoaderRoute: typeof AccountsReceivableAgingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/acceptance-tests': {
+      id: '/admin/acceptance-tests'
+      path: '/admin/acceptance-tests'
+      fullPath: '/admin/acceptance-tests'
+      preLoaderRoute: typeof AdminAcceptanceTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/customer-onboarding': {
+      id: '/admin/customer-onboarding'
+      path: '/admin/customer-onboarding'
+      fullPath: '/admin/customer-onboarding'
+      preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/financial-events': {
+      id: '/admin/financial-events'
+      path: '/admin/financial-events'
+      fullPath: '/admin/financial-events'
+      preLoaderRoute: typeof AdminFinancialEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/integration-testing': {
+      id: '/admin/integration-testing'
+      path: '/admin/integration-testing'
+      fullPath: '/admin/integration-testing'
+      preLoaderRoute: typeof AdminIntegrationTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/integrations': {
+      id: '/admin/integrations'
+      path: '/admin/integrations'
+      fullPath: '/admin/integrations'
+      preLoaderRoute: typeof AdminIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/intelligence': {
+      id: '/admin/intelligence'
+      path: '/admin/intelligence'
+      fullPath: '/admin/intelligence'
+      preLoaderRoute: typeof AdminIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/metrics': {
+      id: '/admin/metrics'
+      path: '/admin/metrics'
+      fullPath: '/admin/metrics'
+      preLoaderRoute: typeof AdminMetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/migration': {
+      id: '/admin/migration'
+      path: '/admin/migration'
+      fullPath: '/admin/migration'
+      preLoaderRoute: typeof AdminMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/observability': {
+      id: '/admin/observability'
+      path: '/admin/observability'
+      fullPath: '/admin/observability'
+      preLoaderRoute: typeof AdminObservabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/pilot-simulation': {
+      id: '/admin/pilot-simulation'
+      path: '/admin/pilot-simulation'
+      fullPath: '/admin/pilot-simulation'
+      preLoaderRoute: typeof AdminPilotSimulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/pilot-success': {
+      id: '/admin/pilot-success'
+      path: '/admin/pilot-success'
+      fullPath: '/admin/pilot-success'
+      preLoaderRoute: typeof AdminPilotSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/production-review': {
+      id: '/admin/production-review'
+      path: '/admin/production-review'
+      fullPath: '/admin/production-review'
+      preLoaderRoute: typeof AdminProductionReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/readiness': {
+      id: '/admin/readiness'
+      path: '/admin/readiness'
+      fullPath: '/admin/readiness'
+      preLoaderRoute: typeof AdminReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apex/': {
@@ -3102,12 +3171,978 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/settings/serviceconnect': {
-      id: '/settings/serviceconnect'
-      path: '/serviceconnect'
-      fullPath: '/settings/serviceconnect'
-      preLoaderRoute: typeof SettingsServiceconnectRouteImport
-      parentRoute: typeof SettingsRoute
+    '/apex/architecture': {
+      id: '/apex/architecture'
+      path: '/apex/architecture'
+      fullPath: '/apex/architecture'
+      preLoaderRoute: typeof ApexArchitectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/assets': {
+      id: '/apex/assets'
+      path: '/apex/assets'
+      fullPath: '/apex/assets'
+      preLoaderRoute: typeof ApexAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/briefing': {
+      id: '/apex/briefing'
+      path: '/apex/briefing'
+      fullPath: '/apex/briefing'
+      preLoaderRoute: typeof ApexBriefingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/company': {
+      id: '/apex/company'
+      path: '/apex/company'
+      fullPath: '/apex/company'
+      preLoaderRoute: typeof ApexCompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/company-health': {
+      id: '/apex/company-health'
+      path: '/apex/company-health'
+      fullPath: '/apex/company-health'
+      preLoaderRoute: typeof ApexCompanyHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/digital-twin': {
+      id: '/apex/digital-twin'
+      path: '/apex/digital-twin'
+      fullPath: '/apex/digital-twin'
+      preLoaderRoute: typeof ApexDigitalTwinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/financial-dna': {
+      id: '/apex/financial-dna'
+      path: '/apex/financial-dna'
+      fullPath: '/apex/financial-dna'
+      preLoaderRoute: typeof ApexFinancialDnaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/growth': {
+      id: '/apex/growth'
+      path: '/apex/growth'
+      fullPath: '/apex/growth'
+      preLoaderRoute: typeof ApexGrowthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/handoff': {
+      id: '/apex/handoff'
+      path: '/apex/handoff'
+      fullPath: '/apex/handoff'
+      preLoaderRoute: typeof ApexHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/insights': {
+      id: '/apex/insights'
+      path: '/apex/insights'
+      fullPath: '/apex/insights'
+      preLoaderRoute: typeof ApexInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/money': {
+      id: '/apex/money'
+      path: '/apex/money'
+      fullPath: '/apex/money'
+      preLoaderRoute: typeof ApexMoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/navigation': {
+      id: '/apex/navigation'
+      path: '/apex/navigation'
+      fullPath: '/apex/navigation'
+      preLoaderRoute: typeof ApexNavigationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/opportunities': {
+      id: '/apex/opportunities'
+      path: '/apex/opportunities'
+      fullPath: '/apex/opportunities'
+      preLoaderRoute: typeof ApexOpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/people': {
+      id: '/apex/people'
+      path: '/apex/people'
+      fullPath: '/apex/people'
+      preLoaderRoute: typeof ApexPeopleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/personas': {
+      id: '/apex/personas'
+      path: '/apex/personas'
+      fullPath: '/apex/personas'
+      preLoaderRoute: typeof ApexPersonasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/relationship-graph': {
+      id: '/apex/relationship-graph'
+      path: '/apex/relationship-graph'
+      fullPath: '/apex/relationship-graph'
+      preLoaderRoute: typeof ApexRelationshipGraphRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/roles': {
+      id: '/apex/roles'
+      path: '/apex/roles'
+      fullPath: '/apex/roles'
+      preLoaderRoute: typeof ApexRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/timeline': {
+      id: '/apex/timeline'
+      path: '/apex/timeline'
+      fullPath: '/apex/timeline'
+      preLoaderRoute: typeof ApexTimelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apex/widgets': {
+      id: '/apex/widgets'
+      path: '/apex/widgets'
+      fullPath: '/apex/widgets'
+      preLoaderRoute: typeof ApexWidgetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/action-plans': {
+      id: '/automation/action-plans'
+      path: '/automation/action-plans'
+      fullPath: '/automation/action-plans'
+      preLoaderRoute: typeof AutomationActionPlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/approvals': {
+      id: '/automation/approvals'
+      path: '/automation/approvals'
+      fullPath: '/automation/approvals'
+      preLoaderRoute: typeof AutomationApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/bonus-controls': {
+      id: '/automation/bonus-controls'
+      path: '/automation/bonus-controls'
+      fullPath: '/automation/bonus-controls'
+      preLoaderRoute: typeof AutomationBonusControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/budget-controls': {
+      id: '/automation/budget-controls'
+      path: '/automation/budget-controls'
+      fullPath: '/automation/budget-controls'
+      preLoaderRoute: typeof AutomationBudgetControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/cash-controls': {
+      id: '/automation/cash-controls'
+      path: '/automation/cash-controls'
+      fullPath: '/automation/cash-controls'
+      preLoaderRoute: typeof AutomationCashControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/collections': {
+      id: '/automation/collections'
+      path: '/automation/collections'
+      fullPath: '/automation/collections'
+      preLoaderRoute: typeof AutomationCollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/data-quality': {
+      id: '/automation/data-quality'
+      path: '/automation/data-quality'
+      fullPath: '/automation/data-quality'
+      preLoaderRoute: typeof AutomationDataQualityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/decision-log': {
+      id: '/automation/decision-log'
+      path: '/automation/decision-log'
+      fullPath: '/automation/decision-log'
+      preLoaderRoute: typeof AutomationDecisionLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/exceptions': {
+      id: '/automation/exceptions'
+      path: '/automation/exceptions'
+      fullPath: '/automation/exceptions'
+      preLoaderRoute: typeof AutomationExceptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/integration-health': {
+      id: '/automation/integration-health'
+      path: '/automation/integration-health'
+      fullPath: '/automation/integration-health'
+      preLoaderRoute: typeof AutomationIntegrationHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/payables': {
+      id: '/automation/payables'
+      path: '/automation/payables'
+      fullPath: '/automation/payables'
+      preLoaderRoute: typeof AutomationPayablesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/revenue-recovery': {
+      id: '/automation/revenue-recovery'
+      path: '/automation/revenue-recovery'
+      fullPath: '/automation/revenue-recovery'
+      preLoaderRoute: typeof AutomationRevenueRecoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/rules': {
+      id: '/automation/rules'
+      path: '/automation/rules'
+      fullPath: '/automation/rules'
+      preLoaderRoute: typeof AutomationRulesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automation/subscription-actions': {
+      id: '/automation/subscription-actions'
+      path: '/automation/subscription-actions'
+      fullPath: '/automation/subscription-actions'
+      preLoaderRoute: typeof AutomationSubscriptionActionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banking/': {
+      id: '/banking/'
+      path: '/banking'
+      fullPath: '/banking/'
+      preLoaderRoute: typeof BankingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banking/reconciliation': {
+      id: '/banking/reconciliation'
+      path: '/banking/reconciliation'
+      fullPath: '/banking/reconciliation'
+      preLoaderRoute: typeof BankingReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/banking/transactions': {
+      id: '/banking/transactions'
+      path: '/banking/transactions'
+      fullPath: '/banking/transactions'
+      preLoaderRoute: typeof BankingTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cash-availability/': {
+      id: '/cash-availability/'
+      path: '/'
+      fullPath: '/cash-availability/'
+      preLoaderRoute: typeof CashAvailabilityIndexRouteImport
+      parentRoute: typeof CashAvailabilityRoute
+    }
+    '/cash-availability/allocations': {
+      id: '/cash-availability/allocations'
+      path: '/allocations'
+      fullPath: '/cash-availability/allocations'
+      preLoaderRoute: typeof CashAvailabilityAllocationsRouteImport
+      parentRoute: typeof CashAvailabilityRoute
+    }
+    '/cash-availability/rules': {
+      id: '/cash-availability/rules'
+      path: '/rules'
+      fullPath: '/cash-availability/rules'
+      preLoaderRoute: typeof CashAvailabilityRulesRouteImport
+      parentRoute: typeof CashAvailabilityRoute
+    }
+    '/close/ai-assistant': {
+      id: '/close/ai-assistant'
+      path: '/ai-assistant'
+      fullPath: '/close/ai-assistant'
+      preLoaderRoute: typeof CloseAiAssistantRouteImport
+      parentRoute: typeof CloseRoute
+    }
+    '/compensation/': {
+      id: '/compensation/'
+      path: '/compensation'
+      fullPath: '/compensation/'
+      preLoaderRoute: typeof CompensationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/adjustments': {
+      id: '/compensation/adjustments'
+      path: '/compensation/adjustments'
+      fullPath: '/compensation/adjustments'
+      preLoaderRoute: typeof CompensationAdjustmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/approvals': {
+      id: '/compensation/approvals'
+      path: '/compensation/approvals'
+      fullPath: '/compensation/approvals'
+      preLoaderRoute: typeof CompensationApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/audit': {
+      id: '/compensation/audit'
+      path: '/compensation/audit'
+      fullPath: '/compensation/audit'
+      preLoaderRoute: typeof CompensationAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/clawbacks': {
+      id: '/compensation/clawbacks'
+      path: '/compensation/clawbacks'
+      fullPath: '/compensation/clawbacks'
+      preLoaderRoute: typeof CompensationClawbacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/eligibility': {
+      id: '/compensation/eligibility'
+      path: '/compensation/eligibility'
+      fullPath: '/compensation/eligibility'
+      preLoaderRoute: typeof CompensationEligibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/holdbacks': {
+      id: '/compensation/holdbacks'
+      path: '/compensation/holdbacks'
+      fullPath: '/compensation/holdbacks'
+      preLoaderRoute: typeof CompensationHoldbacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/preview': {
+      id: '/compensation/preview'
+      path: '/compensation/preview'
+      fullPath: '/compensation/preview'
+      preLoaderRoute: typeof CompensationPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/reconciliation': {
+      id: '/compensation/reconciliation'
+      path: '/compensation/reconciliation'
+      fullPath: '/compensation/reconciliation'
+      preLoaderRoute: typeof CompensationReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/reserves': {
+      id: '/compensation/reserves'
+      path: '/compensation/reserves'
+      fullPath: '/compensation/reserves'
+      preLoaderRoute: typeof CompensationReservesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/verification': {
+      id: '/compensation/verification'
+      path: '/compensation/verification'
+      fullPath: '/compensation/verification'
+      preLoaderRoute: typeof CompensationVerificationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers/$customerId': {
+      id: '/customers/$customerId'
+      path: '/$customerId'
+      fullPath: '/customers/$customerId'
+      preLoaderRoute: typeof CustomersCustomerIdRouteImport
+      parentRoute: typeof CustomersRoute
+    }
+    '/dashboards/accounting': {
+      id: '/dashboards/accounting'
+      path: '/dashboards/accounting'
+      fullPath: '/dashboards/accounting'
+      preLoaderRoute: typeof DashboardsAccountingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboards/reviewer': {
+      id: '/dashboards/reviewer'
+      path: '/dashboards/reviewer'
+      fullPath: '/dashboards/reviewer'
+      preLoaderRoute: typeof DashboardsReviewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboards/team': {
+      id: '/dashboards/team'
+      path: '/dashboards/team'
+      fullPath: '/dashboards/team'
+      preLoaderRoute: typeof DashboardsTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/integrations': {
+      id: '/docs/integrations'
+      path: '/docs/integrations'
+      fullPath: '/docs/integrations'
+      preLoaderRoute: typeof DocsIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/email/inbox': {
+      id: '/email/inbox'
+      path: '/email/inbox'
+      fullPath: '/email/inbox'
+      preLoaderRoute: typeof EmailInboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimates/new': {
+      id: '/estimates/new'
+      path: '/new'
+      fullPath: '/estimates/new'
+      preLoaderRoute: typeof EstimatesNewRouteImport
+      parentRoute: typeof EstimatesRoute
+    }
+    '/expenses/': {
+      id: '/expenses/'
+      path: '/'
+      fullPath: '/expenses/'
+      preLoaderRoute: typeof ExpensesIndexRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/approvals': {
+      id: '/expenses/approvals'
+      path: '/approvals'
+      fullPath: '/expenses/approvals'
+      preLoaderRoute: typeof ExpensesApprovalsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/copilot': {
+      id: '/expenses/copilot'
+      path: '/copilot'
+      fullPath: '/expenses/copilot'
+      preLoaderRoute: typeof ExpensesCopilotRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/intelligence': {
+      id: '/expenses/intelligence'
+      path: '/intelligence'
+      fullPath: '/expenses/intelligence'
+      preLoaderRoute: typeof ExpensesIntelligenceRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/list': {
+      id: '/expenses/list'
+      path: '/list'
+      fullPath: '/expenses/list'
+      preLoaderRoute: typeof ExpensesListRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/matching': {
+      id: '/expenses/matching'
+      path: '/matching'
+      fullPath: '/expenses/matching'
+      preLoaderRoute: typeof ExpensesMatchingRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/policies': {
+      id: '/expenses/policies'
+      path: '/policies'
+      fullPath: '/expenses/policies'
+      preLoaderRoute: typeof ExpensesPoliciesRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/pre-spend': {
+      id: '/expenses/pre-spend'
+      path: '/pre-spend'
+      fullPath: '/expenses/pre-spend'
+      preLoaderRoute: typeof ExpensesPreSpendRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/receipts': {
+      id: '/expenses/receipts'
+      path: '/receipts'
+      fullPath: '/expenses/receipts'
+      preLoaderRoute: typeof ExpensesReceiptsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/recovery': {
+      id: '/expenses/recovery'
+      path: '/recovery'
+      fullPath: '/expenses/recovery'
+      preLoaderRoute: typeof ExpensesRecoveryRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/reimbursements': {
+      id: '/expenses/reimbursements'
+      path: '/reimbursements'
+      fullPath: '/expenses/reimbursements'
+      preLoaderRoute: typeof ExpensesReimbursementsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/reports': {
+      id: '/expenses/reports'
+      path: '/reports'
+      fullPath: '/expenses/reports'
+      preLoaderRoute: typeof ExpensesReportsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/submit': {
+      id: '/expenses/submit'
+      path: '/submit'
+      fullPath: '/expenses/submit'
+      preLoaderRoute: typeof ExpensesSubmitRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/subscriptions': {
+      id: '/expenses/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/expenses/subscriptions'
+      preLoaderRoute: typeof ExpensesSubscriptionsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/expenses/vendors': {
+      id: '/expenses/vendors'
+      path: '/vendors'
+      fullPath: '/expenses/vendors'
+      preLoaderRoute: typeof ExpensesVendorsRouteImport
+      parentRoute: typeof ExpensesRoute
+    }
+    '/feature-registry/': {
+      id: '/feature-registry/'
+      path: '/feature-registry'
+      fullPath: '/feature-registry/'
+      preLoaderRoute: typeof FeatureRegistryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/$id': {
+      id: '/feature-registry/$id'
+      path: '/feature-registry/$id'
+      fullPath: '/feature-registry/$id'
+      preLoaderRoute: typeof FeatureRegistryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/all': {
+      id: '/feature-registry/all'
+      path: '/feature-registry/all'
+      fullPath: '/feature-registry/all'
+      preLoaderRoute: typeof FeatureRegistryAllRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/blocked': {
+      id: '/feature-registry/blocked'
+      path: '/feature-registry/blocked'
+      fullPath: '/feature-registry/blocked'
+      preLoaderRoute: typeof FeatureRegistryBlockedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/built': {
+      id: '/feature-registry/built'
+      path: '/feature-registry/built'
+      fullPath: '/feature-registry/built'
+      preLoaderRoute: typeof FeatureRegistryBuiltRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/dependencies': {
+      id: '/feature-registry/dependencies'
+      path: '/feature-registry/dependencies'
+      fullPath: '/feature-registry/dependencies'
+      preLoaderRoute: typeof FeatureRegistryDependenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/integrations': {
+      id: '/feature-registry/integrations'
+      path: '/feature-registry/integrations'
+      fullPath: '/feature-registry/integrations'
+      preLoaderRoute: typeof FeatureRegistryIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/legal-accounting': {
+      id: '/feature-registry/legal-accounting'
+      path: '/feature-registry/legal-accounting'
+      fullPath: '/feature-registry/legal-accounting'
+      preLoaderRoute: typeof FeatureRegistryLegalAccountingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/navigation': {
+      id: '/feature-registry/navigation'
+      path: '/feature-registry/navigation'
+      fullPath: '/feature-registry/navigation'
+      preLoaderRoute: typeof FeatureRegistryNavigationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/planned': {
+      id: '/feature-registry/planned'
+      path: '/feature-registry/planned'
+      fullPath: '/feature-registry/planned'
+      preLoaderRoute: typeof FeatureRegistryPlannedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/readiness': {
+      id: '/feature-registry/readiness'
+      path: '/feature-registry/readiness'
+      fullPath: '/feature-registry/readiness'
+      preLoaderRoute: typeof FeatureRegistryReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-registry/releases': {
+      id: '/feature-registry/releases'
+      path: '/feature-registry/releases'
+      fullPath: '/feature-registry/releases'
+      preLoaderRoute: typeof FeatureRegistryReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/': {
+      id: '/implementation/'
+      path: '/implementation'
+      fullPath: '/implementation/'
+      preLoaderRoute: typeof ImplementationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/api-map': {
+      id: '/implementation/api-map'
+      path: '/implementation/api-map'
+      fullPath: '/implementation/api-map'
+      preLoaderRoute: typeof ImplementationApiMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/cutover': {
+      id: '/implementation/cutover'
+      path: '/implementation/cutover'
+      fullPath: '/implementation/cutover'
+      preLoaderRoute: typeof ImplementationCutoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/data-map': {
+      id: '/implementation/data-map'
+      path: '/implementation/data-map'
+      fullPath: '/implementation/data-map'
+      preLoaderRoute: typeof ImplementationDataMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/events': {
+      id: '/implementation/events'
+      path: '/implementation/events'
+      fullPath: '/implementation/events'
+      preLoaderRoute: typeof ImplementationEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/handoff': {
+      id: '/implementation/handoff'
+      path: '/implementation/handoff'
+      fullPath: '/implementation/handoff'
+      preLoaderRoute: typeof ImplementationHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/integrations': {
+      id: '/implementation/integrations'
+      path: '/implementation/integrations'
+      fullPath: '/implementation/integrations'
+      preLoaderRoute: typeof ImplementationIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/migration': {
+      id: '/implementation/migration'
+      path: '/implementation/migration'
+      fullPath: '/implementation/migration'
+      preLoaderRoute: typeof ImplementationMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/permissions': {
+      id: '/implementation/permissions'
+      path: '/implementation/permissions'
+      fullPath: '/implementation/permissions'
+      preLoaderRoute: typeof ImplementationPermissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/readiness': {
+      id: '/implementation/readiness'
+      path: '/implementation/readiness'
+      fullPath: '/implementation/readiness'
+      preLoaderRoute: typeof ImplementationReadinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/security': {
+      id: '/implementation/security'
+      path: '/implementation/security'
+      fullPath: '/implementation/security'
+      preLoaderRoute: typeof ImplementationSecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/implementation/testing': {
+      id: '/implementation/testing'
+      path: '/implementation/testing'
+      fullPath: '/implementation/testing'
+      preLoaderRoute: typeof ImplementationTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations/sandbox': {
+      id: '/integrations/sandbox'
+      path: '/sandbox'
+      fullPath: '/integrations/sandbox'
+      preLoaderRoute: typeof IntegrationsSandboxRouteImport
+      parentRoute: typeof IntegrationsRoute
+    }
+    '/intelligence/': {
+      id: '/intelligence/'
+      path: '/intelligence'
+      fullPath: '/intelligence/'
+      preLoaderRoute: typeof IntelligenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/apps': {
+      id: '/intelligence/apps'
+      path: '/intelligence/apps'
+      fullPath: '/intelligence/apps'
+      preLoaderRoute: typeof IntelligenceAppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/attribution': {
+      id: '/intelligence/attribution'
+      path: '/intelligence/attribution'
+      fullPath: '/intelligence/attribution'
+      preLoaderRoute: typeof IntelligenceAttributionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonus-forecast': {
+      id: '/intelligence/bonus-forecast'
+      path: '/intelligence/bonus-forecast'
+      fullPath: '/intelligence/bonus-forecast'
+      preLoaderRoute: typeof IntelligenceBonusForecastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonus-plans': {
+      id: '/intelligence/bonus-plans'
+      path: '/intelligence/bonus-plans'
+      fullPath: '/intelligence/bonus-plans'
+      preLoaderRoute: typeof IntelligenceBonusPlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/bonuses': {
+      id: '/intelligence/bonuses'
+      path: '/intelligence/bonuses'
+      fullPath: '/intelligence/bonuses'
+      preLoaderRoute: typeof IntelligenceBonusesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/campaigns': {
+      id: '/intelligence/campaigns'
+      path: '/intelligence/campaigns'
+      fullPath: '/intelligence/campaigns'
+      preLoaderRoute: typeof IntelligenceCampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/clients': {
+      id: '/intelligence/clients'
+      path: '/intelligence/clients'
+      fullPath: '/intelligence/clients'
+      preLoaderRoute: typeof IntelligenceClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/confidence': {
+      id: '/intelligence/confidence'
+      path: '/intelligence/confidence'
+      fullPath: '/intelligence/confidence'
+      preLoaderRoute: typeof IntelligenceConfidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/departments': {
+      id: '/intelligence/departments'
+      path: '/intelligence/departments'
+      fullPath: '/intelligence/departments'
+      preLoaderRoute: typeof IntelligenceDepartmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/forecasting': {
+      id: '/intelligence/forecasting'
+      path: '/intelligence/forecasting'
+      fullPath: '/intelligence/forecasting'
+      preLoaderRoute: typeof IntelligenceForecastingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/leakage': {
+      id: '/intelligence/leakage'
+      path: '/intelligence/leakage'
+      fullPath: '/intelligence/leakage'
+      preLoaderRoute: typeof IntelligenceLeakageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/marketing': {
+      id: '/intelligence/marketing'
+      path: '/intelligence/marketing'
+      fullPath: '/intelligence/marketing'
+      preLoaderRoute: typeof IntelligenceMarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/overhead': {
+      id: '/intelligence/overhead'
+      path: '/intelligence/overhead'
+      fullPath: '/intelligence/overhead'
+      preLoaderRoute: typeof IntelligenceOverheadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/overhead-anomalies': {
+      id: '/intelligence/overhead-anomalies'
+      path: '/intelligence/overhead-anomalies'
+      fullPath: '/intelligence/overhead-anomalies'
+      preLoaderRoute: typeof IntelligenceOverheadAnomaliesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/profitability': {
+      id: '/intelligence/profitability'
+      path: '/intelligence/profitability'
+      fullPath: '/intelligence/profitability'
+      preLoaderRoute: typeof IntelligenceProfitabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/recommendations': {
+      id: '/intelligence/recommendations'
+      path: '/intelligence/recommendations'
+      fullPath: '/intelligence/recommendations'
+      preLoaderRoute: typeof IntelligenceRecommendationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/services': {
+      id: '/intelligence/services'
+      path: '/intelligence/services'
+      fullPath: '/intelligence/services'
+      preLoaderRoute: typeof IntelligenceServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/tech': {
+      id: '/intelligence/tech'
+      path: '/intelligence/tech'
+      fullPath: '/intelligence/tech'
+      preLoaderRoute: typeof IntelligenceTechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence/tech-portfolio': {
+      id: '/intelligence/tech-portfolio'
+      path: '/intelligence/tech-portfolio'
+      fullPath: '/intelligence/tech-portfolio'
+      preLoaderRoute: typeof IntelligenceTechPortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/'
+      fullPath: '/invoices/'
+      preLoaderRoute: typeof InvoicesIndexRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/$invoiceId': {
+      id: '/invoices/$invoiceId'
+      path: '/$invoiceId'
+      fullPath: '/invoices/$invoiceId'
+      preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/credit-notes': {
+      id: '/invoices/credit-notes'
+      path: '/credit-notes'
+      fullPath: '/invoices/credit-notes'
+      preLoaderRoute: typeof InvoicesCreditNotesRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/new': {
+      id: '/invoices/new'
+      path: '/new'
+      fullPath: '/invoices/new'
+      preLoaderRoute: typeof InvoicesNewRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/recurring': {
+      id: '/invoices/recurring'
+      path: '/recurring'
+      fullPath: '/invoices/recurring'
+      preLoaderRoute: typeof InvoicesRecurringRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/invoices/review': {
+      id: '/invoices/review'
+      path: '/review'
+      fullPath: '/invoices/review'
+      preLoaderRoute: typeof InvoicesReviewRouteImport
+      parentRoute: typeof InvoicesRoute
+    }
+    '/ledger/accounts': {
+      id: '/ledger/accounts'
+      path: '/ledger/accounts'
+      fullPath: '/ledger/accounts'
+      preLoaderRoute: typeof LedgerAccountsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/banking': {
+      id: '/ledger/banking'
+      path: '/ledger/banking'
+      fullPath: '/ledger/banking'
+      preLoaderRoute: typeof LedgerBankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/entities': {
+      id: '/ledger/entities'
+      path: '/ledger/entities'
+      fullPath: '/ledger/entities'
+      preLoaderRoute: typeof LedgerEntitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/fixed-assets': {
+      id: '/ledger/fixed-assets'
+      path: '/ledger/fixed-assets'
+      fullPath: '/ledger/fixed-assets'
+      preLoaderRoute: typeof LedgerFixedAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/general': {
+      id: '/ledger/general'
+      path: '/ledger/general'
+      fullPath: '/ledger/general'
+      preLoaderRoute: typeof LedgerGeneralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/inventory': {
+      id: '/ledger/inventory'
+      path: '/ledger/inventory'
+      fullPath: '/ledger/inventory'
+      preLoaderRoute: typeof LedgerInventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/journals': {
+      id: '/ledger/journals'
+      path: '/ledger/journals'
+      fullPath: '/ledger/journals'
+      preLoaderRoute: typeof LedgerJournalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/tax': {
+      id: '/ledger/tax'
+      path: '/ledger/tax'
+      fullPath: '/ledger/tax'
+      preLoaderRoute: typeof LedgerTaxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/readiness/migration': {
+      id: '/readiness/migration'
+      path: '/readiness/migration'
+      fullPath: '/readiness/migration'
+      preLoaderRoute: typeof ReadinessMigrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/readiness/production': {
+      id: '/readiness/production'
+      path: '/readiness/production'
+      fullPath: '/readiness/production'
+      preLoaderRoute: typeof ReadinessProductionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof ReportsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/balance-sheet': {
+      id: '/reports/balance-sheet'
+      path: '/reports/balance-sheet'
+      fullPath: '/reports/balance-sheet'
+      preLoaderRoute: typeof ReportsBalanceSheetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/cash-flow': {
+      id: '/reports/cash-flow'
+      path: '/reports/cash-flow'
+      fullPath: '/reports/cash-flow'
+      preLoaderRoute: typeof ReportsCashFlowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/profit-loss': {
+      id: '/reports/profit-loss'
+      path: '/reports/profit-loss'
+      fullPath: '/reports/profit-loss'
+      preLoaderRoute: typeof ReportsProfitLossRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/trial-balance': {
+      id: '/reports/trial-balance'
+      path: '/reports/trial-balance'
+      fullPath: '/reports/trial-balance'
+      preLoaderRoute: typeof ReportsTrialBalanceRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/settings/account-mappings': {
       id: '/settings/account-mappings'
@@ -3123,1111 +4158,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsEmailRouteImport
       parentRoute: typeof SettingsRoute
     }
-    '/email/inbox': {
-      id: '/email/inbox'
-      path: '/email/inbox'
-      fullPath: '/email/inbox'
-      preLoaderRoute: typeof EmailInboxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports/trial-balance': {
-      id: '/reports/trial-balance'
-      path: '/reports/trial-balance'
-      fullPath: '/reports/trial-balance'
-      preLoaderRoute: typeof ReportsTrialBalanceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports/profit-loss': {
-      id: '/reports/profit-loss'
-      path: '/reports/profit-loss'
-      fullPath: '/reports/profit-loss'
-      preLoaderRoute: typeof ReportsProfitLossRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports/cash-flow': {
-      id: '/reports/cash-flow'
-      path: '/reports/cash-flow'
-      fullPath: '/reports/cash-flow'
-      preLoaderRoute: typeof ReportsCashFlowRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports/balance-sheet': {
-      id: '/reports/balance-sheet'
-      path: '/reports/balance-sheet'
-      fullPath: '/reports/balance-sheet'
-      preLoaderRoute: typeof ReportsBalanceSheetRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/readiness/production': {
-      id: '/readiness/production'
-      path: '/readiness/production'
-      fullPath: '/readiness/production'
-      preLoaderRoute: typeof ReadinessProductionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/readiness/migration': {
-      id: '/readiness/migration'
-      path: '/readiness/migration'
-      fullPath: '/readiness/migration'
-      preLoaderRoute: typeof ReadinessMigrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/tax': {
-      id: '/ledger/tax'
-      path: '/ledger/tax'
-      fullPath: '/ledger/tax'
-      preLoaderRoute: typeof LedgerTaxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/journals': {
-      id: '/ledger/journals'
-      path: '/ledger/journals'
-      fullPath: '/ledger/journals'
-      preLoaderRoute: typeof LedgerJournalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/inventory': {
-      id: '/ledger/inventory'
-      path: '/ledger/inventory'
-      fullPath: '/ledger/inventory'
-      preLoaderRoute: typeof LedgerInventoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/general': {
-      id: '/ledger/general'
-      path: '/ledger/general'
-      fullPath: '/ledger/general'
-      preLoaderRoute: typeof LedgerGeneralRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/fixed-assets': {
-      id: '/ledger/fixed-assets'
-      path: '/ledger/fixed-assets'
-      fullPath: '/ledger/fixed-assets'
-      preLoaderRoute: typeof LedgerFixedAssetsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/entities': {
-      id: '/ledger/entities'
-      path: '/ledger/entities'
-      fullPath: '/ledger/entities'
-      preLoaderRoute: typeof LedgerEntitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/banking': {
-      id: '/ledger/banking'
-      path: '/ledger/banking'
-      fullPath: '/ledger/banking'
-      preLoaderRoute: typeof LedgerBankingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ledger/accounts': {
-      id: '/ledger/accounts'
-      path: '/ledger/accounts'
-      fullPath: '/ledger/accounts'
-      preLoaderRoute: typeof LedgerAccountsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/invoices/review': {
-      id: '/invoices/review'
-      path: '/review'
-      fullPath: '/invoices/review'
-      preLoaderRoute: typeof InvoicesReviewRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/invoices/recurring': {
-      id: '/invoices/recurring'
-      path: '/recurring'
-      fullPath: '/invoices/recurring'
-      preLoaderRoute: typeof InvoicesRecurringRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/invoices/new': {
-      id: '/invoices/new'
-      path: '/new'
-      fullPath: '/invoices/new'
-      preLoaderRoute: typeof InvoicesNewRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/invoices/credit-notes': {
-      id: '/invoices/credit-notes'
-      path: '/credit-notes'
-      fullPath: '/invoices/credit-notes'
-      preLoaderRoute: typeof InvoicesCreditNotesRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/invoices/$invoiceId': {
-      id: '/invoices/$invoiceId'
-      path: '/$invoiceId'
-      fullPath: '/invoices/$invoiceId'
-      preLoaderRoute: typeof InvoicesInvoiceIdRouteImport
-      parentRoute: typeof InvoicesRoute
-    }
-    '/intelligence/tech-portfolio': {
-      id: '/intelligence/tech-portfolio'
-      path: '/intelligence/tech-portfolio'
-      fullPath: '/intelligence/tech-portfolio'
-      preLoaderRoute: typeof IntelligenceTechPortfolioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/tech': {
-      id: '/intelligence/tech'
-      path: '/intelligence/tech'
-      fullPath: '/intelligence/tech'
-      preLoaderRoute: typeof IntelligenceTechRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/services': {
-      id: '/intelligence/services'
-      path: '/intelligence/services'
-      fullPath: '/intelligence/services'
-      preLoaderRoute: typeof IntelligenceServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/recommendations': {
-      id: '/intelligence/recommendations'
-      path: '/intelligence/recommendations'
-      fullPath: '/intelligence/recommendations'
-      preLoaderRoute: typeof IntelligenceRecommendationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/profitability': {
-      id: '/intelligence/profitability'
-      path: '/intelligence/profitability'
-      fullPath: '/intelligence/profitability'
-      preLoaderRoute: typeof IntelligenceProfitabilityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/overhead-anomalies': {
-      id: '/intelligence/overhead-anomalies'
-      path: '/intelligence/overhead-anomalies'
-      fullPath: '/intelligence/overhead-anomalies'
-      preLoaderRoute: typeof IntelligenceOverheadAnomaliesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/overhead': {
-      id: '/intelligence/overhead'
-      path: '/intelligence/overhead'
-      fullPath: '/intelligence/overhead'
-      preLoaderRoute: typeof IntelligenceOverheadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/marketing': {
-      id: '/intelligence/marketing'
-      path: '/intelligence/marketing'
-      fullPath: '/intelligence/marketing'
-      preLoaderRoute: typeof IntelligenceMarketingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/leakage': {
-      id: '/intelligence/leakage'
-      path: '/intelligence/leakage'
-      fullPath: '/intelligence/leakage'
-      preLoaderRoute: typeof IntelligenceLeakageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/forecasting': {
-      id: '/intelligence/forecasting'
-      path: '/intelligence/forecasting'
-      fullPath: '/intelligence/forecasting'
-      preLoaderRoute: typeof IntelligenceForecastingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/departments': {
-      id: '/intelligence/departments'
-      path: '/intelligence/departments'
-      fullPath: '/intelligence/departments'
-      preLoaderRoute: typeof IntelligenceDepartmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/confidence': {
-      id: '/intelligence/confidence'
-      path: '/intelligence/confidence'
-      fullPath: '/intelligence/confidence'
-      preLoaderRoute: typeof IntelligenceConfidenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/clients': {
-      id: '/intelligence/clients'
-      path: '/intelligence/clients'
-      fullPath: '/intelligence/clients'
-      preLoaderRoute: typeof IntelligenceClientsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/campaigns': {
-      id: '/intelligence/campaigns'
-      path: '/intelligence/campaigns'
-      fullPath: '/intelligence/campaigns'
-      preLoaderRoute: typeof IntelligenceCampaignsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/bonuses': {
-      id: '/intelligence/bonuses'
-      path: '/intelligence/bonuses'
-      fullPath: '/intelligence/bonuses'
-      preLoaderRoute: typeof IntelligenceBonusesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/bonus-plans': {
-      id: '/intelligence/bonus-plans'
-      path: '/intelligence/bonus-plans'
-      fullPath: '/intelligence/bonus-plans'
-      preLoaderRoute: typeof IntelligenceBonusPlansRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/bonus-forecast': {
-      id: '/intelligence/bonus-forecast'
-      path: '/intelligence/bonus-forecast'
-      fullPath: '/intelligence/bonus-forecast'
-      preLoaderRoute: typeof IntelligenceBonusForecastRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/attribution': {
-      id: '/intelligence/attribution'
-      path: '/intelligence/attribution'
-      fullPath: '/intelligence/attribution'
-      preLoaderRoute: typeof IntelligenceAttributionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intelligence/apps': {
-      id: '/intelligence/apps'
-      path: '/intelligence/apps'
-      fullPath: '/intelligence/apps'
-      preLoaderRoute: typeof IntelligenceAppsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/integrations/sandbox': {
-      id: '/integrations/sandbox'
-      path: '/sandbox'
-      fullPath: '/integrations/sandbox'
-      preLoaderRoute: typeof IntegrationsSandboxRouteImport
-      parentRoute: typeof IntegrationsRoute
-    }
-    '/implementation/testing': {
-      id: '/implementation/testing'
-      path: '/implementation/testing'
-      fullPath: '/implementation/testing'
-      preLoaderRoute: typeof ImplementationTestingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/security': {
-      id: '/implementation/security'
-      path: '/implementation/security'
-      fullPath: '/implementation/security'
-      preLoaderRoute: typeof ImplementationSecurityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/readiness': {
-      id: '/implementation/readiness'
-      path: '/implementation/readiness'
-      fullPath: '/implementation/readiness'
-      preLoaderRoute: typeof ImplementationReadinessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/permissions': {
-      id: '/implementation/permissions'
-      path: '/implementation/permissions'
-      fullPath: '/implementation/permissions'
-      preLoaderRoute: typeof ImplementationPermissionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/migration': {
-      id: '/implementation/migration'
-      path: '/implementation/migration'
-      fullPath: '/implementation/migration'
-      preLoaderRoute: typeof ImplementationMigrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/integrations': {
-      id: '/implementation/integrations'
-      path: '/implementation/integrations'
-      fullPath: '/implementation/integrations'
-      preLoaderRoute: typeof ImplementationIntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/handoff': {
-      id: '/implementation/handoff'
-      path: '/implementation/handoff'
-      fullPath: '/implementation/handoff'
-      preLoaderRoute: typeof ImplementationHandoffRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/events': {
-      id: '/implementation/events'
-      path: '/implementation/events'
-      fullPath: '/implementation/events'
-      preLoaderRoute: typeof ImplementationEventsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/data-map': {
-      id: '/implementation/data-map'
-      path: '/implementation/data-map'
-      fullPath: '/implementation/data-map'
-      preLoaderRoute: typeof ImplementationDataMapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/cutover': {
-      id: '/implementation/cutover'
-      path: '/implementation/cutover'
-      fullPath: '/implementation/cutover'
-      preLoaderRoute: typeof ImplementationCutoverRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/implementation/api-map': {
-      id: '/implementation/api-map'
-      path: '/implementation/api-map'
-      fullPath: '/implementation/api-map'
-      preLoaderRoute: typeof ImplementationApiMapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/releases': {
-      id: '/feature-registry/releases'
-      path: '/feature-registry/releases'
-      fullPath: '/feature-registry/releases'
-      preLoaderRoute: typeof FeatureRegistryReleasesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/readiness': {
-      id: '/feature-registry/readiness'
-      path: '/feature-registry/readiness'
-      fullPath: '/feature-registry/readiness'
-      preLoaderRoute: typeof FeatureRegistryReadinessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/planned': {
-      id: '/feature-registry/planned'
-      path: '/feature-registry/planned'
-      fullPath: '/feature-registry/planned'
-      preLoaderRoute: typeof FeatureRegistryPlannedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/navigation': {
-      id: '/feature-registry/navigation'
-      path: '/feature-registry/navigation'
-      fullPath: '/feature-registry/navigation'
-      preLoaderRoute: typeof FeatureRegistryNavigationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/legal-accounting': {
-      id: '/feature-registry/legal-accounting'
-      path: '/feature-registry/legal-accounting'
-      fullPath: '/feature-registry/legal-accounting'
-      preLoaderRoute: typeof FeatureRegistryLegalAccountingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/integrations': {
-      id: '/feature-registry/integrations'
-      path: '/feature-registry/integrations'
-      fullPath: '/feature-registry/integrations'
-      preLoaderRoute: typeof FeatureRegistryIntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/dependencies': {
-      id: '/feature-registry/dependencies'
-      path: '/feature-registry/dependencies'
-      fullPath: '/feature-registry/dependencies'
-      preLoaderRoute: typeof FeatureRegistryDependenciesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/built': {
-      id: '/feature-registry/built'
-      path: '/feature-registry/built'
-      fullPath: '/feature-registry/built'
-      preLoaderRoute: typeof FeatureRegistryBuiltRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/blocked': {
-      id: '/feature-registry/blocked'
-      path: '/feature-registry/blocked'
-      fullPath: '/feature-registry/blocked'
-      preLoaderRoute: typeof FeatureRegistryBlockedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/all': {
-      id: '/feature-registry/all'
-      path: '/feature-registry/all'
-      fullPath: '/feature-registry/all'
-      preLoaderRoute: typeof FeatureRegistryAllRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/feature-registry/$id': {
-      id: '/feature-registry/$id'
-      path: '/feature-registry/$id'
-      fullPath: '/feature-registry/$id'
-      preLoaderRoute: typeof FeatureRegistryIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/expenses/vendors': {
-      id: '/expenses/vendors'
-      path: '/vendors'
-      fullPath: '/expenses/vendors'
-      preLoaderRoute: typeof ExpensesVendorsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/subscriptions': {
-      id: '/expenses/subscriptions'
-      path: '/subscriptions'
-      fullPath: '/expenses/subscriptions'
-      preLoaderRoute: typeof ExpensesSubscriptionsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/submit': {
-      id: '/expenses/submit'
-      path: '/submit'
-      fullPath: '/expenses/submit'
-      preLoaderRoute: typeof ExpensesSubmitRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/reports': {
-      id: '/expenses/reports'
-      path: '/reports'
-      fullPath: '/expenses/reports'
-      preLoaderRoute: typeof ExpensesReportsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/reimbursements': {
-      id: '/expenses/reimbursements'
-      path: '/reimbursements'
-      fullPath: '/expenses/reimbursements'
-      preLoaderRoute: typeof ExpensesReimbursementsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/recovery': {
-      id: '/expenses/recovery'
-      path: '/recovery'
-      fullPath: '/expenses/recovery'
-      preLoaderRoute: typeof ExpensesRecoveryRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/receipts': {
-      id: '/expenses/receipts'
-      path: '/receipts'
-      fullPath: '/expenses/receipts'
-      preLoaderRoute: typeof ExpensesReceiptsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/pre-spend': {
-      id: '/expenses/pre-spend'
-      path: '/pre-spend'
-      fullPath: '/expenses/pre-spend'
-      preLoaderRoute: typeof ExpensesPreSpendRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/policies': {
-      id: '/expenses/policies'
-      path: '/policies'
-      fullPath: '/expenses/policies'
-      preLoaderRoute: typeof ExpensesPoliciesRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/matching': {
-      id: '/expenses/matching'
-      path: '/matching'
-      fullPath: '/expenses/matching'
-      preLoaderRoute: typeof ExpensesMatchingRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/list': {
-      id: '/expenses/list'
-      path: '/list'
-      fullPath: '/expenses/list'
-      preLoaderRoute: typeof ExpensesListRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/intelligence': {
-      id: '/expenses/intelligence'
-      path: '/intelligence'
-      fullPath: '/expenses/intelligence'
-      preLoaderRoute: typeof ExpensesIntelligenceRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/copilot': {
-      id: '/expenses/copilot'
-      path: '/copilot'
-      fullPath: '/expenses/copilot'
-      preLoaderRoute: typeof ExpensesCopilotRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/expenses/approvals': {
-      id: '/expenses/approvals'
-      path: '/approvals'
-      fullPath: '/expenses/approvals'
-      preLoaderRoute: typeof ExpensesApprovalsRouteImport
-      parentRoute: typeof ExpensesRoute
-    }
-    '/estimates/new': {
-      id: '/estimates/new'
-      path: '/new'
-      fullPath: '/estimates/new'
-      preLoaderRoute: typeof EstimatesNewRouteImport
-      parentRoute: typeof EstimatesRoute
-    }
-    '/docs/integrations': {
-      id: '/docs/integrations'
-      path: '/docs/integrations'
-      fullPath: '/docs/integrations'
-      preLoaderRoute: typeof DocsIntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboards/team': {
-      id: '/dashboards/team'
-      path: '/dashboards/team'
-      fullPath: '/dashboards/team'
-      preLoaderRoute: typeof DashboardsTeamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboards/reviewer': {
-      id: '/dashboards/reviewer'
-      path: '/dashboards/reviewer'
-      fullPath: '/dashboards/reviewer'
-      preLoaderRoute: typeof DashboardsReviewerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboards/accounting': {
-      id: '/dashboards/accounting'
-      path: '/dashboards/accounting'
-      fullPath: '/dashboards/accounting'
-      preLoaderRoute: typeof DashboardsAccountingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers/$customerId': {
-      id: '/customers/$customerId'
-      path: '/$customerId'
-      fullPath: '/customers/$customerId'
-      preLoaderRoute: typeof CustomersCustomerIdRouteImport
-      parentRoute: typeof CustomersRoute
-    }
-    '/compensation/verification': {
-      id: '/compensation/verification'
-      path: '/compensation/verification'
-      fullPath: '/compensation/verification'
-      preLoaderRoute: typeof CompensationVerificationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/reserves': {
-      id: '/compensation/reserves'
-      path: '/compensation/reserves'
-      fullPath: '/compensation/reserves'
-      preLoaderRoute: typeof CompensationReservesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/reconciliation': {
-      id: '/compensation/reconciliation'
-      path: '/compensation/reconciliation'
-      fullPath: '/compensation/reconciliation'
-      preLoaderRoute: typeof CompensationReconciliationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/preview': {
-      id: '/compensation/preview'
-      path: '/compensation/preview'
-      fullPath: '/compensation/preview'
-      preLoaderRoute: typeof CompensationPreviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/holdbacks': {
-      id: '/compensation/holdbacks'
-      path: '/compensation/holdbacks'
-      fullPath: '/compensation/holdbacks'
-      preLoaderRoute: typeof CompensationHoldbacksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/eligibility': {
-      id: '/compensation/eligibility'
-      path: '/compensation/eligibility'
-      fullPath: '/compensation/eligibility'
-      preLoaderRoute: typeof CompensationEligibilityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/clawbacks': {
-      id: '/compensation/clawbacks'
-      path: '/compensation/clawbacks'
-      fullPath: '/compensation/clawbacks'
-      preLoaderRoute: typeof CompensationClawbacksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/audit': {
-      id: '/compensation/audit'
-      path: '/compensation/audit'
-      fullPath: '/compensation/audit'
-      preLoaderRoute: typeof CompensationAuditRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/approvals': {
-      id: '/compensation/approvals'
-      path: '/compensation/approvals'
-      fullPath: '/compensation/approvals'
-      preLoaderRoute: typeof CompensationApprovalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/adjustments': {
-      id: '/compensation/adjustments'
-      path: '/compensation/adjustments'
-      fullPath: '/compensation/adjustments'
-      preLoaderRoute: typeof CompensationAdjustmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/close/ai-assistant': {
-      id: '/close/ai-assistant'
-      path: '/ai-assistant'
-      fullPath: '/close/ai-assistant'
-      preLoaderRoute: typeof CloseAiAssistantRouteImport
-      parentRoute: typeof CloseRoute
-    }
-    '/cash-availability/rules': {
-      id: '/cash-availability/rules'
-      path: '/rules'
-      fullPath: '/cash-availability/rules'
-      preLoaderRoute: typeof CashAvailabilityRulesRouteImport
-      parentRoute: typeof CashAvailabilityRoute
-    }
-    '/cash-availability/allocations': {
-      id: '/cash-availability/allocations'
-      path: '/allocations'
-      fullPath: '/cash-availability/allocations'
-      preLoaderRoute: typeof CashAvailabilityAllocationsRouteImport
-      parentRoute: typeof CashAvailabilityRoute
-    }
-    '/banking/transactions': {
-      id: '/banking/transactions'
-      path: '/banking/transactions'
-      fullPath: '/banking/transactions'
-      preLoaderRoute: typeof BankingTransactionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/banking/reconciliation': {
-      id: '/banking/reconciliation'
-      path: '/banking/reconciliation'
-      fullPath: '/banking/reconciliation'
-      preLoaderRoute: typeof BankingReconciliationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/subscription-actions': {
-      id: '/automation/subscription-actions'
-      path: '/automation/subscription-actions'
-      fullPath: '/automation/subscription-actions'
-      preLoaderRoute: typeof AutomationSubscriptionActionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/rules': {
-      id: '/automation/rules'
-      path: '/automation/rules'
-      fullPath: '/automation/rules'
-      preLoaderRoute: typeof AutomationRulesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/revenue-recovery': {
-      id: '/automation/revenue-recovery'
-      path: '/automation/revenue-recovery'
-      fullPath: '/automation/revenue-recovery'
-      preLoaderRoute: typeof AutomationRevenueRecoveryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/payables': {
-      id: '/automation/payables'
-      path: '/automation/payables'
-      fullPath: '/automation/payables'
-      preLoaderRoute: typeof AutomationPayablesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/integration-health': {
-      id: '/automation/integration-health'
-      path: '/automation/integration-health'
-      fullPath: '/automation/integration-health'
-      preLoaderRoute: typeof AutomationIntegrationHealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/exceptions': {
-      id: '/automation/exceptions'
-      path: '/automation/exceptions'
-      fullPath: '/automation/exceptions'
-      preLoaderRoute: typeof AutomationExceptionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/decision-log': {
-      id: '/automation/decision-log'
-      path: '/automation/decision-log'
-      fullPath: '/automation/decision-log'
-      preLoaderRoute: typeof AutomationDecisionLogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/data-quality': {
-      id: '/automation/data-quality'
-      path: '/automation/data-quality'
-      fullPath: '/automation/data-quality'
-      preLoaderRoute: typeof AutomationDataQualityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/collections': {
-      id: '/automation/collections'
-      path: '/automation/collections'
-      fullPath: '/automation/collections'
-      preLoaderRoute: typeof AutomationCollectionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/cash-controls': {
-      id: '/automation/cash-controls'
-      path: '/automation/cash-controls'
-      fullPath: '/automation/cash-controls'
-      preLoaderRoute: typeof AutomationCashControlsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/budget-controls': {
-      id: '/automation/budget-controls'
-      path: '/automation/budget-controls'
-      fullPath: '/automation/budget-controls'
-      preLoaderRoute: typeof AutomationBudgetControlsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/bonus-controls': {
-      id: '/automation/bonus-controls'
-      path: '/automation/bonus-controls'
-      fullPath: '/automation/bonus-controls'
-      preLoaderRoute: typeof AutomationBonusControlsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/approvals': {
-      id: '/automation/approvals'
-      path: '/automation/approvals'
-      fullPath: '/automation/approvals'
-      preLoaderRoute: typeof AutomationApprovalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/automation/action-plans': {
-      id: '/automation/action-plans'
-      path: '/automation/action-plans'
-      fullPath: '/automation/action-plans'
-      preLoaderRoute: typeof AutomationActionPlansRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/widgets': {
-      id: '/apex/widgets'
-      path: '/apex/widgets'
-      fullPath: '/apex/widgets'
-      preLoaderRoute: typeof ApexWidgetsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/timeline': {
-      id: '/apex/timeline'
-      path: '/apex/timeline'
-      fullPath: '/apex/timeline'
-      preLoaderRoute: typeof ApexTimelineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/roles': {
-      id: '/apex/roles'
-      path: '/apex/roles'
-      fullPath: '/apex/roles'
-      preLoaderRoute: typeof ApexRolesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/relationship-graph': {
-      id: '/apex/relationship-graph'
-      path: '/apex/relationship-graph'
-      fullPath: '/apex/relationship-graph'
-      preLoaderRoute: typeof ApexRelationshipGraphRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/personas': {
-      id: '/apex/personas'
-      path: '/apex/personas'
-      fullPath: '/apex/personas'
-      preLoaderRoute: typeof ApexPersonasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/people': {
-      id: '/apex/people'
-      path: '/apex/people'
-      fullPath: '/apex/people'
-      preLoaderRoute: typeof ApexPeopleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/opportunities': {
-      id: '/apex/opportunities'
-      path: '/apex/opportunities'
-      fullPath: '/apex/opportunities'
-      preLoaderRoute: typeof ApexOpportunitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/navigation': {
-      id: '/apex/navigation'
-      path: '/apex/navigation'
-      fullPath: '/apex/navigation'
-      preLoaderRoute: typeof ApexNavigationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/money': {
-      id: '/apex/money'
-      path: '/apex/money'
-      fullPath: '/apex/money'
-      preLoaderRoute: typeof ApexMoneyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/insights': {
-      id: '/apex/insights'
-      path: '/apex/insights'
-      fullPath: '/apex/insights'
-      preLoaderRoute: typeof ApexInsightsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/handoff': {
-      id: '/apex/handoff'
-      path: '/apex/handoff'
-      fullPath: '/apex/handoff'
-      preLoaderRoute: typeof ApexHandoffRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/growth': {
-      id: '/apex/growth'
-      path: '/apex/growth'
-      fullPath: '/apex/growth'
-      preLoaderRoute: typeof ApexGrowthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/financial-dna': {
-      id: '/apex/financial-dna'
-      path: '/apex/financial-dna'
-      fullPath: '/apex/financial-dna'
-      preLoaderRoute: typeof ApexFinancialDnaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/digital-twin': {
-      id: '/apex/digital-twin'
-      path: '/apex/digital-twin'
-      fullPath: '/apex/digital-twin'
-      preLoaderRoute: typeof ApexDigitalTwinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/company-health': {
-      id: '/apex/company-health'
-      path: '/apex/company-health'
-      fullPath: '/apex/company-health'
-      preLoaderRoute: typeof ApexCompanyHealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/company': {
-      id: '/apex/company'
-      path: '/apex/company'
-      fullPath: '/apex/company'
-      preLoaderRoute: typeof ApexCompanyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/briefing': {
-      id: '/apex/briefing'
-      path: '/apex/briefing'
-      fullPath: '/apex/briefing'
-      preLoaderRoute: typeof ApexBriefingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/assets': {
-      id: '/apex/assets'
-      path: '/apex/assets'
-      fullPath: '/apex/assets'
-      preLoaderRoute: typeof ApexAssetsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/architecture': {
-      id: '/apex/architecture'
-      path: '/apex/architecture'
-      fullPath: '/apex/architecture'
-      preLoaderRoute: typeof ApexArchitectureRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/readiness': {
-      id: '/admin/readiness'
-      path: '/admin/readiness'
-      fullPath: '/admin/readiness'
-      preLoaderRoute: typeof AdminReadinessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/production-review': {
-      id: '/admin/production-review'
-      path: '/admin/production-review'
-      fullPath: '/admin/production-review'
-      preLoaderRoute: typeof AdminProductionReviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/pilot-success': {
-      id: '/admin/pilot-success'
-      path: '/admin/pilot-success'
-      fullPath: '/admin/pilot-success'
-      preLoaderRoute: typeof AdminPilotSuccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/pilot-simulation': {
-      id: '/admin/pilot-simulation'
-      path: '/admin/pilot-simulation'
-      fullPath: '/admin/pilot-simulation'
-      preLoaderRoute: typeof AdminPilotSimulationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/observability': {
-      id: '/admin/observability'
-      path: '/admin/observability'
-      fullPath: '/admin/observability'
-      preLoaderRoute: typeof AdminObservabilityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/migration': {
-      id: '/admin/migration'
-      path: '/admin/migration'
-      fullPath: '/admin/migration'
-      preLoaderRoute: typeof AdminMigrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/metrics': {
-      id: '/admin/metrics'
-      path: '/admin/metrics'
-      fullPath: '/admin/metrics'
-      preLoaderRoute: typeof AdminMetricsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/intelligence': {
-      id: '/admin/intelligence'
-      path: '/admin/intelligence'
-      fullPath: '/admin/intelligence'
-      preLoaderRoute: typeof AdminIntelligenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/integrations': {
-      id: '/admin/integrations'
-      path: '/admin/integrations'
-      fullPath: '/admin/integrations'
-      preLoaderRoute: typeof AdminIntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/integration-testing': {
-      id: '/admin/integration-testing'
-      path: '/admin/integration-testing'
-      fullPath: '/admin/integration-testing'
-      preLoaderRoute: typeof AdminIntegrationTestingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/financial-events': {
-      id: '/admin/financial-events'
-      path: '/admin/financial-events'
-      fullPath: '/admin/financial-events'
-      preLoaderRoute: typeof AdminFinancialEventsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/customer-onboarding': {
-      id: '/admin/customer-onboarding'
-      path: '/admin/customer-onboarding'
-      fullPath: '/admin/customer-onboarding'
-      preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/acceptance-tests': {
-      id: '/admin/acceptance-tests'
-      path: '/admin/acceptance-tests'
-      fullPath: '/admin/acceptance-tests'
-      preLoaderRoute: typeof AdminAcceptanceTestsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accounts-receivable/aging': {
-      id: '/accounts-receivable/aging'
-      path: '/accounts-receivable/aging'
-      fullPath: '/accounts-receivable/aging'
-      preLoaderRoute: typeof AccountsReceivableAgingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accounts-payable/vendors': {
-      id: '/accounts-payable/vendors'
-      path: '/accounts-payable/vendors'
-      fullPath: '/accounts-payable/vendors'
-      preLoaderRoute: typeof AccountsPayableVendorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accounts-payable/payments': {
-      id: '/accounts-payable/payments'
-      path: '/accounts-payable/payments'
-      fullPath: '/accounts-payable/payments'
-      preLoaderRoute: typeof AccountsPayablePaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accounts-payable/bills': {
-      id: '/accounts-payable/bills'
-      path: '/accounts-payable/bills'
-      fullPath: '/accounts-payable/bills'
-      preLoaderRoute: typeof AccountsPayableBillsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/accounts-payable/aging': {
-      id: '/accounts-payable/aging'
-      path: '/accounts-payable/aging'
-      fullPath: '/accounts-payable/aging'
-      preLoaderRoute: typeof AccountsPayableAgingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/statements/': {
-      id: '/compensation/statements/'
-      path: '/compensation/statements'
-      fullPath: '/compensation/statements/'
-      preLoaderRoute: typeof CompensationStatementsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/plans/': {
-      id: '/compensation/plans/'
-      path: '/compensation/plans'
-      fullPath: '/compensation/plans/'
-      preLoaderRoute: typeof CompensationPlansIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/payment-batches/': {
-      id: '/compensation/payment-batches/'
-      path: '/compensation/payment-batches'
-      fullPath: '/compensation/payment-batches/'
-      preLoaderRoute: typeof CompensationPaymentBatchesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/payables/': {
-      id: '/compensation/payables/'
-      path: '/compensation/payables'
-      fullPath: '/compensation/payables/'
-      preLoaderRoute: typeof CompensationPayablesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/participants/': {
-      id: '/compensation/participants/'
-      path: '/compensation/participants'
-      fullPath: '/compensation/participants/'
-      preLoaderRoute: typeof CompensationParticipantsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/disputes/': {
-      id: '/compensation/disputes/'
-      path: '/compensation/disputes'
-      fullPath: '/compensation/disputes/'
-      preLoaderRoute: typeof CompensationDisputesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/calculations/': {
-      id: '/compensation/calculations/'
-      path: '/compensation/calculations'
-      fullPath: '/compensation/calculations/'
-      preLoaderRoute: typeof CompensationCalculationsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/attribution/': {
-      id: '/compensation/attribution/'
-      path: '/compensation/attribution'
-      fullPath: '/compensation/attribution/'
-      preLoaderRoute: typeof CompensationAttributionIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apex/workspaces/': {
-      id: '/apex/workspaces/'
-      path: '/apex/workspaces'
-      fullPath: '/apex/workspaces/'
-      preLoaderRoute: typeof ApexWorkspacesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/settings/serviceconnect': {
+      id: '/settings/serviceconnect'
+      path: '/serviceconnect'
+      fullPath: '/settings/serviceconnect'
+      preLoaderRoute: typeof SettingsServiceconnectRouteImport
+      parentRoute: typeof SettingsRoute
     }
     '/apex/ai-personas/': {
       id: '/apex/ai-personas/'
@@ -4236,95 +4172,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexAiPersonasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ledger/banking/reconcile': {
-      id: '/ledger/banking/reconcile'
-      path: '/reconcile'
-      fullPath: '/ledger/banking/reconcile'
-      preLoaderRoute: typeof LedgerBankingReconcileRouteImport
-      parentRoute: typeof LedgerBankingRoute
-    }
-    '/compensation/statements/$id': {
-      id: '/compensation/statements/$id'
-      path: '/compensation/statements/$id'
-      fullPath: '/compensation/statements/$id'
-      preLoaderRoute: typeof CompensationStatementsIdRouteImport
+    '/apex/ai-personas/$persona': {
+      id: '/apex/ai-personas/$persona'
+      path: '/apex/ai-personas/$persona'
+      fullPath: '/apex/ai-personas/$persona'
+      preLoaderRoute: typeof ApexAiPersonasPersonaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/compensation/plans/new': {
-      id: '/compensation/plans/new'
-      path: '/compensation/plans/new'
-      fullPath: '/compensation/plans/new'
-      preLoaderRoute: typeof CompensationPlansNewRouteImport
-      parentRoute: typeof rootRouteImport
+    '/apex/digital-twin/scenarios': {
+      id: '/apex/digital-twin/scenarios'
+      path: '/scenarios'
+      fullPath: '/apex/digital-twin/scenarios'
+      preLoaderRoute: typeof ApexDigitalTwinScenariosRouteImport
+      parentRoute: typeof ApexDigitalTwinRoute
     }
-    '/compensation/plans/$id': {
-      id: '/compensation/plans/$id'
-      path: '/compensation/plans/$id'
-      fullPath: '/compensation/plans/$id'
-      preLoaderRoute: typeof CompensationPlansIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/apex/financial-dna/$id': {
+      id: '/apex/financial-dna/$id'
+      path: '/$id'
+      fullPath: '/apex/financial-dna/$id'
+      preLoaderRoute: typeof ApexFinancialDnaIdRouteImport
+      parentRoute: typeof ApexFinancialDnaRoute
     }
-    '/compensation/payment-batches/$id': {
-      id: '/compensation/payment-batches/$id'
-      path: '/compensation/payment-batches/$id'
-      fullPath: '/compensation/payment-batches/$id'
-      preLoaderRoute: typeof CompensationPaymentBatchesIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/apex/opportunities/$id': {
+      id: '/apex/opportunities/$id'
+      path: '/$id'
+      fullPath: '/apex/opportunities/$id'
+      preLoaderRoute: typeof ApexOpportunitiesIdRouteImport
+      parentRoute: typeof ApexOpportunitiesRoute
     }
-    '/compensation/payables/$id': {
-      id: '/compensation/payables/$id'
-      path: '/compensation/payables/$id'
-      fullPath: '/compensation/payables/$id'
-      preLoaderRoute: typeof CompensationPayablesIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/apex/timeline/$id': {
+      id: '/apex/timeline/$id'
+      path: '/$id'
+      fullPath: '/apex/timeline/$id'
+      preLoaderRoute: typeof ApexTimelineIdRouteImport
+      parentRoute: typeof ApexTimelineRoute
     }
-    '/compensation/participants/$id': {
-      id: '/compensation/participants/$id'
-      path: '/compensation/participants/$id'
-      fullPath: '/compensation/participants/$id'
-      preLoaderRoute: typeof CompensationParticipantsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/disputes/$id': {
-      id: '/compensation/disputes/$id'
-      path: '/compensation/disputes/$id'
-      fullPath: '/compensation/disputes/$id'
-      preLoaderRoute: typeof CompensationDisputesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/calculations/new': {
-      id: '/compensation/calculations/new'
-      path: '/compensation/calculations/new'
-      fullPath: '/compensation/calculations/new'
-      preLoaderRoute: typeof CompensationCalculationsNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/calculations/$id': {
-      id: '/compensation/calculations/$id'
-      path: '/compensation/calculations/$id'
-      fullPath: '/compensation/calculations/$id'
-      preLoaderRoute: typeof CompensationCalculationsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/attribution/evidence': {
-      id: '/compensation/attribution/evidence'
-      path: '/compensation/attribution/evidence'
-      fullPath: '/compensation/attribution/evidence'
-      preLoaderRoute: typeof CompensationAttributionEvidenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/attribution/conflicts': {
-      id: '/compensation/attribution/conflicts'
-      path: '/compensation/attribution/conflicts'
-      fullPath: '/compensation/attribution/conflicts'
-      preLoaderRoute: typeof CompensationAttributionConflictsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/attribution/$id': {
-      id: '/compensation/attribution/$id'
-      path: '/compensation/attribution/$id'
-      fullPath: '/compensation/attribution/$id'
-      preLoaderRoute: typeof CompensationAttributionIdRouteImport
+    '/apex/workspaces/': {
+      id: '/apex/workspaces/'
+      path: '/apex/workspaces'
+      fullPath: '/apex/workspaces/'
+      preLoaderRoute: typeof ApexWorkspacesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apex/workspaces/$role': {
@@ -4334,62 +4221,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexWorkspacesRoleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apex/timeline/$id': {
-      id: '/apex/timeline/$id'
-      path: '/$id'
-      fullPath: '/apex/timeline/$id'
-      preLoaderRoute: typeof ApexTimelineIdRouteImport
-      parentRoute: typeof ApexTimelineRoute
-    }
-    '/apex/opportunities/$id': {
-      id: '/apex/opportunities/$id'
-      path: '/$id'
-      fullPath: '/apex/opportunities/$id'
-      preLoaderRoute: typeof ApexOpportunitiesIdRouteImport
-      parentRoute: typeof ApexOpportunitiesRoute
-    }
-    '/apex/financial-dna/$id': {
-      id: '/apex/financial-dna/$id'
-      path: '/$id'
-      fullPath: '/apex/financial-dna/$id'
-      preLoaderRoute: typeof ApexFinancialDnaIdRouteImport
-      parentRoute: typeof ApexFinancialDnaRoute
-    }
-    '/apex/digital-twin/scenarios': {
-      id: '/apex/digital-twin/scenarios'
-      path: '/scenarios'
-      fullPath: '/apex/digital-twin/scenarios'
-      preLoaderRoute: typeof ApexDigitalTwinScenariosRouteImport
-      parentRoute: typeof ApexDigitalTwinRoute
-    }
-    '/apex/ai-personas/$persona': {
-      id: '/apex/ai-personas/$persona'
-      path: '/apex/ai-personas/$persona'
-      fullPath: '/apex/ai-personas/$persona'
-      preLoaderRoute: typeof ApexAiPersonasPersonaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/compensation/plans/$id/versions': {
-      id: '/compensation/plans/$id/versions'
-      path: '/versions'
-      fullPath: '/compensation/plans/$id/versions'
-      preLoaderRoute: typeof CompensationPlansIdVersionsRouteImport
-      parentRoute: typeof CompensationPlansIdRoute
-    }
-    '/compensation/plans/$id/participants': {
-      id: '/compensation/plans/$id/participants'
-      path: '/participants'
-      fullPath: '/compensation/plans/$id/participants'
-      preLoaderRoute: typeof CompensationPlansIdParticipantsRouteImport
-      parentRoute: typeof CompensationPlansIdRoute
-    }
-    '/compensation/calculations/$id/preview': {
-      id: '/compensation/calculations/$id/preview'
-      path: '/preview'
-      fullPath: '/compensation/calculations/$id/preview'
-      preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
-      parentRoute: typeof CompensationCalculationsIdRoute
-    }
     '/api/webhooks/authorize-net': {
       id: '/api/webhooks/authorize-net'
       path: '/api/webhooks/authorize-net'
@@ -4397,32 +4228,165 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWebhooksAuthorizeNetRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/integrations/refunds': {
-      id: '/api/public/integrations/refunds'
-      path: '/api/public/integrations/refunds'
-      fullPath: '/api/public/integrations/refunds'
-      preLoaderRoute: typeof ApiPublicIntegrationsRefundsRouteImport
+    '/compensation/attribution/': {
+      id: '/compensation/attribution/'
+      path: '/compensation/attribution'
+      fullPath: '/compensation/attribution/'
+      preLoaderRoute: typeof CompensationAttributionIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/integrations/payments': {
-      id: '/api/public/integrations/payments'
-      path: '/api/public/integrations/payments'
-      fullPath: '/api/public/integrations/payments'
-      preLoaderRoute: typeof ApiPublicIntegrationsPaymentsRouteImport
+    '/compensation/attribution/$id': {
+      id: '/compensation/attribution/$id'
+      path: '/compensation/attribution/$id'
+      fullPath: '/compensation/attribution/$id'
+      preLoaderRoute: typeof CompensationAttributionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/integrations/invoices': {
-      id: '/api/public/integrations/invoices'
-      path: '/api/public/integrations/invoices'
-      fullPath: '/api/public/integrations/invoices'
-      preLoaderRoute: typeof ApiPublicIntegrationsInvoicesRouteImport
+    '/compensation/attribution/conflicts': {
+      id: '/compensation/attribution/conflicts'
+      path: '/compensation/attribution/conflicts'
+      fullPath: '/compensation/attribution/conflicts'
+      preLoaderRoute: typeof CompensationAttributionConflictsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/integrations/inventory-consumption': {
-      id: '/api/public/integrations/inventory-consumption'
-      path: '/api/public/integrations/inventory-consumption'
-      fullPath: '/api/public/integrations/inventory-consumption'
-      preLoaderRoute: typeof ApiPublicIntegrationsInventoryConsumptionRouteImport
+    '/compensation/attribution/evidence': {
+      id: '/compensation/attribution/evidence'
+      path: '/compensation/attribution/evidence'
+      fullPath: '/compensation/attribution/evidence'
+      preLoaderRoute: typeof CompensationAttributionEvidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/': {
+      id: '/compensation/calculations/'
+      path: '/compensation/calculations'
+      fullPath: '/compensation/calculations/'
+      preLoaderRoute: typeof CompensationCalculationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/$id': {
+      id: '/compensation/calculations/$id'
+      path: '/compensation/calculations/$id'
+      fullPath: '/compensation/calculations/$id'
+      preLoaderRoute: typeof CompensationCalculationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/new': {
+      id: '/compensation/calculations/new'
+      path: '/compensation/calculations/new'
+      fullPath: '/compensation/calculations/new'
+      preLoaderRoute: typeof CompensationCalculationsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/disputes/': {
+      id: '/compensation/disputes/'
+      path: '/compensation/disputes'
+      fullPath: '/compensation/disputes/'
+      preLoaderRoute: typeof CompensationDisputesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/disputes/$id': {
+      id: '/compensation/disputes/$id'
+      path: '/compensation/disputes/$id'
+      fullPath: '/compensation/disputes/$id'
+      preLoaderRoute: typeof CompensationDisputesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/participants/': {
+      id: '/compensation/participants/'
+      path: '/compensation/participants'
+      fullPath: '/compensation/participants/'
+      preLoaderRoute: typeof CompensationParticipantsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/participants/$id': {
+      id: '/compensation/participants/$id'
+      path: '/compensation/participants/$id'
+      fullPath: '/compensation/participants/$id'
+      preLoaderRoute: typeof CompensationParticipantsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payables/': {
+      id: '/compensation/payables/'
+      path: '/compensation/payables'
+      fullPath: '/compensation/payables/'
+      preLoaderRoute: typeof CompensationPayablesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payables/$id': {
+      id: '/compensation/payables/$id'
+      path: '/compensation/payables/$id'
+      fullPath: '/compensation/payables/$id'
+      preLoaderRoute: typeof CompensationPayablesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payment-batches/': {
+      id: '/compensation/payment-batches/'
+      path: '/compensation/payment-batches'
+      fullPath: '/compensation/payment-batches/'
+      preLoaderRoute: typeof CompensationPaymentBatchesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/payment-batches/$id': {
+      id: '/compensation/payment-batches/$id'
+      path: '/compensation/payment-batches/$id'
+      fullPath: '/compensation/payment-batches/$id'
+      preLoaderRoute: typeof CompensationPaymentBatchesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/plans/': {
+      id: '/compensation/plans/'
+      path: '/compensation/plans'
+      fullPath: '/compensation/plans/'
+      preLoaderRoute: typeof CompensationPlansIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/plans/$id': {
+      id: '/compensation/plans/$id'
+      path: '/compensation/plans/$id'
+      fullPath: '/compensation/plans/$id'
+      preLoaderRoute: typeof CompensationPlansIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/plans/new': {
+      id: '/compensation/plans/new'
+      path: '/compensation/plans/new'
+      fullPath: '/compensation/plans/new'
+      preLoaderRoute: typeof CompensationPlansNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/statements/': {
+      id: '/compensation/statements/'
+      path: '/compensation/statements'
+      fullPath: '/compensation/statements/'
+      preLoaderRoute: typeof CompensationStatementsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/statements/$id': {
+      id: '/compensation/statements/$id'
+      path: '/compensation/statements/$id'
+      fullPath: '/compensation/statements/$id'
+      preLoaderRoute: typeof CompensationStatementsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/banking/reconcile': {
+      id: '/ledger/banking/reconcile'
+      path: '/reconcile'
+      fullPath: '/ledger/banking/reconcile'
+      preLoaderRoute: typeof LedgerBankingReconcileRouteImport
+      parentRoute: typeof LedgerBankingRoute
+    }
+    '/apex/digital-twin/scenarios/$id': {
+      id: '/apex/digital-twin/scenarios/$id'
+      path: '/$id'
+      fullPath: '/apex/digital-twin/scenarios/$id'
+      preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
+      parentRoute: typeof ApexDigitalTwinScenariosRoute
+    }
+    '/api/public/integrations/customers': {
+      id: '/api/public/integrations/customers'
+      path: '/api/public/integrations/customers'
+      fullPath: '/api/public/integrations/customers'
+      preLoaderRoute: typeof ApiPublicIntegrationsCustomersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/integrations/events': {
@@ -4432,19 +4396,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicIntegrationsEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/integrations/customers': {
-      id: '/api/public/integrations/customers'
-      path: '/api/public/integrations/customers'
-      fullPath: '/api/public/integrations/customers'
-      preLoaderRoute: typeof ApiPublicIntegrationsCustomersRouteImport
+    '/api/public/integrations/inventory-consumption': {
+      id: '/api/public/integrations/inventory-consumption'
+      path: '/api/public/integrations/inventory-consumption'
+      fullPath: '/api/public/integrations/inventory-consumption'
+      preLoaderRoute: typeof ApiPublicIntegrationsInventoryConsumptionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apex/digital-twin/scenarios/$id': {
-      id: '/apex/digital-twin/scenarios/$id'
-      path: '/$id'
-      fullPath: '/apex/digital-twin/scenarios/$id'
-      preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
-      parentRoute: typeof ApexDigitalTwinScenariosRoute
+    '/api/public/integrations/invoices': {
+      id: '/api/public/integrations/invoices'
+      path: '/api/public/integrations/invoices'
+      fullPath: '/api/public/integrations/invoices'
+      preLoaderRoute: typeof ApiPublicIntegrationsInvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/integrations/payments': {
+      id: '/api/public/integrations/payments'
+      path: '/api/public/integrations/payments'
+      fullPath: '/api/public/integrations/payments'
+      preLoaderRoute: typeof ApiPublicIntegrationsPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/integrations/refunds': {
+      id: '/api/public/integrations/refunds'
+      path: '/api/public/integrations/refunds'
+      fullPath: '/api/public/integrations/refunds'
+      preLoaderRoute: typeof ApiPublicIntegrationsRefundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compensation/calculations/$id/preview': {
+      id: '/compensation/calculations/$id/preview'
+      path: '/preview'
+      fullPath: '/compensation/calculations/$id/preview'
+      preLoaderRoute: typeof CompensationCalculationsIdPreviewRouteImport
+      parentRoute: typeof CompensationCalculationsIdRoute
+    }
+    '/compensation/plans/$id/participants': {
+      id: '/compensation/plans/$id/participants'
+      path: '/participants'
+      fullPath: '/compensation/plans/$id/participants'
+      preLoaderRoute: typeof CompensationPlansIdParticipantsRouteImport
+      parentRoute: typeof CompensationPlansIdRoute
+    }
+    '/compensation/plans/$id/versions': {
+      id: '/compensation/plans/$id/versions'
+      path: '/versions'
+      fullPath: '/compensation/plans/$id/versions'
+      preLoaderRoute: typeof CompensationPlansIdVersionsRouteImport
+      parentRoute: typeof CompensationPlansIdRoute
     }
     '/api/public/integrations/work-orders/completed': {
       id: '/api/public/integrations/work-orders/completed'
@@ -4707,7 +4706,6 @@ const rootRouteChildren: RootRouteChildren = {
   ControlsRoute: ControlsRoute,
   CustomersRoute: CustomersRouteWithChildren,
   DashboardRoute: DashboardRoute,
-  EmailInboxRoute: EmailInboxRoute,
   EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRouteWithChildren,
   IntegrationsRoute: IntegrationsRouteWithChildren,
@@ -4783,6 +4781,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   DocsIntegrationsRoute: DocsIntegrationsRoute,
+  EmailInboxRoute: EmailInboxRoute,
   FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
@@ -4847,6 +4846,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportsIndexRoute: ReportsIndexRoute,
   ApexAiPersonasPersonaRoute: ApexAiPersonasPersonaRoute,
   ApexWorkspacesRoleRoute: ApexWorkspacesRoleRoute,
+  ApiWebhooksAuthorizeNetRoute: ApiWebhooksAuthorizeNetRoute,
   CompensationAttributionIdRoute: CompensationAttributionIdRoute,
   CompensationAttributionConflictsRoute: CompensationAttributionConflictsRoute,
   CompensationAttributionEvidenceRoute: CompensationAttributionEvidenceRoute,
@@ -4875,7 +4875,6 @@ const rootRouteChildren: RootRouteChildren = {
     ApiPublicIntegrationsInventoryConsumptionRoute,
   ApiPublicIntegrationsInvoicesRoute: ApiPublicIntegrationsInvoicesRoute,
   ApiPublicIntegrationsPaymentsRoute: ApiPublicIntegrationsPaymentsRoute,
-  ApiWebhooksAuthorizeNetRoute: ApiWebhooksAuthorizeNetRoute,
   ApiPublicIntegrationsRefundsRoute: ApiPublicIntegrationsRefundsRoute,
   ApiPublicIntegrationsWorkOrdersCompletedRoute:
     ApiPublicIntegrationsWorkOrdersCompletedRoute,
@@ -4883,3 +4882,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

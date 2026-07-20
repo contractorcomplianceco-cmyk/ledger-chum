@@ -3715,6 +3715,66 @@ export type Database = {
           },
         ]
       }
+      payment_events: {
+        Row: {
+          amount: number | null
+          created_at: string
+          event_type: string
+          id: string
+          org_id: string
+          payload: Json | null
+          payment_id: string | null
+          processed_at: string | null
+          provider: string
+          provider_event_id: string
+          provider_txn_id: string | null
+          status: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          event_type: string
+          id?: string
+          org_id: string
+          payload?: Json | null
+          payment_id?: string | null
+          processed_at?: string | null
+          provider: string
+          provider_event_id: string
+          provider_txn_id?: string | null
+          status?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          org_id?: string
+          payload?: Json | null
+          payment_id?: string | null
+          processed_at?: string | null
+          provider?: string
+          provider_event_id?: string
+          provider_txn_id?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_events_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_events_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount: number
@@ -3723,11 +3783,16 @@ export type Database = {
           external_id: string | null
           external_source: string | null
           id: string
+          idempotency_key: string | null
           memo: string | null
           method: string | null
           org_id: string
           payment_date: string
+          payment_type: string
+          provider: string | null
+          provider_txn_id: string | null
           reference: string | null
+          status: string
           unapplied_amount: number
         }
         Insert: {
@@ -3737,11 +3802,16 @@ export type Database = {
           external_id?: string | null
           external_source?: string | null
           id?: string
+          idempotency_key?: string | null
           memo?: string | null
           method?: string | null
           org_id: string
           payment_date: string
+          payment_type?: string
+          provider?: string | null
+          provider_txn_id?: string | null
           reference?: string | null
+          status?: string
           unapplied_amount: number
         }
         Update: {
@@ -3751,11 +3821,16 @@ export type Database = {
           external_id?: string | null
           external_source?: string | null
           id?: string
+          idempotency_key?: string | null
           memo?: string | null
           method?: string | null
           org_id?: string
           payment_date?: string
+          payment_type?: string
+          provider?: string | null
+          provider_txn_id?: string | null
           reference?: string | null
+          status?: string
           unapplied_amount?: number
         }
         Relationships: [

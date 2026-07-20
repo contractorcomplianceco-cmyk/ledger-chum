@@ -93,6 +93,7 @@ function SettingsPage() {
           <div className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-3">
               <SettingsLink to="/settings/account-mappings" label="Account Mappings" hint="Route integrations to ledger accounts" />
+              <SettingsLink to="/settings/email" label="Email" hint="SMTP send + IMAP/POP inbox" />
               <SettingsLink to="/controls" label="Control Center" hint="Close status, exceptions, aging" />
               <SettingsLink to="/close" label="Monthly Close" hint="Checklist and period locking" />
             </div>

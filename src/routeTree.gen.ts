@@ -38,6 +38,8 @@ import { Route as CashAvailabilityIndexRouteImport } from './routes/cash-availab
 import { Route as BankingIndexRouteImport } from './routes/banking.index'
 import { Route as ApexIndexRouteImport } from './routes/apex.index'
 import { Route as SettingsServiceconnectRouteImport } from './routes/settings.serviceconnect'
+import { Route as SettingsEmailRouteImport } from './routes/settings.email'
+import { Route as EmailInboxRouteImport } from './routes/email.inbox'
 import { Route as SettingsAccountMappingsRouteImport } from './routes/settings.account-mappings'
 import { Route as ReportsTrialBalanceRouteImport } from './routes/reports.trial-balance'
 import { Route as ReportsProfitLossRouteImport } from './routes/reports.profit-loss'
@@ -377,6 +379,16 @@ const SettingsAccountMappingsRoute = SettingsAccountMappingsRouteImport.update({
   id: '/account-mappings',
   path: '/account-mappings',
   getParentRoute: () => SettingsRoute,
+} as any)
+const SettingsEmailRoute = SettingsEmailRouteImport.update({
+  id: '/email',
+  path: '/email',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const EmailInboxRoute = EmailInboxRouteImport.update({
+  id: '/email/inbox',
+  path: '/email/inbox',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ReportsTrialBalanceRoute = ReportsTrialBalanceRouteImport.update({
   id: '/reports/trial-balance',
@@ -1533,6 +1545,8 @@ export interface FileRoutesByFullPath {
   '/reports/profit-loss': typeof ReportsProfitLossRoute
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/email': typeof SettingsEmailRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
@@ -1750,6 +1764,8 @@ export interface FileRoutesByTo {
   '/reports/profit-loss': typeof ReportsProfitLossRoute
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/email': typeof SettingsEmailRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex': typeof ApexIndexRoute
   '/banking': typeof BankingIndexRoute
@@ -1971,6 +1987,8 @@ export interface FileRoutesById {
   '/reports/profit-loss': typeof ReportsProfitLossRoute
   '/reports/trial-balance': typeof ReportsTrialBalanceRoute
   '/settings/account-mappings': typeof SettingsAccountMappingsRoute
+  '/settings/email': typeof SettingsEmailRoute
+  '/email/inbox': typeof EmailInboxRoute
   '/settings/serviceconnect': typeof SettingsServiceconnectRoute
   '/apex/': typeof ApexIndexRoute
   '/banking/': typeof BankingIndexRoute
@@ -2193,6 +2211,8 @@ export interface FileRouteTypes {
     | '/reports/profit-loss'
     | '/reports/trial-balance'
     | '/settings/account-mappings'
+    | '/settings/email'
+    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
@@ -2410,6 +2430,8 @@ export interface FileRouteTypes {
     | '/reports/profit-loss'
     | '/reports/trial-balance'
     | '/settings/account-mappings'
+    | '/settings/email'
+    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex'
     | '/banking'
@@ -2630,6 +2652,8 @@ export interface FileRouteTypes {
     | '/reports/profit-loss'
     | '/reports/trial-balance'
     | '/settings/account-mappings'
+    | '/settings/email'
+    | '/email/inbox'
     | '/settings/serviceconnect'
     | '/apex/'
     | '/banking/'
@@ -2695,6 +2719,7 @@ export interface RootRouteChildren {
   ControlsRoute: typeof ControlsRoute
   CustomersRoute: typeof CustomersRouteWithChildren
   DashboardRoute: typeof DashboardRoute
+  EmailInboxRoute: typeof EmailInboxRoute
   EstimatesRoute: typeof EstimatesRouteWithChildren
   ExpensesRoute: typeof ExpensesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRouteWithChildren
@@ -3076,6 +3101,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings/account-mappings'
       preLoaderRoute: typeof SettingsAccountMappingsRouteImport
       parentRoute: typeof SettingsRoute
+    }
+    '/settings/email': {
+      id: '/settings/email'
+      path: '/email'
+      fullPath: '/settings/email'
+      preLoaderRoute: typeof SettingsEmailRouteImport
+      parentRoute: typeof SettingsRoute
+    }
+    '/email/inbox': {
+      id: '/email/inbox'
+      path: '/email/inbox'
+      fullPath: '/email/inbox'
+      preLoaderRoute: typeof EmailInboxRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/reports/trial-balance': {
       id: '/reports/trial-balance'
@@ -4521,11 +4560,13 @@ const InvoicesRouteWithChildren = InvoicesRoute._addFileChildren(
 
 interface SettingsRouteChildren {
   SettingsAccountMappingsRoute: typeof SettingsAccountMappingsRoute
+  SettingsEmailRoute: typeof SettingsEmailRoute
   SettingsServiceconnectRoute: typeof SettingsServiceconnectRoute
 }
 
 const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsAccountMappingsRoute: SettingsAccountMappingsRoute,
+  SettingsEmailRoute: SettingsEmailRoute,
   SettingsServiceconnectRoute: SettingsServiceconnectRoute,
 }
 
@@ -4645,6 +4686,7 @@ const rootRouteChildren: RootRouteChildren = {
   ControlsRoute: ControlsRoute,
   CustomersRoute: CustomersRouteWithChildren,
   DashboardRoute: DashboardRoute,
+  EmailInboxRoute: EmailInboxRoute,
   EstimatesRoute: EstimatesRouteWithChildren,
   ExpensesRoute: ExpensesRouteWithChildren,
   IntegrationsRoute: IntegrationsRouteWithChildren,

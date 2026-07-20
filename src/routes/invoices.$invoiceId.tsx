@@ -1,10 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  CollectPaymentDialog,
+  type CollectResult,
+} from "@/components/payments/collect-payment-dialog";
+import { DemoPaymentProvider } from "@/lib/payments/demo-provider";
 import { AllocationPreviewCard } from "@/components/invoicing/allocation-preview-card";
 import { MarginPreviewCard } from "@/components/invoicing/margin-preview-card";
 import { InvoiceTimeline } from "@/components/invoicing/invoice-timeline";
@@ -73,6 +79,43 @@ function InvoiceDetailPage() {
   const production = isProductionMode();
   const printRef = useRef<HTMLDivElement>(null);
 
+  // Payment collection seam (Phase C). Processor-agnostic; demo mode charges via
+  // the DemoPaymentProvider so the flow is exercisable end-to-end without secrets.
+  const [payOpen, setPayOpen] = useState(false);
+  const [paying, setPaying] = useState(false);
+
+  async function handleCollect(r: CollectResult) {
+    setPaying(true);
+    try {
+      if (r.mode === "gateway") {
+        const provider = new DemoPaymentProvider();
+        const result = await provider.charge({
+          amount: r.amount,
+          currency: "USD",
+          method: r.gatewayMethod,
+          token: { token: r.token, method: r.gatewayMethod },
+          customer: { id: "demo", name: r.customerName },
+          invoiceRef: r.invoiceNumber || undefined,
+          idempotencyKey: r.idempotencyKey,
+        });
+        if (!result.success) {
+          toast.error(result.errorMessage ?? "Payment declined");
+          return;
+        }
+        toast.success(
+          result.status === "pending"
+            ? "Payment submitted — awaiting settlement"
+            : `Payment of $${r.amount.toLocaleString()} recorded`,
+        );
+      } else {
+        toast.success(`Offline ${r.manualMethod} payment recorded`);
+      }
+      setPayOpen(false);
+    } finally {
+      setPaying(false);
+    }
+  }
+
   // Style seam (Phase B). Active style = per-invoice override, else the saved
   // company brand default, else Classic. Numbers/content are independent of this.
   const { brandStyle, save: saveBrand, canSave } = useBrandStyle();
@@ -123,7 +166,7 @@ function InvoiceDetailPage() {
         >
           <MessageSquare className="mr-1.5 h-3.5 w-3.5" /> Remind
         </Button>
-        <Button size="sm" disabled title="Payment recording arrives in a later phase">
+        <Button size="sm" onClick={() => setPayOpen(true)}>
           <Send className="mr-1.5 h-3.5 w-3.5" /> Record payment
         </Button>
       </div>
@@ -153,6 +196,15 @@ function InvoiceDetailPage() {
           </div>
           {stylePanel}
         </div>
+        <CollectPaymentDialog
+          open={payOpen}
+          onOpenChange={setPayOpen}
+          onSubmit={handleCollect}
+          submitting={paying}
+          defaultCustomerName={data.billTo.name}
+          defaultInvoiceNumber={data.number}
+          defaultAmount={data.totals.balanceDue > 0 ? String(data.totals.balanceDue) : ""}
+        />
       </div>
     );
   }
@@ -322,6 +374,16 @@ function InvoiceDetailPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      <CollectPaymentDialog
+        open={payOpen}
+        onOpenChange={setPayOpen}
+        onSubmit={handleCollect}
+        submitting={paying}
+        defaultCustomerName={inv.customerName}
+        defaultInvoiceNumber={inv.number}
+        defaultAmount={balance > 0 ? String(balance) : ""}
+      />
     </div>
   );
 }

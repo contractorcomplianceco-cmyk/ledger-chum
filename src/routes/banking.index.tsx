@@ -315,13 +315,13 @@ function BankingOverview() {
               <table className="w-full text-sm">
                 <thead className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                   <tr>
-                    <th className="pb-2 text-left">File</th>
-                    <th className="pb-2 text-left">Account</th>
-                    <th className="pb-2 text-left">Imported</th>
-                    <th className="pb-2 text-right">Rows</th>
-                    <th className="pb-2 text-right">Dup</th>
-                    <th className="pb-2 text-right">Err</th>
-                    <th className="pb-2 text-left">By</th>
+                    <th className="pb-2 pr-3 text-left">File</th>
+                    <th className="pb-2 pr-3 text-left">Account</th>
+                    <th className="pb-2 pr-3 text-left">Imported</th>
+                    <th className="pb-2 pr-3 text-right">Rows</th>
+                    <th className="pb-2 pr-3 text-right">Dup</th>
+                    <th className="pb-2 pr-3 text-right">Err</th>
+                    <th className="pb-2 pr-3 text-left">By</th>
                     <th className="pb-2 text-left">Status</th>
                   </tr>
                 </thead>

@@ -74,7 +74,9 @@ export function DemoBadge({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border border-warning/40 bg-warning/10 px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-warning-foreground",
+        // Solid fill, not a tint: `text-warning-foreground` is near-black ink meant
+        // to sit on a solid warning background, and was unreadable over bg-warning/10.
+        "inline-flex items-center gap-1 rounded-full border border-warning bg-warning px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-warning-foreground",
         className,
       )}
     >

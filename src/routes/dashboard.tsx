@@ -129,7 +129,7 @@ function ExecutiveDashboard() {
         </section>
 
         {/* Main analytics row: Financial Overview | Cash Flow | Utility column */}
-        <section className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
+        <section className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
           <FinancialOverviewCard />
           <CashFlowCard />
           <UtilityColumn />
@@ -148,7 +148,7 @@ function ExecutiveDashboard() {
 
 function FinancialOverviewCard() {
   return (
-    <Card className="border border-border/70 bg-surface p-5 shadow-card">
+    <Card className="flex flex-col border border-border/70 bg-surface p-5 shadow-card">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="text-[15.5px] font-semibold text-foreground">Financial Overview</div>
@@ -166,7 +166,7 @@ function FinancialOverviewCard() {
         </button>
       </div>
 
-      <div className="mt-4 h-[280px] w-full">
+      <div className="mt-4 min-h-[280px] w-full flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={FIN_OVERVIEW} margin={{ top: 10, right: 8, bottom: 0, left: -8 }}>
             <defs>

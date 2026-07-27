@@ -37,12 +37,22 @@ export function PageHeader({
   actions?: ReactNode;
   className?: string;
 }) {
+  // When `highlight` is a word inside the title, gradient just that word. When it
+  // isn't (e.g. an "APEX" product mark), append it as a spaced suffix instead of
+  // letting split() concatenate it onto the title.
   const titleNode = highlight ? (
-    <>
-      {title.split(highlight)[0]}
-      <span className="bg-gradient-brand-full bg-clip-text text-transparent">{highlight}</span>
-      {title.split(highlight)[1]}
-    </>
+    title.includes(highlight) ? (
+      <>
+        {title.split(highlight)[0]}
+        <span className="bg-gradient-brand-full bg-clip-text text-transparent">{highlight}</span>
+        {title.split(highlight)[1]}
+      </>
+    ) : (
+      <>
+        {title}{" "}
+        <span className="bg-gradient-brand-full bg-clip-text text-transparent">{highlight}</span>
+      </>
+    )
   ) : (
     title
   );

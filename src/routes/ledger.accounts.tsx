@@ -15,6 +15,8 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { mockAccountTree } from "@/lib/mock/ledger";
 import {
   listAccountTree, createAccount, updateAccount,
 } from "@/lib/accounting/accounts.functions";
@@ -78,7 +80,10 @@ function ChartOfAccountsPage() {
     retry: false,
   });
 
-  const rows: AccountRow[] = (accountsQ.data ?? []) as AccountRow[];
+  // Demo mode has no org, so the live query above stays disabled and the
+  // sample chart of accounts stands in for it.
+  const demo = !orgId && isMockMode();
+  const rows: AccountRow[] = (demo ? mockAccountTree() : (accountsQ.data ?? [])) as AccountRow[];
 
   const filtered = useMemo(() => {
     const s = search.trim().toLowerCase();
@@ -153,13 +158,13 @@ function ChartOfAccountsPage() {
         }
       />
       <PageBody>
-        {!orgId && (
+        {!orgId && !demo && (
           <Card className="border-dashed p-6 text-sm text-muted-foreground">
             Sign in to view your organization's chart of accounts.
           </Card>
         )}
 
-        {orgId && (
+        {(orgId || demo) && (
           <>
             <div className="flex items-center gap-3">
               <div className="relative w-full max-w-sm">

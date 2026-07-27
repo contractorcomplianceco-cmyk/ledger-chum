@@ -417,7 +417,7 @@ export const BONUS_STATUS_META: Record<BonusStatus, { label: string; className: 
   earned: { label: "Earned", className: "bg-info/15 text-info" },
   pending_verification: { label: "Pending verification", className: "bg-warning/10 text-warning" },
   pending_christin: { label: "Pending Christin", className: "bg-warning/10 text-warning" },
-  pending_rose: { label: "Pending Rose", className: "bg-warning/10 text-warning" },
+  pending_rose: { label: "Pending Rose Approval", className: "bg-warning/10 text-warning" },
   approved: { label: "Approved", className: "bg-success/10 text-success" },
   payable: { label: "Payable", className: "bg-success/15 text-success" },
   scheduled: { label: "Scheduled", className: "bg-info/10 text-info" },

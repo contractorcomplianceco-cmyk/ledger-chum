@@ -58,7 +58,7 @@ export function BankAccountCard({ account }: { account: BankAccount }) {
               </h3>
               <span className="font-mono text-[11px] text-muted-foreground">{account.mask}</span>
             </div>
-            <div className="mt-0.5 truncate text-[11px] text-muted-foreground">
+            <div className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
               {account.institution} · {account.type}
             </div>
           </div>

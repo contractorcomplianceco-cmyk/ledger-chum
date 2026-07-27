@@ -13,6 +13,8 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { mockAccountTree, mockLedgerLines } from "@/lib/mock/ledger";
 import { listLedgerLines } from "@/lib/accounting/general-ledger.functions";
 import { listAccountTree } from "@/lib/accounting/accounts.functions";
 import { Download, Filter, RotateCcw } from "lucide-react";
@@ -98,7 +100,21 @@ function GeneralLedgerPage() {
     enabled: !!orgId, retry: false,
   });
 
-  const rows: Row[] = (linesQ.data as unknown as Row[]) ?? [];
+  // Demo mode has no org, so the live queries above stay disabled and the
+  // sample ledger stands in for them.
+  const demo = !orgId && isMockMode();
+
+  const rows: Row[] = demo
+    ? mockLedgerLines({
+        accountId: search.accountId,
+        from: search.from,
+        to: search.to,
+        sourceType: search.sourceType,
+        status: search.status ?? "posted",
+        search: search.q,
+        limit: 500,
+      })
+    : ((linesQ.data as unknown as Row[]) ?? []);
 
   const totals = useMemo(() => {
     const d = rows.reduce((s, r) => s + Number(r.debit ?? 0), 0);
@@ -146,7 +162,7 @@ function GeneralLedgerPage() {
     a.click();
   };
 
-  const accounts = (accountsQ.data ?? []) as Array<{
+  const accounts = (demo ? mockAccountTree() : (accountsQ.data ?? [])) as Array<{
     account_id: string; code: string; name: string; type: string;
   }>;
 
@@ -163,12 +179,12 @@ function GeneralLedgerPage() {
         }
       />
       <PageBody>
-        {!orgId && (
+        {!orgId && !demo && (
           <Card className="border-dashed p-6 text-sm text-muted-foreground">
             Sign in to view the general ledger.
           </Card>
         )}
-        {orgId && (
+        {(orgId || demo) && (
           <>
             <Card className="p-4">
               <div className="flex items-center gap-2 pb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">

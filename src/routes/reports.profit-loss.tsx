@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { mockProfitAndLoss } from "@/lib/mock/ledger";
 import { getProfitAndLoss } from "@/lib/accounting/financial-reports.functions";
 
 export const Route = createFileRoute("/reports/profit-loss")({
@@ -61,6 +63,8 @@ function PnlPage() {
     enabled: !!orgId,
   });
 
+  const report = orgId ? q.data : isMockMode() ? mockProfitAndLoss(from, to) : undefined;
+
   return (
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Profit & Loss" description="Revenue − Expense = Net Income." />
@@ -72,15 +76,15 @@ function PnlPage() {
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
+          {!report ? (
             <div className="text-sm text-muted-foreground">Loading…</div>
           ) : (
             <>
-              <Section title="Revenue" rows={q.data.revenue} total={q.data.revenueTotal} />
-              <Section title="Expense" rows={q.data.expense} total={q.data.expenseTotal} />
+              <Section title="Revenue" rows={report.revenue} total={report.revenueTotal} />
+              <Section title="Expense" rows={report.expense} total={report.expenseTotal} />
               <div className="border-t-2 pt-3 flex justify-between font-bold text-lg">
                 <span>Net Income</span>
-                <span className={q.data.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>{fmt(q.data.netIncome)}</span>
+                <span className={report.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>{fmt(report.netIncome)}</span>
               </div>
             </>
           )}

@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { mockBalanceSheet } from "@/lib/mock/ledger";
 import { getBalanceSheetAsOf } from "@/lib/accounting/financial-reports.functions";
 
 export const Route = createFileRoute("/reports/balance-sheet")({
@@ -70,6 +72,8 @@ function BalanceSheetPage() {
     enabled: !!orgId,
   });
 
+  const report = orgId ? q.data : isMockMode() ? mockBalanceSheet(asOf) : undefined;
+
   return (
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Balance Sheet" description="Assets = Liabilities + Equity." />
@@ -77,32 +81,32 @@ function BalanceSheetPage() {
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div><Label>As of</Label><Input type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} /></div>
-            {q.data && (
+            {report && (
               <div className="ml-auto text-sm">
-                <span className={q.data.balanced ? "text-emerald-600" : "text-destructive"}>
-                  {q.data.balanced ? "Balanced ✓" : "Unbalanced"}
+                <span className={report.balanced ? "text-emerald-600" : "text-destructive"}>
+                  {report.balanced ? "Balanced ✓" : "Unbalanced"}
                 </span>
               </div>
             )}
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
+          {!report ? (
             <div className="text-sm text-muted-foreground">Loading…</div>
           ) : (
             <div className="grid gap-8 md:grid-cols-2">
-              <Column title="Assets" rows={q.data.asset} total={q.data.totals.asset} />
+              <Column title="Assets" rows={report.asset} total={report.totals.asset} />
               <div className="space-y-6">
-                <Column title="Liabilities" rows={q.data.liability} total={q.data.totals.liability} />
+                <Column title="Liabilities" rows={report.liability} total={report.totals.liability} />
                 <Column
                   title="Equity"
-                  rows={q.data.equity}
-                  total={q.data.totals.equity}
-                  extra={{ label: "Retained earnings (period)", amount: q.data.retainedEarnings }}
+                  rows={report.equity}
+                  total={report.totals.equity}
+                  extra={{ label: "Retained earnings (period)", amount: report.retainedEarnings }}
                 />
                 <div className="border-t-2 pt-3 flex justify-between font-bold">
                   <span>Total Liabilities + Equity</span>
-                  <span>{fmt(q.data.totals.liabAndEquity)}</span>
+                  <span>{fmt(report.totals.liabAndEquity)}</span>
                 </div>
               </div>
             </div>

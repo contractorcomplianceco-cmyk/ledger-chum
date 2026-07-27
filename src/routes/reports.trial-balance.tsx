@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { MOCK_FISCAL_YEAR_START, mockTrialBalance } from "@/lib/mock/ledger";
 import { getTrialBalanceRanged } from "@/lib/accounting/financial-reports.functions";
 
 export const Route = createFileRoute("/reports/trial-balance")({
@@ -27,7 +29,9 @@ const fmt = (n: number) =>
 function TrialBalancePage() {
   const orgId = useOrgId();
   const today = new Date().toISOString().slice(0, 10);
-  const [from, setFrom] = useState("");
+  const [from, setFrom] = useState(
+    isMockMode() ? MOCK_FISCAL_YEAR_START : `${new Date().getFullYear()}-01-01`,
+  );
   const [to, setTo] = useState(today);
   const fn = useServerFn(getTrialBalanceRanged);
   const q = useQuery({
@@ -35,6 +39,8 @@ function TrialBalancePage() {
     queryFn: () => fn({ data: { orgId: orgId!, from: from || undefined, to: to || undefined } }),
     enabled: !!orgId,
   });
+
+  const report = orgId ? q.data : isMockMode() ? mockTrialBalance(from || undefined, to || undefined) : undefined;
 
   return (
     <AppShell>
@@ -50,10 +56,10 @@ function TrialBalancePage() {
               <Label>To</Label>
               <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
             </div>
-            {q.data && (
+            {report && (
               <div className="ml-auto text-sm">
-                <span className={q.data.balanced ? "text-emerald-600" : "text-destructive"}>
-                  {q.data.balanced ? "Balanced ✓" : "Unbalanced"}
+                <span className={report.balanced ? "text-emerald-600" : "text-destructive"}>
+                  {report.balanced ? "Balanced ✓" : "Unbalanced"}
                 </span>
               </div>
             )}
@@ -61,7 +67,7 @@ function TrialBalancePage() {
         </Card>
 
         <Card className="p-4">
-          {!q.data ? (
+          {!report ? (
             <div className="text-sm text-muted-foreground">Loading…</div>
           ) : (
             <div className="overflow-x-auto">
@@ -77,7 +83,7 @@ function TrialBalancePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {q.data.rows.map((r) => (
+                  {report.rows.map((r) => (
                     <tr key={r.account_id} className="border-b last:border-0">
                       <td className="py-2 pr-3 font-mono text-xs">{r.code}</td>
                       <td className="py-2 pr-3">{r.name}</td>
@@ -87,16 +93,16 @@ function TrialBalancePage() {
                       <td className="py-2 pr-3 text-right tabular-nums font-medium">{fmt(r.balance)}</td>
                     </tr>
                   ))}
-                  {q.data.rows.length === 0 && (
+                  {report.rows.length === 0 && (
                     <tr><td colSpan={6} className="py-8 text-center text-muted-foreground">No posted activity in range.</td></tr>
                   )}
                 </tbody>
                 <tfoot>
                   <tr className="border-t font-semibold">
                     <td colSpan={3} className="py-2 pr-3">Totals</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.credit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit - q.data.totals.credit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(report.totals.debit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(report.totals.credit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(report.totals.debit - report.totals.credit)}</td>
                   </tr>
                 </tfoot>
               </table>

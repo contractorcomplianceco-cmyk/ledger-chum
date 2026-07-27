@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
+import { isMockMode } from "@/lib/api/config";
+import { mockCashFlow } from "@/lib/mock/ledger";
 import { getCashFlow } from "@/lib/accounting/financial-reports.functions";
 
 export const Route = createFileRoute("/reports/cash-flow")({
@@ -45,6 +47,8 @@ function CashFlowPage() {
     enabled: !!orgId,
   });
 
+  const report = orgId ? q.data : isMockMode() ? mockCashFlow(from, to) : undefined;
+
   return (
     <AppShell>
       <PageHeader
@@ -60,19 +64,19 @@ function CashFlowPage() {
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
+          {!report ? (
             <div className="text-sm text-muted-foreground">Loading…</div>
           ) : (
             <div className="max-w-xl">
-              <Row label="Net Income" amount={q.data.netIncome} />
+              <Row label="Net Income" amount={report.netIncome} />
               <div className="pt-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Working capital adjustments</div>
-              <Row label="− Increase in Accounts Receivable" amount={-q.data.adjustments.arIncrease} muted />
-              <Row label="− Increase in Inventory" amount={-q.data.adjustments.inventoryIncrease} muted />
-              <Row label="+ Increase in Accounts Payable" amount={q.data.adjustments.apIncrease} muted />
-              <Row label="Cash from Operating" amount={q.data.operating} strong />
-              <Row label="Cash from Investing" amount={q.data.investing} />
-              <Row label="Cash from Financing" amount={q.data.financing} />
-              <Row label="Net Change in Cash" amount={q.data.netChange} strong />
+              <Row label="− Increase in Accounts Receivable" amount={-report.adjustments.arIncrease} muted />
+              <Row label="− Increase in Inventory" amount={-report.adjustments.inventoryIncrease} muted />
+              <Row label="+ Increase in Accounts Payable" amount={report.adjustments.apIncrease} muted />
+              <Row label="Cash from Operating" amount={report.operating} strong />
+              <Row label="Cash from Investing" amount={report.investing} />
+              <Row label="Cash from Financing" amount={report.financing} />
+              <Row label="Net Change in Cash" amount={report.netChange} strong />
             </div>
           )}
         </Card>

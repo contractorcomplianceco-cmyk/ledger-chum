@@ -17,7 +17,7 @@ const STATUS_LABEL: Record<PreSpendStatus, { label: string; className: string }>
   needs_info: { label: "Needs Info", className: "bg-warning/15 text-warning" },
   pending_manager: { label: "Pending Manager", className: "bg-brand/10 text-brand" },
   pending_accounting: { label: "Pending Accounting", className: "bg-brand/10 text-brand" },
-  pending_rose: { label: "Pending Rose", className: "bg-violet-500/10 text-violet-500" },
+  pending_rose: { label: "Pending Rose Approval", className: "bg-violet-500/10 text-violet-500" },
   approved: { label: "Approved", className: "bg-success/10 text-success" },
   rejected: { label: "Rejected", className: "bg-destructive/10 text-destructive" },
   expired: { label: "Expired", className: "bg-muted text-muted-foreground" },

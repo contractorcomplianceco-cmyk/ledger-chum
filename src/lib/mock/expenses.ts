@@ -76,7 +76,7 @@ export const STATUS_META: Record<ExpenseStatus, { label: string; tone: "muted" |
   needs_changes: { label: "Needs Changes", tone: "warning" },
   pending_manager: { label: "Pending Manager", tone: "brand" },
   pending_accounting: { label: "Pending Accounting", tone: "brand" },
-  pending_rose: { label: "Pending Rose", tone: "violet" },
+  pending_rose: { label: "Pending Rose Approval", tone: "violet" },
   approved: { label: "Approved", tone: "success" },
   rejected: { label: "Rejected", tone: "destructive" },
   paid: { label: "Paid", tone: "success" },

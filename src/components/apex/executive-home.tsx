@@ -757,7 +757,9 @@ function QuickActionGrid() {
           <div className="mt-0.5 text-[12px] text-muted-foreground">Demonstration shortcuts.</div>
         </div>
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+      {/* Two columns only — this card sits in a ~270px sidebar column, so three
+          would leave each label too narrow to render. */}
+      <div className="mt-3 grid grid-cols-2 gap-2">
         {APEX_QUICK_ACTIONS.map((a) => {
           const Icon = a.icon;
           return (
@@ -775,7 +777,7 @@ function QuickActionGrid() {
               >
                 <Icon className="h-4 w-4" />
               </span>
-              <span className="min-w-0 text-[12px] font-semibold text-foreground group-hover:text-info">
+              <span className="min-w-0 text-[11.5px] font-semibold leading-tight text-foreground group-hover:text-info">
                 {a.label}
               </span>
             </Link>

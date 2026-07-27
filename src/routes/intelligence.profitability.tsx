@@ -65,7 +65,9 @@ function ProfitabilityHome() {
           rows={DEPARTMENT_PROFITABILITY.slice(0, 5).map((d) => ({
             label: d.name,
             value: currency(d.contribution),
-            margin: d.efficiency * 100,
+            // `efficiency` is a cost-coverage multiple (shown as "2.28x" on the
+            // departments page), not a margin — derive the margin from revenue.
+            margin: (d.contribution / (d.directRevenue || d.revenueSupported)) * 100,
           }))}
         />
       </section>

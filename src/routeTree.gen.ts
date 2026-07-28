@@ -226,6 +226,11 @@ import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from '.
 import { Route as ApiPublicIntegrationsEventsRouteImport } from './routes/api/public/integrations/events'
 import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
 import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
+import { Route as ApiPublicReadV1MetricsRouteImport } from './routes/api/public/read/v1/metrics'
+import { Route as ApiPublicReadV1JournalsRouteImport } from './routes/api/public/read/v1/journals'
+import { Route as ApiPublicReadV1IntelligenceRouteImport } from './routes/api/public/read/v1/intelligence'
+import { Route as ApiPublicReadV1HealthRouteImport } from './routes/api/public/read/v1/health'
+import { Route as ApiPublicReadV1CloseStatusRouteImport } from './routes/api/public/read/v1/close-status'
 import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
 
 const VendorsRoute = VendorsRouteImport.update({
@@ -1358,6 +1363,33 @@ const ApexDigitalTwinScenariosIdRoute =
     path: '/$id',
     getParentRoute: () => ApexDigitalTwinScenariosRoute,
   } as any)
+const ApiPublicReadV1MetricsRoute = ApiPublicReadV1MetricsRouteImport.update({
+  id: '/api/public/read/v1/metrics',
+  path: '/api/public/read/v1/metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1JournalsRoute = ApiPublicReadV1JournalsRouteImport.update({
+  id: '/api/public/read/v1/journals',
+  path: '/api/public/read/v1/journals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1IntelligenceRoute =
+  ApiPublicReadV1IntelligenceRouteImport.update({
+    id: '/api/public/read/v1/intelligence',
+    path: '/api/public/read/v1/intelligence',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicReadV1HealthRoute = ApiPublicReadV1HealthRouteImport.update({
+  id: '/api/public/read/v1/health',
+  path: '/api/public/read/v1/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1CloseStatusRoute =
+  ApiPublicReadV1CloseStatusRouteImport.update({
+    id: '/api/public/read/v1/close-status',
+    path: '/api/public/read/v1/close-status',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicIntegrationsWorkOrdersCompletedRoute =
   ApiPublicIntegrationsWorkOrdersCompletedRouteImport.update({
     id: '/api/public/integrations/work-orders/completed',
@@ -1584,6 +1616,11 @@ export interface FileRoutesByFullPath {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -1801,6 +1838,11 @@ export interface FileRoutesByTo {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -2022,6 +2064,11 @@ export interface FileRoutesById {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -2244,6 +2291,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -2461,6 +2513,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   id:
     | '__root__'
     | '/'
@@ -2681,6 +2738,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -2863,6 +2925,11 @@ export interface RootRouteChildren {
   ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
   ApiPublicIntegrationsRefundsRoute: typeof ApiPublicIntegrationsRefundsRoute
   ApiPublicIntegrationsWorkOrdersCompletedRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  ApiPublicReadV1CloseStatusRoute: typeof ApiPublicReadV1CloseStatusRoute
+  ApiPublicReadV1HealthRoute: typeof ApiPublicReadV1HealthRoute
+  ApiPublicReadV1IntelligenceRoute: typeof ApiPublicReadV1IntelligenceRoute
+  ApiPublicReadV1JournalsRoute: typeof ApiPublicReadV1JournalsRoute
+  ApiPublicReadV1MetricsRoute: typeof ApiPublicReadV1MetricsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -4386,6 +4453,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
       parentRoute: typeof ApexDigitalTwinScenariosRoute
     }
+    '/api/public/read/v1/metrics': {
+      id: '/api/public/read/v1/metrics'
+      path: '/api/public/read/v1/metrics'
+      fullPath: '/api/public/read/v1/metrics'
+      preLoaderRoute: typeof ApiPublicReadV1MetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/journals': {
+      id: '/api/public/read/v1/journals'
+      path: '/api/public/read/v1/journals'
+      fullPath: '/api/public/read/v1/journals'
+      preLoaderRoute: typeof ApiPublicReadV1JournalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/intelligence': {
+      id: '/api/public/read/v1/intelligence'
+      path: '/api/public/read/v1/intelligence'
+      fullPath: '/api/public/read/v1/intelligence'
+      preLoaderRoute: typeof ApiPublicReadV1IntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/health': {
+      id: '/api/public/read/v1/health'
+      path: '/api/public/read/v1/health'
+      fullPath: '/api/public/read/v1/health'
+      preLoaderRoute: typeof ApiPublicReadV1HealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/close-status': {
+      id: '/api/public/read/v1/close-status'
+      path: '/api/public/read/v1/close-status'
+      fullPath: '/api/public/read/v1/close-status'
+      preLoaderRoute: typeof ApiPublicReadV1CloseStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/integrations/work-orders/completed': {
       id: '/api/public/integrations/work-orders/completed'
       path: '/api/public/integrations/work-orders/completed'
@@ -4815,6 +4917,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicIntegrationsRefundsRoute: ApiPublicIntegrationsRefundsRoute,
   ApiPublicIntegrationsWorkOrdersCompletedRoute:
     ApiPublicIntegrationsWorkOrdersCompletedRoute,
+  ApiPublicReadV1CloseStatusRoute: ApiPublicReadV1CloseStatusRoute,
+  ApiPublicReadV1HealthRoute: ApiPublicReadV1HealthRoute,
+  ApiPublicReadV1IntelligenceRoute: ApiPublicReadV1IntelligenceRoute,
+  ApiPublicReadV1JournalsRoute: ApiPublicReadV1JournalsRoute,
+  ApiPublicReadV1MetricsRoute: ApiPublicReadV1MetricsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -272,6 +272,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Accounting Acceptance", to: "/admin/acceptance-tests", icon: BookOpenCheck, badge: "M12", badgeTone: "brand", keywords: ["acceptance", "tests", "revenue", "payments", "expenses", "refunds", "reconciliation", "close"] },
       { title: "Pilot Success", to: "/admin/pilot-success", icon: Gauge, badge: "M12", badgeTone: "brand", keywords: ["pilot", "success", "metrics", "events", "objects", "journals"] },
       { title: "Integration Docs", to: "/docs/integrations", icon: BookOpen, keywords: ["docs", "integration", "api", "events", "webhook"] },
+      { title: "Consumer Contracts", to: "/admin/contracts", icon: Plug, badge: "M13", badgeTone: "brand", keywords: ["contracts", "auditengine", "cca", "consumers", "read api", "keys", "scopes"] },
+      { title: "Read API Docs", to: "/docs/read-api", icon: BookOpen, keywords: ["read api", "contract", "v1", "auditengine", "consumer", "docs"] },
       { title: "Migration Readiness", to: "/readiness/migration", icon: Rocket },
       { title: "Production Readiness (legacy)", to: "/readiness/production", icon: ShieldCheck },
       { title: "Master Feature Registry", to: "/feature-registry", icon: ClipboardList, badge: "Planning", badgeTone: "violet", permission: "implementation.view" },

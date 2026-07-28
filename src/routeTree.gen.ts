@@ -115,6 +115,7 @@ import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.inte
 import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
 import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
 import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
+import { Route as DocsReadApiRouteImport } from './routes/docs.read-api'
 import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
@@ -181,6 +182,7 @@ import { Route as AdminIntegrationsRouteImport } from './routes/admin.integratio
 import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
+import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as AdminAcceptanceTestsRouteImport } from './routes/admin.acceptance-tests'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
@@ -775,6 +777,11 @@ const EstimatesNewRoute = EstimatesNewRouteImport.update({
   path: '/new',
   getParentRoute: () => EstimatesRoute,
 } as any)
+const DocsReadApiRoute = DocsReadApiRouteImport.update({
+  id: '/docs/read-api',
+  path: '/docs/read-api',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
   id: '/docs/integrations',
   path: '/docs/integrations',
@@ -1112,6 +1119,11 @@ const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
   path: '/admin/customer-onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminContractsRoute = AdminContractsRouteImport.update({
+  id: '/admin/contracts',
+  path: '/admin/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAcceptanceTestsRoute = AdminAcceptanceTestsRouteImport.update({
   id: '/admin/acceptance-tests',
   path: '/admin/acceptance-tests',
@@ -1422,6 +1434,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1488,6 +1501,7 @@ export interface FileRoutesByFullPath {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1644,6 +1658,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1710,6 +1725,7 @@ export interface FileRoutesByTo {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1870,6 +1886,7 @@ export interface FileRoutesById {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1936,6 +1953,7 @@ export interface FileRoutesById {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -2097,6 +2115,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2163,6 +2182,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2319,6 +2339,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2385,6 +2406,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2544,6 +2566,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2610,6 +2633,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2770,6 +2794,7 @@ export interface RootRouteChildren {
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
   AdminAcceptanceTestsRoute: typeof AdminAcceptanceTestsRoute
+  AdminContractsRoute: typeof AdminContractsRoute
   AdminCustomerOnboardingRoute: typeof AdminCustomerOnboardingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
@@ -2832,6 +2857,7 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   DocsIntegrationsRoute: typeof DocsIntegrationsRoute
+  DocsReadApiRoute: typeof DocsReadApiRoute
   FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
@@ -3676,6 +3702,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EstimatesNewRouteImport
       parentRoute: typeof EstimatesRoute
     }
+    '/docs/read-api': {
+      id: '/docs/read-api'
+      path: '/docs/read-api'
+      fullPath: '/docs/read-api'
+      preLoaderRoute: typeof DocsReadApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/integrations': {
       id: '/docs/integrations'
       path: '/docs/integrations'
@@ -4136,6 +4169,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/customer-onboarding'
       fullPath: '/admin/customer-onboarding'
       preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contracts': {
+      id: '/admin/contracts'
+      path: '/admin/contracts'
+      fullPath: '/admin/contracts'
+      preLoaderRoute: typeof AdminContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/acceptance-tests': {
@@ -4760,6 +4800,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
   AdminAcceptanceTestsRoute: AdminAcceptanceTestsRoute,
+  AdminContractsRoute: AdminContractsRoute,
   AdminCustomerOnboardingRoute: AdminCustomerOnboardingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
@@ -4822,6 +4863,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   DocsIntegrationsRoute: DocsIntegrationsRoute,
+  DocsReadApiRoute: DocsReadApiRoute,
   FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,

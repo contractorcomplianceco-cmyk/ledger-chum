@@ -15,6 +15,8 @@ import {
 import { useOrgId } from "@/hooks/use-current-org";
 import { listLedgerLines } from "@/lib/accounting/general-ledger.functions";
 import { listAccountTree } from "@/lib/accounting/accounts.functions";
+import { DEMO_ACCOUNTS, DEMO_GL_LINES, DEMO_MODE_MESSAGE } from "@/lib/mock/ledger-demo";
+import { DemoNotice } from "@/components/banking/demo-notice";
 import { Download, Filter, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 

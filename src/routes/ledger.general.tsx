@@ -373,8 +373,7 @@ function GeneralLedgerPage() {
                 </tbody>
               </table>
             </Card>
-          </>
-        )}
+        </>
       </PageBody>
     </AppShell>
   );

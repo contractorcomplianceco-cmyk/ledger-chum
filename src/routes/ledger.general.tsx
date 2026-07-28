@@ -170,9 +170,13 @@ function GeneralLedgerPage() {
     a.click();
   };
 
-  const accounts = (accountsQ.data ?? []) as Array<{
-    account_id: string; code: string; name: string; type: string;
-  }>;
+  const accounts = isDemo
+    ? DEMO_ACCOUNTS.map((a) => ({
+        account_id: a.account_id, code: a.code, name: a.name, type: a.type,
+      }))
+    : ((accountsQ.data ?? []) as Array<{
+        account_id: string; code: string; name: string; type: string;
+      }>);
 
   return (
     <AppShell>
@@ -187,13 +191,13 @@ function GeneralLedgerPage() {
         }
       />
       <PageBody>
-        {!orgId && (
-          <Card className="border-dashed p-6 text-sm text-muted-foreground">
-            Sign in to view the general ledger.
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} />}
+        {!isDemo && linesQ.isError && (
+          <Card className="border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+            Couldn't load ledger lines: {(linesQ.error as Error)?.message ?? "Unknown error"}
           </Card>
         )}
-        {orgId && (
-          <>
+        <>
             <Card className="p-4">
               <div className="flex items-center gap-2 pb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 <Filter className="h-3.5 w-3.5" /> Filters

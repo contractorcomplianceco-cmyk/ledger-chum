@@ -45,7 +45,11 @@ function CashFlowPage() {
     queryKey: ["report.cf", orgId, from, to],
     queryFn: () => fn({ data: { orgId: orgId!, from, to } }),
     enabled: !!orgId,
+    retry: false,
   });
+
+  const isDemo = !orgId;
+  const data = isDemo ? getDemoCashFlow() : q.data;
 
   return (
     <AppShell>
@@ -55,6 +59,7 @@ function CashFlowPage() {
         description="Operating = Net Income + ΔAP − ΔAR − ΔInventory. Investing/Financing arrive with M4."
       />
       <PageBody>
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} className="mb-4" />}
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div><Label>From</Label><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
@@ -62,19 +67,23 @@ function CashFlowPage() {
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
-            <div className="text-sm text-muted-foreground">Loading…</div>
+          {!isDemo && q.isError ? (
+            <div className="text-sm text-destructive">
+              Couldn't load cash flow: {(q.error as Error)?.message ?? "Unknown error"}
+            </div>
+          ) : !data ? (
+            <div className="text-sm text-muted-foreground">Loading cash flow…</div>
           ) : (
             <div className="max-w-xl">
-              <Row label="Net Income" amount={q.data.netIncome} />
+              <Row label="Net Income" amount={data.netIncome} />
               <div className="pt-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Working capital adjustments</div>
-              <Row label="− Increase in Accounts Receivable" amount={-q.data.adjustments.arIncrease} muted />
-              <Row label="− Increase in Inventory" amount={-q.data.adjustments.inventoryIncrease} muted />
-              <Row label="+ Increase in Accounts Payable" amount={q.data.adjustments.apIncrease} muted />
-              <Row label="Cash from Operating" amount={q.data.operating} strong />
-              <Row label="Cash from Investing" amount={q.data.investing} />
-              <Row label="Cash from Financing" amount={q.data.financing} />
-              <Row label="Net Change in Cash" amount={q.data.netChange} strong />
+              <Row label="− Increase in Accounts Receivable" amount={-data.adjustments.arIncrease} muted />
+              <Row label="− Increase in Inventory" amount={-data.adjustments.inventoryIncrease} muted />
+              <Row label="+ Increase in Accounts Payable" amount={data.adjustments.apIncrease} muted />
+              <Row label="Cash from Operating" amount={data.operating} strong />
+              <Row label="Cash from Investing" amount={data.investing} />
+              <Row label="Cash from Financing" amount={data.financing} />
+              <Row label="Net Change in Cash" amount={data.netChange} strong />
             </div>
           )}
         </Card>

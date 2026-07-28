@@ -285,8 +285,7 @@ function ChartOfAccountsPage() {
                 </Card>
               );
             })}
-          </>
-        )}
+        </>
       </PageBody>
 
       <AccountDialog

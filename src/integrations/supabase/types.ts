@@ -224,6 +224,7 @@ export type Database = {
       api_clients: {
         Row: {
           active: boolean
+          consumer_slug: string | null
           created_at: string
           created_by: string | null
           description: string | null
@@ -242,6 +243,7 @@ export type Database = {
         }
         Insert: {
           active?: boolean
+          consumer_slug?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
@@ -260,6 +262,7 @@ export type Database = {
         }
         Update: {
           active?: boolean
+          consumer_slug?: string | null
           created_at?: string
           created_by?: string | null
           description?: string | null
@@ -277,6 +280,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "api_clients_consumer_slug_fkey"
+            columns: ["consumer_slug"]
+            isOneToOne: false
+            referencedRelation: "system_consumers"
+            referencedColumns: ["slug"]
+          },
           {
             foreignKeyName: "api_clients_org_id_fkey"
             columns: ["org_id"]
@@ -3950,6 +3960,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      system_consumers: {
+        Row: {
+          category: string
+          contract_version: string
+          created_at: string
+          default_scopes: string[]
+          homepage: string | null
+          id: string
+          name: string
+          notes: string | null
+          purpose: string
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          contract_version?: string
+          created_at?: string
+          default_scopes?: string[]
+          homepage?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          purpose: string
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          contract_version?: string
+          created_at?: string
+          default_scopes?: string[]
+          homepage?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          purpose?: string
+          slug?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       tax_categories: {
         Row: {

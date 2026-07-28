@@ -80,7 +80,10 @@ function ChartOfAccountsPage() {
     retry: false,
   });
 
-  const rows: AccountRow[] = (accountsQ.data ?? []) as AccountRow[];
+  const isDemo = !orgId;
+  const rows: AccountRow[] = isDemo
+    ? (DEMO_ACCOUNTS as AccountRow[])
+    : ((accountsQ.data ?? []) as AccountRow[]);
 
   const filtered = useMemo(() => {
     const s = search.trim().toLowerCase();

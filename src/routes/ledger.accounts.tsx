@@ -158,42 +158,42 @@ function ChartOfAccountsPage() {
         }
       />
       <PageBody>
-        {!orgId && (
-          <Card className="border-dashed p-6 text-sm text-muted-foreground">
-            Sign in to view your organization's chart of accounts.
-          </Card>
-        )}
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} />}
 
-        {orgId && (
-          <>
-            <div className="flex items-center gap-3">
-              <div className="relative w-full max-w-sm">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search by code or name"
-                  className="pl-9"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
-              <div className="ml-auto text-xs text-muted-foreground">
-                {rows.length} account{rows.length === 1 ? "" : "s"}
-              </div>
+        <>
+          <div className="flex items-center gap-3">
+            <div className="relative w-full max-w-sm">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search by code or name"
+                className="pl-9"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </div>
+            <div className="ml-auto text-xs text-muted-foreground">
+              {rows.length} account{rows.length === 1 ? "" : "s"}
+            </div>
+          </div>
 
-            {accountsQ.isLoading && (
-              <Card className="p-8 text-center text-sm text-muted-foreground">Loading…</Card>
-            )}
+          {!isDemo && accountsQ.isLoading && (
+            <Card className="p-8 text-center text-sm text-muted-foreground">Loading chart of accounts…</Card>
+          )}
+          {!isDemo && accountsQ.isError && (
+            <Card className="border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+              Couldn't load accounts: {(accountsQ.error as Error)?.message ?? "Unknown error"}
+            </Card>
+          )}
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-              {TYPE_ORDER.map((t) => (
-                <Card key={t} className="p-4">
-                  <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    {TYPE_LABEL[t]}
-                  </div>
-                  <div className="mt-1 font-mono text-lg tabular-nums">
-                    {fmt(totals[t] ?? 0)}
-                  </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+            {TYPE_ORDER.map((t) => (
+              <Card key={t} className="p-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {TYPE_LABEL[t]}
+                </div>
+                <div className="mt-1 font-mono text-lg tabular-nums">
+                  {fmt(totals[t] ?? 0)}
+                </div>
                   <div className="mt-0.5 text-[11px] text-muted-foreground">
                     {(grouped.get(t) ?? []).length} accounts
                   </div>

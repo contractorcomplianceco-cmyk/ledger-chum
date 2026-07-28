@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
 import { getTrialBalanceRanged } from "@/lib/accounting/financial-reports.functions";
+import { getDemoTrialBalance, DEMO_MODE_MESSAGE } from "@/lib/mock/ledger-demo";
+import { DemoNotice } from "@/components/banking/demo-notice";
 
 export const Route = createFileRoute("/reports/trial-balance")({
   head: () => ({
@@ -34,12 +36,17 @@ function TrialBalancePage() {
     queryKey: ["report.tb", orgId, from, to],
     queryFn: () => fn({ data: { orgId: orgId!, from: from || undefined, to: to || undefined } }),
     enabled: !!orgId,
+    retry: false,
   });
+
+  const isDemo = !orgId;
+  const data = isDemo ? getDemoTrialBalance() : q.data;
 
   return (
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Trial Balance" description="Sum of debits and credits per account. Must balance." />
       <PageBody>
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} className="mb-4" />}
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div>
@@ -50,10 +57,10 @@ function TrialBalancePage() {
               <Label>To</Label>
               <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
             </div>
-            {q.data && (
+            {data && (
               <div className="ml-auto text-sm">
-                <span className={q.data.balanced ? "text-emerald-600" : "text-destructive"}>
-                  {q.data.balanced ? "Balanced ✓" : "Unbalanced"}
+                <span className={data.balanced ? "text-emerald-600" : "text-destructive"}>
+                  {data.balanced ? "Balanced ✓" : "Unbalanced"}
                 </span>
               </div>
             )}
@@ -61,8 +68,12 @@ function TrialBalancePage() {
         </Card>
 
         <Card className="p-4">
-          {!q.data ? (
-            <div className="text-sm text-muted-foreground">Loading…</div>
+          {!isDemo && q.isError ? (
+            <div className="text-sm text-destructive">
+              Couldn't load trial balance: {(q.error as Error)?.message ?? "Unknown error"}
+            </div>
+          ) : !data ? (
+            <div className="text-sm text-muted-foreground">Loading trial balance…</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -77,7 +88,7 @@ function TrialBalancePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {q.data.rows.map((r) => (
+                  {data.rows.map((r) => (
                     <tr key={r.account_id} className="border-b last:border-0">
                       <td className="py-2 pr-3 font-mono text-xs">{r.code}</td>
                       <td className="py-2 pr-3">{r.name}</td>
@@ -87,16 +98,16 @@ function TrialBalancePage() {
                       <td className="py-2 pr-3 text-right tabular-nums font-medium">{fmt(r.balance)}</td>
                     </tr>
                   ))}
-                  {q.data.rows.length === 0 && (
+                  {data.rows.length === 0 && (
                     <tr><td colSpan={6} className="py-8 text-center text-muted-foreground">No posted activity in range.</td></tr>
                   )}
                 </tbody>
                 <tfoot>
                   <tr className="border-t font-semibold">
                     <td colSpan={3} className="py-2 pr-3">Totals</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.credit)}</td>
-                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(q.data.totals.debit - q.data.totals.credit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(data.totals.debit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(data.totals.credit)}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{fmt(data.totals.debit - data.totals.credit)}</td>
                   </tr>
                 </tfoot>
               </table>

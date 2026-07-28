@@ -15,6 +15,8 @@ import {
 import { useOrgId } from "@/hooks/use-current-org";
 import { listLedgerLines } from "@/lib/accounting/general-ledger.functions";
 import { listAccountTree } from "@/lib/accounting/accounts.functions";
+import { DEMO_ACCOUNTS, DEMO_GL_LINES, DEMO_MODE_MESSAGE } from "@/lib/mock/ledger-demo";
+import { DemoNotice } from "@/components/banking/demo-notice";
 import { Download, Filter, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -74,6 +76,8 @@ function GeneralLedgerPage() {
   const accountsFn = useServerFn(listAccountTree);
   const [localSearch, setLocalSearch] = useState(search.q ?? "");
 
+  const isDemo = !orgId;
+
   const accountsQ = useQuery({
     queryKey: ["accounts", orgId],
     queryFn: () => accountsFn({ data: { orgId: orgId! } }),
@@ -98,7 +102,27 @@ function GeneralLedgerPage() {
     enabled: !!orgId, retry: false,
   });
 
-  const rows: Row[] = (linesQ.data as unknown as Row[]) ?? [];
+  const demoRows: Row[] = useMemo(() => {
+    if (!isDemo) return [];
+    let list = DEMO_GL_LINES as unknown as Row[];
+    if (search.accountId) list = list.filter((r) => r.account.id === search.accountId);
+    if (search.from) list = list.filter((r) => r.journal.entry_date >= search.from!);
+    if (search.to) list = list.filter((r) => r.journal.entry_date <= search.to!);
+    if (search.sourceType && search.sourceType !== "all") {
+      list = list.filter((r) => r.journal.source_type === search.sourceType);
+    }
+    if (search.q) {
+      const q = search.q.toLowerCase();
+      list = list.filter(
+        (r) =>
+          (r.journal.memo ?? "").toLowerCase().includes(q) ||
+          (r.memo ?? "").toLowerCase().includes(q),
+      );
+    }
+    return list;
+  }, [isDemo, search]);
+
+  const rows: Row[] = isDemo ? demoRows : ((linesQ.data as unknown as Row[]) ?? []);
 
   const totals = useMemo(() => {
     const d = rows.reduce((s, r) => s + Number(r.debit ?? 0), 0);
@@ -146,9 +170,13 @@ function GeneralLedgerPage() {
     a.click();
   };
 
-  const accounts = (accountsQ.data ?? []) as Array<{
-    account_id: string; code: string; name: string; type: string;
-  }>;
+  const accounts = isDemo
+    ? DEMO_ACCOUNTS.map((a) => ({
+        account_id: a.account_id, code: a.code, name: a.name, type: a.type,
+      }))
+    : ((accountsQ.data ?? []) as Array<{
+        account_id: string; code: string; name: string; type: string;
+      }>);
 
   return (
     <AppShell>
@@ -163,13 +191,13 @@ function GeneralLedgerPage() {
         }
       />
       <PageBody>
-        {!orgId && (
-          <Card className="border-dashed p-6 text-sm text-muted-foreground">
-            Sign in to view the general ledger.
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} />}
+        {!isDemo && linesQ.isError && (
+          <Card className="border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+            Couldn't load ledger lines: {(linesQ.error as Error)?.message ?? "Unknown error"}
           </Card>
         )}
-        {orgId && (
-          <>
+        <>
             <Card className="p-4">
               <div className="flex items-center gap-2 pb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 <Filter className="h-3.5 w-3.5" /> Filters
@@ -345,8 +373,7 @@ function GeneralLedgerPage() {
                 </tbody>
               </table>
             </Card>
-          </>
-        )}
+        </>
       </PageBody>
     </AppShell>
   );

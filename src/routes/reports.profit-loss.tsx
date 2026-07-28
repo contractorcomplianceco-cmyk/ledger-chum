@@ -61,12 +61,17 @@ function PnlPage() {
     queryKey: ["report.pnl", orgId, from, to],
     queryFn: () => fn({ data: { orgId: orgId!, from, to } }),
     enabled: !!orgId,
+    retry: false,
   });
+
+  const isDemo = !orgId;
+  const data = isDemo ? getDemoProfitAndLoss() : q.data;
 
   return (
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Profit & Loss" description="Revenue − Expense = Net Income." />
       <PageBody>
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} className="mb-4" />}
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div><Label>From</Label><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
@@ -74,15 +79,19 @@ function PnlPage() {
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
-            <div className="text-sm text-muted-foreground">Loading…</div>
+          {!isDemo && q.isError ? (
+            <div className="text-sm text-destructive">
+              Couldn't load P&amp;L: {(q.error as Error)?.message ?? "Unknown error"}
+            </div>
+          ) : !data ? (
+            <div className="text-sm text-muted-foreground">Loading profit &amp; loss…</div>
           ) : (
             <>
-              <Section title="Revenue" rows={q.data.revenue} total={q.data.revenueTotal} />
-              <Section title="Expense" rows={q.data.expense} total={q.data.expenseTotal} />
+              <Section title="Revenue" rows={data.revenue} total={data.revenueTotal} />
+              <Section title="Expense" rows={data.expense} total={data.expenseTotal} />
               <div className="border-t-2 pt-3 flex justify-between font-bold text-lg">
                 <span>Net Income</span>
-                <span className={q.data.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>{fmt(q.data.netIncome)}</span>
+                <span className={data.netIncome >= 0 ? "text-emerald-600" : "text-destructive"}>{fmt(data.netIncome)}</span>
               </div>
             </>
           )}

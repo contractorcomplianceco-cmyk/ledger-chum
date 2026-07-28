@@ -18,6 +18,8 @@ import { useOrgId } from "@/hooks/use-current-org";
 import {
   listAccountTree, createAccount, updateAccount,
 } from "@/lib/accounting/accounts.functions";
+import { DEMO_ACCOUNTS, DEMO_MODE_MESSAGE } from "@/lib/mock/ledger-demo";
+import { DemoNotice } from "@/components/banking/demo-notice";
 import { ChevronRight, Plus, Search, Lock, Circle, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";

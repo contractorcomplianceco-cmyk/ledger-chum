@@ -70,41 +70,50 @@ function BalanceSheetPage() {
     queryKey: ["report.bs", orgId, asOf],
     queryFn: () => fn({ data: { orgId: orgId!, asOf } }),
     enabled: !!orgId,
+    retry: false,
   });
+
+  const isDemo = !orgId;
+  const data = isDemo ? getDemoBalanceSheet() : q.data;
 
   return (
     <AppShell>
       <PageHeader eyebrow="LedgerOS · Reporting" title="Balance Sheet" description="Assets = Liabilities + Equity." />
       <PageBody>
+        {isDemo && <DemoNotice message={DEMO_MODE_MESSAGE} className="mb-4" />}
         <Card className="p-4 mb-4">
           <div className="flex flex-wrap gap-4 items-end">
             <div><Label>As of</Label><Input type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} /></div>
-            {q.data && (
+            {data && (
               <div className="ml-auto text-sm">
-                <span className={q.data.balanced ? "text-emerald-600" : "text-destructive"}>
-                  {q.data.balanced ? "Balanced ✓" : "Unbalanced"}
+                <span className={data.balanced ? "text-emerald-600" : "text-destructive"}>
+                  {data.balanced ? "Balanced ✓" : "Unbalanced"}
                 </span>
               </div>
             )}
           </div>
         </Card>
         <Card className="p-6">
-          {!q.data ? (
-            <div className="text-sm text-muted-foreground">Loading…</div>
+          {!isDemo && q.isError ? (
+            <div className="text-sm text-destructive">
+              Couldn't load balance sheet: {(q.error as Error)?.message ?? "Unknown error"}
+            </div>
+          ) : !data ? (
+            <div className="text-sm text-muted-foreground">Loading balance sheet…</div>
           ) : (
             <div className="grid gap-8 md:grid-cols-2">
-              <Column title="Assets" rows={q.data.asset} total={q.data.totals.asset} />
+              <Column title="Assets" rows={data.asset} total={data.totals.asset} />
               <div className="space-y-6">
-                <Column title="Liabilities" rows={q.data.liability} total={q.data.totals.liability} />
+                <Column title="Liabilities" rows={data.liability} total={data.totals.liability} />
                 <Column
                   title="Equity"
-                  rows={q.data.equity}
-                  total={q.data.totals.equity}
-                  extra={{ label: "Retained earnings (period)", amount: q.data.retainedEarnings }}
+                  rows={data.equity}
+                  total={data.totals.equity}
+                  extra={{ label: "Retained earnings (period)", amount: data.retainedEarnings }}
                 />
                 <div className="border-t-2 pt-3 flex justify-between font-bold">
                   <span>Total Liabilities + Equity</span>
-                  <span>{fmt(q.data.totals.liabAndEquity)}</span>
+                  <span>{fmt(data.totals.liabAndEquity)}</span>
                 </div>
               </div>
             </div>

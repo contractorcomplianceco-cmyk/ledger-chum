@@ -76,6 +76,8 @@ function GeneralLedgerPage() {
   const accountsFn = useServerFn(listAccountTree);
   const [localSearch, setLocalSearch] = useState(search.q ?? "");
 
+  const isDemo = !orgId;
+
   const accountsQ = useQuery({
     queryKey: ["accounts", orgId],
     queryFn: () => accountsFn({ data: { orgId: orgId! } }),
@@ -100,7 +102,27 @@ function GeneralLedgerPage() {
     enabled: !!orgId, retry: false,
   });
 
-  const rows: Row[] = (linesQ.data as unknown as Row[]) ?? [];
+  const demoRows: Row[] = useMemo(() => {
+    if (!isDemo) return [];
+    let list = DEMO_GL_LINES as unknown as Row[];
+    if (search.accountId) list = list.filter((r) => r.account.id === search.accountId);
+    if (search.from) list = list.filter((r) => r.journal.entry_date >= search.from!);
+    if (search.to) list = list.filter((r) => r.journal.entry_date <= search.to!);
+    if (search.sourceType && search.sourceType !== "all") {
+      list = list.filter((r) => r.journal.source_type === search.sourceType);
+    }
+    if (search.q) {
+      const q = search.q.toLowerCase();
+      list = list.filter(
+        (r) =>
+          (r.journal.memo ?? "").toLowerCase().includes(q) ||
+          (r.memo ?? "").toLowerCase().includes(q),
+      );
+    }
+    return list;
+  }, [isDemo, search]);
+
+  const rows: Row[] = isDemo ? demoRows : ((linesQ.data as unknown as Row[]) ?? []);
 
   const totals = useMemo(() => {
     const d = rows.reduce((s, r) => s + Number(r.debit ?? 0), 0);

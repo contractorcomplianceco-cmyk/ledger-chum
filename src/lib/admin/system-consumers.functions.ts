@@ -2,6 +2,35 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+export type SystemConsumer = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  purpose: string;
+  homepage: string | null;
+  contract_version: string;
+  default_scopes: string[];
+  status: string;
+  notes: string | null;
+};
+
+export type ConsumerClient = {
+  id: string;
+  name: string;
+  consumer_slug: string | null;
+  scopes: string[] | null;
+  environment: string | null;
+  active: boolean;
+  key_prefix: string | null;
+  last_used_at: string | null;
+  expires_at: string | null;
+  revoked_at: string | null;
+  created_at: string;
+};
+
+export type IssuedClient = ConsumerClient & { token: string };
+
 async function sha256Hex(input: string): Promise<string> {
   const enc = new TextEncoder().encode(input);
   const buf = await crypto.subtle.digest("SHA-256", enc);
@@ -14,50 +43,30 @@ function randomToken(len = 32): string {
   crypto.getRandomValues(bytes);
   return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
-async function assertOwner(context: { supabase: unknown; userId: string }, orgId: string) {
-  const sb = context.supabase as { rpc: (n: string, a: Record<string, unknown>) => Promise<{ data: unknown; error: { message: string } | null }> };
-  const { data, error } = await sb.rpc("has_role", { _user: context.userId, _org: orgId, _role: "owner" });
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: owner role required");
-}
 
 export const listSystemConsumers = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const sb = context.supabase as unknown as {
-      from: (t: string) => {
-        select: (c: string) => { order: (c: string) => Promise<{ data: unknown[] | null; error: { message: string } | null }> };
-      };
-    };
-    const { data, error } = await sb
-      .from("system_consumers")
+  .handler(async ({ context }): Promise<SystemConsumer[]> => {
+    const { data, error } = await context.supabase
+      .from("system_consumers" as never)
       .select("id, slug, name, category, purpose, homepage, contract_version, default_scopes, status, notes")
       .order("name");
-    if (error) throw new Error(error.message);
-    return data ?? [];
+    if (error) throw new Error((error as { message: string }).message);
+    return (data ?? []) as unknown as SystemConsumer[];
   });
 
 export const listConsumerClients = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => z.object({ orgId: z.string().uuid() }).parse(v))
-  .handler(async ({ data, context }) => {
-    const sb = context.supabase as unknown as {
-      from: (t: string) => {
-        select: (c: string) => {
-          eq: (k: string, v: string) => {
-            not: (k: string, o: string, v: unknown) => { order: (c: string, o?: unknown) => Promise<{ data: unknown[] | null; error: { message: string } | null }> };
-          };
-        };
-      };
-    };
-    const { data: rows, error } = await sb
+  .handler(async ({ data, context }): Promise<ConsumerClient[]> => {
+    const { data: rows, error } = await context.supabase
       .from("api_clients")
       .select("id, name, consumer_slug, scopes, environment, active, key_prefix, last_used_at, expires_at, revoked_at, created_at")
       .eq("org_id", data.orgId)
       .not("consumer_slug", "is", null)
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
-    return rows ?? [];
+    return (rows ?? []) as unknown as ConsumerClient[];
   });
 
 export const issueConsumerClient = createServerFn({ method: "POST" })
@@ -72,34 +81,19 @@ export const issueConsumerClient = createServerFn({ method: "POST" })
       expiresAt: z.string().datetime().optional(),
     }).parse(v),
   )
-  .handler(async ({ data, context }) => {
-    await assertOwner(context, data.orgId);
-
-    const sb = context.supabase as unknown as {
-      from: (t: string) => {
-        select: (c: string) => {
-          eq: (k: string, v: string) => { maybeSingle: () => Promise<{ data: { slug: string } | null; error: { message: string } | null }> };
-        };
-        insert: (row: unknown) => {
-          select: (c: string) => { single: () => Promise<{ data: unknown; error: { message: string } | null }> };
-        };
-      };
-    };
-
-    const { data: consumer, error: cErr } = await sb
-      .from("system_consumers")
-      .select("slug")
-      .eq("slug", data.consumerSlug)
-      .maybeSingle();
-    if (cErr) throw new Error(cErr.message);
-    if (!consumer) throw new Error(`Unknown consumer: ${data.consumerSlug}`);
+  .handler(async ({ data, context }): Promise<IssuedClient> => {
+    const { data: ok, error: rErr } = await context.supabase.rpc("has_role", {
+      _user: context.userId, _org: data.orgId, _role: "owner",
+    });
+    if (rErr) throw new Error(rErr.message);
+    if (!ok) throw new Error("Forbidden: owner role required");
 
     const raw = randomToken(32);
     const token = `los_${raw}`;
     const keyHash = await sha256Hex(token);
     const keyPrefix = token.slice(0, 10);
 
-    const { data: row, error } = await sb
+    const { data: row, error } = await context.supabase
       .from("api_clients")
       .insert({
         org_id: data.orgId,
@@ -114,10 +108,9 @@ export const issueConsumerClient = createServerFn({ method: "POST" })
         active: true,
         expires_at: data.expiresAt ?? null,
         created_by: context.userId,
-      })
-      .select("id, name, consumer_slug, scopes, environment, key_prefix, expires_at, active, created_at")
+      } as never)
+      .select("id, name, consumer_slug, scopes, environment, active, key_prefix, last_used_at, expires_at, revoked_at, created_at")
       .single();
     if (error) throw new Error(error.message);
-
-    return { ...(row as Record<string, unknown>), token };
+    return { ...(row as unknown as ConsumerClient), token };
   });

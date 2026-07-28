@@ -1,13 +1,9 @@
 /**
  * LedgerOS Read API — bearer-auth helpers for /api/public/read/v1/*.
  *
- * Reuses public.api_clients (SHA-256 key_hash, scopes[]) for authentication
- * and authorization. Unlike ServiceConnect write endpoints, read endpoints
- * do NOT require an Idempotency-Key.
- *
- * Exposed only to internal CCA systems (AuditEngine, ApplicationsOS,
- * DocumentOS, ComplianceCoreOS, BidIntelligenceOS, CarmenOS, ComplianceConnect,
- * TrustScore, Steel Link, Rose OS). Third-party consumers are not in scope.
+ * Reuses public.api_clients (SHA-256 key_hash, scopes[]) for auth.
+ * Read endpoints do NOT require Idempotency-Key. Exposed only to internal
+ * CCA systems bound via api_clients.consumer_slug.
  */
 
 import { createHash } from "crypto";
@@ -47,32 +43,41 @@ export async function verifyReadClient(request: Request): Promise<ReadClient> {
 
   const { data, error } = await supabaseAdmin
     .from("api_clients")
-    .select("id, org_id, name, active, scopes, environment, consumer_slug, revoked_at, expires_at")
+    .select("*")
     .eq("key_hash", hashKey(token))
     .maybeSingle();
 
   if (error) throw new ReadApiError(500, `Auth lookup failed: ${error.message}`);
-  if (!data || !data.active) throw new ReadApiError(401, "Invalid or inactive API key");
-  if (data.revoked_at) throw new ReadApiError(401, "API key revoked");
-  if (data.expires_at && new Date(data.expires_at) < new Date()) {
+  const row = data as {
+    id: string;
+    org_id: string;
+    name: string;
+    active: boolean;
+    scopes: string[] | null;
+    environment: string | null;
+    consumer_slug: string | null;
+    revoked_at: string | null;
+    expires_at: string | null;
+  } | null;
+  if (!row || !row.active) throw new ReadApiError(401, "Invalid or inactive API key");
+  if (row.revoked_at) throw new ReadApiError(401, "API key revoked");
+  if (row.expires_at && new Date(row.expires_at) < new Date()) {
     throw new ReadApiError(401, "API key expired");
   }
 
   supabaseAdmin
     .from("api_clients")
     .update({ last_used_at: new Date().toISOString() })
-    .eq("id", data.id)
+    .eq("id", row.id)
     .then(() => {}, () => {});
 
   return {
-    clientId: data.id,
-    orgId: data.org_id,
-    clientName: data.name,
-    consumerSlug: (data as { consumer_slug?: string | null }).consumer_slug ?? null,
-    scopes: ((data as { scopes?: string[] }).scopes ?? []),
-    environment: (((data as { environment?: string }).environment ?? "production") as
-      | "sandbox"
-      | "production"),
+    clientId: row.id,
+    orgId: row.org_id,
+    clientName: row.name,
+    consumerSlug: row.consumer_slug,
+    scopes: row.scopes ?? [],
+    environment: (row.environment ?? "production") as "sandbox" | "production",
   };
 }
 
@@ -82,19 +87,18 @@ export function requireReadScope(client: ReadClient, scope: ReadScope): void {
   }
 }
 
-export function readResponse(payload: unknown, status = 200): Response {
-  const body = {
-    contract_version: "v1",
-    served_at: new Date().toISOString(),
-    ...(payload as Record<string, unknown>),
-  };
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      "content-type": "application/json",
-      "cache-control": "no-store",
+export function readResponse(payload: Record<string, unknown>, status = 200): Response {
+  return new Response(
+    JSON.stringify({
+      contract_version: "v1",
+      served_at: new Date().toISOString(),
+      ...payload,
+    }),
+    {
+      status,
+      headers: { "content-type": "application/json", "cache-control": "no-store" },
     },
-  });
+  );
 }
 
 export function readErrorResponse(err: unknown): Response {

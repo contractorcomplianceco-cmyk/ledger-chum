@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useOrgId } from "@/hooks/use-current-org";
 import { getTrialBalanceRanged } from "@/lib/accounting/financial-reports.functions";
+import { getDemoTrialBalance, DEMO_MODE_MESSAGE } from "@/lib/mock/ledger-demo";
+import { DemoNotice } from "@/components/banking/demo-notice";
 
 export const Route = createFileRoute("/reports/trial-balance")({
   head: () => ({

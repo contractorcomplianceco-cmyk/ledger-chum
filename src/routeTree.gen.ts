@@ -115,6 +115,7 @@ import { Route as ExpensesIntelligenceRouteImport } from './routes/expenses.inte
 import { Route as ExpensesCopilotRouteImport } from './routes/expenses.copilot'
 import { Route as ExpensesApprovalsRouteImport } from './routes/expenses.approvals'
 import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
+import { Route as DocsReadApiRouteImport } from './routes/docs.read-api'
 import { Route as DocsIntegrationsRouteImport } from './routes/docs.integrations'
 import { Route as DashboardsTeamRouteImport } from './routes/dashboards.team'
 import { Route as DashboardsReviewerRouteImport } from './routes/dashboards.reviewer'
@@ -181,6 +182,7 @@ import { Route as AdminIntegrationsRouteImport } from './routes/admin.integratio
 import { Route as AdminIntegrationTestingRouteImport } from './routes/admin.integration-testing'
 import { Route as AdminFinancialEventsRouteImport } from './routes/admin.financial-events'
 import { Route as AdminCustomerOnboardingRouteImport } from './routes/admin.customer-onboarding'
+import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as AdminAcceptanceTestsRouteImport } from './routes/admin.acceptance-tests'
 import { Route as AccountsReceivableAgingRouteImport } from './routes/accounts-receivable.aging'
 import { Route as AccountsPayableVendorsRouteImport } from './routes/accounts-payable.vendors'
@@ -226,6 +228,11 @@ import { Route as ApiPublicIntegrationsInventoryConsumptionRouteImport } from '.
 import { Route as ApiPublicIntegrationsEventsRouteImport } from './routes/api/public/integrations/events'
 import { Route as ApiPublicIntegrationsCustomersRouteImport } from './routes/api/public/integrations/customers'
 import { Route as ApexDigitalTwinScenariosIdRouteImport } from './routes/apex.digital-twin.scenarios.$id'
+import { Route as ApiPublicReadV1MetricsRouteImport } from './routes/api/public/read/v1/metrics'
+import { Route as ApiPublicReadV1JournalsRouteImport } from './routes/api/public/read/v1/journals'
+import { Route as ApiPublicReadV1IntelligenceRouteImport } from './routes/api/public/read/v1/intelligence'
+import { Route as ApiPublicReadV1HealthRouteImport } from './routes/api/public/read/v1/health'
+import { Route as ApiPublicReadV1CloseStatusRouteImport } from './routes/api/public/read/v1/close-status'
 import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
 
 const VendorsRoute = VendorsRouteImport.update({
@@ -770,6 +777,11 @@ const EstimatesNewRoute = EstimatesNewRouteImport.update({
   path: '/new',
   getParentRoute: () => EstimatesRoute,
 } as any)
+const DocsReadApiRoute = DocsReadApiRouteImport.update({
+  id: '/docs/read-api',
+  path: '/docs/read-api',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsIntegrationsRoute = DocsIntegrationsRouteImport.update({
   id: '/docs/integrations',
   path: '/docs/integrations',
@@ -1107,6 +1119,11 @@ const AdminCustomerOnboardingRoute = AdminCustomerOnboardingRouteImport.update({
   path: '/admin/customer-onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminContractsRoute = AdminContractsRouteImport.update({
+  id: '/admin/contracts',
+  path: '/admin/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAcceptanceTestsRoute = AdminAcceptanceTestsRouteImport.update({
   id: '/admin/acceptance-tests',
   path: '/admin/acceptance-tests',
@@ -1358,6 +1375,33 @@ const ApexDigitalTwinScenariosIdRoute =
     path: '/$id',
     getParentRoute: () => ApexDigitalTwinScenariosRoute,
   } as any)
+const ApiPublicReadV1MetricsRoute = ApiPublicReadV1MetricsRouteImport.update({
+  id: '/api/public/read/v1/metrics',
+  path: '/api/public/read/v1/metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1JournalsRoute = ApiPublicReadV1JournalsRouteImport.update({
+  id: '/api/public/read/v1/journals',
+  path: '/api/public/read/v1/journals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1IntelligenceRoute =
+  ApiPublicReadV1IntelligenceRouteImport.update({
+    id: '/api/public/read/v1/intelligence',
+    path: '/api/public/read/v1/intelligence',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicReadV1HealthRoute = ApiPublicReadV1HealthRouteImport.update({
+  id: '/api/public/read/v1/health',
+  path: '/api/public/read/v1/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicReadV1CloseStatusRoute =
+  ApiPublicReadV1CloseStatusRouteImport.update({
+    id: '/api/public/read/v1/close-status',
+    path: '/api/public/read/v1/close-status',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicIntegrationsWorkOrdersCompletedRoute =
   ApiPublicIntegrationsWorkOrdersCompletedRouteImport.update({
     id: '/api/public/integrations/work-orders/completed',
@@ -1390,6 +1434,7 @@ export interface FileRoutesByFullPath {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1456,6 +1501,7 @@ export interface FileRoutesByFullPath {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1584,6 +1630,11 @@ export interface FileRoutesByFullPath {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -1607,6 +1658,7 @@ export interface FileRoutesByTo {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1673,6 +1725,7 @@ export interface FileRoutesByTo {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -1801,6 +1854,11 @@ export interface FileRoutesByTo {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1828,6 +1886,7 @@ export interface FileRoutesById {
   '/accounts-payable/vendors': typeof AccountsPayableVendorsRoute
   '/accounts-receivable/aging': typeof AccountsReceivableAgingRoute
   '/admin/acceptance-tests': typeof AdminAcceptanceTestsRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/customer-onboarding': typeof AdminCustomerOnboardingRoute
   '/admin/financial-events': typeof AdminFinancialEventsRoute
   '/admin/integration-testing': typeof AdminIntegrationTestingRoute
@@ -1894,6 +1953,7 @@ export interface FileRoutesById {
   '/dashboards/reviewer': typeof DashboardsReviewerRoute
   '/dashboards/team': typeof DashboardsTeamRoute
   '/docs/integrations': typeof DocsIntegrationsRoute
+  '/docs/read-api': typeof DocsReadApiRoute
   '/estimates/new': typeof EstimatesNewRoute
   '/expenses/approvals': typeof ExpensesApprovalsRoute
   '/expenses/copilot': typeof ExpensesCopilotRoute
@@ -2022,6 +2082,11 @@ export interface FileRoutesById {
   '/compensation/plans/$id/participants': typeof CompensationPlansIdParticipantsRoute
   '/compensation/plans/$id/versions': typeof CompensationPlansIdVersionsRoute
   '/api/public/integrations/work-orders/completed': typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  '/api/public/read/v1/close-status': typeof ApiPublicReadV1CloseStatusRoute
+  '/api/public/read/v1/health': typeof ApiPublicReadV1HealthRoute
+  '/api/public/read/v1/intelligence': typeof ApiPublicReadV1IntelligenceRoute
+  '/api/public/read/v1/journals': typeof ApiPublicReadV1JournalsRoute
+  '/api/public/read/v1/metrics': typeof ApiPublicReadV1MetricsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -2050,6 +2115,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2116,6 +2182,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2244,6 +2311,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -2267,6 +2339,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2333,6 +2406,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2461,6 +2535,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   id:
     | '__root__'
     | '/'
@@ -2487,6 +2566,7 @@ export interface FileRouteTypes {
     | '/accounts-payable/vendors'
     | '/accounts-receivable/aging'
     | '/admin/acceptance-tests'
+    | '/admin/contracts'
     | '/admin/customer-onboarding'
     | '/admin/financial-events'
     | '/admin/integration-testing'
@@ -2553,6 +2633,7 @@ export interface FileRouteTypes {
     | '/dashboards/reviewer'
     | '/dashboards/team'
     | '/docs/integrations'
+    | '/docs/read-api'
     | '/estimates/new'
     | '/expenses/approvals'
     | '/expenses/copilot'
@@ -2681,6 +2762,11 @@ export interface FileRouteTypes {
     | '/compensation/plans/$id/participants'
     | '/compensation/plans/$id/versions'
     | '/api/public/integrations/work-orders/completed'
+    | '/api/public/read/v1/close-status'
+    | '/api/public/read/v1/health'
+    | '/api/public/read/v1/intelligence'
+    | '/api/public/read/v1/journals'
+    | '/api/public/read/v1/metrics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -2708,6 +2794,7 @@ export interface RootRouteChildren {
   AccountsPayableVendorsRoute: typeof AccountsPayableVendorsRoute
   AccountsReceivableAgingRoute: typeof AccountsReceivableAgingRoute
   AdminAcceptanceTestsRoute: typeof AdminAcceptanceTestsRoute
+  AdminContractsRoute: typeof AdminContractsRoute
   AdminCustomerOnboardingRoute: typeof AdminCustomerOnboardingRoute
   AdminFinancialEventsRoute: typeof AdminFinancialEventsRoute
   AdminIntegrationTestingRoute: typeof AdminIntegrationTestingRoute
@@ -2770,6 +2857,7 @@ export interface RootRouteChildren {
   DashboardsReviewerRoute: typeof DashboardsReviewerRoute
   DashboardsTeamRoute: typeof DashboardsTeamRoute
   DocsIntegrationsRoute: typeof DocsIntegrationsRoute
+  DocsReadApiRoute: typeof DocsReadApiRoute
   FeatureRegistryIdRoute: typeof FeatureRegistryIdRoute
   FeatureRegistryAllRoute: typeof FeatureRegistryAllRoute
   FeatureRegistryBlockedRoute: typeof FeatureRegistryBlockedRoute
@@ -2863,6 +2951,11 @@ export interface RootRouteChildren {
   ApiPublicIntegrationsPaymentsRoute: typeof ApiPublicIntegrationsPaymentsRoute
   ApiPublicIntegrationsRefundsRoute: typeof ApiPublicIntegrationsRefundsRoute
   ApiPublicIntegrationsWorkOrdersCompletedRoute: typeof ApiPublicIntegrationsWorkOrdersCompletedRoute
+  ApiPublicReadV1CloseStatusRoute: typeof ApiPublicReadV1CloseStatusRoute
+  ApiPublicReadV1HealthRoute: typeof ApiPublicReadV1HealthRoute
+  ApiPublicReadV1IntelligenceRoute: typeof ApiPublicReadV1IntelligenceRoute
+  ApiPublicReadV1JournalsRoute: typeof ApiPublicReadV1JournalsRoute
+  ApiPublicReadV1MetricsRoute: typeof ApiPublicReadV1MetricsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -3609,6 +3702,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EstimatesNewRouteImport
       parentRoute: typeof EstimatesRoute
     }
+    '/docs/read-api': {
+      id: '/docs/read-api'
+      path: '/docs/read-api'
+      fullPath: '/docs/read-api'
+      preLoaderRoute: typeof DocsReadApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/integrations': {
       id: '/docs/integrations'
       path: '/docs/integrations'
@@ -4071,6 +4171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCustomerOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/contracts': {
+      id: '/admin/contracts'
+      path: '/admin/contracts'
+      fullPath: '/admin/contracts'
+      preLoaderRoute: typeof AdminContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/acceptance-tests': {
       id: '/admin/acceptance-tests'
       path: '/admin/acceptance-tests'
@@ -4386,6 +4493,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApexDigitalTwinScenariosIdRouteImport
       parentRoute: typeof ApexDigitalTwinScenariosRoute
     }
+    '/api/public/read/v1/metrics': {
+      id: '/api/public/read/v1/metrics'
+      path: '/api/public/read/v1/metrics'
+      fullPath: '/api/public/read/v1/metrics'
+      preLoaderRoute: typeof ApiPublicReadV1MetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/journals': {
+      id: '/api/public/read/v1/journals'
+      path: '/api/public/read/v1/journals'
+      fullPath: '/api/public/read/v1/journals'
+      preLoaderRoute: typeof ApiPublicReadV1JournalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/intelligence': {
+      id: '/api/public/read/v1/intelligence'
+      path: '/api/public/read/v1/intelligence'
+      fullPath: '/api/public/read/v1/intelligence'
+      preLoaderRoute: typeof ApiPublicReadV1IntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/health': {
+      id: '/api/public/read/v1/health'
+      path: '/api/public/read/v1/health'
+      fullPath: '/api/public/read/v1/health'
+      preLoaderRoute: typeof ApiPublicReadV1HealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/read/v1/close-status': {
+      id: '/api/public/read/v1/close-status'
+      path: '/api/public/read/v1/close-status'
+      fullPath: '/api/public/read/v1/close-status'
+      preLoaderRoute: typeof ApiPublicReadV1CloseStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/integrations/work-orders/completed': {
       id: '/api/public/integrations/work-orders/completed'
       path: '/api/public/integrations/work-orders/completed'
@@ -4658,6 +4800,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsPayableVendorsRoute: AccountsPayableVendorsRoute,
   AccountsReceivableAgingRoute: AccountsReceivableAgingRoute,
   AdminAcceptanceTestsRoute: AdminAcceptanceTestsRoute,
+  AdminContractsRoute: AdminContractsRoute,
   AdminCustomerOnboardingRoute: AdminCustomerOnboardingRoute,
   AdminFinancialEventsRoute: AdminFinancialEventsRoute,
   AdminIntegrationTestingRoute: AdminIntegrationTestingRoute,
@@ -4720,6 +4863,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardsReviewerRoute: DashboardsReviewerRoute,
   DashboardsTeamRoute: DashboardsTeamRoute,
   DocsIntegrationsRoute: DocsIntegrationsRoute,
+  DocsReadApiRoute: DocsReadApiRoute,
   FeatureRegistryIdRoute: FeatureRegistryIdRoute,
   FeatureRegistryAllRoute: FeatureRegistryAllRoute,
   FeatureRegistryBlockedRoute: FeatureRegistryBlockedRoute,
@@ -4815,17 +4959,12 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicIntegrationsRefundsRoute: ApiPublicIntegrationsRefundsRoute,
   ApiPublicIntegrationsWorkOrdersCompletedRoute:
     ApiPublicIntegrationsWorkOrdersCompletedRoute,
+  ApiPublicReadV1CloseStatusRoute: ApiPublicReadV1CloseStatusRoute,
+  ApiPublicReadV1HealthRoute: ApiPublicReadV1HealthRoute,
+  ApiPublicReadV1IntelligenceRoute: ApiPublicReadV1IntelligenceRoute,
+  ApiPublicReadV1JournalsRoute: ApiPublicReadV1JournalsRoute,
+  ApiPublicReadV1MetricsRoute: ApiPublicReadV1MetricsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

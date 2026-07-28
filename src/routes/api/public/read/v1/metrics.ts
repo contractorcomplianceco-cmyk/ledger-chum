@@ -7,6 +7,24 @@ import {
 } from "@/integrations/ledgeros-read-api/verify.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+type MetricRow = {
+  id: string;
+  metric_key: string;
+  metric_name: string;
+  category: string;
+  refresh_frequency: string | null;
+  description: string | null;
+};
+type ValueRow = {
+  metric_id: string;
+  value: number | null;
+  value_json: unknown;
+  period_end: string | null;
+  calculation_timestamp: string | null;
+  freshness_status: string | null;
+  confidence_score: number | null;
+};
+
 export const Route = createFileRoute("/api/public/read/v1/metrics")({
   server: {
     handlers: {
@@ -16,40 +34,39 @@ export const Route = createFileRoute("/api/public/read/v1/metrics")({
           requireReadScope(client, "read.metrics");
 
           const url = new URL(request.url);
-          const slug = url.searchParams.get("slug");
+          const key = url.searchParams.get("key");
 
-          let query = supabaseAdmin
+          let mq = supabaseAdmin
             .from("financial_metrics")
-            .select("id, slug, name, category, status, refresh_frequency, description")
+            .select("id, metric_key, metric_name, category, refresh_frequency, description")
             .eq("org_id", client.orgId)
             .eq("status", "active")
             .order("category");
-          if (slug) query = query.eq("slug", slug);
-          const { data: metrics, error } = await query;
+          if (key) mq = mq.eq("metric_key", key);
+          const { data: metricsData, error } = await mq;
           if (error) throw new Error(error.message);
+          const metrics = (metricsData ?? []) as unknown as MetricRow[];
 
-          const metricIds = (metrics ?? []).map((m) => m.id);
-          const { data: values } = metricIds.length
+          const ids = metrics.map((m) => m.id);
+          const { data: valuesData } = ids.length
             ? await supabaseAdmin
                 .from("financial_metric_values")
-                .select("metric_id, value_numeric, value_json, as_of, computed_at, freshness, confidence")
-                .in("metric_id", metricIds)
-                .order("as_of", { ascending: false })
+                .select("metric_id, value, value_json, period_end, calculation_timestamp, freshness_status, confidence_score")
+                .in("metric_id", ids)
+                .order("calculation_timestamp", { ascending: false })
             : { data: [] };
+          const values = (valuesData ?? []) as unknown as ValueRow[];
 
-          const latest = new Map<string, unknown>();
-          for (const v of values ?? []) {
-            const key = (v as { metric_id: string }).metric_id;
-            if (!latest.has(key)) latest.set(key, v);
-          }
+          const latest = new Map<string, ValueRow>();
+          for (const v of values) if (!latest.has(v.metric_id)) latest.set(v.metric_id, v);
 
           return readResponse({
             org_id: client.orgId,
             consumer: client.consumerSlug,
-            count: metrics?.length ?? 0,
-            metrics: (metrics ?? []).map((m) => ({
-              slug: m.slug,
-              name: m.name,
+            count: metrics.length,
+            metrics: metrics.map((m) => ({
+              key: m.metric_key,
+              name: m.metric_name,
               category: m.category,
               refresh_frequency: m.refresh_frequency,
               description: m.description,

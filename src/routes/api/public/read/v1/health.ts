@@ -7,7 +7,16 @@ import {
 } from "@/integrations/ledgeros-read-api/verify.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-const HEALTH_SLUGS = [
+type MetricRow = { id: string; metric_key: string; metric_name: string };
+type ValueRow = {
+  metric_id: string;
+  value: number | null;
+  period_end: string | null;
+  freshness_status: string | null;
+  confidence_score: number | null;
+};
+
+const HEALTH_KEYS = [
   "financial_health_score",
   "true_available_cash",
   "cash_runway_days",
@@ -25,33 +34,32 @@ export const Route = createFileRoute("/api/public/read/v1/health")({
           const client = await verifyReadClient(request);
           requireReadScope(client, "read.health");
 
-          const { data: metrics } = await supabaseAdmin
+          const { data: mData } = await supabaseAdmin
             .from("financial_metrics")
-            .select("id, slug, name")
+            .select("id, metric_key, metric_name")
             .eq("org_id", client.orgId)
-            .in("slug", HEALTH_SLUGS);
+            .in("metric_key", HEALTH_KEYS);
+          const metrics = (mData ?? []) as unknown as MetricRow[];
 
-          const ids = (metrics ?? []).map((m) => m.id);
-          const { data: values } = ids.length
+          const ids = metrics.map((m) => m.id);
+          const { data: vData } = ids.length
             ? await supabaseAdmin
                 .from("financial_metric_values")
-                .select("metric_id, value_numeric, as_of, freshness, confidence")
+                .select("metric_id, value, period_end, freshness_status, confidence_score")
                 .in("metric_id", ids)
-                .order("as_of", { ascending: false })
+                .order("calculation_timestamp", { ascending: false })
             : { data: [] };
+          const values = (vData ?? []) as unknown as ValueRow[];
 
-          const latest = new Map<string, unknown>();
-          for (const v of values ?? []) {
-            const key = (v as { metric_id: string }).metric_id;
-            if (!latest.has(key)) latest.set(key, v);
-          }
+          const latest = new Map<string, ValueRow>();
+          for (const v of values) if (!latest.has(v.metric_id)) latest.set(v.metric_id, v);
 
           return readResponse({
             org_id: client.orgId,
             consumer: client.consumerSlug,
-            drivers: (metrics ?? []).map((m) => ({
-              slug: m.slug,
-              name: m.name,
+            drivers: metrics.map((m) => ({
+              key: m.metric_key,
+              name: m.metric_name,
               latest: latest.get(m.id) ?? null,
             })),
           });

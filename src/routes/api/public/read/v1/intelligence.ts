@@ -16,7 +16,6 @@ export const Route = createFileRoute("/api/public/read/v1/intelligence")({
           requireReadScope(client, "read.intelligence");
           const url = new URL(request.url);
           const kind = url.searchParams.get("kind") ?? "all";
-
           const wantAnom = kind === "all" || kind === "anomalies";
           const wantRec = kind === "all" || kind === "recommendations";
           const wantExp = kind === "all" || kind === "explanations";
@@ -25,27 +24,27 @@ export const Route = createFileRoute("/api/public/read/v1/intelligence")({
             wantAnom
               ? supabaseAdmin
                   .from("financial_anomalies")
-                  .select("id, metric_slug, severity, status, detected_at, summary, confidence")
+                  .select("id, metric_key, severity, status, title, narrative, confidence, freshness, created_at")
                   .eq("org_id", client.orgId)
-                  .order("detected_at", { ascending: false })
+                  .order("created_at", { ascending: false })
                   .limit(50)
-              : Promise.resolve({ data: [] }),
+              : Promise.resolve({ data: [] as unknown[] }),
             wantRec
               ? supabaseAdmin
                   .from("financial_recommendations")
-                  .select("id, persona, title, priority, status, confidence, created_at")
+                  .select("id, persona, title, category, state, confidence, estimated_impact, created_at")
                   .eq("org_id", client.orgId)
                   .order("created_at", { ascending: false })
                   .limit(50)
-              : Promise.resolve({ data: [] }),
+              : Promise.resolve({ data: [] as unknown[] }),
             wantExp
               ? supabaseAdmin
                   .from("intelligence_explanations")
-                  .select("id, subject_type, subject_id, answer, confidence, freshness, created_at")
+                  .select("id, subject_type, subject_key, question, answer, confidence, freshness, created_at")
                   .eq("org_id", client.orgId)
                   .order("created_at", { ascending: false })
                   .limit(25)
-              : Promise.resolve({ data: [] }),
+              : Promise.resolve({ data: [] as unknown[] }),
           ]);
 
           return readResponse({

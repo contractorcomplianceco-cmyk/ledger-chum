@@ -19,15 +19,14 @@ export const Route = createFileRoute("/api/public/read/v1/journals")({
           const limit = Math.min(Number(url.searchParams.get("limit") ?? 50), 200);
           const since = url.searchParams.get("since");
 
-          let query = supabaseAdmin
+          let q = supabaseAdmin
             .from("journal_entries")
-            .select("id, entry_date, memo, description, source, status, posted_at, correlation_id")
+            .select("id, entry_date, memo, description, source_system, source_ref, status, posted_at, correlation_id")
             .eq("org_id", client.orgId)
             .order("posted_at", { ascending: false, nullsFirst: false })
             .limit(limit);
-          if (since) query = query.gte("posted_at", since);
-
-          const { data, error } = await query;
+          if (since) q = q.gte("posted_at", since);
+          const { data, error } = await q;
           if (error) throw new Error(error.message);
 
           return readResponse({

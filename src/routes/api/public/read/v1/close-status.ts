@@ -17,9 +17,9 @@ export const Route = createFileRoute("/api/public/read/v1/close-status")({
 
           const { data: runs, error } = await supabaseAdmin
             .from("close_runs")
-            .select("id, period_id, status, opened_at, closed_at, approved_at, completion_score")
+            .select("id, fiscal_period_id, status, started_at, completed_at, notes")
             .eq("org_id", client.orgId)
-            .order("opened_at", { ascending: false })
+            .order("started_at", { ascending: false })
             .limit(12);
           if (error) throw new Error(error.message);
 

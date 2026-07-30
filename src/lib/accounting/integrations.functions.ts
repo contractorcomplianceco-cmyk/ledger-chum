@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Json } from "@/integrations/supabase/types";
 
 /**
  * M5 — Integration Layer
@@ -27,9 +28,9 @@ export const listIntegrationSources = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from(
+    const { data: rows, error } = await context.supabase.from(
       "integration_sources",
-    ) as any)
+    )
       .select(
         "id, source_key, name, kind, active, contact_email, notes, config, created_at, updated_at",
       )
@@ -69,11 +70,11 @@ export const upsertIntegrationSource = createServerFn({ method: "POST" })
       active: data.active,
       contact_email: data.contactEmail ?? null,
       notes: data.notes ?? null,
-      config: data.config ?? {},
+      config: (data.config ?? {}) as Json,
     };
-    const { data: row, error } = await (context.supabase.from(
+    const { data: row, error } = await context.supabase.from(
       "integration_sources",
-    ) as any)
+    )
       .upsert(payload, { onConflict: "org_id,source_key" })
       .select()
       .single();
@@ -107,9 +108,9 @@ export const setIntegrationSourceActive = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: row, error } = await (context.supabase.from(
+    const { data: row, error } = await context.supabase.from(
       "integration_sources",
-    ) as any)
+    )
       .update({ active: data.active })
       .eq("id", data.id)
       .eq("org_id", data.orgId)
@@ -149,9 +150,9 @@ export const listIntegrationEventMappings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from(
+    const { data: rows, error } = await context.supabase.from(
       "integration_event_mappings",
-    ) as any)
+    )
       .select(
         "id, source_id, external_event_type, ledger_object, account_purpose, active, description, config, created_at, updated_at",
       )
@@ -187,11 +188,11 @@ export const upsertIntegrationEventMapping = createServerFn({ method: "POST" })
       account_purpose: data.accountPurpose ?? null,
       active: data.active,
       description: data.description ?? null,
-      config: data.config ?? {},
+      config: (data.config ?? {}) as Json,
     };
-    const { data: row, error } = await (context.supabase.from(
+    const { data: row, error } = await context.supabase.from(
       "integration_event_mappings",
-    ) as any)
+    )
       .upsert(payload, { onConflict: "org_id,source_id,external_event_type" })
       .select()
       .single();
@@ -217,9 +218,9 @@ export const deleteIntegrationEventMapping = createServerFn({ method: "POST" })
     z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { error } = await (context.supabase.from(
+    const { error } = await context.supabase.from(
       "integration_event_mappings",
-    ) as any)
+    )
       .delete()
       .eq("id", data.id)
       .eq("org_id", data.orgId);
@@ -289,9 +290,9 @@ export const markSyncRetry = createServerFn({ method: "POST" })
     if (readErr) throw new Error(readErr.message);
     if (!existing) throw new Error("sync_history row not found");
 
-    const { data: row, error } = await (context.supabase.from(
+    const { data: row, error } = await context.supabase.from(
       "sync_history",
-    ) as any)
+    )
       .update({
         retry_count: (existing.retry_count ?? 0) + 1,
         last_retry_at: new Date().toISOString(),

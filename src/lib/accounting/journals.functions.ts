@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { assertBalanced } from "@/lib/accounting/journal-invariants";
 
 /**
  * Manual Journal Entry workspace — server functions backing /ledger/journals.
@@ -84,10 +85,7 @@ export const postManualJournal = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     // Client-side sanity check before the RPC (RPC will re-enforce)
-    const debit = data.lines.reduce((s, l) => s + l.debit, 0);
-    const credit = data.lines.reduce((s, l) => s + l.credit, 0);
-    if (Math.abs(debit - credit) > 0.005)
-      throw new Error(`Unbalanced entry: debit=${debit.toFixed(2)} credit=${credit.toFixed(2)}`);
+    assertBalanced(data.lines);
 
     const { data: res, error } = await context.supabase.rpc("post_manual_journal", {
       _org_id: data.orgId,

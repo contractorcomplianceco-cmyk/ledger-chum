@@ -19,6 +19,7 @@ export type IntegrationScope =
   | "customers.read"
   | "customers.write"
   | "work_orders.completed"
+  | "events.ingest"
   | "invoices.create"
   | "invoices.read"
   | "payments.create"
@@ -60,12 +61,16 @@ async function verifyBearer(request: Request): Promise<ResolvedClient> {
 
   const { data, error } = await supabaseAdmin
     .from("api_clients")
-    .select("id, org_id, name, active, scopes, environment")
+    .select("id, org_id, name, active, scopes, environment, expires_at, revoked_at")
     .eq("key_hash", hashKey(token))
     .maybeSingle();
 
   if (error) throw new IntegrationError(500, `Auth lookup failed: ${error.message}`);
   if (!data || !data.active) throw new IntegrationError(401, "Invalid or inactive API key");
+  if (data.revoked_at) throw new IntegrationError(401, "API key has been revoked");
+  if (data.expires_at && new Date(data.expires_at).getTime() <= Date.now()) {
+    throw new IntegrationError(401, "API key has expired");
+  }
 
   // Fire-and-forget last_used_at update.
   supabaseAdmin

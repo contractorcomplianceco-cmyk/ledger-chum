@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Json } from "@/integrations/supabase/types";
 
 /**
  * M6 — Financial Event Engine
@@ -88,7 +89,7 @@ export const approveFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
+    const { data: res, error } = await context.supabase.rpc(
       "approve_financial_event",
       {
         _org_id: data.orgId,
@@ -112,7 +113,7 @@ export const rejectFinancialEvent = createServerFn({ method: "POST" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
+    const { data: res, error } = await context.supabase.rpc(
       "reject_financial_event",
       {
         _org_id: data.orgId,
@@ -162,10 +163,10 @@ export const upsertEventRule = createServerFn({ method: "POST" })
       description: data.description ?? null,
       priority: data.priority,
       active: data.active,
-      conditions: data.conditions,
-      actions: data.actions,
+      conditions: data.conditions as Json,
+      actions: data.actions as Json,
     };
-    const table = context.supabase.from("financial_event_rules") as any;
+    const table = context.supabase.from("financial_event_rules");
     const query = data.id
       ? table.update(payload).eq("id", data.id).eq("org_id", data.orgId).select().single()
       : table.insert(payload).select().single();
@@ -222,7 +223,7 @@ export const materializeFinancialEvent = createServerFn({ method: "POST" })
     z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
+    const { data: res, error } = await context.supabase.rpc(
       "materialize_financial_event",
       { _org_id: data.orgId, _event_id: data.id },
     );
@@ -245,7 +246,7 @@ export const retryMaterialization = createServerFn({ method: "POST" })
     z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { data: res, error } = await (context.supabase.rpc as any)(
+    const { data: res, error } = await context.supabase.rpc(
       "retry_materialization",
       { _org_id: data.orgId, _event_id: data.id },
     );
@@ -275,7 +276,7 @@ export const listMaterializations = createServerFn({ method: "GET" })
       .parse(v),
   )
   .handler(async ({ data, context }) => {
-    let q = (context.supabase.from as any)("financial_event_materializations")
+    let q = context.supabase.from("financial_event_materializations")
       .select(
         "id, event_id, materialization_type, target_object_type, target_object_id, status, error_code, error_message, retry_count, created_at, completed_at",
       )
@@ -306,7 +307,7 @@ export const listFinancialAccountMappings = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((v) => orgOnly.parse(v))
   .handler(async ({ data, context }) => {
-    const { data: rows, error } = await (context.supabase.from as any)(
+    const { data: rows, error } = await context.supabase.from(
       "financial_account_mappings",
     )
       .select("*")
@@ -344,7 +345,7 @@ export const upsertFinancialAccountMapping = createServerFn({ method: "POST" })
       status: data.status,
       notes: data.notes ?? null,
     };
-    const table = (context.supabase.from as any)("financial_account_mappings");
+    const table = context.supabase.from("financial_account_mappings");
     const q = data.id
       ? table.update(payload).eq("id", data.id).eq("org_id", data.orgId).select().single()
       : table.insert(payload).select().single();
@@ -359,7 +360,7 @@ export const deleteFinancialAccountMapping = createServerFn({ method: "POST" })
     z.object({ orgId: z.string().uuid(), id: z.string().uuid() }).parse(v),
   )
   .handler(async ({ data, context }) => {
-    const { error } = await (context.supabase.from as any)(
+    const { error } = await context.supabase.from(
       "financial_account_mappings",
     )
       .delete()

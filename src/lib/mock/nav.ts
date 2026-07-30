@@ -96,6 +96,7 @@ export const NAV_GROUPS: NavGroup[] = [
     icon: Compass,
     defaultOpen: true,
     items: [
+      { title: "Dashboard", to: "/dashboards/accounting", icon: LayoutDashboard, keywords: ["home", "accountant", "workspace", "kpi"] },
       { title: "Operational Dashboard", to: "/dashboard", icon: LayoutDashboard, keywords: ["home", "kpi", "operational"] },
       { title: "Executive Home", to: "/apex", icon: LayoutDashboard, keywords: ["executive", "apex", "home"] },
       { title: "APEX Insights", to: "/apex/insights", icon: LayoutDashboard, keywords: ["insights", "intelligence", "apex", "feed"] },
@@ -122,7 +123,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Cash Availability", to: "/cash-availability", icon: Coins },
       { title: "Allocations", to: "/cash-availability/allocations", icon: Split },
       { title: "Treatment Rules", to: "/cash-availability/rules", icon: ScrollText },
-      { title: "Budgets", to: "/budgets", icon: Wallet2 },
       { title: "Reports", to: "/reports", icon: BarChart3, permission: "reports.view" },
       { title: "Trial Balance", to: "/reports/trial-balance", icon: BookOpenCheck },
       { title: "Profit & Loss", to: "/reports/profit-loss", icon: BarChart3 },
@@ -166,7 +166,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { title: "Approvals", to: "/expenses/approvals", icon: ShieldCheck },
       { title: "Subscriptions", to: "/expenses/subscriptions", icon: CalendarClock },
       { title: "Vendor Spend", to: "/expenses/vendors", icon: Building2 },
-      { title: "Payroll", to: "/payroll", icon: Users2 },
     ],
   },
   {

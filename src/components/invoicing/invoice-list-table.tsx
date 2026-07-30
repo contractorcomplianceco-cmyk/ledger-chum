@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { currency } from "@/lib/mock/finance";
+import { currencyPrecise } from "@/lib/mock/finance";
 import { computeInvoice, type Invoice } from "@/lib/mock/invoicing";
 import { InvoiceStatusBadge } from "./invoice-status-badge";
 import { PaymentLikelihoodChip } from "./payment-likelihood-chip";
@@ -55,14 +55,14 @@ export function InvoiceListTable({ invoices }: { invoices: Invoice[] }) {
                   <td className="px-2 py-2.5 text-muted-foreground">{inv.issued}</td>
                   <td className={cn("px-2 py-2.5", inv.status === "overdue" ? "font-semibold text-destructive" : "text-muted-foreground")}>{inv.due}</td>
                   <td className="px-2 py-2.5 text-right">
-                    <div className="font-tabular font-semibold text-foreground">{currency(c.total)}</div>
+                    <div className="font-tabular font-semibold text-foreground">{currencyPrecise(c.total)}</div>
                     {balance > 0 && inv.status !== "draft" && (
-                      <div className="text-[11px] text-muted-foreground">bal {currency(balance)}</div>
+                      <div className="text-[11px] text-muted-foreground">bal {currencyPrecise(balance)}</div>
                     )}
                   </td>
-                  <td className="px-2 py-2.5 text-right font-tabular text-foreground/85">{currency(c.ccaRevenue)}</td>
-                  <td className="px-2 py-2.5 text-right font-tabular text-destructive/80">{currency(c.passThrough)}</td>
-                  <td className="px-2 py-2.5 text-right font-tabular text-warning">{currency(c.commission)}</td>
+                  <td className="px-2 py-2.5 text-right font-tabular text-foreground/85">{currencyPrecise(c.ccaRevenue)}</td>
+                  <td className="px-2 py-2.5 text-right font-tabular text-destructive/80">{currencyPrecise(c.passThrough)}</td>
+                  <td className="px-2 py-2.5 text-right font-tabular text-warning">{currencyPrecise(c.commission)}</td>
                   <td className="px-2 py-2.5"><InvoiceStatusBadge status={inv.status} /></td>
                   <td className="px-2 py-2.5"><PaymentLikelihoodChip likelihood={inv.likelihood} compact /></td>
                 </tr>

@@ -27,6 +27,8 @@ import {
   TRANSACTIONS,
 } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
+import { isProductionMode } from "@/lib/app-mode";
+import { ProductionUnavailable } from "@/components/production-unavailable";
 import {
   Bar,
   BarChart,
@@ -69,6 +71,17 @@ export const Route = createFileRoute("/banking/")({
 });
 
 function BankingOverview() {
+  if (isProductionMode()) {
+    return (
+      <ProductionUnavailable
+        title="Banking"
+        description="This is the design-lab banking preview. The live banking workspace is under Ledger."
+        to="/ledger/banking"
+        toLabel="Go to live banking"
+      />
+    );
+  }
+
   const totalBank = BANK_ACCOUNTS.reduce((s, a) => s + a.bankBalance, 0);
   const totalLedger = BANK_ACCOUNTS.reduce((s, a) => s + a.ledgerBalance, 0);
   const pending = BANK_ACCOUNTS.reduce((s, a) => s + a.pendingReview, 0);

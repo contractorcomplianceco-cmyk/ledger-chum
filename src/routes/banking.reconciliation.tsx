@@ -19,6 +19,9 @@ import { ReconciliationHistoryTable } from "@/components/banking/reconciliation-
 import { TxKindIcon } from "@/components/banking/transaction-icons";
 import { BANK_ACCOUNTS, TRANSACTIONS, type BankAccount } from "@/lib/mock/banking";
 import { currencyPrecise } from "@/lib/mock/finance";
+import { computeReconciliation, deriveOpeningBalance } from "@/lib/accounting/reconciliation";
+import { isProductionMode } from "@/lib/app-mode";
+import { ProductionUnavailable } from "@/components/production-unavailable";
 import {
   ArrowLeft,
   ArrowRight,
@@ -63,6 +66,20 @@ const STEPS = [
 ];
 
 function ReconciliationPage() {
+  if (isProductionMode()) {
+    return (
+      <ProductionUnavailable
+        title="Reconciliation"
+        description="This is the design-lab reconciliation preview. Live reconciliation lives under Ledger."
+        to="/ledger/banking/reconcile"
+        toLabel="Go to live reconciliation"
+      />
+    );
+  }
+  return <ReconciliationWorkspace />;
+}
+
+function ReconciliationWorkspace() {
   const [activeAccountId, setActiveAccountId] = useState<string | null>(null);
   const activeAccount = BANK_ACCOUNTS.find((a) => a.id === activeAccountId) ?? null;
 
@@ -135,14 +152,20 @@ function ReconciliationFlow({ account, onExit }: { account: BankAccount; onExit:
   const [step, setStep] = useState(3); // Jump straight to clear step for demo
   const [statementStart, setStatementStart] = useState("2026-07-01");
   const [statementEnd, setStatementEnd] = useState("2026-07-31");
-  const [startingBalance] = useState(1_620_400.11);
-  const [endingBalance, setEndingBalance] = useState(1_838_902.11);
   const [notes, setNotes] = useState("");
 
   const accountTx = useMemo(
     () => TRANSACTIONS.filter((t) => t.accountId === account.id),
     [account.id],
   );
+
+  // Opening balance is the ledger position before this statement's activity.
+  const startingBalance = useMemo(
+    () => deriveOpeningBalance(account.ledgerBalance, accountTx.reduce((s, t) => s + t.amount, 0)),
+    [account.ledgerBalance, accountTx],
+  );
+  const [endingBalance, setEndingBalance] = useState(account.bankBalance);
+
   const [cleared, setCleared] = useState<Set<string>>(
     () => new Set(accountTx.filter((t) => t.reconciled || t.status === "matched").map((t) => t.id)),
   );
@@ -150,10 +173,12 @@ function ReconciliationFlow({ account, onExit }: { account: BankAccount; onExit:
   const clearedTx = accountTx.filter((t) => cleared.has(t.id));
   const unclearedTx = accountTx.filter((t) => !cleared.has(t.id));
   const clearedSum = clearedTx.reduce((s, t) => s + t.amount, 0);
-  const clearedBalance = startingBalance + clearedSum;
   const unclearedSum = unclearedTx.reduce((s, t) => s + t.amount, 0);
-  const difference = endingBalance - clearedBalance;
-  const balanced = Math.abs(difference) < 0.005;
+  const { clearedBalance, balanced } = computeReconciliation({
+    openingBalance: startingBalance,
+    clearedAmount: clearedSum,
+    statementEndingBalance: endingBalance,
+  });
 
   const isLocked = account.reconciliation === "reconciled" && step >= 7;
 

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as VendorsRouteImport } from './routes/vendors'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as PaymentsRouteImport } from './routes/payments'
@@ -235,6 +236,11 @@ import { Route as ApiPublicReadV1HealthRouteImport } from './routes/api/public/r
 import { Route as ApiPublicReadV1CloseStatusRouteImport } from './routes/api/public/read/v1/close-status'
 import { Route as ApiPublicIntegrationsWorkOrdersCompletedRouteImport } from './routes/api/public/integrations/work-orders.completed'
 
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VendorsRoute = VendorsRouteImport.update({
   id: '/vendors',
   path: '/vendors',
@@ -1428,6 +1434,7 @@ export interface FileRoutesByFullPath {
   '/payments': typeof PaymentsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/welcome': typeof WelcomeRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
@@ -1652,6 +1659,7 @@ export interface FileRoutesByTo {
   '/payments': typeof PaymentsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/welcome': typeof WelcomeRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
@@ -1880,6 +1888,7 @@ export interface FileRoutesById {
   '/payments': typeof PaymentsRoute
   '/settings': typeof SettingsRouteWithChildren
   '/vendors': typeof VendorsRoute
+  '/welcome': typeof WelcomeRoute
   '/accounts-payable/aging': typeof AccountsPayableAgingRoute
   '/accounts-payable/bills': typeof AccountsPayableBillsRoute
   '/accounts-payable/payments': typeof AccountsPayablePaymentsRoute
@@ -2109,6 +2118,7 @@ export interface FileRouteTypes {
     | '/payments'
     | '/settings'
     | '/vendors'
+    | '/welcome'
     | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
@@ -2333,6 +2343,7 @@ export interface FileRouteTypes {
     | '/payments'
     | '/settings'
     | '/vendors'
+    | '/welcome'
     | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
@@ -2560,6 +2571,7 @@ export interface FileRouteTypes {
     | '/payments'
     | '/settings'
     | '/vendors'
+    | '/welcome'
     | '/accounts-payable/aging'
     | '/accounts-payable/bills'
     | '/accounts-payable/payments'
@@ -2788,6 +2800,7 @@ export interface RootRouteChildren {
   PaymentsRoute: typeof PaymentsRoute
   SettingsRoute: typeof SettingsRouteWithChildren
   VendorsRoute: typeof VendorsRoute
+  WelcomeRoute: typeof WelcomeRoute
   AccountsPayableAgingRoute: typeof AccountsPayableAgingRoute
   AccountsPayableBillsRoute: typeof AccountsPayableBillsRoute
   AccountsPayablePaymentsRoute: typeof AccountsPayablePaymentsRoute
@@ -2960,6 +2973,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vendors': {
       id: '/vendors'
       path: '/vendors'
@@ -4794,6 +4814,7 @@ const rootRouteChildren: RootRouteChildren = {
   PaymentsRoute: PaymentsRoute,
   SettingsRoute: SettingsRouteWithChildren,
   VendorsRoute: VendorsRoute,
+  WelcomeRoute: WelcomeRoute,
   AccountsPayableAgingRoute: AccountsPayableAgingRoute,
   AccountsPayableBillsRoute: AccountsPayableBillsRoute,
   AccountsPayablePaymentsRoute: AccountsPayablePaymentsRoute,
